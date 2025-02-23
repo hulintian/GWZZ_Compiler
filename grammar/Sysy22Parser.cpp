@@ -1,5 +1,5 @@
 
-// Generated from Sysy22.g4 by ANTLR 4.10.1
+// Generated from Sysy22.g4 by ANTLR 4.13.2
 
 
 #include "Sysy22Listener.h"
@@ -37,11 +37,20 @@ struct Sysy22ParserStaticData final {
   std::unique_ptr<antlr4::atn::ATN> atn;
 };
 
-std::once_flag sysy22ParserOnceFlag;
-Sysy22ParserStaticData *sysy22ParserStaticData = nullptr;
+::antlr4::internal::OnceFlag sysy22ParserOnceFlag;
+#if ANTLR4_USE_THREAD_LOCAL_CACHE
+static thread_local
+#endif
+std::unique_ptr<Sysy22ParserStaticData> sysy22ParserStaticData = nullptr;
 
 void sysy22ParserInitialize() {
+#if ANTLR4_USE_THREAD_LOCAL_CACHE
+  if (sysy22ParserStaticData != nullptr) {
+    return;
+  }
+#else
   assert(sysy22ParserStaticData == nullptr);
+#endif
   auto staticData = std::make_unique<Sysy22ParserStaticData>(
     std::vector<std::string>{
       "prog", "compUnit", "decl", "constDecl", "bType", "constDef", "constInitVal", 
@@ -204,7 +213,7 @@ void sysy22ParserInitialize() {
   for (size_t i = 0; i < count; i++) { 
     staticData->decisionToDFA.emplace_back(staticData->atn->getDecisionState(i), i);
   }
-  sysy22ParserStaticData = staticData.release();
+  sysy22ParserStaticData = std::move(staticData);
 }
 
 }
@@ -371,10 +380,7 @@ Sysy22Parser::CompUnitContext* Sysy22Parser::compUnit() {
     _errHandler->sync(this);
     _la = _input->LA(1);
     while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & ((1ULL << Sysy22Parser::INT)
-      | (1ULL << Sysy22Parser::FLOAT)
-      | (1ULL << Sysy22Parser::VOID)
-      | (1ULL << Sysy22Parser::CONST))) != 0)) {
+      ((1ULL << _la) & 30) != 0)) {
       setState(70);
       _errHandler->sync(this);
       switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 0, _ctx)) {
@@ -909,14 +915,7 @@ Sysy22Parser::ConstInitValContext* Sysy22Parser::constInitVal() {
 
         _la = _input->LA(1);
         if ((((_la & ~ 0x3fULL) == 0) &&
-          ((1ULL << _la) & ((1ULL << Sysy22Parser::LP)
-          | (1ULL << Sysy22Parser::LC)
-          | (1ULL << Sysy22Parser::MINUS)
-          | (1ULL << Sysy22Parser::NOT)
-          | (1ULL << Sysy22Parser::ADD)
-          | (1ULL << Sysy22Parser::INT_LIT)
-          | (1ULL << Sysy22Parser::FLOAT_LIT)
-          | (1ULL << Sysy22Parser::ID))) != 0)) {
+          ((1ULL << _la) & 962095777792) != 0)) {
           setState(110);
           constInitVal();
           setState(115);
@@ -1373,14 +1372,7 @@ Sysy22Parser::InitValContext* Sysy22Parser::initVal() {
 
         _la = _input->LA(1);
         if ((((_la & ~ 0x3fULL) == 0) &&
-          ((1ULL << _la) & ((1ULL << Sysy22Parser::LP)
-          | (1ULL << Sysy22Parser::LC)
-          | (1ULL << Sysy22Parser::MINUS)
-          | (1ULL << Sysy22Parser::NOT)
-          | (1ULL << Sysy22Parser::ADD)
-          | (1ULL << Sysy22Parser::INT_LIT)
-          | (1ULL << Sysy22Parser::FLOAT_LIT)
-          | (1ULL << Sysy22Parser::ID))) != 0)) {
+          ((1ULL << _la) & 962095777792) != 0)) {
           setState(160);
           initVal();
           setState(165);
@@ -1575,9 +1567,7 @@ Sysy22Parser::FuncTypeContext* Sysy22Parser::funcType() {
     setState(182);
     _la = _input->LA(1);
     if (!((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & ((1ULL << Sysy22Parser::INT)
-      | (1ULL << Sysy22Parser::FLOAT)
-      | (1ULL << Sysy22Parser::VOID))) != 0))) {
+      ((1ULL << _la) & 14) != 0))) {
     _errHandler->recoverInline(this);
     }
     else {
@@ -1864,23 +1854,7 @@ Sysy22Parser::BlockContext* Sysy22Parser::block() {
     _errHandler->sync(this);
     _la = _input->LA(1);
     while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & ((1ULL << Sysy22Parser::INT)
-      | (1ULL << Sysy22Parser::FLOAT)
-      | (1ULL << Sysy22Parser::CONST)
-      | (1ULL << Sysy22Parser::RETURN)
-      | (1ULL << Sysy22Parser::IF)
-      | (1ULL << Sysy22Parser::WHILE)
-      | (1ULL << Sysy22Parser::BREAK)
-      | (1ULL << Sysy22Parser::CONTINUE)
-      | (1ULL << Sysy22Parser::LP)
-      | (1ULL << Sysy22Parser::LC)
-      | (1ULL << Sysy22Parser::SEMICOLON)
-      | (1ULL << Sysy22Parser::MINUS)
-      | (1ULL << Sysy22Parser::NOT)
-      | (1ULL << Sysy22Parser::ADD)
-      | (1ULL << Sysy22Parser::INT_LIT)
-      | (1ULL << Sysy22Parser::FLOAT_LIT)
-      | (1ULL << Sysy22Parser::ID))) != 0)) {
+      ((1ULL << _la) & 962096041846) != 0)) {
       setState(208);
       blockItem();
       setState(213);
@@ -2363,13 +2337,7 @@ Sysy22Parser::StmtContext* Sysy22Parser::stmt() {
 
       _la = _input->LA(1);
       if ((((_la & ~ 0x3fULL) == 0) &&
-        ((1ULL << _la) & ((1ULL << Sysy22Parser::LP)
-        | (1ULL << Sysy22Parser::MINUS)
-        | (1ULL << Sysy22Parser::NOT)
-        | (1ULL << Sysy22Parser::ADD)
-        | (1ULL << Sysy22Parser::INT_LIT)
-        | (1ULL << Sysy22Parser::FLOAT_LIT)
-        | (1ULL << Sysy22Parser::ID))) != 0)) {
+        ((1ULL << _la) & 962095745024) != 0)) {
         setState(225);
         exp();
       }
@@ -2468,13 +2436,7 @@ Sysy22Parser::StmtContext* Sysy22Parser::stmt() {
 
       _la = _input->LA(1);
       if ((((_la & ~ 0x3fULL) == 0) &&
-        ((1ULL << _la) & ((1ULL << Sysy22Parser::LP)
-        | (1ULL << Sysy22Parser::MINUS)
-        | (1ULL << Sysy22Parser::NOT)
-        | (1ULL << Sysy22Parser::ADD)
-        | (1ULL << Sysy22Parser::INT_LIT)
-        | (1ULL << Sysy22Parser::FLOAT_LIT)
-        | (1ULL << Sysy22Parser::ID))) != 0)) {
+        ((1ULL << _la) & 962095745024) != 0)) {
         setState(255);
         exp();
       }
@@ -3129,14 +3091,7 @@ Sysy22Parser::UnaryExpContext* Sysy22Parser::unaryExp() {
 
       _la = _input->LA(1);
       if ((((_la & ~ 0x3fULL) == 0) &&
-        ((1ULL << _la) & ((1ULL << Sysy22Parser::LP)
-        | (1ULL << Sysy22Parser::MINUS)
-        | (1ULL << Sysy22Parser::NOT)
-        | (1ULL << Sysy22Parser::ADD)
-        | (1ULL << Sysy22Parser::INT_LIT)
-        | (1ULL << Sysy22Parser::FLOAT_LIT)
-        | (1ULL << Sysy22Parser::ID)
-        | (1ULL << Sysy22Parser::STRING))) != 0)) {
+        ((1ULL << _la) & 2061607372800) != 0)) {
         setState(290);
         funcRParams();
       }
@@ -3229,9 +3184,7 @@ Sysy22Parser::UnaryOpContext* Sysy22Parser::unaryOp() {
     setState(299);
     _la = _input->LA(1);
     if (!((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & ((1ULL << Sysy22Parser::MINUS)
-      | (1ULL << Sysy22Parser::NOT)
-      | (1ULL << Sysy22Parser::ADD))) != 0))) {
+      ((1ULL << _la) & 23068672) != 0))) {
     _errHandler->recoverInline(this);
     }
     else {
@@ -3582,9 +3535,7 @@ Sysy22Parser::MulExpContext* Sysy22Parser::mulExp(int precedence) {
         setState(317);
         _la = _input->LA(1);
         if (!((((_la & ~ 0x3fULL) == 0) &&
-          ((1ULL << _la) & ((1ULL << Sysy22Parser::MUL)
-          | (1ULL << Sysy22Parser::DIV)
-          | (1ULL << Sysy22Parser::MOD))) != 0))) {
+          ((1ULL << _la) & 234881024) != 0))) {
         _errHandler->recoverInline(this);
         }
         else {
@@ -3893,10 +3844,7 @@ Sysy22Parser::RelExpContext* Sysy22Parser::relExp(int precedence) {
         setState(339);
         _la = _input->LA(1);
         if (!((((_la & ~ 0x3fULL) == 0) &&
-          ((1ULL << _la) & ((1ULL << Sysy22Parser::LT)
-          | (1ULL << Sysy22Parser::LE)
-          | (1ULL << Sysy22Parser::GT)
-          | (1ULL << Sysy22Parser::GE))) != 0))) {
+          ((1ULL << _la) & 64424509440) != 0))) {
         _errHandler->recoverInline(this);
         }
         else {
@@ -4483,5 +4431,9 @@ bool Sysy22Parser::lOrExpSempred(LOrExpContext *_localctx, size_t predicateIndex
 }
 
 void Sysy22Parser::initialize() {
-  std::call_once(sysy22ParserOnceFlag, sysy22ParserInitialize);
+#if ANTLR4_USE_THREAD_LOCAL_CACHE
+  sysy22ParserInitialize();
+#else
+  ::antlr4::internal::call_once(sysy22ParserOnceFlag, sysy22ParserInitialize);
+#endif
 }
