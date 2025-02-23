@@ -1,17 +1,18 @@
 Parser=Sysy22.g4
 ANTLR=antlr4
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor -listener
-ANTLR_OUT_PATH = frontend
+ANTLR_OUT_PATH = grammar
+
+INCLUDE_FLAGS = -Isrc -Igrammar -I/usr/include/antlr4-runtim
 
 BUILD_DIR = build
 
+CC = clang++
 
 
 .DEFAULT_GOAL := all
 
 all: parse
-	echo $^
-	echo $<
 
 
 parse: ${Parser}
@@ -21,3 +22,4 @@ parse: ${Parser}
 .PHONY: clean
 clean:
 	rm -rf ${ANTLR_OUT_PATH}
+	rm -rf ${BUILD_DIR}

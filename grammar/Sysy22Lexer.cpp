@@ -1,5 +1,5 @@
 
-// Generated from Sysy22.g4 by ANTLR 4.10.1
+// Generated from Sysy22.g4 by ANTLR 4.13.2
 
 
 #include "Sysy22Lexer.h"
@@ -41,11 +41,20 @@ struct Sysy22LexerStaticData final {
   std::unique_ptr<antlr4::atn::ATN> atn;
 };
 
-std::once_flag sysy22lexerLexerOnceFlag;
-Sysy22LexerStaticData *sysy22lexerLexerStaticData = nullptr;
+::antlr4::internal::OnceFlag sysy22lexerLexerOnceFlag;
+#if ANTLR4_USE_THREAD_LOCAL_CACHE
+static thread_local
+#endif
+std::unique_ptr<Sysy22LexerStaticData> sysy22lexerLexerStaticData = nullptr;
 
 void sysy22lexerLexerInitialize() {
+#if ANTLR4_USE_THREAD_LOCAL_CACHE
+  if (sysy22lexerLexerStaticData != nullptr) {
+    return;
+  }
+#else
   assert(sysy22lexerLexerStaticData == nullptr);
+#endif
   auto staticData = std::make_unique<Sysy22LexerStaticData>(
     std::vector<std::string>{
       "INT", "FLOAT", "VOID", "CONST", "RETURN", "IF", "ELSE", "WHILE", 
@@ -187,7 +196,7 @@ void sysy22lexerLexerInitialize() {
   for (size_t i = 0; i < count; i++) { 
     staticData->decisionToDFA.emplace_back(staticData->atn->getDecisionState(i), i);
   }
-  sysy22lexerLexerStaticData = staticData.release();
+  sysy22lexerLexerStaticData = std::move(staticData);
 }
 
 }
@@ -233,5 +242,9 @@ const atn::ATN& Sysy22Lexer::getATN() const {
 
 
 void Sysy22Lexer::initialize() {
-  std::call_once(sysy22lexerLexerOnceFlag, sysy22lexerLexerInitialize);
+#if ANTLR4_USE_THREAD_LOCAL_CACHE
+  sysy22lexerLexerInitialize();
+#else
+  ::antlr4::internal::call_once(sysy22lexerLexerOnceFlag, sysy22lexerLexerInitialize);
+#endif
 }
