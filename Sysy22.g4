@@ -4,7 +4,7 @@ import SysyLex;
 
 prog : funcDef;
 
-// CompUnit : FuncDef;
+compUnit : funcDef;
 
 funcDef : funcType Ident '('  ')' block;
 
