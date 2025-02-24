@@ -81,5 +81,5 @@ fragment B_Exp
 
 
 WhiteSpace  :   [ \t\r\n]   -> skip;
-LineComment :   '//' .* '\r'?'\n'   ->  skip;
+LineComment : '//' ~[\r\n]* -> skip;
 BlockComment:   '/*'    .*?     '/*'    ->  skip;

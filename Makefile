@@ -1,25 +1,58 @@
 Parser=Sysy22.g4
 ANTLR=antlr4
+CXX = clang++
+CC = clang
+
+INCLUDE_FLAGS = -Isrc -I/usr/include/antlr4-runtime
+CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE 
+
+
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
-ANTLR_OUT_PATH = grammar
 
-INCLUDE_FLAGS = -Isrc -Igrammar -I/usr/include/antlr4-runtim
 
+
+LDFLAGS = -Llib -lantlr4-runtime
+
+ANTLR_OUT_PATH = src/grammar
 BUILD_DIR = build
+SRC_DIR = src
 
-CC = clang++
+SOURCES = $(shell find src -name '*.cpp')
+OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SOURCES))
 
+TARGET=bin/compiler
+
+DEPS = $(OBJECTS:.o=.d)
+
+# -include $(DEPS)
 
 .DEFAULT_GOAL := all
 
-all: parse
+all: parse $(TARGET)
 
-
-parse: ${Parser}
+parse: ${Parser} 
 	${ANTLR} ${ANTLR_FLAG} ${Parser} -o ${ANTLR_OUT_PATH}
+
+$(TARGET) : $(OBJECTS)
+	mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(TARGET) $(OBJECTS)
+
+$(BUILD_DIR)/%.o : $(SRC_DIR)/%.cpp 
+	mkdir -p $(dir $@)
+	$(CC) $(CXXFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.d : $(SRC_DIR)/%.cpp  
+	mkdir -p $(dir $@)
+	$(CC) $(CXXFLAGS) $(INCLUDE_FLAGS) -MM $< > $@
 
 
 .PHONY: clean
 clean:
-	rm -rf ${ANTLR_OUT_PATH}
 	rm -rf ${BUILD_DIR}
+
+.PHONY: test 
+test:	
+	echo "run tests"
+	echo $(OBJECTS)
+	# echo $(SOURCES)
+	# echo $(DEPS)
