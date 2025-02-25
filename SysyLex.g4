@@ -14,6 +14,35 @@ WHILE   :   'while';
 BREAK   :   'break';
 CONTINUE:   'continue';
 RETURN  :   'return';
+CONST   :   'const';
+
+// Symbols
+Assign  :   '=';
+Add : '+';
+Sub : '-';
+Mul : '*';
+Div : '/';
+Mod : '%';
+
+Eq : '==';
+Neq : '!=';
+Lt : '<';
+Gt : '>';
+Leq : '<=';
+Geq : '>=';
+
+Not : '!';
+And : '&&';
+Or : '||';
+
+// Comma : ',';
+// Semicolon : ';';
+// Lparen : '(';
+// Rparen : ')';
+// Lbracket : '[';
+// Rbracket : ']';
+// Lbrace : '{';
+// Rbrace : '}';
 
 // values
 
@@ -79,6 +108,8 @@ fragment B_Exp
     : [Pp] Sign? Digit+
     ;
 
+fragment Escaped : '\\'['"?\\abfnrtv];
+StringConst : '"' (~['"\\\r\n] | Escaped)* '"';
 
 WhiteSpace  :   [ \t\r\n]   -> skip;
 LineComment : '//' ~[\r\n]* -> skip;
