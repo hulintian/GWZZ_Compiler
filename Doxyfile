@@ -1,0 +1,6 @@
+PROJECT_NAME = sysy22
+INPUT = src src/IR src/frontend src/backend 
+EXTRACT_ALL = YES
+OUTPUT_DIRECTORY = docs
+GENERATE_HTML = YES
+GENERATE_LATEX = YES
