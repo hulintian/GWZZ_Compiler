@@ -2,5 +2,7 @@
 .cache/**
 build
 bin/
+gen
+tmp/
 
 /.cache/

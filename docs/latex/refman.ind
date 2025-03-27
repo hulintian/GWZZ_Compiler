@@ -1,0 +1,27 @@
+\begin{theindex}
+
+  \item {ASTVisitor}, \hyperpage{11}
+
+  \indexspace
+
+  \item {frontEnd}, \hyperpage{9}
+  \item {frontEnd::ast}, \hyperpage{9}
+
+  \indexspace
+
+  \item {main}
+    \subitem {main.cpp}, \hyperpage{17}
+  \item {main.cpp}
+    \subitem {main}, \hyperpage{17}
+
+  \indexspace
+
+  \item {src/frontend/AST.cpp}, \hyperpage{13}
+  \item {src/frontend/AST.hpp}, \hyperpage{13}
+  \item {src/frontend/ASTVisitor.cpp}, \hyperpage{13}
+  \item {src/frontend/ASTVisitor.h}, \hyperpage{13, 14}
+  \item {src/frontend/emit\_ir.cpp}, \hyperpage{17}
+  \item {src/frontend/emit\_ir.hpp}, \hyperpage{17}
+  \item {src/main.cpp}, \hyperpage{17}
+
+\end{theindex}

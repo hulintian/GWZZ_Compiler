@@ -12,56 +12,6 @@
 using namespace std;
 using namespace antlr4;
 
-class ParsePrintVisitor : public Sysy22Visitor {
-public :
-    std::any visitProg(Sysy22Parser::ProgContext *context) override {
-        cout << "In the Prog Visitor" << endl;
-        auto cu = context->funcDef();
-        visitFuncDef(cu);
-        return nullptr;
-    } 
-
-    std::any visitCompUnit(Sysy22Parser::CompUnitContext *context)override{
-        cout << "In the CU Visitor" << endl;
-        auto fd = context->funcDef();
-        visitFuncDef(fd);
-        return nullptr;
-    }
-
-    std::any visitFuncDef(Sysy22Parser::FuncDefContext *context) override{
-        cout << "In the FD Visitor" << endl;
-        auto ft = context->funcType();
-        auto block = context->block();
-        auto ident = context->Ident();
-        return nullptr;
-    }
-
-    std::any visitFuncType(Sysy22Parser::FuncTypeContext *context) override{
-        cout << "In the FT Visitor" << endl;
-        
-        return nullptr;
-    }
-
-    std::any visitBlock(Sysy22Parser::BlockContext *context) override {
-        cout << "In the Block Visitor" << endl;
-        
-        return nullptr;
-    }
-
-    std::any visitStmt(Sysy22Parser::StmtContext *context) override {
-        cout << "In the Stmt Visitor" << endl;
-
-        return nullptr;
-    }
-
-    std::any visitNumber(Sysy22Parser::NumberContext *context) override {
-        cout << "In the Number Visitor" << endl;
-
-        return nullptr;
-    }
-};
-
-
 int main(int argc, char** argv) {
     const char* input_path = argv[1];
     std::ifstream ipf;
@@ -71,10 +21,8 @@ int main(int argc, char** argv) {
     CommonTokenStream tokens(&lexer);
     Sysy22Parser parser(&tokens);
 
-    auto tree = parser.prog();
+//    auto tree = parser.prog();
 
-    ParsePrintVisitor v;
-    v.visitProg(tree);
 
     return 0;
 }

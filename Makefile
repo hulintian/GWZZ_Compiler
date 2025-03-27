@@ -6,10 +6,7 @@ CC = clang
 INCLUDE_FLAGS = -Isrc -I/usr/include/antlr4-runtime
 CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE 
 
-
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
-
-
 
 LDFLAGS = -Llib -lantlr4-runtime
 
