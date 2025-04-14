@@ -66,7 +66,7 @@ blockItem
     ;
 
 stmt
-    : lVal Assign exp ';'  # assign
+    : lVal Assign exp ';'  # assignment
     | exp? ';'  # exprStmt
     | block  # blockStmt
     | IF '(' cond ')' stmt (ELSE stmt)?  # ifElse
