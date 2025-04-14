@@ -2,10 +2,11 @@
 
 #include "common/Display.hpp"
 #include "common/defines.hpp"
+#include "tree/xpath/XPathLexer.h"
 #include <memory>
+#include <optional>
 #include <variant>
 #include <vector>
-
 
 namespace frontend {
 namespace ast {
@@ -47,37 +48,234 @@ private:
     std::string ident_name;
 };
 
-class ASTNode : public Display {};
+class ASTNode : public Display {
+public:
+  virtual ~ASTNode() = default;
+};
 
+class Param : public Display {
+public:
+    explicit Param(Ident ident, std::unique_ptr<SysyType> type)
+        : _ident(std::move(ident)), _type(std::move(type)) {}
+    virtual ~Param() = default;
 
+    const Ident &ident() const { return _ident; }
+    const std::unique_ptr<SysyType> &type() const { return _type; }
 
-class Func : public ASTNode {};
+    void print(std::ostream &out, unsigned level) const override;
 
-class Expr : public ASTNode {};
+private:
+    Ident _ident;
+    // scalar type or array type 
+    std::unique_ptr<SysyType> _type;
+};
 
-class Stmt : public ASTNode {};
+class Block;
+class Func : public ASTNode {
+public:
+    explicit Func(std::unique_ptr<ScalarType> type, Ident ident, std::vector<std::unique_ptr<Param>> params, std::unique_ptr<Block> body) 
+        : _type(std::move(type)), _ident(std::move(ident)), _params(std::move(params)), _body(std::move(body)) {}
+    virtual ~Func() = default;
 
-class Initializer : public ASTNode {};
+    const std::unique_ptr<ScalarType> &type() const { return _type; }
+    const Ident &ident() const { return _ident; }
+    const std::vector<std::unique_ptr<Param>> &params() const { return _params; }
+    const std::unique_ptr<Block> &body() const { return _body; }
 
-class StringLiteral : public ASTNode {};
+    void print(std::ostream &out, unsigned level) const override;
 
-class BinaryExpr : public Expr {};
+private:
+    std::unique_ptr<ScalarType> _type;
+    Ident _ident;
+    std::vector<std::unique_ptr<Param>> _params;
+    std::unique_ptr<Block> _body;
+};
 
-class LValue : public Expr {};
+class Expr : public ASTNode {
+public:
+  virtual ~Expr() = default;
 
-class Literal : public Expr {};
+private:
+    mutable std::optional<Type> type;
+};
+
+class Stmt : public ASTNode {
+public:
+  virtual ~Stmt() = default;
+};
+
+class Initializer : public ASTNode {
+public:
+    // 初值类型要么是表达式 or initVal list
+    using Value = std::variant<std::unique_ptr<Expr>, std::vector<std::unique_ptr<Initializer>>>; 
+
+    explicit Initializer(std::unique_ptr<Expr> expr) : _value(std::move(expr)) {}
+    explicit Initializer(std::vector<std::unique_ptr<Initializer>> init_list) : _value(std::move(init_list)) {}
+    virtual ~Initializer() = default;
+
+    const Value &value() { return _value; }
+    void print(std::ostream &out, unsigned level) const override;
+
+private:
+    Value _value;
+};
+
+class StringLiteral : public ASTNode {
+public:
+    using Value = std::string;
+
+    explicit StringLiteral(std::string value) : _value(std::move(value)) {}
+    virtual ~StringLiteral() = default;
+
+    const Value &value() const { return _value; }
+    void print(std::ostream &out, unsigned level) const override;
+
+private:
+    Value _value;
+};
+
+#define GetValue(x) (x.type == Int ? x.iv : x.fv)
+
+class BinaryExpr : public Expr {
+public:
+  BinaryExpr(BinaryOp op, std::unique_ptr<Expr> lhs,
+             std::unique_ptr<Expr> rhs)
+      : m_op{op}, m_lhs{std::move(lhs)}, m_rhs{std::move(rhs)} {}
+  virtual ~BinaryExpr() = default;
+
+  void print(std::ostream &out, unsigned indent) const override;
+
+  BinaryOp op() const { return m_op; }
+  const std::unique_ptr<Expr> &lhs() const { return _lhs; }
+  const std::unique_ptr<Expr> &rhs() const { return _rhs; }
+
+  ConstValue to_const(ConstValue lhs, ConstValue rhs, BinaryOp type_) {
+    if (type_ == BinaryOp::And) return ConstValue((int)GetValue(lhs) & (int)GetValue(rhs));
+    if (type_ == BinaryOp::Or ) return ConstValue((int)GetValue(lhs) | (int)GetValue(rhs));
+
+    if (lhs.type == Float || rhs.type == Float) {
+      if (type_ == BinaryOp::Add) return ConstValue(GetValue(lhs) + GetValue(rhs));
+      if (type_ == BinaryOp::Sub) return ConstValue(GetValue(lhs) - GetValue(rhs));
+      if (type_ == BinaryOp::Mul) return ConstValue(GetValue(lhs) * GetValue(rhs));
+      if (type_ == BinaryOp::Div) return ConstValue(GetValue(lhs) / GetValue(rhs));
+    }
+    else {
+      if (type_ == BinaryOp::Add) return ConstValue((int)GetValue(lhs) + (int)GetValue(rhs));
+      if (type_ == BinaryOp::Sub) return ConstValue((int)GetValue(lhs) - (int)GetValue(rhs));
+      if (type_ == BinaryOp::Mul) return ConstValue((int)GetValue(lhs) * (int)GetValue(rhs));
+      if (type_ == BinaryOp::Div) return ConstValue((int)GetValue(lhs) / (int)GetValue(rhs));
+    }
+    if (type_ == BinaryOp::Mod) return ConstValue((int)GetValue(lhs) % (int)GetValue(rhs));
+    
+    if (type_ == BinaryOp::Eq) return lhs == rhs;
+    if (type_ == BinaryOp::Neq) return lhs != rhs;
+
+    if (type_ == BinaryOp::Lt) return ConstValue(GetValue(lhs) < GetValue(rhs));
+    if (type_ == BinaryOp::Leq) return ConstValue(GetValue(lhs) <= GetValue(rhs));
+    if (type_ == BinaryOp::Gt) return ConstValue(GetValue(lhs) > GetValue(rhs));
+    if (type_ == BinaryOp::Geq) return ConstValue(GetValue(lhs) >= GetValue(rhs));
+    if (type_ == BinaryOp::Shr) return ConstValue((int)GetValue(lhs) >> (int)GetValue(rhs));
+    if (type_ == BinaryOp::Shl) return ConstValue((int)GetValue(lhs) << (int)GetValue(rhs));
+    assert(false);
+}
+
+private:
+  BinaryOp m_op;
+  std::unique_ptr<Expr> _lhs, _rhs;
+
+};
+
+// 右值 
+// 可变 -> 求值
+class LValue : public Expr {
+public:
+    explicit LValue(Ident ident, std::vector<std::unique_ptr<Expr>> indices = {})
+        : _ident(std::move(ident)), _idices(std::move(indices)) {}
+    virtual ~LValue() = default;
+
+    const Ident &ident() const { return _ident; }
+    const std::vector<std::unique_ptr<Expr>> &indices() const { return _idices; }
+
+    void print(std::ostream &out, unsigned level) const override;
+
+public:
+    mutable std::shared_ptr<Var> var;
+
+private:
+    Ident _ident;
+    std::vector<std::unique_ptr<Expr>> _idices;
+};
+
+class Literal : public Expr {
+public:
+    virtual ~Literal() = default;
+};
 
 class Call : public Expr {};
 
-class IntLiteral : public Literal {};
-
-class FloatLiteral : public Literal {};
-
-class Assignment : public Stmt {};
-class Block : public Stmt {
+class IntLiteral : public Literal {
 public:
+    using Value = int32_t;
+    static_assert(sizeof(Value) == 4);
+
+    IntLiteral(Value value) : _value{value} {}
+    virtual ~IntLiteral() = default;
+
+    Value value() const { return _value; }
+
+    void print(std::ostream &out, unsigned indent) const override;
+
+private:
+  Value _value;
+};
+
+class FloatLiteral : public Literal {
+public:
+  using Value = float;
+  static_assert(sizeof(Value) == 4);
+
+  FloatLiteral(Value value) : _value{value} {}
+  virtual ~FloatLiteral() = default;
+
+  Value value() const { return _value; }
+
+  void print(std::ostream &out, unsigned indent) const override;
+
+private:
+  Value _value;
+};
+
+// 赋值语句 lhs + rhs 
+class Assignment : public Stmt {
+public:
+    explicit Assignment(std::unique_ptr<LValue> lhs, std::unique_ptr<Expr> rhs) : _lhs(std::move(lhs)), _rhs(std::move(rhs)) {}
+    virtual ~Assignment() = default;
+
+    const std::unique_ptr<LValue> &lhs() const { return _lhs; }
+    const std::unique_ptr<Expr> &rhs() const { return _rhs; }
 
     void print(std::ostream &out, unsigned level) const override;
+
+private:
+    std::unique_ptr<LValue> _lhs;
+    std::unique_ptr<Expr> _rhs;
+};
+
+
+class Decl;
+/// block items hans stmts and decls
+class Block : public Stmt {
+public:
+    using child = std::variant<std::unique_ptr<Stmt>, std::unique_ptr<Decl>>;
+    
+    explicit Block(std::vector<child> children) : _children(std::move(children)) {}
+    virtual ~Block() = default;
+
+    const std::vector<child> &children() const { return _children; }
+    void print(std::ostream &out, unsigned level) const override;
+
+private:
+    std::vector<child> _children;
 };
 
 class Break : public Stmt {
@@ -102,9 +300,49 @@ public:
     virtual ~Continue() = default;
     void print(std::ostream &out, unsigned level) const override;
 };
-class ExprStmt : public Stmt {};
-class IfStmt : public Stmt {};
-class WhileStmt : public Stmt {};
+class ExprStmt : public Stmt {
+public:
+    explicit ExprStmt(std::unique_ptr<Expr> expr) : _expr(std::move(expr)) {}
+    void print(std::ostream &out, unsigned level) const override;
+
+    const std::unique_ptr<Expr> &expr() { return _expr; }
+
+private:
+    std::unique_ptr<Expr> _expr;
+};
+
+class WhileStmt : public Stmt {
+public:
+    explicit WhileStmt(std::unique_ptr<Expr> cond, std::unique_ptr<Stmt> body)
+        : _cond(std::move(cond)), _body(std::move(body)) {}
+    virtual ~WhileStmt() = default;
+
+    const std::unique_ptr<Expr> &cond() const { return _cond; }
+    const std::unique_ptr<Stmt> &body() const { return _body; }
+
+    void print(std::ostream &out, unsigned level) const override;
+
+private:
+    std::unique_ptr<Expr> _cond;
+    std::unique_ptr<Stmt> _body;
+};
+
+class IfStmt : public Stmt {
+public:
+    explicit IfStmt(std::unique_ptr<Expr> cond, std::unique_ptr<Stmt> then_stmt, std::unique_ptr<Stmt> else_stmt = nullptr)
+        : _cond(std::move(cond)), _then(std::move(then_stmt)), _else(std::move(else_stmt)) {}
+    virtual ~IfStmt() = default;
+
+    const std::unique_ptr<Expr> &cond() const { return _cond; }
+    const std::unique_ptr<Stmt> &then() const { return _then; }
+    const std::unique_ptr<Stmt> &else_stmt() const { return _else; }
+
+    void print(std::ostream &out, unsigned level) const override;
+
+private:
+    std::unique_ptr<Expr> _cond;
+    std::unique_ptr<Stmt> _then, _else;
+};
 
 class Decl : public ASTNode {
 public:
