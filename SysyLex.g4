@@ -57,11 +57,11 @@ fragment Hex_Digit:[0-9A-Za-z];
 fragment Oct_Digit:[0-7];
 fragment Hex_prefix: '0x' | '0X';
 
-IntConst    
-    : DecConst
-    | OctConst
-    | HexConst
-    ;
+// IntConst
+//     : DecConst
+//     | OctConst
+//     | HexConst
+//     ;
 
 DecConst    
     : Non_zero Digit*
@@ -76,10 +76,10 @@ HexConst
     : Hex_prefix Hex_Digit+
     ;
 
-FloatConst  
-    : DecimalFloatingConst
-    | HexFloatingConst
-    ;
+// FloatConst
+//     : DecimalFloatingConst
+//     | HexFloatingConst
+//     ;
 
 // 小数+指数 或 整数+指数
 DecimalFloatingConst

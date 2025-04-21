@@ -65,11 +65,13 @@ struct Type {
 
     Type get_lower_dim() const {
         Type new_type = *this;
-        /// TODO need to lowering dim 
+        /// lowering dim 
+        if(new_type.dims.size() > 1)  
+            new_type.dims.erase(new_type.dims.begin()+1);
         return new_type;
     }
 
-    bool is_ptr() const { return dims.size() > 0 && dims[0]=0; }
+    bool is_ptr() const { return dims.size() > 0 && dims[0]==0; }
     bool is_ptr2scalar() const { return dims.size() == 1 && dims[0] == 0; }
     /// 判断是否是全局指针
     bool is_gp() const { return base_type == Int || is_array(); }
