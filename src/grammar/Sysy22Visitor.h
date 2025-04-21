@@ -19,8 +19,6 @@ public:
   /**
    * Visit parse trees produced by Sysy22Parser.
    */
-    virtual std::any visitProg(Sysy22Parser::ProgContext *context) = 0;
-
     virtual std::any visitCompUnits(Sysy22Parser::CompUnitsContext *context) = 0;
 
     virtual std::any visitCompUnit(Sysy22Parser::CompUnitContext *context) = 0;
@@ -45,7 +43,9 @@ public:
 
     virtual std::any visitFuncDef(Sysy22Parser::FuncDefContext *context) = 0;
 
-    virtual std::any visitFuncType(Sysy22Parser::FuncTypeContext *context) = 0;
+    virtual std::any visitFuncType_(Sysy22Parser::FuncType_Context *context) = 0;
+
+    virtual std::any visitVoid(Sysy22Parser::VoidContext *context) = 0;
 
     virtual std::any visitFuncFParams(Sysy22Parser::FuncFParamsContext *context) = 0;
 
@@ -57,7 +57,7 @@ public:
 
     virtual std::any visitBlockItem(Sysy22Parser::BlockItemContext *context) = 0;
 
-    virtual std::any visitAssign(Sysy22Parser::AssignContext *context) = 0;
+    virtual std::any visitAssignment(Sysy22Parser::AssignmentContext *context) = 0;
 
     virtual std::any visitExprStmt(Sysy22Parser::ExprStmtContext *context) = 0;
 
@@ -83,9 +83,15 @@ public:
 
     virtual std::any visitLValExpr(Sysy22Parser::LValExprContext *context) = 0;
 
-    virtual std::any visitIntConst(Sysy22Parser::IntConstContext *context) = 0;
+    virtual std::any visitDecConst(Sysy22Parser::DecConstContext *context) = 0;
 
-    virtual std::any visitFloatConst(Sysy22Parser::FloatConstContext *context) = 0;
+    virtual std::any visitOctConst(Sysy22Parser::OctConstContext *context) = 0;
+
+    virtual std::any visitHexConst(Sysy22Parser::HexConstContext *context) = 0;
+
+    virtual std::any visitDecFloatConst(Sysy22Parser::DecFloatConstContext *context) = 0;
+
+    virtual std::any visitHexFloatConst(Sysy22Parser::HexFloatConstContext *context) = 0;
 
     virtual std::any visitNumber(Sysy22Parser::NumberContext *context) = 0;
 

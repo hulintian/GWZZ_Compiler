@@ -24,10 +24,8 @@ DEPS = $(OBJECTS:.o=.d)
 
 .DEFAULT_GOAL := all
 
-all: parse $(TARGET)
+all: $(TARGET)
 
-parse: ${Parser} 
-	${ANTLR} ${ANTLR_FLAG} ${Parser} -o ${ANTLR_OUT_PATH}
 
 $(TARGET) : $(OBJECTS)
 	mkdir -p $(dir $@)
@@ -41,6 +39,9 @@ $(BUILD_DIR)/%.d : $(SRC_DIR)/%.cpp
 	mkdir -p $(dir $@)
 	$(CC) $(CXXFLAGS) $(INCLUDE_FLAGS) -MM $< > $@
 
+.PHONY: grammar
+grammar: ${Parser} 
+	${ANTLR} ${ANTLR_FLAG} ${Parser} -o ${ANTLR_OUT_PATH}
 
 .PHONY: clean
 clean:
