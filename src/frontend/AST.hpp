@@ -21,29 +21,46 @@ class ScalarType : public SysyType {
 public:
     using Type = int;
 
-    ScalarType(Type type) : _type_(type) {}
+    ScalarType(Type type) : _type(type) {}
     virtual ~ScalarType() = default;
 
+    Type type() const { return _type; }
     void print(std::ostream &out, unsigned level) const override;
 
 private:
     /// 用整数表示类型， 0 --> int ; 1 --> float;
-    Type _type_;
+    Type _type;
 };
 
+class Expr;
 /// 数组类型
 class ArrayType : public SysyType {
 public:
+    using Dimension = std::unique_ptr<Expr>;
     virtual ~ArrayType() = default;
+
+    ArrayType(ScalarType type, std::vector<Dimension> dimensions, bool omit_first_dimesion) 
+            : _type(type) , _dimensions(std::move(dimensions)), _omit_first_dimesion(omit_first_dimesion) {}
+    void print(std::ostream &out, unsigned level) const override;
+
+    ScalarType::Type base_type() const { return _type.type(); }
+    const std::vector<Dimension>& dimensions() const { return _dimensions; }
+    bool omit_first_dimesion() const { return  _omit_first_dimesion;}
+
+private:
+    ScalarType _type;
+    std::vector<Dimension> _dimensions;
+    bool _omit_first_dimesion; // 是否隐藏第一维大小
 };
 
 class Ident : public Display {
 public:
-    Ident(std::string ident_name) : ident_name(std::move(ident_name)) {}
+    // mangle 是否重构变量名（是否在变量名前加$）,用来区别函数名还是变量名
+    Ident(std::string ident_name, bool const mangle = true) : ident_name(mangle ? '$' + ident_name : std::move(ident_name)) {}
     virtual ~Ident() = default;
     void print(std::ostream &out, unsigned level) const override;
 
-    std::string &identifier() {return ident_name;}
+    const std::string &identifier() const {return ident_name;}
 private:
     std::string ident_name;
 };
@@ -93,7 +110,8 @@ private:
 
 class Expr : public ASTNode {
 public:
-  virtual ~Expr() = default;
+    Expr(){}
+    virtual ~Expr() = default;
 
 private:
     mutable std::optional<Type> type;
@@ -140,15 +158,16 @@ class BinaryExpr : public Expr {
 public:
   BinaryExpr(BinaryOp op, std::unique_ptr<Expr> lhs,
              std::unique_ptr<Expr> rhs)
-      : m_op{op}, m_lhs{std::move(lhs)}, m_rhs{std::move(rhs)} {}
+      : _op{op}, _lhs{std::move(lhs)}, _rhs{std::move(rhs)} {}
   virtual ~BinaryExpr() = default;
 
-  void print(std::ostream &out, unsigned indent) const override;
+    void print(std::ostream &out, unsigned level) const override;
 
-  BinaryOp op() const { return m_op; }
+  BinaryOp op() const { return _op; }
   const std::unique_ptr<Expr> &lhs() const { return _lhs; }
   const std::unique_ptr<Expr> &rhs() const { return _rhs; }
 
+  // calcualte the value, when need
   ConstValue to_const(ConstValue lhs, ConstValue rhs, BinaryOp type_) {
     if (type_ == BinaryOp::And) return ConstValue((int)GetValue(lhs) & (int)GetValue(rhs));
     if (type_ == BinaryOp::Or ) return ConstValue((int)GetValue(lhs) | (int)GetValue(rhs));
@@ -180,9 +199,25 @@ public:
 }
 
 private:
-  BinaryOp m_op;
+  BinaryOp _op;
   std::unique_ptr<Expr> _lhs, _rhs;
 
+};
+
+class UnaryExpr : public Expr {
+public:
+    explicit UnaryExpr(UnaryOp op, std::unique_ptr<Expr> operand)
+        : _op(op), _operand(std::move(operand)) {}
+    virtual ~UnaryExpr() = default;
+
+    UnaryOp op() const { return _op; }
+    const std::unique_ptr<Expr> &operand() const { return _operand; }
+
+    void print(std::ostream &out, unsigned level) const override;
+
+private:
+    UnaryOp _op;
+    std::unique_ptr<Expr> _operand;
 };
 
 // 右值 
@@ -190,11 +225,11 @@ private:
 class LValue : public Expr {
 public:
     explicit LValue(Ident ident, std::vector<std::unique_ptr<Expr>> indices = {})
-        : _ident(std::move(ident)), _idices(std::move(indices)) {}
+        : _ident(std::move(ident)), _indices(std::move(indices)) {}
     virtual ~LValue() = default;
 
     const Ident &ident() const { return _ident; }
-    const std::vector<std::unique_ptr<Expr>> &indices() const { return _idices; }
+    const std::vector<std::unique_ptr<Expr>> &indices() const { return _indices; }
 
     void print(std::ostream &out, unsigned level) const override;
 
@@ -203,7 +238,7 @@ public:
 
 private:
     Ident _ident;
-    std::vector<std::unique_ptr<Expr>> _idices;
+    std::vector<std::unique_ptr<Expr>> _indices;
 };
 
 class Literal : public Expr {
@@ -211,7 +246,24 @@ public:
     virtual ~Literal() = default;
 };
 
-class Call : public Expr {};
+class Call : public Expr {
+public:
+    using Argument = std::variant<std::unique_ptr<Expr>, StringLiteral>;
+
+    Call(Ident func, std::vector<Argument> args, unsigned line) 
+        : _func(func), _args(std::move(args)), _line(line) {}
+    virtual ~Call() = default;
+
+    const Ident &func() const { return _func; }
+    const std::vector<Argument> &args() const { return _args; }
+    unsigned line() const { return this->_line; }
+
+    void print(std::ostream &out, unsigned level) const override;
+private:
+    Ident _func;
+    std::vector<Argument> _args;
+    unsigned _line;
+};
 
 class IntLiteral : public Literal {
 public:
@@ -223,7 +275,7 @@ public:
 
     Value value() const { return _value; }
 
-    void print(std::ostream &out, unsigned indent) const override;
+    void print(std::ostream &out, unsigned level) const override;
 
 private:
   Value _value;
@@ -239,7 +291,7 @@ public:
 
   Value value() const { return _value; }
 
-  void print(std::ostream &out, unsigned indent) const override;
+  void print(std::ostream &out, unsigned level) const override;
 
 private:
   Value _value;
@@ -362,13 +414,13 @@ private:
     std::unique_ptr<Initializer> _init;
 };
 
-class CompUnit : public ASTNode {
+class CompUnits : public ASTNode {
 public:
     using Child = std::variant<std::unique_ptr<Decl>, std::unique_ptr<Func>>;
 
-    explicit CompUnit(std::vector<Child> children) : _children(std::move(children)) {}
+    explicit CompUnits(std::vector<Child> children) : _children(std::move(children)) {}
     
-    virtual ~CompUnit() = default;
+    virtual ~CompUnits() = default;
     void print(std::ostream &out, unsigned level) const override;
 
     const std::vector<Child> &children() {return _children;}

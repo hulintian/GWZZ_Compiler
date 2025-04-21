@@ -1,6 +1,9 @@
 #pragma once 
 
 #include "type.hpp"
+#include <memory>
+#include <map>
+#include <optional>
 
 struct ConstValue {
     int type;
@@ -23,8 +26,15 @@ std::string to_string() const { return type == Int ? std::to_string(iv) : std::t
 
 /// 值 
 struct Var {
-    // TODO Wait to finish
-    Type type;
+  Type type;
+  std::optional<ConstValue> val;
+  std::unique_ptr<std::map<int, ConstValue>>
+      arr_val; // index -> value，未记录的项全部初始化为0
+
+  Var() {}
+  Var(Type type_) : type{std::move(type_)} {}
+  Var(Type type_, std::optional<ConstValue> value)
+      : type{std::move(type_)}, val{std::move(value)} {}
 };
 
 /// 正、负、非
@@ -44,8 +54,8 @@ enum class BinaryOp {
   Geq,
   And,
   Or,
-  Shr,
-  Shl,
-  Ashl,
-  NR_OPS
+  Shr,      // shift right
+  Shl,      // shift left
+  Ashl,     // arithmetic shift left
+  NR_OPS // number of operators
 };
