@@ -16,9 +16,6 @@
 class  Sysy22BaseListener : public Sysy22Listener {
 public:
 
-  virtual void enterProg(Sysy22Parser::ProgContext * /*ctx*/) override { }
-  virtual void exitProg(Sysy22Parser::ProgContext * /*ctx*/) override { }
-
   virtual void enterCompUnits(Sysy22Parser::CompUnitsContext * /*ctx*/) override { }
   virtual void exitCompUnits(Sysy22Parser::CompUnitsContext * /*ctx*/) override { }
 
@@ -55,8 +52,11 @@ public:
   virtual void enterFuncDef(Sysy22Parser::FuncDefContext * /*ctx*/) override { }
   virtual void exitFuncDef(Sysy22Parser::FuncDefContext * /*ctx*/) override { }
 
-  virtual void enterFuncType(Sysy22Parser::FuncTypeContext * /*ctx*/) override { }
-  virtual void exitFuncType(Sysy22Parser::FuncTypeContext * /*ctx*/) override { }
+  virtual void enterFuncType_(Sysy22Parser::FuncType_Context * /*ctx*/) override { }
+  virtual void exitFuncType_(Sysy22Parser::FuncType_Context * /*ctx*/) override { }
+
+  virtual void enterVoid(Sysy22Parser::VoidContext * /*ctx*/) override { }
+  virtual void exitVoid(Sysy22Parser::VoidContext * /*ctx*/) override { }
 
   virtual void enterFuncFParams(Sysy22Parser::FuncFParamsContext * /*ctx*/) override { }
   virtual void exitFuncFParams(Sysy22Parser::FuncFParamsContext * /*ctx*/) override { }
@@ -73,8 +73,8 @@ public:
   virtual void enterBlockItem(Sysy22Parser::BlockItemContext * /*ctx*/) override { }
   virtual void exitBlockItem(Sysy22Parser::BlockItemContext * /*ctx*/) override { }
 
-  virtual void enterAssign(Sysy22Parser::AssignContext * /*ctx*/) override { }
-  virtual void exitAssign(Sysy22Parser::AssignContext * /*ctx*/) override { }
+  virtual void enterAssignment(Sysy22Parser::AssignmentContext * /*ctx*/) override { }
+  virtual void exitAssignment(Sysy22Parser::AssignmentContext * /*ctx*/) override { }
 
   virtual void enterExprStmt(Sysy22Parser::ExprStmtContext * /*ctx*/) override { }
   virtual void exitExprStmt(Sysy22Parser::ExprStmtContext * /*ctx*/) override { }
@@ -112,11 +112,20 @@ public:
   virtual void enterLValExpr(Sysy22Parser::LValExprContext * /*ctx*/) override { }
   virtual void exitLValExpr(Sysy22Parser::LValExprContext * /*ctx*/) override { }
 
-  virtual void enterIntConst(Sysy22Parser::IntConstContext * /*ctx*/) override { }
-  virtual void exitIntConst(Sysy22Parser::IntConstContext * /*ctx*/) override { }
+  virtual void enterDecConst(Sysy22Parser::DecConstContext * /*ctx*/) override { }
+  virtual void exitDecConst(Sysy22Parser::DecConstContext * /*ctx*/) override { }
 
-  virtual void enterFloatConst(Sysy22Parser::FloatConstContext * /*ctx*/) override { }
-  virtual void exitFloatConst(Sysy22Parser::FloatConstContext * /*ctx*/) override { }
+  virtual void enterOctConst(Sysy22Parser::OctConstContext * /*ctx*/) override { }
+  virtual void exitOctConst(Sysy22Parser::OctConstContext * /*ctx*/) override { }
+
+  virtual void enterHexConst(Sysy22Parser::HexConstContext * /*ctx*/) override { }
+  virtual void exitHexConst(Sysy22Parser::HexConstContext * /*ctx*/) override { }
+
+  virtual void enterDecFloatConst(Sysy22Parser::DecFloatConstContext * /*ctx*/) override { }
+  virtual void exitDecFloatConst(Sysy22Parser::DecFloatConstContext * /*ctx*/) override { }
+
+  virtual void enterHexFloatConst(Sysy22Parser::HexFloatConstContext * /*ctx*/) override { }
+  virtual void exitHexFloatConst(Sysy22Parser::HexFloatConstContext * /*ctx*/) override { }
 
   virtual void enterNumber(Sysy22Parser::NumberContext * /*ctx*/) override { }
   virtual void exitNumber(Sysy22Parser::NumberContext * /*ctx*/) override { }

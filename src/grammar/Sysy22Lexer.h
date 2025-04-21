@@ -17,9 +17,9 @@ public:
     BREAK = 15, CONTINUE = 16, RETURN = 17, CONST = 18, Assign = 19, Add = 20, 
     Sub = 21, Mul = 22, Div = 23, Mod = 24, Eq = 25, Neq = 26, Lt = 27, 
     Gt = 28, Leq = 29, Geq = 30, Not = 31, And = 32, Or = 33, Ident = 34, 
-    IntConst = 35, DecConst = 36, OctConst = 37, HexConst = 38, FloatConst = 39, 
-    DecimalFloatingConst = 40, HexFloatingConst = 41, StringConst = 42, 
-    WhiteSpace = 43, LineComment = 44, BlockComment = 45
+    DecConst = 35, OctConst = 36, HexConst = 37, DecimalFloatingConst = 38, 
+    HexFloatingConst = 39, StringConst = 40, WhiteSpace = 41, LineComment = 42, 
+    BlockComment = 43
   };
 
   explicit Sysy22Lexer(antlr4::CharStream *input);

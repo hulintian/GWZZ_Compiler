@@ -15,10 +15,6 @@
 class  Sysy22BaseVisitor : public Sysy22Visitor {
 public:
 
-  virtual std::any visitProg(Sysy22Parser::ProgContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual std::any visitCompUnits(Sysy22Parser::CompUnitsContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -67,7 +63,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitFuncType(Sysy22Parser::FuncTypeContext *ctx) override {
+  virtual std::any visitFuncType_(Sysy22Parser::FuncType_Context *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitVoid(Sysy22Parser::VoidContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -91,7 +91,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitAssign(Sysy22Parser::AssignContext *ctx) override {
+  virtual std::any visitAssignment(Sysy22Parser::AssignmentContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -143,11 +143,23 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitIntConst(Sysy22Parser::IntConstContext *ctx) override {
+  virtual std::any visitDecConst(Sysy22Parser::DecConstContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitFloatConst(Sysy22Parser::FloatConstContext *ctx) override {
+  virtual std::any visitOctConst(Sysy22Parser::OctConstContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitHexConst(Sysy22Parser::HexConstContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDecFloatConst(Sysy22Parser::DecFloatConstContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitHexFloatConst(Sysy22Parser::HexFloatConstContext *ctx) override {
     return visitChildren(ctx);
   }
 
