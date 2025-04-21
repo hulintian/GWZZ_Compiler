@@ -14,9 +14,6 @@
 class  Sysy22Listener : public antlr4::tree::ParseTreeListener {
 public:
 
-  virtual void enterProg(Sysy22Parser::ProgContext *ctx) = 0;
-  virtual void exitProg(Sysy22Parser::ProgContext *ctx) = 0;
-
   virtual void enterCompUnits(Sysy22Parser::CompUnitsContext *ctx) = 0;
   virtual void exitCompUnits(Sysy22Parser::CompUnitsContext *ctx) = 0;
 
@@ -53,8 +50,11 @@ public:
   virtual void enterFuncDef(Sysy22Parser::FuncDefContext *ctx) = 0;
   virtual void exitFuncDef(Sysy22Parser::FuncDefContext *ctx) = 0;
 
-  virtual void enterFuncType(Sysy22Parser::FuncTypeContext *ctx) = 0;
-  virtual void exitFuncType(Sysy22Parser::FuncTypeContext *ctx) = 0;
+  virtual void enterFuncType_(Sysy22Parser::FuncType_Context *ctx) = 0;
+  virtual void exitFuncType_(Sysy22Parser::FuncType_Context *ctx) = 0;
+
+  virtual void enterVoid(Sysy22Parser::VoidContext *ctx) = 0;
+  virtual void exitVoid(Sysy22Parser::VoidContext *ctx) = 0;
 
   virtual void enterFuncFParams(Sysy22Parser::FuncFParamsContext *ctx) = 0;
   virtual void exitFuncFParams(Sysy22Parser::FuncFParamsContext *ctx) = 0;
@@ -71,8 +71,8 @@ public:
   virtual void enterBlockItem(Sysy22Parser::BlockItemContext *ctx) = 0;
   virtual void exitBlockItem(Sysy22Parser::BlockItemContext *ctx) = 0;
 
-  virtual void enterAssign(Sysy22Parser::AssignContext *ctx) = 0;
-  virtual void exitAssign(Sysy22Parser::AssignContext *ctx) = 0;
+  virtual void enterAssignment(Sysy22Parser::AssignmentContext *ctx) = 0;
+  virtual void exitAssignment(Sysy22Parser::AssignmentContext *ctx) = 0;
 
   virtual void enterExprStmt(Sysy22Parser::ExprStmtContext *ctx) = 0;
   virtual void exitExprStmt(Sysy22Parser::ExprStmtContext *ctx) = 0;
@@ -110,11 +110,20 @@ public:
   virtual void enterLValExpr(Sysy22Parser::LValExprContext *ctx) = 0;
   virtual void exitLValExpr(Sysy22Parser::LValExprContext *ctx) = 0;
 
-  virtual void enterIntConst(Sysy22Parser::IntConstContext *ctx) = 0;
-  virtual void exitIntConst(Sysy22Parser::IntConstContext *ctx) = 0;
+  virtual void enterDecConst(Sysy22Parser::DecConstContext *ctx) = 0;
+  virtual void exitDecConst(Sysy22Parser::DecConstContext *ctx) = 0;
 
-  virtual void enterFloatConst(Sysy22Parser::FloatConstContext *ctx) = 0;
-  virtual void exitFloatConst(Sysy22Parser::FloatConstContext *ctx) = 0;
+  virtual void enterOctConst(Sysy22Parser::OctConstContext *ctx) = 0;
+  virtual void exitOctConst(Sysy22Parser::OctConstContext *ctx) = 0;
+
+  virtual void enterHexConst(Sysy22Parser::HexConstContext *ctx) = 0;
+  virtual void exitHexConst(Sysy22Parser::HexConstContext *ctx) = 0;
+
+  virtual void enterDecFloatConst(Sysy22Parser::DecFloatConstContext *ctx) = 0;
+  virtual void exitDecFloatConst(Sysy22Parser::DecFloatConstContext *ctx) = 0;
+
+  virtual void enterHexFloatConst(Sysy22Parser::HexFloatConstContext *ctx) = 0;
+  virtual void exitHexFloatConst(Sysy22Parser::HexFloatConstContext *ctx) = 0;
 
   virtual void enterNumber(Sysy22Parser::NumberContext *ctx) = 0;
   virtual void exitNumber(Sysy22Parser::NumberContext *ctx) = 0;

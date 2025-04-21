@@ -2,7 +2,7 @@ grammar Sysy22;
 
 import SysyLex;
 
-prog : compUnits;
+// prog : compUnits;
 
 compUnits : compUnit* EOF;
 
@@ -42,9 +42,8 @@ bType
 funcDef : funcType Ident '(' funcFParams? ')' block;
 
 funcType
-    : INT
-    | FLOAT
-    | VOID
+    : bType # funcType_
+    | VOID  # void
     ;
 
 funcFParams
@@ -53,7 +52,7 @@ funcFParams
 
 funcFParam
     : bType Ident   # scalarParam
-    | bType Ident '['  ']' '[' exp ']'  # arrayParam
+    | bType Ident '['  ']' ('[' exp ']')*  # arrayParam
     ;
 
 block
@@ -89,11 +88,14 @@ primaryExp
     ;
 
 intConst
-    : IntConst
+    : DecConst # decConst
+    | OctConst # octConst
+    | HexConst # hexConst
     ;
 
 floatConst
-    : FloatConst
+    : DecimalFloatingConst # decFloatConst
+    | HexFloatingConst # hexFloatConst
     ;
 
 number
