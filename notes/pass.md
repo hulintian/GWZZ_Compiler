@@ -1,3 +1,4 @@
+## The pass manager in LLVM
 ```mermaid
 graph TD
     subgraph "Pass Management"
@@ -40,7 +41,7 @@ graph TD
     CGSCC --> CGAM
 ```
 
-* Class graph 
+* Class Diagram 
 ```mermaid
 classDiagram
     %% 核心接口
