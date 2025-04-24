@@ -2,7 +2,6 @@
 
 #include "common/Display.hpp"
 #include "common/defines.hpp"
-#include "tree/xpath/XPathLexer.h"
 #include <memory>
 #include <optional>
 #include <variant>
@@ -80,7 +79,8 @@ public:
     const std::unique_ptr<SysyType> &type() const { return _type; }
 
     void print(std::ostream &out, unsigned level) const override;
-
+public:
+    mutable std::shared_ptr<Var> var;
 private:
     Ident _ident;
     // scalar type or array type 
@@ -357,7 +357,7 @@ public:
     explicit ExprStmt(std::unique_ptr<Expr> expr) : _expr(std::move(expr)) {}
     void print(std::ostream &out, unsigned level) const override;
 
-    const std::unique_ptr<Expr> &expr() { return _expr; }
+    const std::unique_ptr<Expr> &expr() const { return _expr; }
 
 private:
     std::unique_ptr<Expr> _expr;
@@ -400,13 +400,15 @@ class Decl : public ASTNode {
 public:
     Decl(std::unique_ptr<SysyType> type, bool is_const, std::unique_ptr<Ident> ident, std::unique_ptr<Initializer> init) : _type(std::move(type)), _is_const(is_const), _ident(std::move(ident)), _init(std::move(init))   {}
 
-    const std::unique_ptr<SysyType> &type() { return _type; }
-    const bool is_const() {return _is_const;}
-    const std::unique_ptr<Ident> &ident() {return _ident;} 
-    const std::unique_ptr<Initializer> &init() {return  _init;}
+    const std::unique_ptr<SysyType> &type() const { return _type; }
+    const bool is_const()const {return _is_const;}
+    const std::unique_ptr<Ident> &ident() const {return _ident;} 
+    const std::unique_ptr<Initializer> &init()const {return  _init;}
     
     virtual ~Decl() = default;
     void print(std::ostream &out, unsigned level) const override;
+public:
+    mutable std::shared_ptr<Var> var;   //用来挂载值
 private:
     std::unique_ptr<SysyType> _type;
     bool _is_const;
@@ -423,7 +425,7 @@ public:
     virtual ~CompUnits() = default;
     void print(std::ostream &out, unsigned level) const override;
 
-    const std::vector<Child> &children() {return _children;}
+    const std::vector<Child> &children() const {return _children;}
 private:
     std::vector<Child> _children;
 };
