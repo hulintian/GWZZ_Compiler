@@ -338,7 +338,7 @@ Type : bool is_pointer_to_scalar()
 Type : bool is_gp()
 ```
 
-## Typer(类型检查)
+## 类型检查
 - 使用访问者遍历完ANTLR得到的解析树后，得到AST，然后再用访问者（类型检查，也就是语义分析器）进行类型检测
 * Typer类图
 ```mermaid
