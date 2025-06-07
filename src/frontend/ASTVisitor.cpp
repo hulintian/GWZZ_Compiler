@@ -281,7 +281,7 @@ std::any ASTVisitor::visitHexFloatConst(Sysy22Parser::HexFloatConstContext *cont
  
 
 std::any ASTVisitor::visitCall(Sysy22Parser::CallContext *context) { 
-    Ident id(context->Ident()->getText());
+    Ident id(context->Ident()->getText(), false);
     std::vector<Call::Argument> args;
     auto args_ctx = context->funcRParams();
     if(args_ctx) {

@@ -113,7 +113,7 @@ public:
     Expr(){}
     virtual ~Expr() = default;
 
-private:
+public:
     mutable std::optional<Type> type;
 };
 
@@ -339,7 +339,7 @@ class Return : public Stmt {
 public:
     explicit Return(std::unique_ptr<Expr> rets) : _rets(std::move(rets)) {}
 
-    const std::unique_ptr<Expr> &rets() {return _rets;}
+    const std::unique_ptr<Expr> &rets() const {return _rets;}
     
     virtual ~Return() = default;
     void print(std::ostream &out, unsigned level) const override;

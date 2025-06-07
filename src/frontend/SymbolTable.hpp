@@ -39,9 +39,12 @@ struct Scope {
 // 保存scope嵌套关系
 class ScopeStack {
 public:
-
     void enter_scope(bool is_loop=false){path.emplace_back(is_loop);}
     void exit_scope(){path.pop_back();}
+
+    ScopeStack() {
+        enter_scope();
+    }
 
     Scope& cur_scope() {return path.back();}
 
@@ -94,8 +97,9 @@ struct SymbolTable {
     };
     // 库函数
     struct LibFunc {
+        std::optional<int> return_type;
         std::vector<Type> params_type;
-        std::vector<std::string> params_name;
+        // std::vector<std::string> params_name;
         bool variadic; // 是否是变参函数
     };
 
