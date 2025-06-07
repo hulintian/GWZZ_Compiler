@@ -1,5 +1,7 @@
 \doxysection{src/main.cpp File Reference}
 \hypertarget{main_8cpp}{}\label{main_8cpp}\index{src/main.cpp@{src/main.cpp}}
+{\ttfamily \#include "{}IR/\+IR.\+hpp"{}}\newline
+{\ttfamily \#include "{}frontend/emit\+\_\+ir.\+hpp"{}}\newline
 {\ttfamily \#include "{}grammar/\+Sysy22\+Lexer.\+h"{}}\newline
 {\ttfamily \#include "{}grammar/\+Sysy22\+Parser.\+h"{}}\newline
 {\ttfamily \#include "{}grammar/\+Sysy22\+Visitor.\+h"{}}\newline
@@ -10,6 +12,12 @@
 {\ttfamily \#include $<$iostream$>$}\newline
 {\ttfamily \#include $<$fstream$>$}\newline
 {\ttfamily \#include $<$antlr4-\/runtime/antlr4-\/runtime.\+h$>$}\newline
+{\ttfamily \#include $<$antlr4-\/runtime/tree/\+Parse\+Tree.\+h$>$}\newline
+{\ttfamily \#include $<$frontend/\+ASTVisitor.\+h$>$}\newline
+{\ttfamily \#include $<$ostream$>$}\newline
+{\ttfamily \#include "{}frontend/\+Sema.\+hpp"{}}\newline
+{\ttfamily \#include "{}backend/program.\+hpp"{}}\newline
+{\ttfamily \#include "{}backend/passes.\+hpp"{}}\newline
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 

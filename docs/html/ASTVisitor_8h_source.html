@@ -94,260 +94,173 @@ $(function(){ initResizable(false); });
 <a href="ASTVisitor_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;grammar/Sysy22BaseVisitor.h&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="foldopen" id="foldopen00005" data-start="{" data-end="};">
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="classASTVisitor.html">    5</a></span><span class="keyword">class </span><a class="code hl_class" href="classASTVisitor.html">ASTVisitor</a> : <span class="keyword">public</span> Sysy22BaseVisitor {</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>  <span class="keyword">virtual</span> std::any visitProg(Sysy22Parser::ProgContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>  }</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>  <span class="keyword">virtual</span> std::any visitCompUnits(Sysy22Parser::CompUnitsContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  }</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <span class="keyword">virtual</span> std::any visitCompUnit(Sysy22Parser::CompUnitContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  }</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <span class="keyword">virtual</span> std::any visitDecl(Sysy22Parser::DeclContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  }</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keyword">virtual</span> std::any visitConstDecl(Sysy22Parser::ConstDeclContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  }</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keyword">virtual</span> std::any visitConstDef(Sysy22Parser::ConstDefContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  }</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <span class="keyword">virtual</span> std::any visitVarDecl(Sysy22Parser::VarDeclContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  }</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  <span class="keyword">virtual</span> std::any visitVarDef(Sysy22Parser::VarDefContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  }</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="keyword">virtual</span> std::any visitInit(Sysy22Parser::InitContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  }</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <span class="keyword">virtual</span> std::any visitInitList(Sysy22Parser::InitListContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  }</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keyword">virtual</span> std::any visitInt(Sysy22Parser::IntContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  }</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <span class="keyword">virtual</span> std::any visitFloat(Sysy22Parser::FloatContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  }</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  <span class="keyword">virtual</span> std::any visitFuncDef(Sysy22Parser::FuncDefContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  }</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="keyword">virtual</span> std::any visitFuncType(Sysy22Parser::FuncTypeContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  }</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <span class="keyword">virtual</span> std::any visitFuncFParams(Sysy22Parser::FuncFParamsContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  }</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  <span class="keyword">virtual</span> std::any visitScalarParam(Sysy22Parser::ScalarParamContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  }</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  <span class="keyword">virtual</span> std::any visitArrayParam(Sysy22Parser::ArrayParamContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  }</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <span class="keyword">virtual</span> std::any visitBlock(Sysy22Parser::BlockContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  }</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  <span class="keyword">virtual</span> std::any visitBlockItem(Sysy22Parser::BlockItemContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  }</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="keyword">virtual</span> std::any visitAssign(Sysy22Parser::AssignContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  }</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  <span class="keyword">virtual</span> std::any visitExprStmt(Sysy22Parser::ExprStmtContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  }</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  <span class="keyword">virtual</span> std::any visitBlockStmt(Sysy22Parser::BlockStmtContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  }</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  <span class="keyword">virtual</span> std::any visitIfElse(Sysy22Parser::IfElseContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  }</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  <span class="keyword">virtual</span> std::any visitWhile(Sysy22Parser::WhileContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  }</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  <span class="keyword">virtual</span> std::any visitBreak(Sysy22Parser::BreakContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  }</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  <span class="keyword">virtual</span> std::any visitContinue(Sysy22Parser::ContinueContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  }</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  <span class="keyword">virtual</span> std::any visitReturn(Sysy22Parser::ReturnContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  }</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  <span class="keyword">virtual</span> std::any visitExp(Sysy22Parser::ExpContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  }</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>  <span class="keyword">virtual</span> std::any visitCond(Sysy22Parser::CondContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  }</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  <span class="keyword">virtual</span> std::any visitLVal(Sysy22Parser::LValContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  }</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>  <span class="keyword">virtual</span> std::any visitPrimaryExp_(Sysy22Parser::PrimaryExp_Context *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>  }</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>  <span class="keyword">virtual</span> std::any visitLValExpr(Sysy22Parser::LValExprContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>  }</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  <span class="keyword">virtual</span> std::any visitIntConst(Sysy22Parser::IntConstContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  }</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>  <span class="keyword">virtual</span> std::any visitFloatConst(Sysy22Parser::FloatConstContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  }</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  <span class="keyword">virtual</span> std::any visitNumber(Sysy22Parser::NumberContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  }</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  <span class="keyword">virtual</span> std::any visitUnaryExp_(Sysy22Parser::UnaryExp_Context *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>  }</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  <span class="keyword">virtual</span> std::any visitCall(Sysy22Parser::CallContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>  }</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>  <span class="keyword">virtual</span> std::any visitUnaryAdd(Sysy22Parser::UnaryAddContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  }</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  <span class="keyword">virtual</span> std::any visitUnarySub(Sysy22Parser::UnarySubContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  }</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>  <span class="keyword">virtual</span> std::any visitNot(Sysy22Parser::NotContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>  }</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  <span class="keyword">virtual</span> std::any visitStringConst(Sysy22Parser::StringConstContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>  }</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>  <span class="keyword">virtual</span> std::any visitFuncRParam(Sysy22Parser::FuncRParamContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>  }</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>  <span class="keyword">virtual</span> std::any visitFuncRParams(Sysy22Parser::FuncRParamsContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>  }</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>  <span class="keyword">virtual</span> std::any visitDiv(Sysy22Parser::DivContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>  }</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>  <span class="keyword">virtual</span> std::any visitMod(Sysy22Parser::ModContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  }</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>  <span class="keyword">virtual</span> std::any visitMul(Sysy22Parser::MulContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>  }</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>  <span class="keyword">virtual</span> std::any visitMulExp_(Sysy22Parser::MulExp_Context *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>  }</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>  <span class="keyword">virtual</span> std::any visitAddExp_(Sysy22Parser::AddExp_Context *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>  }</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>  <span class="keyword">virtual</span> std::any visitAdd(Sysy22Parser::AddContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>  }</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>  <span class="keyword">virtual</span> std::any visitSub(Sysy22Parser::SubContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>  }</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>  <span class="keyword">virtual</span> std::any visitGeq(Sysy22Parser::GeqContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  }</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>  <span class="keyword">virtual</span> std::any visitLt(Sysy22Parser::LtContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>  }</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>  <span class="keyword">virtual</span> std::any visitRelExp_(Sysy22Parser::RelExp_Context *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>  }</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>  <span class="keyword">virtual</span> std::any visitLeq(Sysy22Parser::LeqContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>  }</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>  <span class="keyword">virtual</span> std::any visitGt(Sysy22Parser::GtContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>  }</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>  <span class="keyword">virtual</span> std::any visitNeq(Sysy22Parser::NeqContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>  }</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>  <span class="keyword">virtual</span> std::any visitEq(Sysy22Parser::EqContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>  }</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>  <span class="keyword">virtual</span> std::any visitEqExp_(Sysy22Parser::EqExp_Context *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>  }</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>  <span class="keyword">virtual</span> std::any visitLAndExp_(Sysy22Parser::LAndExp_Context *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>  }</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>  <span class="keyword">virtual</span> std::any visitAnd(Sysy22Parser::AndContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>  }</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>  <span class="keyword">virtual</span> std::any visitOr(Sysy22Parser::OrContext *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>  }</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>  <span class="keyword">virtual</span> std::any visitLOrExp_(Sysy22Parser::LOrExp_Context *ctx)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    <span class="keywordflow">return</span> visitChildren(ctx);</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>  }</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>};</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="AST_8hpp.html">AST.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;grammar/Sysy22Parser.h&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacefrontend.html">frontend</a> {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">using namespace </span>ast;</div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classfrontend_1_1ASTVisitor.html">   11</a></span><span class="keyword">class </span><a class="code hl_class" href="classfrontend_1_1ASTVisitor.html">ASTVisitor</a> : <span class="keyword">public</span> Sysy22BaseVisitor {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="comment">// 提醒使用返回值 </span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classfrontend_1_1ASTVisitor.html#ae970a5e0965a0c648c967e58c18792c1">   14</a></span>    [[nodiscard]] <a class="code hl_class" href="classfrontend_1_1ast_1_1CompUnits.html">CompUnits</a> <span class="keyword">const</span> &amp;<a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#ae970a5e0965a0c648c967e58c18792c1">compUnit</a>() { <span class="keywordflow">return</span> *this-&gt;_compUnits; }</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#abf093f49239d6bbb9a8c94258206c0e1">visitCompUnits</a>(Sysy22Parser::CompUnitsContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a672db3ecffd2318028d7afa0d86ee9dd">visitConstDecl</a>(Sysy22Parser::ConstDeclContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a465bde3e89196e1567b26d30c3c43050">visitInt</a>(Sysy22Parser::IntContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a9a3becdcbe757fff2413ed3274212b7b">visitFloat</a>(Sysy22Parser::FloatContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a5f69b56905804ac634fdb3d7d2b5aed8">visitVarDecl</a>(Sysy22Parser::VarDeclContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a7ebc4965889d087ce012eedffaee1782">visitInit</a>(Sysy22Parser::InitContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a92c8b7562c80bec8ac5e1ac552c38d78">visitInitList</a>(Sysy22Parser::InitListContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a9eb5e2bb09cd623c240088fdd9005a00">visitFuncDef</a>(Sysy22Parser::FuncDefContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#af3e40be51061439b06d5a100e4ba46dc">visitVoid</a>(Sysy22Parser::VoidContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#ab80701ec5933c27b78b8b4a03417627a">visitScalarParam</a>(Sysy22Parser::ScalarParamContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#af778006ff2080b378f68f6c848600261">visitArrayParam</a>(Sysy22Parser::ArrayParamContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a9a5ae4d8aec5d6a18d8b9825aceb561d">visitBlock</a>(Sysy22Parser::BlockContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a4b15e6407e31edd0b12a7c1d6cafa5db">visitAssignment</a>(Sysy22Parser::AssignmentContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#ae37670df2080be55baf51c521a0a0cc3">visitExprStmt</a>(Sysy22Parser::ExprStmtContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#ac153b56abdecf9c89f03d976b6733c2b">visitBlockStmt</a>(Sysy22Parser::BlockStmtContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a1e2a290675b5191ad2f1f7b7e3c1c87b">visitIfElse</a>(Sysy22Parser::IfElseContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a1eabc5e7d2e0b752b6ad55abb4fdfd7d">visitWhile</a>(Sysy22Parser::WhileContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a30725c07203a291c04ba928d0f766dfc">visitBreak</a>(Sysy22Parser::BreakContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a4f0f8eb31e1fe3fe65a726f05eec6c62">visitContinue</a>(Sysy22Parser::ContinueContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a9a9f6c03453de7f11ae82efc389ff5c6">visitReturn</a>(Sysy22Parser::ReturnContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a32f376141519c6ed67bd121a80132df6">visitLVal</a>(Sysy22Parser::LValContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#ab777ba895c2c90b3ce031cea826a962c">visitPrimaryExp_</a>(Sysy22Parser::PrimaryExp_Context *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#ab66a31c172ac94221bf92bc5826bcd2f">visitLValExpr</a>(Sysy22Parser::LValExprContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#aa6e7adca8db01faf44a6242a327add9e">visitDecConst</a>(Sysy22Parser::DecConstContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#ad600a1535818d748e520150bbe38545e">visitHexConst</a>(Sysy22Parser::HexConstContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a10e165b49d90050cafe61dad52bce500">visitOctConst</a>(Sysy22Parser::OctConstContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a1ae87070df571299b565ee04dd590ecd">visitDecFloatConst</a>(Sysy22Parser::DecFloatConstContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a863114a0951f5b2bad8832e7ba410165">visitHexFloatConst</a>(Sysy22Parser::HexFloatConstContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a2184fa7d6c7f31f30fdd861936509b2d">visitCall</a>(Sysy22Parser::CallContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a1fec5ce43a944616f4900f682abe6ffd">visitUnaryAdd</a>(Sysy22Parser::UnaryAddContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a834e6eda3e0a826b282fe90928860dcc">visitUnarySub</a>(Sysy22Parser::UnarySubContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a428d6bdc2f5a79c05b3ee972d7417d55">visitNot</a>(Sysy22Parser::NotContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a1dbaa9f837c75cae4aa4c0d5d651cd53">visitStringConst</a>(Sysy22Parser::StringConstContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#aeae2fb1be965d9b74ea5809bdffbb097">visitDiv</a>(Sysy22Parser::DivContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a70e58fd5d0f10c7e15da3708e1965c07">visitMod</a>(Sysy22Parser::ModContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#adc13d1a549bee0bf46952124ee951a36">visitMul</a>(Sysy22Parser::MulContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#ac07bceccbbf12cc150a7e8d1e1b6e814">visitAdd</a>(Sysy22Parser::AddContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a873836a81657f53c2079445b652022c9">visitSub</a>(Sysy22Parser::SubContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a3abc116412e7f1aa9b716155bd4390b2">visitGeq</a>(Sysy22Parser::GeqContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a8065cc1922d7793c7c62f1a2c53e76d2">visitLt</a>(Sysy22Parser::LtContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a33eb2eb50654093d6e6f8c6a889cfe66">visitLeq</a>(Sysy22Parser::LeqContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a080cee8423a18bfb7dd8a98cfd2f4d94">visitGt</a>(Sysy22Parser::GtContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a77994f586f117de2d1f309067307f749">visitNeq</a>(Sysy22Parser::NeqContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a0be400b11cbfb7f764a99015f2906974">visitEq</a>(Sysy22Parser::EqContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#ab017f9235419595aa4581c9ef7d35459">visitAnd</a>(Sysy22Parser::AndContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#aba51ac8c07727d8665aacff700b32462">visitOr</a>(Sysy22Parser::OrContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>     std::any <a class="code hl_function" href="classfrontend_1_1ASTVisitor.html#a9c4c2c1185ec5348e48c932c94c02fed">visitNumber</a>(Sysy22Parser::NumberContext *context) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    std::vector&lt;std::unique_ptr&lt;Expr&gt;&gt; </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        visitDimensions(<span class="keyword">const</span> std::vector&lt;Sysy22Parser::ExpContext*&gt; &amp;ctxs);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    std::unique_ptr&lt;CompUnits&gt; _compUnits;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>};</div>
 </div>
-<div class="ttc" id="aclassASTVisitor_html"><div class="ttname"><a href="classASTVisitor.html">ASTVisitor</a></div><div class="ttdef"><b>Definition</b> ASTVisitor.h:5</div></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}</div>
+<div class="ttc" id="aAST_8hpp_html"><div class="ttname"><a href="AST_8hpp.html">AST.hpp</a></div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html">frontend::ASTVisitor</a></div><div class="ttdef"><b>Definition</b> ASTVisitor.h:11</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a080cee8423a18bfb7dd8a98cfd2f4d94"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a080cee8423a18bfb7dd8a98cfd2f4d94">frontend::ASTVisitor::visitGt</a></div><div class="ttdeci">std::any visitGt(Sysy22Parser::GtContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:393</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a0be400b11cbfb7f764a99015f2906974"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a0be400b11cbfb7f764a99015f2906974">frontend::ASTVisitor::visitEq</a></div><div class="ttdeci">std::any visitEq(Sysy22Parser::EqContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:409</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a10e165b49d90050cafe61dad52bce500"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a10e165b49d90050cafe61dad52bce500">frontend::ASTVisitor::visitOctConst</a></div><div class="ttdeci">std::any visitOctConst(Sysy22Parser::OctConstContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:269</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a1ae87070df571299b565ee04dd590ecd"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a1ae87070df571299b565ee04dd590ecd">frontend::ASTVisitor::visitDecFloatConst</a></div><div class="ttdeci">std::any visitDecFloatConst(Sysy22Parser::DecFloatConstContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:274</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a1dbaa9f837c75cae4aa4c0d5d651cd53"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a1dbaa9f837c75cae4aa4c0d5d651cd53">frontend::ASTVisitor::visitStringConst</a></div><div class="ttdeci">std::any visitStringConst(Sysy22Parser::StringConstContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:325</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a1e2a290675b5191ad2f1f7b7e3c1c87b"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a1e2a290675b5191ad2f1f7b7e3c1c87b">frontend::ASTVisitor::visitIfElse</a></div><div class="ttdeci">std::any visitIfElse(Sysy22Parser::IfElseContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:195</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a1eabc5e7d2e0b752b6ad55abb4fdfd7d"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a1eabc5e7d2e0b752b6ad55abb4fdfd7d">frontend::ASTVisitor::visitWhile</a></div><div class="ttdeci">std::any visitWhile(Sysy22Parser::WhileContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:209</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a1fec5ce43a944616f4900f682abe6ffd"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a1fec5ce43a944616f4900f682abe6ffd">frontend::ASTVisitor::visitUnaryAdd</a></div><div class="ttdeci">std::any visitUnaryAdd(Sysy22Parser::UnaryAddContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:304</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a2184fa7d6c7f31f30fdd861936509b2d"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a2184fa7d6c7f31f30fdd861936509b2d">frontend::ASTVisitor::visitCall</a></div><div class="ttdeci">std::any visitCall(Sysy22Parser::CallContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:283</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a30725c07203a291c04ba928d0f766dfc"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a30725c07203a291c04ba928d0f766dfc">frontend::ASTVisitor::visitBreak</a></div><div class="ttdeci">std::any visitBreak(Sysy22Parser::BreakContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:218</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a32f376141519c6ed67bd121a80132df6"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a32f376141519c6ed67bd121a80132df6">frontend::ASTVisitor::visitLVal</a></div><div class="ttdeci">std::any visitLVal(Sysy22Parser::LValContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:235</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a33eb2eb50654093d6e6f8c6a889cfe66"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a33eb2eb50654093d6e6f8c6a889cfe66">frontend::ASTVisitor::visitLeq</a></div><div class="ttdeci">std::any visitLeq(Sysy22Parser::LeqContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:385</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a3abc116412e7f1aa9b716155bd4390b2"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a3abc116412e7f1aa9b716155bd4390b2">frontend::ASTVisitor::visitGeq</a></div><div class="ttdeci">std::any visitGeq(Sysy22Parser::GeqContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:369</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a428d6bdc2f5a79c05b3ee972d7417d55"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a428d6bdc2f5a79c05b3ee972d7417d55">frontend::ASTVisitor::visitNot</a></div><div class="ttdeci">std::any visitNot(Sysy22Parser::NotContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:318</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a465bde3e89196e1567b26d30c3c43050"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a465bde3e89196e1567b26d30c3c43050">frontend::ASTVisitor::visitInt</a></div><div class="ttdeci">std::any visitInt(Sysy22Parser::IntContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:67</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a4b15e6407e31edd0b12a7c1d6cafa5db"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a4b15e6407e31edd0b12a7c1d6cafa5db">frontend::ASTVisitor::visitAssignment</a></div><div class="ttdeci">std::any visitAssignment(Sysy22Parser::AssignmentContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:172</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a4f0f8eb31e1fe3fe65a726f05eec6c62"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a4f0f8eb31e1fe3fe65a726f05eec6c62">frontend::ASTVisitor::visitContinue</a></div><div class="ttdeci">std::any visitContinue(Sysy22Parser::ContinueContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:222</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a5f69b56905804ac634fdb3d7d2b5aed8"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a5f69b56905804ac634fdb3d7d2b5aed8">frontend::ASTVisitor::visitVarDecl</a></div><div class="ttdeci">std::any visitVarDecl(Sysy22Parser::VarDeclContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:75</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a672db3ecffd2318028d7afa0d86ee9dd"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a672db3ecffd2318028d7afa0d86ee9dd">frontend::ASTVisitor::visitConstDecl</a></div><div class="ttdeci">std::any visitConstDecl(Sysy22Parser::ConstDeclContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:44</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a70e58fd5d0f10c7e15da3708e1965c07"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a70e58fd5d0f10c7e15da3708e1965c07">frontend::ASTVisitor::visitMod</a></div><div class="ttdeci">std::any visitMod(Sysy22Parser::ModContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:337</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a77994f586f117de2d1f309067307f749"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a77994f586f117de2d1f309067307f749">frontend::ASTVisitor::visitNeq</a></div><div class="ttdeci">std::any visitNeq(Sysy22Parser::NeqContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:401</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a7ebc4965889d087ce012eedffaee1782"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a7ebc4965889d087ce012eedffaee1782">frontend::ASTVisitor::visitInit</a></div><div class="ttdeci">std::any visitInit(Sysy22Parser::InitContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:100</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a8065cc1922d7793c7c62f1a2c53e76d2"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a8065cc1922d7793c7c62f1a2c53e76d2">frontend::ASTVisitor::visitLt</a></div><div class="ttdeci">std::any visitLt(Sysy22Parser::LtContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:377</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a834e6eda3e0a826b282fe90928860dcc"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a834e6eda3e0a826b282fe90928860dcc">frontend::ASTVisitor::visitUnarySub</a></div><div class="ttdeci">std::any visitUnarySub(Sysy22Parser::UnarySubContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:311</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a863114a0951f5b2bad8832e7ba410165"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a863114a0951f5b2bad8832e7ba410165">frontend::ASTVisitor::visitHexFloatConst</a></div><div class="ttdeci">std::any visitHexFloatConst(Sysy22Parser::HexFloatConstContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:278</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a873836a81657f53c2079445b652022c9"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a873836a81657f53c2079445b652022c9">frontend::ASTVisitor::visitSub</a></div><div class="ttdeci">std::any visitSub(Sysy22Parser::SubContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:361</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a92c8b7562c80bec8ac5e1ac552c38d78"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a92c8b7562c80bec8ac5e1ac552c38d78">frontend::ASTVisitor::visitInitList</a></div><div class="ttdeci">std::any visitInitList(Sysy22Parser::InitListContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:106</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a9a3becdcbe757fff2413ed3274212b7b"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a9a3becdcbe757fff2413ed3274212b7b">frontend::ASTVisitor::visitFloat</a></div><div class="ttdeci">std::any visitFloat(Sysy22Parser::FloatContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:71</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a9a5ae4d8aec5d6a18d8b9825aceb561d"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a9a5ae4d8aec5d6a18d8b9825aceb561d">frontend::ASTVisitor::visitBlock</a></div><div class="ttdeci">std::any visitBlock(Sysy22Parser::BlockContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:154</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a9a9f6c03453de7f11ae82efc389ff5c6"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a9a9f6c03453de7f11ae82efc389ff5c6">frontend::ASTVisitor::visitReturn</a></div><div class="ttdeci">std::any visitReturn(Sysy22Parser::ReturnContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:226</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a9c4c2c1185ec5348e48c932c94c02fed"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a9c4c2c1185ec5348e48c932c94c02fed">frontend::ASTVisitor::visitNumber</a></div><div class="ttdeci">std::any visitNumber(Sysy22Parser::NumberContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:433</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_a9eb5e2bb09cd623c240088fdd9005a00"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#a9eb5e2bb09cd623c240088fdd9005a00">frontend::ASTVisitor::visitFuncDef</a></div><div class="ttdeci">std::any visitFuncDef(Sysy22Parser::FuncDefContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:117</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_aa6e7adca8db01faf44a6242a327add9e"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#aa6e7adca8db01faf44a6242a327add9e">frontend::ASTVisitor::visitDecConst</a></div><div class="ttdeci">std::any visitDecConst(Sysy22Parser::DecConstContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:260</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_ab017f9235419595aa4581c9ef7d35459"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#ab017f9235419595aa4581c9ef7d35459">frontend::ASTVisitor::visitAnd</a></div><div class="ttdeci">std::any visitAnd(Sysy22Parser::AndContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:417</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_ab66a31c172ac94221bf92bc5826bcd2f"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#ab66a31c172ac94221bf92bc5826bcd2f">frontend::ASTVisitor::visitLValExpr</a></div><div class="ttdeci">std::any visitLValExpr(Sysy22Parser::LValExprContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:255</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_ab777ba895c2c90b3ce031cea826a962c"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#ab777ba895c2c90b3ce031cea826a962c">frontend::ASTVisitor::visitPrimaryExp_</a></div><div class="ttdeci">std::any visitPrimaryExp_(Sysy22Parser::PrimaryExp_Context *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:245</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_ab80701ec5933c27b78b8b4a03417627a"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#ab80701ec5933c27b78b8b4a03417627a">frontend::ASTVisitor::visitScalarParam</a></div><div class="ttdeci">std::any visitScalarParam(Sysy22Parser::ScalarParamContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:138</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_aba51ac8c07727d8665aacff700b32462"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#aba51ac8c07727d8665aacff700b32462">frontend::ASTVisitor::visitOr</a></div><div class="ttdeci">std::any visitOr(Sysy22Parser::OrContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:425</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_abf093f49239d6bbb9a8c94258206c0e1"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#abf093f49239d6bbb9a8c94258206c0e1">frontend::ASTVisitor::visitCompUnits</a></div><div class="ttdeci">std::any visitCompUnits(Sysy22Parser::CompUnitsContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:14</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_ac07bceccbbf12cc150a7e8d1e1b6e814"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#ac07bceccbbf12cc150a7e8d1e1b6e814">frontend::ASTVisitor::visitAdd</a></div><div class="ttdeci">std::any visitAdd(Sysy22Parser::AddContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:353</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_ac153b56abdecf9c89f03d976b6733c2b"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#ac153b56abdecf9c89f03d976b6733c2b">frontend::ASTVisitor::visitBlockStmt</a></div><div class="ttdeci">std::any visitBlockStmt(Sysy22Parser::BlockStmtContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:190</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_ad600a1535818d748e520150bbe38545e"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#ad600a1535818d748e520150bbe38545e">frontend::ASTVisitor::visitHexConst</a></div><div class="ttdeci">std::any visitHexConst(Sysy22Parser::HexConstContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:264</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_adc13d1a549bee0bf46952124ee951a36"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#adc13d1a549bee0bf46952124ee951a36">frontend::ASTVisitor::visitMul</a></div><div class="ttdeci">std::any visitMul(Sysy22Parser::MulContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:345</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_ae37670df2080be55baf51c521a0a0cc3"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#ae37670df2080be55baf51c521a0a0cc3">frontend::ASTVisitor::visitExprStmt</a></div><div class="ttdeci">std::any visitExprStmt(Sysy22Parser::ExprStmtContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:181</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_ae970a5e0965a0c648c967e58c18792c1"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#ae970a5e0965a0c648c967e58c18792c1">frontend::ASTVisitor::compUnit</a></div><div class="ttdeci">CompUnits const &amp; compUnit()</div><div class="ttdef"><b>Definition</b> ASTVisitor.h:14</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_aeae2fb1be965d9b74ea5809bdffbb097"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#aeae2fb1be965d9b74ea5809bdffbb097">frontend::ASTVisitor::visitDiv</a></div><div class="ttdeci">std::any visitDiv(Sysy22Parser::DivContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:329</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_af3e40be51061439b06d5a100e4ba46dc"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#af3e40be51061439b06d5a100e4ba46dc">frontend::ASTVisitor::visitVoid</a></div><div class="ttdeci">std::any visitVoid(Sysy22Parser::VoidContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:134</div></div>
+<div class="ttc" id="aclassfrontend_1_1ASTVisitor_html_af778006ff2080b378f68f6c848600261"><div class="ttname"><a href="classfrontend_1_1ASTVisitor.html#af778006ff2080b378f68f6c848600261">frontend::ASTVisitor::visitArrayParam</a></div><div class="ttdeci">std::any visitArrayParam(Sysy22Parser::ArrayParamContext *context) override</div><div class="ttdef"><b>Definition</b> ASTVisitor.cpp:145</div></div>
+<div class="ttc" id="aclassfrontend_1_1ast_1_1CompUnits_html"><div class="ttname"><a href="classfrontend_1_1ast_1_1CompUnits.html">frontend::ast::CompUnits</a></div><div class="ttdef"><b>Definition</b> AST.hpp:419</div></div>
+<div class="ttc" id="anamespacefrontend_html"><div class="ttname"><a href="namespacefrontend.html">frontend</a></div><div class="ttdef"><b>Definition</b> AST.hpp:10</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,0 +1,208 @@
+\doxysection{backend\+::riscv\+::Basic\+Block Class Reference}
+\hypertarget{classbackend_1_1riscv_1_1BasicBlock}{}\label{classbackend_1_1riscv_1_1BasicBlock}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+
+
+{\ttfamily \#include $<$program.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a99f34904f030a61b24b2d1e818cb0607}{Basic\+Block}} (std\+::string name)
+\item 
+std\+::string \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a1be16829313fa86252d74087760eca4f}{get\+\_\+name}} () const
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_afbccdf36d04b0ab190a9d003a8b83dc1}{set\+\_\+label\+\_\+used}} (bool temp)
+\item 
+std\+::list$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_accb97e32d6a454c938dd368d0490c9f1}{get\+\_\+instr}} ()
+\item 
+bool \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a4791889e7e467fcaa8cce7291c181ed1}{construct}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}ir\+\_\+bb, \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}exit\+\_\+bb, \mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}func, \mbox{\hyperlink{classbackend_1_1riscv_1_1Program}{Program}} \texorpdfstring{$\ast$}{*}prog)
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_aa250764ea49b984d84371b6d4df9603d}{add\+\_\+instr}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}instr, std\+::list$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$\+::iterator pos)
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a5d2f4a1f6bda58fcdb30b42e1d7a49c4}{add\+\_\+instr}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}instr, int pos)
+\item 
+std\+::list$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$\+::iterator \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a4edbadf8a54a99154dc343d08ebb8820}{insert\+\_\+instr}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}instr, std\+::list$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$\+::iterator pos)
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a908a1ad9de9f05cc11f410eded2fb0ba}{change}} (std\+::list$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$ \&new\+\_\+list)
+\item 
+\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a076ef8e306a2b9790b5cddab10e0215a}{get\+\_\+instr}} (int pos)
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a6d366ad43b45f6c1936f5b9a4ca756dc}{compute\+Def\+And\+Live\+Use}} (bool is\+\_\+gp\+\_\+pass)
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a7bd9b43091a32a2767ef5ce6d2024ced}{compute\+Def\+And\+Live\+Use\+After\+Alloc}} ()
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a652d2624e9555f303cdaffcf8565429c}{analyze\+Liveness\+For\+Each\+Instr}} ()
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a0f3528e1f4396628cc6b3b41cedb7270}{analyze\+Liveness\+For\+Each\+Instr\+After\+Alloc}} ()
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a33095adb38bc21655322098ced0f06b6}{gen\+\_\+asm}} (std\+::ostream \&out)
+\begin{DoxyCompactList}\small\item\em generate asm for this \doxylink{classbackend_1_1riscv_1_1BasicBlock}{Basic\+Block} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::set$<$ Riscv\+Reg\+::\+Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_abbaf579dddb28b6289363b2b417f2072}{def}}
+\item 
+std\+::set$<$ Riscv\+Reg\+::\+Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a82756ba6f3684ed0c8ee0bf8b94f8bec}{live\+\_\+use}}
+\item 
+std\+::set$<$ Riscv\+Reg\+::\+Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a56683d5d2bd457418f6eb7be30fc1937}{live\+\_\+in}}
+\item 
+std\+::set$<$ Riscv\+Reg\+::\+Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a2a8b2e348d0c1623cd4ec0f92f7ec25e}{live\+\_\+out}}
+\item 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a37f580cf0c44acf252e9b5cf104fa9dd}{prev}}
+\item 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a040b386429ca4f5bf49c36569e84b939}{succ}}
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock_a88e00ce9fccd58d9b89156567ebc5591}{loop\+\_\+level}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a99f34904f030a61b24b2d1e818cb0607}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!BasicBlock@{BasicBlock}}
+\index{BasicBlock@{BasicBlock}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{BasicBlock()}{BasicBlock()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a99f34904f030a61b24b2d1e818cb0607} 
+backend\+::riscv\+::\+Basic\+Block\+::\+Basic\+Block (\begin{DoxyParamCaption}\item[{std\+::string}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a5d2f4a1f6bda58fcdb30b42e1d7a49c4}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!add\_instr@{add\_instr}}
+\index{add\_instr@{add\_instr}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{add\_instr()}{add\_instr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a5d2f4a1f6bda58fcdb30b42e1d7a49c4} 
+void backend\+::riscv\+::\+Basic\+Block\+::add\+\_\+instr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}}]{instr}{, }\item[{int}]{pos}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_aa250764ea49b984d84371b6d4df9603d}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!add\_instr@{add\_instr}}
+\index{add\_instr@{add\_instr}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{add\_instr()}{add\_instr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_aa250764ea49b984d84371b6d4df9603d} 
+void backend\+::riscv\+::\+Basic\+Block\+::add\+\_\+instr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}}]{instr}{, }\item[{std\+::list$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$\+::iterator}]{pos}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a652d2624e9555f303cdaffcf8565429c}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!analyzeLivenessForEachInstr@{analyzeLivenessForEachInstr}}
+\index{analyzeLivenessForEachInstr@{analyzeLivenessForEachInstr}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{analyzeLivenessForEachInstr()}{analyzeLivenessForEachInstr()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a652d2624e9555f303cdaffcf8565429c} 
+void backend\+::riscv\+::\+Basic\+Block\+::analyze\+Liveness\+For\+Each\+Instr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a0f3528e1f4396628cc6b3b41cedb7270}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!analyzeLivenessForEachInstrAfterAlloc@{analyzeLivenessForEachInstrAfterAlloc}}
+\index{analyzeLivenessForEachInstrAfterAlloc@{analyzeLivenessForEachInstrAfterAlloc}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{analyzeLivenessForEachInstrAfterAlloc()}{analyzeLivenessForEachInstrAfterAlloc()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a0f3528e1f4396628cc6b3b41cedb7270} 
+void backend\+::riscv\+::\+Basic\+Block\+::analyze\+Liveness\+For\+Each\+Instr\+After\+Alloc (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a908a1ad9de9f05cc11f410eded2fb0ba}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!change@{change}}
+\index{change@{change}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{change()}{change()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a908a1ad9de9f05cc11f410eded2fb0ba} 
+void backend\+::riscv\+::\+Basic\+Block\+::change (\begin{DoxyParamCaption}\item[{std\+::list$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$ \&}]{new\+\_\+list}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a6d366ad43b45f6c1936f5b9a4ca756dc}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!computeDefAndLiveUse@{computeDefAndLiveUse}}
+\index{computeDefAndLiveUse@{computeDefAndLiveUse}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{computeDefAndLiveUse()}{computeDefAndLiveUse()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a6d366ad43b45f6c1936f5b9a4ca756dc} 
+void backend\+::riscv\+::\+Basic\+Block\+::compute\+Def\+And\+Live\+Use (\begin{DoxyParamCaption}\item[{bool}]{is\+\_\+gp\+\_\+pass}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a7bd9b43091a32a2767ef5ce6d2024ced}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!computeDefAndLiveUseAfterAlloc@{computeDefAndLiveUseAfterAlloc}}
+\index{computeDefAndLiveUseAfterAlloc@{computeDefAndLiveUseAfterAlloc}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{computeDefAndLiveUseAfterAlloc()}{computeDefAndLiveUseAfterAlloc()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a7bd9b43091a32a2767ef5ce6d2024ced} 
+void backend\+::riscv\+::\+Basic\+Block\+::compute\+Def\+And\+Live\+Use\+After\+Alloc (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a4791889e7e467fcaa8cce7291c181ed1}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!construct@{construct}}
+\index{construct@{construct}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{construct()}{construct()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a4791889e7e467fcaa8cce7291c181ed1} 
+bool backend\+::riscv\+::\+Basic\+Block\+::construct (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{ir\+\_\+bb}{, }\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{exit\+\_\+bb}{, }\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}}]{func}{, }\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Program}{Program}} \texorpdfstring{$\ast$}{*}}]{prog}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a33095adb38bc21655322098ced0f06b6}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!gen\_asm@{gen\_asm}}
+\index{gen\_asm@{gen\_asm}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{gen\_asm()}{gen\_asm()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a33095adb38bc21655322098ced0f06b6} 
+void backend\+::riscv\+::\+Basic\+Block\+::gen\+\_\+asm (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out}{}\end{DoxyParamCaption})}
+
+
+
+generate asm for this \doxylink{classbackend_1_1riscv_1_1BasicBlock}{Basic\+Block} 
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_accb97e32d6a454c938dd368d0490c9f1}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!get\_instr@{get\_instr}}
+\index{get\_instr@{get\_instr}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{get\_instr()}{get\_instr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_accb97e32d6a454c938dd368d0490c9f1} 
+std\+::list$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} backend\+::riscv\+::\+Basic\+Block\+::get\+\_\+instr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a076ef8e306a2b9790b5cddab10e0215a}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!get\_instr@{get\_instr}}
+\index{get\_instr@{get\_instr}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{get\_instr()}{get\_instr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a076ef8e306a2b9790b5cddab10e0215a} 
+\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} backend\+::riscv\+::\+Basic\+Block\+::get\+\_\+instr (\begin{DoxyParamCaption}\item[{int}]{pos}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a1be16829313fa86252d74087760eca4f}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!get\_name@{get\_name}}
+\index{get\_name@{get\_name}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{get\_name()}{get\_name()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a1be16829313fa86252d74087760eca4f} 
+std\+::string backend\+::riscv\+::\+Basic\+Block\+::get\+\_\+name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a4edbadf8a54a99154dc343d08ebb8820}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!insert\_instr@{insert\_instr}}
+\index{insert\_instr@{insert\_instr}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{insert\_instr()}{insert\_instr()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a4edbadf8a54a99154dc343d08ebb8820} 
+std\+::list$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$\+::iterator backend\+::riscv\+::\+Basic\+Block\+::insert\+\_\+instr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}}]{instr}{, }\item[{std\+::list$<$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$\+::iterator}]{pos}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_afbccdf36d04b0ab190a9d003a8b83dc1}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!set\_label\_used@{set\_label\_used}}
+\index{set\_label\_used@{set\_label\_used}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{set\_label\_used()}{set\_label\_used()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_afbccdf36d04b0ab190a9d003a8b83dc1} 
+void backend\+::riscv\+::\+Basic\+Block\+::set\+\_\+label\+\_\+used (\begin{DoxyParamCaption}\item[{bool}]{temp}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_abbaf579dddb28b6289363b2b417f2072}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!def@{def}}
+\index{def@{def}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{def}{def}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_abbaf579dddb28b6289363b2b417f2072} 
+std\+::set$<$Riscv\+Reg\+::\+Reg$>$ backend\+::riscv\+::\+Basic\+Block\+::def}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a56683d5d2bd457418f6eb7be30fc1937}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!live\_in@{live\_in}}
+\index{live\_in@{live\_in}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{live\_in}{live\_in}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a56683d5d2bd457418f6eb7be30fc1937} 
+std\+::set$<$Riscv\+Reg\+::\+Reg$>$ backend\+::riscv\+::\+Basic\+Block\+::live\+\_\+in}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a2a8b2e348d0c1623cd4ec0f92f7ec25e}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!live\_out@{live\_out}}
+\index{live\_out@{live\_out}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{live\_out}{live\_out}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a2a8b2e348d0c1623cd4ec0f92f7ec25e} 
+std\+::set$<$Riscv\+Reg\+::\+Reg$>$ backend\+::riscv\+::\+Basic\+Block\+::live\+\_\+out}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a82756ba6f3684ed0c8ee0bf8b94f8bec}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!live\_use@{live\_use}}
+\index{live\_use@{live\_use}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{live\_use}{live\_use}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a82756ba6f3684ed0c8ee0bf8b94f8bec} 
+std\+::set$<$Riscv\+Reg\+::\+Reg$>$ backend\+::riscv\+::\+Basic\+Block\+::live\+\_\+use}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a88e00ce9fccd58d9b89156567ebc5591}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!loop\_level@{loop\_level}}
+\index{loop\_level@{loop\_level}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{loop\_level}{loop\_level}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a88e00ce9fccd58d9b89156567ebc5591} 
+int backend\+::riscv\+::\+Basic\+Block\+::loop\+\_\+level = 0}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a37f580cf0c44acf252e9b5cf104fa9dd}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!prev@{prev}}
+\index{prev@{prev}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{prev}{prev}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a37f580cf0c44acf252e9b5cf104fa9dd} 
+std\+::unordered\+\_\+set$<$\mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}$>$ backend\+::riscv\+::\+Basic\+Block\+::prev}
+
+\Hypertarget{classbackend_1_1riscv_1_1BasicBlock_a040b386429ca4f5bf49c36569e84b939}\index{backend::riscv::BasicBlock@{backend::riscv::BasicBlock}!succ@{succ}}
+\index{succ@{succ}!backend::riscv::BasicBlock@{backend::riscv::BasicBlock}}
+\doxysubsubsection{\texorpdfstring{succ}{succ}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1BasicBlock_a040b386429ca4f5bf49c36569e84b939} 
+std\+::unordered\+\_\+set$<$\mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}$>$ backend\+::riscv\+::\+Basic\+Block\+::succ}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/backend/\mbox{\hyperlink{program_8hpp}{program.\+hpp}}\item 
+src/backend/\mbox{\hyperlink{analysis_8cpp}{analysis.\+cpp}}\item 
+src/backend/\mbox{\hyperlink{program_8cpp}{program.\+cpp}}\end{DoxyCompactItemize}

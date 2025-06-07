@@ -1,0 +1,1788 @@
+CompileUnit start{
+  Function int func(int $a, int $b)
+    Block {
+      Declaration const int $i
+      Assignment (
+        LValue $i:
+        BinaryExpr +
+          LValue $a:
+          LValue $b:
+      )
+      Declaration const int $c1
+      Declaration const int $c2
+      Declaration const int $c3
+      Declaration const int $c4
+      Declaration const int $d1
+      Declaration const int $d2
+      Declaration const int $d3
+      Declaration const int $d4
+      Declaration const int $e1
+      Declaration const int $e2
+      Declaration const int $e3
+      Declaration const int $e4
+      Declaration const int $f1
+      Declaration const int $f2
+      Declaration const int $f3
+      Declaration const int $f4
+      Declaration const int $g1
+      Declaration const int $g2
+      Declaration const int $g3
+      Declaration const int $g4
+      Declaration const int $h1
+      Declaration const int $h2
+      Declaration const int $h3
+      Declaration const int $h4
+      Declaration const int $i1
+      Declaration const int $i2
+      Declaration const int $i3
+      Declaration const int $i4
+      Declaration const int $j1
+      Declaration const int $j2
+      Declaration const int $j3
+      Declaration const int $j4
+      Declaration const int $k1
+      Declaration const int $k2
+      Declaration const int $k3
+      Declaration const int $k4
+      Assignment (
+        LValue $c1:
+        IntLiteral 1
+      )
+      Assignment (
+        LValue $c2:
+        IntLiteral 2
+      )
+      Assignment (
+        LValue $c3:
+        IntLiteral 3
+      )
+      Assignment (
+        LValue $c4:
+        IntLiteral 4
+      )
+      Assignment (
+        LValue $d1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $c1:
+      )
+      Assignment (
+        LValue $d2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $c2:
+      )
+      Assignment (
+        LValue $d3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $c3:
+      )
+      Assignment (
+        LValue $d4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $c4:
+      )
+      Assignment (
+        LValue $e1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $d1:
+      )
+      Assignment (
+        LValue $e2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $d2:
+      )
+      Assignment (
+        LValue $e3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $d3:
+      )
+      Assignment (
+        LValue $e4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $d4:
+      )
+      Assignment (
+        LValue $f1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $e1:
+      )
+      Assignment (
+        LValue $f2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $e2:
+      )
+      Assignment (
+        LValue $f3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $e3:
+      )
+      Assignment (
+        LValue $f4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $e4:
+      )
+      Assignment (
+        LValue $g1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $f1:
+      )
+      Assignment (
+        LValue $g2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $f2:
+      )
+      Assignment (
+        LValue $g3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $f3:
+      )
+      Assignment (
+        LValue $g4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $f4:
+      )
+      Assignment (
+        LValue $h1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $g1:
+      )
+      Assignment (
+        LValue $h2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $g2:
+      )
+      Assignment (
+        LValue $h3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $g3:
+      )
+      Assignment (
+        LValue $h4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $g4:
+      )
+      Assignment (
+        LValue $i1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $h1:
+      )
+      Assignment (
+        LValue $i2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $h2:
+      )
+      Assignment (
+        LValue $i3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $h3:
+      )
+      Assignment (
+        LValue $i4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $h4:
+      )
+      Assignment (
+        LValue $j1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $i1:
+      )
+      Assignment (
+        LValue $j2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $i2:
+      )
+      Assignment (
+        LValue $j3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $i3:
+      )
+      Assignment (
+        LValue $j4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $i4:
+      )
+      Assignment (
+        LValue $k1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $j1:
+      )
+      Assignment (
+        LValue $k2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $j2:
+      )
+      Assignment (
+        LValue $k3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $j3:
+      )
+      Assignment (
+        LValue $k4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $j4:
+      )
+      Assignment (
+        LValue $i:
+        BinaryExpr +
+          BinaryExpr -
+            LValue $a:
+            LValue $b:
+          IntLiteral 10
+      )
+      Assignment (
+        LValue $k1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $j1:
+      )
+      Assignment (
+        LValue $k2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $j2:
+      )
+      Assignment (
+        LValue $k3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $j3:
+      )
+      Assignment (
+        LValue $k4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $j4:
+      )
+      Assignment (
+        LValue $j1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $i1:
+      )
+      Assignment (
+        LValue $j2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $i2:
+      )
+      Assignment (
+        LValue $j3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $i3:
+      )
+      Assignment (
+        LValue $j4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $i4:
+      )
+      Assignment (
+        LValue $i1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $h1:
+      )
+      Assignment (
+        LValue $i2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $h2:
+      )
+      Assignment (
+        LValue $i3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $h3:
+      )
+      Assignment (
+        LValue $i4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $h4:
+      )
+      Assignment (
+        LValue $h1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $g1:
+      )
+      Assignment (
+        LValue $h2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $g2:
+      )
+      Assignment (
+        LValue $h3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $g3:
+      )
+      Assignment (
+        LValue $h4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $g4:
+      )
+      Assignment (
+        LValue $g1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $f1:
+      )
+      Assignment (
+        LValue $g2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $f2:
+      )
+      Assignment (
+        LValue $g3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $f3:
+      )
+      Assignment (
+        LValue $g4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $f4:
+      )
+      Assignment (
+        LValue $f1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $e1:
+      )
+      Assignment (
+        LValue $f2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $e2:
+      )
+      Assignment (
+        LValue $f3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $e3:
+      )
+      Assignment (
+        LValue $f4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $e4:
+      )
+      Assignment (
+        LValue $e1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $d1:
+      )
+      Assignment (
+        LValue $e2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $d2:
+      )
+      Assignment (
+        LValue $e3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $d3:
+      )
+      Assignment (
+        LValue $e4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $d4:
+      )
+      Assignment (
+        LValue $d1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $c1:
+      )
+      Assignment (
+        LValue $d2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $c2:
+      )
+      Assignment (
+        LValue $d3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $c3:
+      )
+      Assignment (
+        LValue $d4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $c4:
+      )
+      Assignment (
+        LValue $c1:
+        BinaryExpr +
+          IntLiteral 1
+          LValue $k1:
+      )
+      Assignment (
+        LValue $c2:
+        BinaryExpr +
+          IntLiteral 2
+          LValue $k2:
+      )
+      Assignment (
+        LValue $c3:
+        BinaryExpr +
+          IntLiteral 3
+          LValue $k3:
+      )
+      Assignment (
+        LValue $c4:
+        BinaryExpr +
+          IntLiteral 4
+          LValue $k4:
+      )
+      Return
+        BinaryExpr +
+          BinaryExpr +
+            BinaryExpr +
+              BinaryExpr +
+                BinaryExpr -
+                  BinaryExpr -
+                    BinaryExpr -
+                      BinaryExpr -
+                        BinaryExpr +
+                          BinaryExpr +
+                            BinaryExpr +
+                              BinaryExpr +
+                                BinaryExpr -
+                                  BinaryExpr -
+                                    BinaryExpr -
+                                      BinaryExpr -
+                                        BinaryExpr +
+                                          BinaryExpr +
+                                            BinaryExpr +
+                                              BinaryExpr +
+                                                BinaryExpr -
+                                                  BinaryExpr -
+                                                    BinaryExpr -
+                                                      BinaryExpr -
+                                                        BinaryExpr +
+                                                          BinaryExpr +
+                                                            BinaryExpr +
+                                                              BinaryExpr +
+                                                                BinaryExpr -
+                                                                  BinaryExpr -
+                                                                    BinaryExpr -
+                                                                      BinaryExpr -
+                                                                        BinaryExpr +
+                                                                          BinaryExpr +
+                                                                            BinaryExpr +
+                                                                              BinaryExpr +
+                                                                                LValue $i:
+                                                                                LValue $c1:
+                                                                              LValue $c2:
+                                                                            LValue $c3:
+                                                                          LValue $c4:
+                                                                        LValue $d1:
+                                                                      LValue $d2:
+                                                                    LValue $d3:
+                                                                  LValue $d4:
+                                                                LValue $e1:
+                                                              LValue $e2:
+                                                            LValue $e3:
+                                                          LValue $e4:
+                                                        LValue $f1:
+                                                      LValue $f2:
+                                                    LValue $f3:
+                                                  LValue $f4:
+                                                LValue $g1:
+                                              LValue $g2:
+                                            LValue $g3:
+                                          LValue $g4:
+                                        LValue $h1:
+                                      LValue $h2:
+                                    LValue $h3:
+                                  LValue $h4:
+                                LValue $i1:
+                              LValue $i2:
+                            LValue $i3:
+                          LValue $i4:
+                        LValue $j1:
+                      LValue $j2:
+                    LValue $j3:
+                  LValue $j4:
+                LValue $k1:
+              LValue $k2:
+            LValue $k3:
+          LValue $k4:
+    }
+  Function void main()
+    Block {
+      Declaration const int $a
+      Declaration const int $b
+      Assignment (
+        LValue $a:
+        IntLiteral 1
+      )
+      Assignment (
+        LValue $b:
+        BinaryExpr +
+          LValue $a:
+          BinaryExpr *
+            IntLiteral 2
+            IntLiteral 9
+      )
+      ExprStmt
+        Call func:putint(
+          Call func:func(
+            LValue $a:
+            LValue $b:
+          )
+        )
+      ExprStmt
+        Call func:putline(
+        )
+    }
+}CompileUnit end
+def int func ( int _T0, int _T2 ) {
+B0
+  alloca int* _T1 = 4
+  store *(int* _T1 + 0) = int _T0
+  alloca int* _T3 = 4
+  store *(int* _T3 + 0) = int _T2
+  alloca int* _T4 = 4
+  int _T5 = 1804289383
+  store *(int* _T4 + 0) = int _T5
+  load int _T6 = *(int* _T1 + 0)
+  load int _T7 = *(int* _T3 + 0)
+  int _T8 = int _T6 + int _T7
+  store *(int* _T4 + 0) = int _T8
+  alloca int* _T9 = 4
+  int _T10 = 846930886
+  store *(int* _T9 + 0) = int _T10
+  alloca int* _T11 = 4
+  int _T12 = 1681692777
+  store *(int* _T11 + 0) = int _T12
+  alloca int* _T13 = 4
+  int _T14 = 1714636915
+  store *(int* _T13 + 0) = int _T14
+  alloca int* _T15 = 4
+  int _T16 = 1957747793
+  store *(int* _T15 + 0) = int _T16
+  alloca int* _T17 = 4
+  int _T18 = 424238335
+  store *(int* _T17 + 0) = int _T18
+  alloca int* _T19 = 4
+  int _T20 = 719885386
+  store *(int* _T19 + 0) = int _T20
+  alloca int* _T21 = 4
+  int _T22 = 1649760492
+  store *(int* _T21 + 0) = int _T22
+  alloca int* _T23 = 4
+  int _T24 = 596516649
+  store *(int* _T23 + 0) = int _T24
+  alloca int* _T25 = 4
+  int _T26 = 1189641421
+  store *(int* _T25 + 0) = int _T26
+  alloca int* _T27 = 4
+  int _T28 = 1025202362
+  store *(int* _T27 + 0) = int _T28
+  alloca int* _T29 = 4
+  int _T30 = 1350490027
+  store *(int* _T29 + 0) = int _T30
+  alloca int* _T31 = 4
+  int _T32 = 783368690
+  store *(int* _T31 + 0) = int _T32
+  alloca int* _T33 = 4
+  int _T34 = 1102520059
+  store *(int* _T33 + 0) = int _T34
+  alloca int* _T35 = 4
+  int _T36 = 2044897763
+  store *(int* _T35 + 0) = int _T36
+  alloca int* _T37 = 4
+  int _T38 = 1967513926
+  store *(int* _T37 + 0) = int _T38
+  alloca int* _T39 = 4
+  int _T40 = 1365180540
+  store *(int* _T39 + 0) = int _T40
+  alloca int* _T41 = 4
+  int _T42 = 1540383426
+  store *(int* _T41 + 0) = int _T42
+  alloca int* _T43 = 4
+  int _T44 = 304089172
+  store *(int* _T43 + 0) = int _T44
+  alloca int* _T45 = 4
+  int _T46 = 1303455736
+  store *(int* _T45 + 0) = int _T46
+  alloca int* _T47 = 4
+  int _T48 = 35005211
+  store *(int* _T47 + 0) = int _T48
+  alloca int* _T49 = 4
+  int _T50 = 521595368
+  store *(int* _T49 + 0) = int _T50
+  alloca int* _T51 = 4
+  int _T52 = 294702567
+  store *(int* _T51 + 0) = int _T52
+  alloca int* _T53 = 4
+  int _T54 = 1726956429
+  store *(int* _T53 + 0) = int _T54
+  alloca int* _T55 = 4
+  int _T56 = 336465782
+  store *(int* _T55 + 0) = int _T56
+  alloca int* _T57 = 4
+  int _T58 = 861021530
+  store *(int* _T57 + 0) = int _T58
+  alloca int* _T59 = 4
+  int _T60 = 278722862
+  store *(int* _T59 + 0) = int _T60
+  alloca int* _T61 = 4
+  int _T62 = 233665123
+  store *(int* _T61 + 0) = int _T62
+  alloca int* _T63 = 4
+  int _T64 = 2145174067
+  store *(int* _T63 + 0) = int _T64
+  alloca int* _T65 = 4
+  int _T66 = 468703135
+  store *(int* _T65 + 0) = int _T66
+  alloca int* _T67 = 4
+  int _T68 = 1101513929
+  store *(int* _T67 + 0) = int _T68
+  alloca int* _T69 = 4
+  int _T70 = 1801979802
+  store *(int* _T69 + 0) = int _T70
+  alloca int* _T71 = 4
+  int _T72 = 1315634022
+  store *(int* _T71 + 0) = int _T72
+  alloca int* _T73 = 4
+  int _T74 = 635723058
+  store *(int* _T73 + 0) = int _T74
+  alloca int* _T75 = 4
+  int _T76 = 1369133069
+  store *(int* _T75 + 0) = int _T76
+  alloca int* _T77 = 4
+  int _T78 = 1125898167
+  store *(int* _T77 + 0) = int _T78
+  alloca int* _T79 = 4
+  int _T80 = 1059961393
+  store *(int* _T79 + 0) = int _T80
+  int _T81 = 1
+  store *(int* _T9 + 0) = int _T81
+  int _T82 = 2
+  store *(int* _T11 + 0) = int _T82
+  int _T83 = 3
+  store *(int* _T13 + 0) = int _T83
+  int _T84 = 4
+  store *(int* _T15 + 0) = int _T84
+  int _T85 = 1
+  load int _T86 = *(int* _T9 + 0)
+  int _T87 = int _T85 + int _T86
+  store *(int* _T17 + 0) = int _T87
+  int _T88 = 2
+  load int _T89 = *(int* _T11 + 0)
+  int _T90 = int _T88 + int _T89
+  store *(int* _T19 + 0) = int _T90
+  int _T91 = 3
+  load int _T92 = *(int* _T13 + 0)
+  int _T93 = int _T91 + int _T92
+  store *(int* _T21 + 0) = int _T93
+  int _T94 = 4
+  load int _T95 = *(int* _T15 + 0)
+  int _T96 = int _T94 + int _T95
+  store *(int* _T23 + 0) = int _T96
+  int _T97 = 1
+  load int _T98 = *(int* _T17 + 0)
+  int _T99 = int _T97 + int _T98
+  store *(int* _T25 + 0) = int _T99
+  int _T100 = 2
+  load int _T101 = *(int* _T19 + 0)
+  int _T102 = int _T100 + int _T101
+  store *(int* _T27 + 0) = int _T102
+  int _T103 = 3
+  load int _T104 = *(int* _T21 + 0)
+  int _T105 = int _T103 + int _T104
+  store *(int* _T29 + 0) = int _T105
+  int _T106 = 4
+  load int _T107 = *(int* _T23 + 0)
+  int _T108 = int _T106 + int _T107
+  store *(int* _T31 + 0) = int _T108
+  int _T109 = 1
+  load int _T110 = *(int* _T25 + 0)
+  int _T111 = int _T109 + int _T110
+  store *(int* _T33 + 0) = int _T111
+  int _T112 = 2
+  load int _T113 = *(int* _T27 + 0)
+  int _T114 = int _T112 + int _T113
+  store *(int* _T35 + 0) = int _T114
+  int _T115 = 3
+  load int _T116 = *(int* _T29 + 0)
+  int _T117 = int _T115 + int _T116
+  store *(int* _T37 + 0) = int _T117
+  int _T118 = 4
+  load int _T119 = *(int* _T31 + 0)
+  int _T120 = int _T118 + int _T119
+  store *(int* _T39 + 0) = int _T120
+  int _T121 = 1
+  load int _T122 = *(int* _T33 + 0)
+  int _T123 = int _T121 + int _T122
+  store *(int* _T41 + 0) = int _T123
+  int _T124 = 2
+  load int _T125 = *(int* _T35 + 0)
+  int _T126 = int _T124 + int _T125
+  store *(int* _T43 + 0) = int _T126
+  int _T127 = 3
+  load int _T128 = *(int* _T37 + 0)
+  int _T129 = int _T127 + int _T128
+  store *(int* _T45 + 0) = int _T129
+  int _T130 = 4
+  load int _T131 = *(int* _T39 + 0)
+  int _T132 = int _T130 + int _T131
+  store *(int* _T47 + 0) = int _T132
+  int _T133 = 1
+  load int _T134 = *(int* _T41 + 0)
+  int _T135 = int _T133 + int _T134
+  store *(int* _T49 + 0) = int _T135
+  int _T136 = 2
+  load int _T137 = *(int* _T43 + 0)
+  int _T138 = int _T136 + int _T137
+  store *(int* _T51 + 0) = int _T138
+  int _T139 = 3
+  load int _T140 = *(int* _T45 + 0)
+  int _T141 = int _T139 + int _T140
+  store *(int* _T53 + 0) = int _T141
+  int _T142 = 4
+  load int _T143 = *(int* _T47 + 0)
+  int _T144 = int _T142 + int _T143
+  store *(int* _T55 + 0) = int _T144
+  int _T145 = 1
+  load int _T146 = *(int* _T49 + 0)
+  int _T147 = int _T145 + int _T146
+  store *(int* _T57 + 0) = int _T147
+  int _T148 = 2
+  load int _T149 = *(int* _T51 + 0)
+  int _T150 = int _T148 + int _T149
+  store *(int* _T59 + 0) = int _T150
+  int _T151 = 3
+  load int _T152 = *(int* _T53 + 0)
+  int _T153 = int _T151 + int _T152
+  store *(int* _T61 + 0) = int _T153
+  int _T154 = 4
+  load int _T155 = *(int* _T55 + 0)
+  int _T156 = int _T154 + int _T155
+  store *(int* _T63 + 0) = int _T156
+  int _T157 = 1
+  load int _T158 = *(int* _T57 + 0)
+  int _T159 = int _T157 + int _T158
+  store *(int* _T65 + 0) = int _T159
+  int _T160 = 2
+  load int _T161 = *(int* _T59 + 0)
+  int _T162 = int _T160 + int _T161
+  store *(int* _T67 + 0) = int _T162
+  int _T163 = 3
+  load int _T164 = *(int* _T61 + 0)
+  int _T165 = int _T163 + int _T164
+  store *(int* _T69 + 0) = int _T165
+  int _T166 = 4
+  load int _T167 = *(int* _T63 + 0)
+  int _T168 = int _T166 + int _T167
+  store *(int* _T71 + 0) = int _T168
+  int _T169 = 1
+  load int _T170 = *(int* _T65 + 0)
+  int _T171 = int _T169 + int _T170
+  store *(int* _T73 + 0) = int _T171
+  int _T172 = 2
+  load int _T173 = *(int* _T67 + 0)
+  int _T174 = int _T172 + int _T173
+  store *(int* _T75 + 0) = int _T174
+  int _T175 = 3
+  load int _T176 = *(int* _T69 + 0)
+  int _T177 = int _T175 + int _T176
+  store *(int* _T77 + 0) = int _T177
+  int _T178 = 4
+  load int _T179 = *(int* _T71 + 0)
+  int _T180 = int _T178 + int _T179
+  store *(int* _T79 + 0) = int _T180
+  load int _T181 = *(int* _T1 + 0)
+  load int _T182 = *(int* _T3 + 0)
+  int _T183 = int _T181 - int _T182
+  int _T184 = 10
+  int _T185 = int _T183 + int _T184
+  store *(int* _T4 + 0) = int _T185
+  int _T186 = 1
+  load int _T187 = *(int* _T65 + 0)
+  int _T188 = int _T186 + int _T187
+  store *(int* _T73 + 0) = int _T188
+  int _T189 = 2
+  load int _T190 = *(int* _T67 + 0)
+  int _T191 = int _T189 + int _T190
+  store *(int* _T75 + 0) = int _T191
+  int _T192 = 3
+  load int _T193 = *(int* _T69 + 0)
+  int _T194 = int _T192 + int _T193
+  store *(int* _T77 + 0) = int _T194
+  int _T195 = 4
+  load int _T196 = *(int* _T71 + 0)
+  int _T197 = int _T195 + int _T196
+  store *(int* _T79 + 0) = int _T197
+  int _T198 = 1
+  load int _T199 = *(int* _T57 + 0)
+  int _T200 = int _T198 + int _T199
+  store *(int* _T65 + 0) = int _T200
+  int _T201 = 2
+  load int _T202 = *(int* _T59 + 0)
+  int _T203 = int _T201 + int _T202
+  store *(int* _T67 + 0) = int _T203
+  int _T204 = 3
+  load int _T205 = *(int* _T61 + 0)
+  int _T206 = int _T204 + int _T205
+  store *(int* _T69 + 0) = int _T206
+  int _T207 = 4
+  load int _T208 = *(int* _T63 + 0)
+  int _T209 = int _T207 + int _T208
+  store *(int* _T71 + 0) = int _T209
+  int _T210 = 1
+  load int _T211 = *(int* _T49 + 0)
+  int _T212 = int _T210 + int _T211
+  store *(int* _T57 + 0) = int _T212
+  int _T213 = 2
+  load int _T214 = *(int* _T51 + 0)
+  int _T215 = int _T213 + int _T214
+  store *(int* _T59 + 0) = int _T215
+  int _T216 = 3
+  load int _T217 = *(int* _T53 + 0)
+  int _T218 = int _T216 + int _T217
+  store *(int* _T61 + 0) = int _T218
+  int _T219 = 4
+  load int _T220 = *(int* _T55 + 0)
+  int _T221 = int _T219 + int _T220
+  store *(int* _T63 + 0) = int _T221
+  int _T222 = 1
+  load int _T223 = *(int* _T41 + 0)
+  int _T224 = int _T222 + int _T223
+  store *(int* _T49 + 0) = int _T224
+  int _T225 = 2
+  load int _T226 = *(int* _T43 + 0)
+  int _T227 = int _T225 + int _T226
+  store *(int* _T51 + 0) = int _T227
+  int _T228 = 3
+  load int _T229 = *(int* _T45 + 0)
+  int _T230 = int _T228 + int _T229
+  store *(int* _T53 + 0) = int _T230
+  int _T231 = 4
+  load int _T232 = *(int* _T47 + 0)
+  int _T233 = int _T231 + int _T232
+  store *(int* _T55 + 0) = int _T233
+  int _T234 = 1
+  load int _T235 = *(int* _T33 + 0)
+  int _T236 = int _T234 + int _T235
+  store *(int* _T41 + 0) = int _T236
+  int _T237 = 2
+  load int _T238 = *(int* _T35 + 0)
+  int _T239 = int _T237 + int _T238
+  store *(int* _T43 + 0) = int _T239
+  int _T240 = 3
+  load int _T241 = *(int* _T37 + 0)
+  int _T242 = int _T240 + int _T241
+  store *(int* _T45 + 0) = int _T242
+  int _T243 = 4
+  load int _T244 = *(int* _T39 + 0)
+  int _T245 = int _T243 + int _T244
+  store *(int* _T47 + 0) = int _T245
+  int _T246 = 1
+  load int _T247 = *(int* _T25 + 0)
+  int _T248 = int _T246 + int _T247
+  store *(int* _T33 + 0) = int _T248
+  int _T249 = 2
+  load int _T250 = *(int* _T27 + 0)
+  int _T251 = int _T249 + int _T250
+  store *(int* _T35 + 0) = int _T251
+  int _T252 = 3
+  load int _T253 = *(int* _T29 + 0)
+  int _T254 = int _T252 + int _T253
+  store *(int* _T37 + 0) = int _T254
+  int _T255 = 4
+  load int _T256 = *(int* _T31 + 0)
+  int _T257 = int _T255 + int _T256
+  store *(int* _T39 + 0) = int _T257
+  int _T258 = 1
+  load int _T259 = *(int* _T17 + 0)
+  int _T260 = int _T258 + int _T259
+  store *(int* _T25 + 0) = int _T260
+  int _T261 = 2
+  load int _T262 = *(int* _T19 + 0)
+  int _T263 = int _T261 + int _T262
+  store *(int* _T27 + 0) = int _T263
+  int _T264 = 3
+  load int _T265 = *(int* _T21 + 0)
+  int _T266 = int _T264 + int _T265
+  store *(int* _T29 + 0) = int _T266
+  int _T267 = 4
+  load int _T268 = *(int* _T23 + 0)
+  int _T269 = int _T267 + int _T268
+  store *(int* _T31 + 0) = int _T269
+  int _T270 = 1
+  load int _T271 = *(int* _T9 + 0)
+  int _T272 = int _T270 + int _T271
+  store *(int* _T17 + 0) = int _T272
+  int _T273 = 2
+  load int _T274 = *(int* _T11 + 0)
+  int _T275 = int _T273 + int _T274
+  store *(int* _T19 + 0) = int _T275
+  int _T276 = 3
+  load int _T277 = *(int* _T13 + 0)
+  int _T278 = int _T276 + int _T277
+  store *(int* _T21 + 0) = int _T278
+  int _T279 = 4
+  load int _T280 = *(int* _T15 + 0)
+  int _T281 = int _T279 + int _T280
+  store *(int* _T23 + 0) = int _T281
+  int _T282 = 1
+  load int _T283 = *(int* _T73 + 0)
+  int _T284 = int _T282 + int _T283
+  store *(int* _T9 + 0) = int _T284
+  int _T285 = 2
+  load int _T286 = *(int* _T75 + 0)
+  int _T287 = int _T285 + int _T286
+  store *(int* _T11 + 0) = int _T287
+  int _T288 = 3
+  load int _T289 = *(int* _T77 + 0)
+  int _T290 = int _T288 + int _T289
+  store *(int* _T13 + 0) = int _T290
+  int _T291 = 4
+  load int _T292 = *(int* _T79 + 0)
+  int _T293 = int _T291 + int _T292
+  store *(int* _T15 + 0) = int _T293
+  load int _T294 = *(int* _T4 + 0)
+  load int _T295 = *(int* _T9 + 0)
+  int _T296 = int _T294 + int _T295
+  load int _T297 = *(int* _T11 + 0)
+  int _T298 = int _T296 + int _T297
+  load int _T299 = *(int* _T13 + 0)
+  int _T300 = int _T298 + int _T299
+  load int _T301 = *(int* _T15 + 0)
+  int _T302 = int _T300 + int _T301
+  load int _T303 = *(int* _T17 + 0)
+  int _T304 = int _T302 - int _T303
+  load int _T305 = *(int* _T19 + 0)
+  int _T306 = int _T304 - int _T305
+  load int _T307 = *(int* _T21 + 0)
+  int _T308 = int _T306 - int _T307
+  load int _T309 = *(int* _T23 + 0)
+  int _T310 = int _T308 - int _T309
+  load int _T311 = *(int* _T25 + 0)
+  int _T312 = int _T310 + int _T311
+  load int _T313 = *(int* _T27 + 0)
+  int _T314 = int _T312 + int _T313
+  load int _T315 = *(int* _T29 + 0)
+  int _T316 = int _T314 + int _T315
+  load int _T317 = *(int* _T31 + 0)
+  int _T318 = int _T316 + int _T317
+  load int _T319 = *(int* _T33 + 0)
+  int _T320 = int _T318 - int _T319
+  load int _T321 = *(int* _T35 + 0)
+  int _T322 = int _T320 - int _T321
+  load int _T323 = *(int* _T37 + 0)
+  int _T324 = int _T322 - int _T323
+  load int _T325 = *(int* _T39 + 0)
+  int _T326 = int _T324 - int _T325
+  load int _T327 = *(int* _T41 + 0)
+  int _T328 = int _T326 + int _T327
+  load int _T329 = *(int* _T43 + 0)
+  int _T330 = int _T328 + int _T329
+  load int _T331 = *(int* _T45 + 0)
+  int _T332 = int _T330 + int _T331
+  load int _T333 = *(int* _T47 + 0)
+  int _T334 = int _T332 + int _T333
+  load int _T335 = *(int* _T49 + 0)
+  int _T336 = int _T334 - int _T335
+  load int _T337 = *(int* _T51 + 0)
+  int _T338 = int _T336 - int _T337
+  load int _T339 = *(int* _T53 + 0)
+  int _T340 = int _T338 - int _T339
+  load int _T341 = *(int* _T55 + 0)
+  int _T342 = int _T340 - int _T341
+  load int _T343 = *(int* _T57 + 0)
+  int _T344 = int _T342 + int _T343
+  load int _T345 = *(int* _T59 + 0)
+  int _T346 = int _T344 + int _T345
+  load int _T347 = *(int* _T61 + 0)
+  int _T348 = int _T346 + int _T347
+  load int _T349 = *(int* _T63 + 0)
+  int _T350 = int _T348 + int _T349
+  load int _T351 = *(int* _T65 + 0)
+  int _T352 = int _T350 - int _T351
+  load int _T353 = *(int* _T67 + 0)
+  int _T354 = int _T352 - int _T353
+  load int _T355 = *(int* _T69 + 0)
+  int _T356 = int _T354 - int _T355
+  load int _T357 = *(int* _T71 + 0)
+  int _T358 = int _T356 - int _T357
+  load int _T359 = *(int* _T73 + 0)
+  int _T360 = int _T358 + int _T359
+  load int _T361 = *(int* _T75 + 0)
+  int _T362 = int _T360 + int _T361
+  load int _T363 = *(int* _T77 + 0)
+  int _T364 = int _T362 + int _T363
+  load int _T365 = *(int* _T79 + 0)
+  int _T366 = int _T364 + int _T365
+  return int _T366
+B1
+  int _T367 = 0
+  return int _T367
+}
+def void main (  ) {
+B0
+  alloca int* _T0 = 4
+  int _T1 = 2089018456
+  store *(int* _T0 + 0) = int _T1
+  alloca int* _T2 = 4
+  int _T3 = 628175011
+  store *(int* _T2 + 0) = int _T3
+  int _T4 = 1
+  store *(int* _T0 + 0) = int _T4
+  load int _T5 = *(int* _T0 + 0)
+  int _T6 = 2
+  int _T7 = 9
+  int _T8 = int _T6 * int _T7
+  int _T9 = int _T5 + int _T8
+  store *(int* _T2 + 0) = int _T9
+  load int _T10 = *(int* _T0 + 0)
+  load int _T11 = *(int* _T2 + 0)
+  int _T12 = call func(int _T10, int _T11)
+  call putint(int _T12)
+  call putline()
+  return
+}
+
+    .option pic
+    .attribute unaligned_access, 0
+    .attribute stack_align, 16
+    .attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_c2p0_zicsr2p0_zifencei2p0_zba1p0_zbb1p0"
+    .align 3
+    .globl main
+    .text
+__create_threads:
+    li a5, 3
+.Label1:
+    li a0, 273
+    mv a1, sp
+    li a2, 0
+    li a3, 0
+    li a4, 0
+    li a7, 220
+    ecall
+    li a1, -1
+    beq a0, a1, .Label1
+    beqz a0, .Label2
+    addi a5, a5, -1
+    bnez a5, .Label1
+.Label2:
+    mv a0, a5
+    ret
+
+__join_threads:
+    li a1, 3
+    mv a5, a0
+    beq a0, a1, .Label3
+.Label4:
+    li a0, 0
+    li a1, 0
+    li a2, 0
+    li a3, 4
+    li a7, 95
+    ecall
+    li a3, -1
+    beq a3, a0, .Label4
+    bnez a5, .Label3
+.sleep:
+    li a0, 0
+    sd a0, -16(sp)
+    li a0, 1
+    slli a0, a0, 29
+    sd a0, -8(sp)
+    addi sp, sp, -16
+    mv a0, sp
+    li a7, 101
+    addi sp, sp, 16
+    ecall
+    bnez a0, .sleep
+    ret
+.Label3:
+    li a0, 0
+    li a7, 93
+    ecall
+
+    .align 1
+func:
+.entry_func:
+    sd s11, -1104(sp)
+    sd s10, -1112(sp)
+    sd s9, -1120(sp)
+    sd s8, -1128(sp)
+    sd s7, -1136(sp)
+    sd s6, -1144(sp)
+    sd s5, -1152(sp)
+    sd s4, -1160(sp)
+    sd s3, -1168(sp)
+    sd s2, -1176(sp)
+    sd s1, -1184(sp)
+    sd fp, -1192(sp)
+    sd ra, -1200(sp)
+    addi sp, sp, -1360
+    addi fp, sp, 1360
+    mv s11, a0
+    j .L0
+.L0:
+    addi s10, sp, 12
+    addi s9, sp, 16
+    addi s8, sp, 20
+    addi s7, sp, 24
+    addi s6, sp, 28
+    addi s5, sp, 32
+    addi s4, sp, 36
+    addi s3, sp, 40
+    addi s2, sp, 44
+    addi s1, sp, 48
+    addi a7, sp, 52
+    addi a6, sp, 56
+    addi a5, sp, 60
+    addi a4, sp, 64
+    addi a3, sp, 68
+    addi a2, sp, 72
+    addi a0, sp, 76
+    addi t6, sp, 80
+    addi t5, sp, 84
+    addi t4, sp, 88
+    addi t3, sp, 92
+    addi t2, sp, 96
+    addi t1, sp, 100
+    addi t0, sp, 0
+    sw s11, 0(t0)
+    addi t0, sp, 4
+    sw a1, 0(t0)
+    addi a1, sp, 8
+    li t0, 1804289383
+    sw t0, 0(a1)
+    addi t0, sp, 0
+    lw a1, 0(t0)
+    addi t0, sp, 4
+    lw t0, 0(t0)
+    addw a1, a1, t0
+    addi t0, sp, 8
+    sw a1, 0(t0)
+    li t0, 846930886
+    sw t0, 0(s10)
+    li t0, 1681692777
+    sw t0, 0(s9)
+    li t0, 1714636915
+    sw t0, 0(s8)
+    li t0, 1957747793
+    sw t0, 0(s7)
+    li t0, 424238335
+    sw t0, 0(s6)
+    li t0, 719885386
+    sw t0, 0(s5)
+    li t0, 1649760492
+    sw t0, 0(s4)
+    li t0, 596516649
+    sw t0, 0(s3)
+    li t0, 1189641421
+    sw t0, 0(s2)
+    li t0, 1025202362
+    sw t0, 0(s1)
+    li t0, 1350490027
+    sw t0, 0(a7)
+    li t0, 783368690
+    sw t0, 0(a6)
+    li t0, 1102520059
+    sw t0, 0(a5)
+    li t0, 2044897763
+    sw t0, 0(a4)
+    li t0, 1967513926
+    sw t0, 0(a3)
+    li t0, 1365180540
+    sw t0, 0(a2)
+    li t0, 1540383426
+    sw t0, 0(a0)
+    li t0, 304089172
+    sw t0, 0(t6)
+    li t0, 1303455736
+    sw t0, 0(t5)
+    li t0, 35005211
+    sw t0, 0(t4)
+    li t0, 521595368
+    sw t0, 0(t3)
+    li t0, 294702567
+    sw t0, 0(t2)
+    li t0, 1726956429
+    sw t0, 0(t1)
+    li a1, 336465782
+    addi t0, sp, 104
+    sw a1, 0(t0)
+    li a1, 861021530
+    addi t0, sp, 108
+    sw a1, 0(t0)
+    addi a1, sp, 112
+    li t0, 278722862
+    sw t0, 0(a1)
+    addi a1, sp, 116
+    li t0, 233665123
+    sw t0, 0(a1)
+    addi a1, sp, 120
+    li t0, 2145174067
+    sw t0, 0(a1)
+    addi a1, sp, 124
+    li t0, 468703135
+    sw t0, 0(a1)
+    addi a1, sp, 128
+    li t0, 1101513929
+    sw t0, 0(a1)
+    addi a1, sp, 132
+    li t0, 1801979802
+    sw t0, 0(a1)
+    addi a1, sp, 136
+    li t0, 1315634022
+    sw t0, 0(a1)
+    addi a1, sp, 140
+    li t0, 635723058
+    sw t0, 0(a1)
+    addi a1, sp, 144
+    li t0, 1369133069
+    sw t0, 0(a1)
+    addi a1, sp, 148
+    li t0, 1125898167
+    sw t0, 0(a1)
+    addi a1, sp, 152
+    li t0, 1059961393
+    sw t0, 0(a1)
+    li t0, 1
+    sw t0, 0(s10)
+    li t0, 2
+    sw t0, 0(s9)
+    li t0, 3
+    sw t0, 0(s8)
+    li t0, 4
+    sw t0, 0(s7)
+    lw a1, 0(s10)
+    li t0, 1
+    addw t0, t0, a1
+    sw t0, 0(s6)
+    lw a1, 0(s9)
+    li t0, 2
+    addw t0, t0, a1
+    sw t0, 0(s5)
+    lw a1, 0(s8)
+    li t0, 3
+    addw t0, t0, a1
+    sw t0, 0(s4)
+    lw a1, 0(s7)
+    li t0, 4
+    addw t0, t0, a1
+    sw t0, 0(s3)
+    lw a1, 0(s6)
+    li t0, 1
+    addw t0, t0, a1
+    sw t0, 0(s2)
+    lw a1, 0(s5)
+    li t0, 2
+    addw t0, t0, a1
+    sw t0, 0(s1)
+    lw a1, 0(s4)
+    li t0, 3
+    addw t0, t0, a1
+    sw t0, 0(a7)
+    lw a1, 0(s3)
+    li t0, 4
+    addw t0, t0, a1
+    sw t0, 0(a6)
+    lw a1, 0(s2)
+    li t0, 1
+    addw t0, t0, a1
+    sw t0, 0(a5)
+    lw a1, 0(s1)
+    li t0, 2
+    addw t0, t0, a1
+    sw t0, 0(a4)
+    lw a1, 0(a7)
+    li t0, 3
+    addw t0, t0, a1
+    sw t0, 0(a3)
+    lw a1, 0(a6)
+    li t0, 4
+    addw t0, t0, a1
+    sw t0, 0(a2)
+    lw a1, 0(a5)
+    li t0, 1
+    addw t0, t0, a1
+    sw t0, 0(a0)
+    lw a1, 0(a4)
+    li t0, 2
+    addw t0, t0, a1
+    sw t0, 0(t6)
+    lw a1, 0(a3)
+    li t0, 3
+    addw t0, t0, a1
+    sw t0, 0(t5)
+    lw a1, 0(a2)
+    li t0, 4
+    addw t0, t0, a1
+    sw t0, 0(t4)
+    lw a1, 0(a0)
+    li t0, 1
+    addw t0, t0, a1
+    sw t0, 0(t3)
+    lw a1, 0(t6)
+    li t0, 2
+    addw t0, t0, a1
+    sw t0, 0(t2)
+    lw a1, 0(t5)
+    li t0, 3
+    addw t0, t0, a1
+    sw t0, 0(t1)
+    lw a1, 0(t4)
+    li t0, 4
+    addw a1, t0, a1
+    addi t0, sp, 104
+    sw a1, 0(t0)
+    lw a1, 0(t3)
+    li t0, 1
+    addw a1, t0, a1
+    addi t0, sp, 108
+    sw a1, 0(t0)
+    lw a1, 0(t2)
+    li t0, 2
+    addw a1, t0, a1
+    addi t0, sp, 112
+    sw a1, 0(t0)
+    lw a1, 0(t1)
+    li t0, 3
+    addw a1, t0, a1
+    addi t0, sp, 116
+    sw a1, 0(t0)
+    addi t0, sp, 104
+    lw a1, 0(t0)
+    li t0, 4
+    addw a1, t0, a1
+    addi t0, sp, 120
+    sw a1, 0(t0)
+    addi t0, sp, 108
+    lw a1, 0(t0)
+    li t0, 1
+    addw a1, t0, a1
+    addi t0, sp, 124
+    sw a1, 0(t0)
+    addi t0, sp, 112
+    lw a1, 0(t0)
+    li t0, 2
+    addw a1, t0, a1
+    addi t0, sp, 128
+    sw a1, 0(t0)
+    addi t0, sp, 116
+    lw a1, 0(t0)
+    li t0, 3
+    addw a1, t0, a1
+    addi t0, sp, 132
+    sw a1, 0(t0)
+    addi t0, sp, 120
+    lw a1, 0(t0)
+    li t0, 4
+    addw a1, t0, a1
+    addi t0, sp, 136
+    sw a1, 0(t0)
+    addi t0, sp, 124
+    lw a1, 0(t0)
+    li t0, 1
+    addw a1, t0, a1
+    addi t0, sp, 140
+    sw a1, 0(t0)
+    addi t0, sp, 128
+    lw a1, 0(t0)
+    li t0, 2
+    addw a1, t0, a1
+    addi t0, sp, 144
+    sw a1, 0(t0)
+    addi t0, sp, 132
+    lw a1, 0(t0)
+    li t0, 3
+    addw a1, t0, a1
+    addi t0, sp, 148
+    sw a1, 0(t0)
+    addi t0, sp, 136
+    lw a1, 0(t0)
+    li t0, 4
+    addw a1, t0, a1
+    addi t0, sp, 152
+    sw a1, 0(t0)
+    addi t0, sp, 0
+    lw a1, 0(t0)
+    addi t0, sp, 4
+    lw t0, 0(t0)
+    subw a1, a1, t0
+    li t0, 10
+    addw a1, a1, t0
+    addi t0, sp, 8
+    sw a1, 0(t0)
+    addi t0, sp, 124
+    lw a1, 0(t0)
+    li t0, 1
+    addw a1, t0, a1
+    addi t0, sp, 140
+    sw a1, 0(t0)
+    addi t0, sp, 128
+    lw a1, 0(t0)
+    li t0, 2
+    addw a1, t0, a1
+    addi t0, sp, 144
+    sw a1, 0(t0)
+    addi t0, sp, 132
+    lw a1, 0(t0)
+    li t0, 3
+    addw a1, t0, a1
+    addi t0, sp, 148
+    sw a1, 0(t0)
+    addi t0, sp, 136
+    lw a1, 0(t0)
+    li t0, 4
+    addw a1, t0, a1
+    addi t0, sp, 152
+    sw a1, 0(t0)
+    addi t0, sp, 108
+    lw a1, 0(t0)
+    li t0, 1
+    addw a1, t0, a1
+    addi t0, sp, 124
+    sw a1, 0(t0)
+    addi t0, sp, 112
+    lw a1, 0(t0)
+    li t0, 2
+    addw a1, t0, a1
+    addi t0, sp, 128
+    sw a1, 0(t0)
+    addi t0, sp, 116
+    lw a1, 0(t0)
+    li t0, 3
+    addw a1, t0, a1
+    addi t0, sp, 132
+    sw a1, 0(t0)
+    addi t0, sp, 120
+    lw a1, 0(t0)
+    li t0, 4
+    addw a1, t0, a1
+    addi t0, sp, 136
+    sw a1, 0(t0)
+    lw a1, 0(t3)
+    li t0, 1
+    addw a1, t0, a1
+    addi t0, sp, 108
+    sw a1, 0(t0)
+    lw a1, 0(t2)
+    li t0, 2
+    addw a1, t0, a1
+    addi t0, sp, 112
+    sw a1, 0(t0)
+    lw a1, 0(t1)
+    li t0, 3
+    addw a1, t0, a1
+    addi t0, sp, 116
+    sw a1, 0(t0)
+    addi t0, sp, 104
+    lw a1, 0(t0)
+    li t0, 4
+    addw a1, t0, a1
+    addi t0, sp, 120
+    sw a1, 0(t0)
+    lw a1, 0(a0)
+    li t0, 1
+    addw t0, t0, a1
+    sw t0, 0(t3)
+    lw a1, 0(t6)
+    li t0, 2
+    addw t0, t0, a1
+    sw t0, 0(t2)
+    lw a1, 0(t5)
+    li t0, 3
+    addw t0, t0, a1
+    sw t0, 0(t1)
+    lw a1, 0(t4)
+    li t0, 4
+    addw a1, t0, a1
+    addi t0, sp, 104
+    sw a1, 0(t0)
+    lw a1, 0(a5)
+    li t0, 1
+    addw t0, t0, a1
+    sw t0, 0(a0)
+    lw a1, 0(a4)
+    li t0, 2
+    addw t0, t0, a1
+    sw t0, 0(t6)
+    lw a1, 0(a3)
+    li t0, 3
+    addw t0, t0, a1
+    sw t0, 0(t5)
+    lw a1, 0(a2)
+    li t0, 4
+    addw t0, t0, a1
+    sw t0, 0(t4)
+    lw a1, 0(s2)
+    li t0, 1
+    addw t0, t0, a1
+    sw t0, 0(a5)
+    lw a1, 0(s1)
+    li t0, 2
+    addw t0, t0, a1
+    sw t0, 0(a4)
+    lw a1, 0(a7)
+    li t0, 3
+    addw t0, t0, a1
+    sw t0, 0(a3)
+    lw a1, 0(a6)
+    li t0, 4
+    addw t0, t0, a1
+    sw t0, 0(a2)
+    lw a1, 0(s6)
+    li t0, 1
+    addw t0, t0, a1
+    sw t0, 0(s2)
+    lw a1, 0(s5)
+    li t0, 2
+    addw t0, t0, a1
+    sw t0, 0(s1)
+    lw a1, 0(s4)
+    li t0, 3
+    addw t0, t0, a1
+    sw t0, 0(a7)
+    lw a1, 0(s3)
+    li t0, 4
+    addw t0, t0, a1
+    sw t0, 0(a6)
+    lw a1, 0(s10)
+    li t0, 1
+    addw t0, t0, a1
+    sw t0, 0(s6)
+    lw a1, 0(s9)
+    li t0, 2
+    addw t0, t0, a1
+    sw t0, 0(s5)
+    lw a1, 0(s8)
+    li t0, 3
+    addw t0, t0, a1
+    sw t0, 0(s4)
+    lw a1, 0(s7)
+    li t0, 4
+    addw t0, t0, a1
+    sw t0, 0(s3)
+    addi t0, sp, 140
+    lw a1, 0(t0)
+    li t0, 1
+    addw t0, t0, a1
+    sw t0, 0(s10)
+    addi t0, sp, 144
+    lw a1, 0(t0)
+    li t0, 2
+    addw t0, t0, a1
+    sw t0, 0(s9)
+    addi t0, sp, 148
+    lw a1, 0(t0)
+    li t0, 3
+    addw t0, t0, a1
+    sw t0, 0(s8)
+    addi t0, sp, 152
+    lw a1, 0(t0)
+    li t0, 4
+    addw t0, t0, a1
+    sw t0, 0(s7)
+    addi t0, sp, 8
+    lw t0, 0(t0)
+    sd t0, -1000(fp)
+    lw t0, 0(s10)
+    lw a1, 0(s9)
+    sd a1, -1008(fp)
+    lw a1, 0(s8)
+    sd a1, -1016(fp)
+    lw a1, 0(s7)
+    sd a1, -1024(fp)
+    lw a1, 0(s6)
+    sd a1, -1032(fp)
+    lw a1, 0(s5)
+    sd a1, -1040(fp)
+    lw a1, 0(s4)
+    sd a1, -1048(fp)
+    lw a1, 0(s3)
+    sd a1, -1056(fp)
+    lw a1, 0(s2)
+    sd a1, -1064(fp)
+    lw a1, 0(s1)
+    sd a1, -1072(fp)
+    lw a1, 0(a7)
+    sd a1, -1096(fp)
+    lw ra, 0(a6)
+    lw s9, 0(a5)
+    lw s8, 0(a4)
+    lw s7, 0(a3)
+    lw s6, 0(a2)
+    lw s5, 0(a0)
+    lw s4, 0(t6)
+    lw s3, 0(t5)
+    lw s2, 0(t4)
+    lw s1, 0(t3)
+    lw a7, 0(t2)
+    lw a6, 0(t1)
+    addi t1, sp, 104
+    lw a5, 0(t1)
+    addi t1, sp, 108
+    lw a4, 0(t1)
+    addi t1, sp, 112
+    lw a3, 0(t1)
+    addi t1, sp, 116
+    lw a2, 0(t1)
+    addi t1, sp, 120
+    lw a1, 0(t1)
+    addi t1, sp, 124
+    lw a0, 0(t1)
+    addi t1, sp, 128
+    lw t6, 0(t1)
+    addi t1, sp, 132
+    lw t5, 0(t1)
+    addi t1, sp, 136
+    lw t4, 0(t1)
+    addi t1, sp, 140
+    lw t3, 0(t1)
+    addi t1, sp, 144
+    lw t2, 0(t1)
+    addi t1, sp, 148
+    lw t1, 0(t1)
+    addi s10, sp, 152
+    lw s10, 0(s10)
+    ld s11, -1000(fp)
+    addw s11, s11, t0
+    ld t0, -1008(fp)
+    addw s11, s11, t0
+    ld t0, -1016(fp)
+    addw s11, s11, t0
+    ld t0, -1024(fp)
+    addw s11, s11, t0
+    ld t0, -1032(fp)
+    subw s11, s11, t0
+    ld t0, -1040(fp)
+    subw s11, s11, t0
+    ld t0, -1048(fp)
+    subw s11, s11, t0
+    ld t0, -1056(fp)
+    subw s11, s11, t0
+    ld t0, -1064(fp)
+    addw s11, s11, t0
+    ld t0, -1072(fp)
+    addw t0, s11, t0
+    ld s11, -1096(fp)
+    addw t0, t0, s11
+    addw t0, t0, ra
+    subw t0, t0, s9
+    subw t0, t0, s8
+    subw t0, t0, s7
+    subw t0, t0, s6
+    addw t0, t0, s5
+    addw t0, t0, s4
+    addw t0, t0, s3
+    addw t0, t0, s2
+    subw t0, t0, s1
+    subw t0, t0, a7
+    subw t0, t0, a6
+    subw t0, t0, a5
+    addw t0, t0, a4
+    addw t0, t0, a3
+    addw t0, t0, a2
+    addw t0, t0, a1
+    subw t0, t0, a0
+    subw t0, t0, t6
+    subw t0, t0, t5
+    subw t0, t0, t4
+    addw t0, t0, t3
+    addw t0, t0, t2
+    addw t0, t0, t1
+    addw a0, t0, s10
+    j .exit_func
+.exit_func:
+    addi sp, sp, 1360
+    ld s11, -1104(sp)
+    ld s10, -1112(sp)
+    ld s9, -1120(sp)
+    ld s8, -1128(sp)
+    ld s7, -1136(sp)
+    ld s6, -1144(sp)
+    ld s5, -1152(sp)
+    ld s4, -1160(sp)
+    ld s3, -1168(sp)
+    ld s2, -1176(sp)
+    ld s1, -1184(sp)
+    ld fp, -1192(sp)
+    ld ra, -1200(sp)
+    ret
+    .align 1
+main:
+.entry_main:
+    sd fp, -8(sp)
+    sd ra, -16(sp)
+    addi sp, sp, -24
+    addi fp, sp, 24
+    j .L1
+.L1:
+    addi t6, sp, 0
+    li t5, 2089018456
+    addi t4, sp, 4
+    li t3, 628175011
+    li t2, 1
+    li t1, 2
+    li t0, 9
+    sw t5, 0(t6)
+    sw t3, 0(t4)
+    sw t2, 0(t6)
+    lw t2, 0(t6)
+    mulw t0, t1, t0
+    addw t0, t2, t0
+    sw t0, 0(t4)
+    lw a0, 0(t6)
+    lw a1, 0(t4)
+    call func
+    call putint
+    call putline
+    j .exit_main
+.exit_main:
+    addi sp, sp, 24
+    ld fp, -8(sp)
+    ld ra, -16(sp)
+    ret

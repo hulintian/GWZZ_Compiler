@@ -1,0 +1,107 @@
+\doxysection{frontend\+::ast\+::Call Class Reference}
+\hypertarget{classfrontend_1_1ast_1_1Call}{}\label{classfrontend_1_1ast_1_1Call}\index{frontend::ast::Call@{frontend::ast::Call}}
+
+
+{\ttfamily \#include $<$AST.\+hpp$>$}
+
+Inheritance diagram for frontend\+::ast\+::Call\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classfrontend_1_1ast_1_1Call}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a6c14b3dd153fd62d01391e8d46b7c7b1}{Argument}} = std\+::variant$<$std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{Expr}}$>$, \mbox{\hyperlink{classfrontend_1_1ast_1_1StringLiteral}{String\+Literal}}$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a71133fdfba1f8c80e4a06b770103d559}{Call}} (\mbox{\hyperlink{classfrontend_1_1ast_1_1Ident}{Ident}} \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a6415740224e5add3f0a1bb51e22a78d2}{func}}, std\+::vector$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a6c14b3dd153fd62d01391e8d46b7c7b1}{Argument}} $>$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a596a681942a0f53d2ad83e701e5e9817}{args}}, unsigned \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a6a7b47c2f0689a71bde5dfc49dc3af59}{line}})
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a711b7ac1c14bd42e6f9fef590f548e84}{\texorpdfstring{$\sim$}{\string~}\+Call}} ()=default
+\item 
+const \mbox{\hyperlink{classfrontend_1_1ast_1_1Ident}{Ident}} \& \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a6415740224e5add3f0a1bb51e22a78d2}{func}} () const
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a6c14b3dd153fd62d01391e8d46b7c7b1}{Argument}} $>$ \& \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a596a681942a0f53d2ad83e701e5e9817}{args}} () const
+\item 
+unsigned \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a6a7b47c2f0689a71bde5dfc49dc3af59}{line}} () const
+\item 
+void \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_ae53048ec14ecaae67b3d61e781163c46}{print}} (std\+::ostream \&out, unsigned level) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{frontend\+::ast\+::\+Expr}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfrontend_1_1ast_1_1Expr_a2b66c5540dafeec062fe558ed1418a91}{Expr}} ()
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr_a8babdba13ed285059bc2106e169e8160}{\texorpdfstring{$\sim$}{\string~}\+Expr}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfrontend_1_1ast_1_1ASTNode}{frontend\+::ast\+::\+ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1ASTNode_aeebf803d00cd6d3210bbbc5838e791ed}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{frontend\+::ast\+::\+Expr}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::optional$<$ Type $>$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr_af829a4f128554df2b98aa07e04e0bce4}{type}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1Call_a6c14b3dd153fd62d01391e8d46b7c7b1}\index{frontend::ast::Call@{frontend::ast::Call}!Argument@{Argument}}
+\index{Argument@{Argument}!frontend::ast::Call@{frontend::ast::Call}}
+\doxysubsubsection{\texorpdfstring{Argument}{Argument}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1Call_a6c14b3dd153fd62d01391e8d46b7c7b1} 
+using \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a6c14b3dd153fd62d01391e8d46b7c7b1}{frontend\+::ast\+::\+Call\+::\+Argument}} = std\+::variant$<$std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{Expr}}$>$, \mbox{\hyperlink{classfrontend_1_1ast_1_1StringLiteral}{String\+Literal}}$>$}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1Call_a71133fdfba1f8c80e4a06b770103d559}\index{frontend::ast::Call@{frontend::ast::Call}!Call@{Call}}
+\index{Call@{Call}!frontend::ast::Call@{frontend::ast::Call}}
+\doxysubsubsection{\texorpdfstring{Call()}{Call()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1Call_a71133fdfba1f8c80e4a06b770103d559} 
+frontend\+::ast\+::\+Call\+::\+Call (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfrontend_1_1ast_1_1Ident}{Ident}}}]{func}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a6c14b3dd153fd62d01391e8d46b7c7b1}{Argument}} $>$}]{args}{, }\item[{unsigned}]{line}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1Call_a711b7ac1c14bd42e6f9fef590f548e84}\index{frontend::ast::Call@{frontend::ast::Call}!````~Call@{\texorpdfstring{$\sim$}{\string~}Call}}
+\index{````~Call@{\texorpdfstring{$\sim$}{\string~}Call}!frontend::ast::Call@{frontend::ast::Call}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Call()}{\string~Call()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1Call_a711b7ac1c14bd42e6f9fef590f548e84} 
+virtual frontend\+::ast\+::\+Call\+::\texorpdfstring{$\sim$}{\string~}\+Call (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1Call_a596a681942a0f53d2ad83e701e5e9817}\index{frontend::ast::Call@{frontend::ast::Call}!args@{args}}
+\index{args@{args}!frontend::ast::Call@{frontend::ast::Call}}
+\doxysubsubsection{\texorpdfstring{args()}{args()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1Call_a596a681942a0f53d2ad83e701e5e9817} 
+const std\+::vector$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Call_a6c14b3dd153fd62d01391e8d46b7c7b1}{Argument}} $>$ \& frontend\+::ast\+::\+Call\+::args (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1Call_a6415740224e5add3f0a1bb51e22a78d2}\index{frontend::ast::Call@{frontend::ast::Call}!func@{func}}
+\index{func@{func}!frontend::ast::Call@{frontend::ast::Call}}
+\doxysubsubsection{\texorpdfstring{func()}{func()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1Call_a6415740224e5add3f0a1bb51e22a78d2} 
+const \mbox{\hyperlink{classfrontend_1_1ast_1_1Ident}{Ident}} \& frontend\+::ast\+::\+Call\+::func (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1Call_a6a7b47c2f0689a71bde5dfc49dc3af59}\index{frontend::ast::Call@{frontend::ast::Call}!line@{line}}
+\index{line@{line}!frontend::ast::Call@{frontend::ast::Call}}
+\doxysubsubsection{\texorpdfstring{line()}{line()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1Call_a6a7b47c2f0689a71bde5dfc49dc3af59} 
+unsigned frontend\+::ast\+::\+Call\+::line (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1Call_ae53048ec14ecaae67b3d61e781163c46}\index{frontend::ast::Call@{frontend::ast::Call}!print@{print}}
+\index{print@{print}!frontend::ast::Call@{frontend::ast::Call}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1Call_ae53048ec14ecaae67b3d61e781163c46} 
+void Call\+::print (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out}{, }\item[{unsigned}]{level}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/frontend/\mbox{\hyperlink{AST_8hpp}{AST.\+hpp}}\item 
+src/frontend/\mbox{\hyperlink{AST_8cpp}{AST.\+cpp}}\end{DoxyCompactItemize}

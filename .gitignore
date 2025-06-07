@@ -16,6 +16,8 @@ build
 bin/
 gen
 tmp/
+tests/
 
+*.gdb
 /.cache/
 >>>>>>> 2cea2f5 (finish gramma)

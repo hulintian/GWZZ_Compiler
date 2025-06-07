@@ -1,0 +1,33 @@
+\doxysection{Module.\+hpp}
+\hypertarget{Module_8hpp_source}{}\label{Module_8hpp_source}\index{src/IR/Module.hpp@{src/IR/Module.hpp}}
+\mbox{\hyperlink{Module_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{GlobalVariable_8h}{IR/GlobalVariable.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Function_8hpp}{IR/Function.hpp}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Value_8hpp}{IR/Value.hpp}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceir}{ir}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }Function;}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1Module}{Module}}\{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ 维护函数信息}}
+\DoxyCodeLine{00018\ \ \ \ \ std::unordered\_map<std::string,\ Function*>\ \mbox{\hyperlink{classir_1_1Module_aeb0c263d48d4f69facb976fa2b22540d}{func\_table}};}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ 维护全局变量}}
+\DoxyCodeLine{00020\ \ \ \ \ std::unordered\_map<std::string,\ GlobalVariable*>\ \mbox{\hyperlink{classir_1_1Module_ae95cf54c78ee664d3d88112372577e75}{global\_variables}};}
+\DoxyCodeLine{00021\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ 函数列表}}
+\DoxyCodeLine{00023\ \ \ \ \ std::vector<Function*>\ \_functions;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ 全局变量列表}}
+\DoxyCodeLine{00025\ \ \ \ \ std::vector<GlobalVariable*>\ \_global\_variables;}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ \}}
+
+\end{DoxyCode}

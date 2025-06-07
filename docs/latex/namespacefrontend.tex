@@ -1,0 +1,68 @@
+\doxysection{frontend Namespace Reference}
+\hypertarget{namespacefrontend}{}\label{namespacefrontend}\index{frontend@{frontend}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacefrontend_1_1ast}{ast}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classfrontend_1_1ASTVisitor}{ASTVisitor}}
+\item 
+class \mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}}
+\item 
+class \mbox{\hyperlink{classfrontend_1_1GenIr}{Gen\+Ir}}
+\item 
+struct \mbox{\hyperlink{structfrontend_1_1Scope}{Scope}}
+\item 
+class \mbox{\hyperlink{classfrontend_1_1ScopeStack}{Scope\+Stack}}
+\item 
+class \mbox{\hyperlink{classfrontend_1_1Sema}{Sema}}
+\item 
+struct \mbox{\hyperlink{structfrontend_1_1SymbolTable}{Symbol\+Table}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::map$<$ std\+::string, std\+::shared\+\_\+ptr$<$ Var $>$ $>$ \mbox{\hyperlink{namespacefrontend_aca795ec177c374f9fada7442d5eeacee}{Var\+Tab}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespacefrontend_a4eba3d1550efa1663d60f30cd4166bbc}{type\+\_\+compatible}} (const Type \&t1, const Type \&t2)
+\item 
+Const\+Value \mbox{\hyperlink{namespacefrontend_a975951c8ca0cce1bb36a93885aa31752}{eval}} (Binary\+Op bop, const Const\+Value \&lhs, const Const\+Value \&rhs)
+\item 
+const std\+::shared\+\_\+ptr$<$ Var $>$ \& \mbox{\hyperlink{namespacefrontend_a738f1581eba409ae9903e6867a640eb3}{null\+Var}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespacefrontend_aca795ec177c374f9fada7442d5eeacee}\index{frontend@{frontend}!VarTab@{VarTab}}
+\index{VarTab@{VarTab}!frontend@{frontend}}
+\doxysubsubsection{\texorpdfstring{VarTab}{VarTab}}
+{\footnotesize\ttfamily \label{namespacefrontend_aca795ec177c374f9fada7442d5eeacee} 
+typedef std\+::map$<$std\+::string, std\+::shared\+\_\+ptr$<$Var$>$ $>$ \mbox{\hyperlink{namespacefrontend_aca795ec177c374f9fada7442d5eeacee}{frontend\+::\+Var\+Tab}}}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacefrontend_a975951c8ca0cce1bb36a93885aa31752}\index{frontend@{frontend}!eval@{eval}}
+\index{eval@{eval}!frontend@{frontend}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily \label{namespacefrontend_a975951c8ca0cce1bb36a93885aa31752} 
+Const\+Value frontend\+::eval (\begin{DoxyParamCaption}\item[{Binary\+Op}]{bop}{, }\item[{const Const\+Value \&}]{lhs}{, }\item[{const Const\+Value \&}]{rhs}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespacefrontend_a738f1581eba409ae9903e6867a640eb3}\index{frontend@{frontend}!nullVar@{nullVar}}
+\index{nullVar@{nullVar}!frontend@{frontend}}
+\doxysubsubsection{\texorpdfstring{nullVar()}{nullVar()}}
+{\footnotesize\ttfamily \label{namespacefrontend_a738f1581eba409ae9903e6867a640eb3} 
+const std\+::shared\+\_\+ptr$<$ Var $>$ \& frontend\+::null\+Var (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{namespacefrontend_a4eba3d1550efa1663d60f30cd4166bbc}\index{frontend@{frontend}!type\_compatible@{type\_compatible}}
+\index{type\_compatible@{type\_compatible}!frontend@{frontend}}
+\doxysubsubsection{\texorpdfstring{type\_compatible()}{type\_compatible()}}
+{\footnotesize\ttfamily \label{namespacefrontend_a4eba3d1550efa1663d60f30cd4166bbc} 
+bool frontend\+::type\+\_\+compatible (\begin{DoxyParamCaption}\item[{const Type \&}]{t1}{, }\item[{const Type \&}]{t2}{}\end{DoxyParamCaption})}
+

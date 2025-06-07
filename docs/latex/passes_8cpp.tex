@@ -1,0 +1,31 @@
+\doxysection{src/backend/passes.cpp File Reference}
+\hypertarget{passes_8cpp}{}\label{passes_8cpp}\index{src/backend/passes.cpp@{src/backend/passes.cpp}}
+{\ttfamily \#include "{}backend/passes.\+hpp"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$set$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacebackend}{backend}}
+\item 
+namespace \mbox{\hyperlink{namespacebackend_1_1riscv}{backend\+::riscv}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_a79738b4a7b971edb54e6f9e5da9156b4}{backend\+::riscv\+::backend\+\_\+passes}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Program}{Program}} \texorpdfstring{$\ast$}{*}prog)
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_a56decd2a7461c2222567e45a44acd1c5}{backend\+::riscv\+::tail\+\_\+duplication}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Program}{Program}} \texorpdfstring{$\ast$}{*}prog, \mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}func)
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_a35ed6bbde584f9267a76027208cec5fc}{backend\+::riscv\+::post\+\_\+order\+\_\+dfs}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}bb, std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \&visited\+\_\+bbs, std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \&order)
+\item 
+bool \mbox{\hyperlink{namespacebackend_1_1riscv_abe7a6b7d7989286a906158c879bbd7ab}{backend\+::riscv\+::clean\+\_\+cf\+\_\+one\+\_\+pass}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}func)
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_a4d57f49ff3b030b7a15217181425954e}{backend\+::riscv\+::clean\+\_\+control\+\_\+flow}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}func)
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_a7894a40baf6b37b8b2faa957f4829822}{backend\+::riscv\+::remove\+\_\+useless\+\_\+load}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}func)
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_aaec506d923834473e3fa768b206a5cb5}{backend\+::riscv\+::remove\+\_\+useless\+\_\+inst}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}func)
+\end{DoxyCompactItemize}

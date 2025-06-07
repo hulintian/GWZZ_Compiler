@@ -1,0 +1,186 @@
+\doxysection{backend\+::riscv\+::Riscv\+Instr\+::Load\+Double Class Reference}
+\hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble}{}\label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+
+
+{\ttfamily \#include $<$instr.\+hpp$>$}
+
+Inheritance diagram for backend\+::riscv\+::Riscv\+Instr\+::Load\+Double\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a0d233b0c53ac984d6124c9432e7b19d9}{change\+Offset}} (int32\+\_\+t new\+\_\+offset)
+\item 
+bool \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_abdbf94fed85dde54e2f16a9c94a12f04}{offset\+Zero}} ()
+\item 
+\mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a121909e2b79a67da07c541529becebf2}{Load\+Double}} (const Reg \&\+\_\+dst, const Reg \&\+\_\+base, int32\+\_\+t \+\_\+offset, bool isspill=false, bool cs=false)
+\item 
+virtual std\+::vector$<$ Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_aa2420bf0248aa3fe239a127e2b9c5ef4}{def\+\_\+reg}} () override
+\item 
+virtual std\+::vector$<$ Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_ad392616a90fe28bb2646f78289351c51}{use\+\_\+reg}} () override
+\item 
+virtual std\+::vector$<$ Reg \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a23bcbddaf4a8e996a60fbdf190f7c1c2}{regs}} () override
+\item 
+virtual \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a196dec1388c7660adb94e9bc3436b81c}{tonative}} (std\+::vector$<$ Reg $>$ \+\_\+def, std\+::vector$<$ Reg $>$ \+\_\+use) override
+\item 
+virtual void \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a3b13671898c35881a4487950e4bfc271}{gen\+\_\+asm}} (std\+::ostream \&out) override
+\item 
+bool \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_aca0501d756292b63a596595f6581de39}{is\+\_\+spill\+\_\+load}} ()
+\item 
+Reg \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_aed52491ac528965b5869386963c3da8c}{get\+\_\+base}} ()
+\item 
+Reg \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a7cf31cf0994cfb0f102996c71c3113f9}{get\+\_\+dst}} ()
+\item 
+int32\+\_\+t \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_ab4fd1b1f7174c933c9668c871f804d5f}{get\+\_\+offset}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{backend\+::riscv\+::\+Instr}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a1509ab4ebe934ee216d29172d7fdf771}{replace\+\_\+reg}} (Reg src, Reg dst)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a9c9f947f5fbfdc01b7166cef0e09474d}{is\+\_\+for\+\_\+func}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{backend\+::riscv\+::\+Instr}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::set$<$ Riscv\+Reg\+::\+Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a00e2981a30c8c60e421e94975d7c99db}{live\+\_\+in}}
+\item 
+std\+::set$<$ Riscv\+Reg\+::\+Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a181aab3c8d595a81edc4101f0b63c1d3}{live\+\_\+out}}
+\item 
+std\+::unordered\+\_\+set$<$ std\+::pair$<$ int, \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$ $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_ae41f1fc9a6810a7d0ab43d9994b96c11}{edges\+\_\+out}}
+\item 
+std\+::unordered\+\_\+set$<$ std\+::pair$<$ int, \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$ $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a2497679fb19b1eb3b31e48670a38c662}{edges\+\_\+in}}
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_ad6f98c6ed0f40616be65632cb5283a01}{rely\+\_\+count}} = 0
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a3709888d96272c7dfd0be4700fc714c7}{latency}}
+\item 
+\mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768}{Operation\+Type}} \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a4aa056b5252fce7e4b0a1828e19f4e99}{type}}
+\item 
+bool \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_ab0d6166c0c3c43b9ca41cfb59402e36b}{finished}} = false
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a5b9189665dc2141155d4ff4ebba25647}{start\+\_\+time}}
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_afd70113ef95cdf2eb1279feb3c760ea8}{cost}}
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a96de9decd82026954d1460c71cb949ec}{temp}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a121909e2b79a67da07c541529becebf2}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!LoadDouble@{LoadDouble}}
+\index{LoadDouble@{LoadDouble}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{LoadDouble()}{LoadDouble()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a121909e2b79a67da07c541529becebf2} 
+backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::\+Load\+Double (\begin{DoxyParamCaption}\item[{const Reg \&}]{\+\_\+dst}{, }\item[{const Reg \&}]{\+\_\+base}{, }\item[{int32\+\_\+t}]{\+\_\+offset}{, }\item[{bool}]{isspill}{ = {\ttfamily false}, }\item[{bool}]{cs}{ = {\ttfamily false}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a0d233b0c53ac984d6124c9432e7b19d9}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!changeOffset@{changeOffset}}
+\index{changeOffset@{changeOffset}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{changeOffset()}{changeOffset()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a0d233b0c53ac984d6124c9432e7b19d9} 
+void backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::change\+Offset (\begin{DoxyParamCaption}\item[{int32\+\_\+t}]{new\+\_\+offset}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_aa2420bf0248aa3fe239a127e2b9c5ef4}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!def\_reg@{def\_reg}}
+\index{def\_reg@{def\_reg}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{def\_reg()}{def\_reg()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_aa2420bf0248aa3fe239a127e2b9c5ef4} 
+virtual std\+::vector$<$ Reg $>$ backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::def\+\_\+reg (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a7995d42d88f5deecde447380a5894c77}{backend\+::riscv\+::\+Instr}}.
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a3b13671898c35881a4487950e4bfc271}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!gen\_asm@{gen\_asm}}
+\index{gen\_asm@{gen\_asm}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{gen\_asm()}{gen\_asm()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a3b13671898c35881a4487950e4bfc271} 
+virtual void backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::gen\+\_\+asm (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a084cd7d989187b62bc41831ef805a6f0}{backend\+::riscv\+::\+Instr}}.
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_aed52491ac528965b5869386963c3da8c}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!get\_base@{get\_base}}
+\index{get\_base@{get\_base}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{get\_base()}{get\_base()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_aed52491ac528965b5869386963c3da8c} 
+Reg backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::get\+\_\+base (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a7cf31cf0994cfb0f102996c71c3113f9}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!get\_dst@{get\_dst}}
+\index{get\_dst@{get\_dst}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{get\_dst()}{get\_dst()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a7cf31cf0994cfb0f102996c71c3113f9} 
+Reg backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::get\+\_\+dst (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_ab4fd1b1f7174c933c9668c871f804d5f}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!get\_offset@{get\_offset}}
+\index{get\_offset@{get\_offset}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{get\_offset()}{get\_offset()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_ab4fd1b1f7174c933c9668c871f804d5f} 
+int32\+\_\+t backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::get\+\_\+offset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_aca0501d756292b63a596595f6581de39}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!is\_spill\_load@{is\_spill\_load}}
+\index{is\_spill\_load@{is\_spill\_load}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{is\_spill\_load()}{is\_spill\_load()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_aca0501d756292b63a596595f6581de39} 
+bool backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::is\+\_\+spill\+\_\+load (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_abdbf94fed85dde54e2f16a9c94a12f04}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!offsetZero@{offsetZero}}
+\index{offsetZero@{offsetZero}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{offsetZero()}{offsetZero()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_abdbf94fed85dde54e2f16a9c94a12f04} 
+bool backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::offset\+Zero (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a23bcbddaf4a8e996a60fbdf190f7c1c2}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!regs@{regs}}
+\index{regs@{regs}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{regs()}{regs()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a23bcbddaf4a8e996a60fbdf190f7c1c2} 
+virtual std\+::vector$<$ Reg \texorpdfstring{$\ast$}{*} $>$ backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::regs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a486c4cab6c5c52ff595f3cf9f05cf563}{backend\+::riscv\+::\+Instr}}.
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a196dec1388c7660adb94e9bc3436b81c}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!tonative@{tonative}}
+\index{tonative@{tonative}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{tonative()}{tonative()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a196dec1388c7660adb94e9bc3436b81c} 
+virtual \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::tonative (\begin{DoxyParamCaption}\item[{std\+::vector$<$ Reg $>$}]{\+\_\+def}{, }\item[{std\+::vector$<$ Reg $>$}]{\+\_\+use}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a5517c2d4a85760c014a43f26b0a1aa92}{backend\+::riscv\+::\+Instr}}.
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_ad392616a90fe28bb2646f78289351c51}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!use\_reg@{use\_reg}}
+\index{use\_reg@{use\_reg}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{use\_reg()}{use\_reg()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_ad392616a90fe28bb2646f78289351c51} 
+virtual std\+::vector$<$ Reg $>$ backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::use\+\_\+reg (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_af080722dec46b1743e24014c4252f2af}{backend\+::riscv\+::\+Instr}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a9c9f947f5fbfdc01b7166cef0e09474d}\index{backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}!is\_for\_func@{is\_for\_func}}
+\index{is\_for\_func@{is\_for\_func}!backend::riscv::RiscvInstr::LoadDouble@{backend::riscv::RiscvInstr::LoadDouble}}
+\doxysubsubsection{\texorpdfstring{is\_for\_func}{is\_for\_func}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble_a9c9f947f5fbfdc01b7166cef0e09474d} 
+bool backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double\+::is\+\_\+for\+\_\+func}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/backend/\mbox{\hyperlink{instr_8hpp}{instr.\+hpp}}\end{DoxyCompactItemize}

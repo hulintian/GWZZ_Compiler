@@ -1,0 +1,251 @@
+\doxysection{frontend\+::Func\+Emitter Class Reference}
+\hypertarget{classfrontend_1_1FuncEmitter}{}\label{classfrontend_1_1FuncEmitter}\index{frontend::FuncEmitter@{frontend::FuncEmitter}}
+
+
+{\ttfamily \#include $<$func\+Emitter.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a79918b081d9160683b5fc649e74ec49d}{Func\+Emitter}} (\mbox{\hyperlink{classmidend_1_1ir_1_1Module}{Module}} \texorpdfstring{$\ast$}{*}parent, Type var\+\_\+type, \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Label}{instruction\+::\+Label}} entry, int num\+Args)
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1FuncEmitter_acf1f750ee0566b195dd9a38a27019f3e}{\texorpdfstring{$\sim$}{\string~}\+Func\+Emitter}} ()
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a0bf577d18a0eae548300aca614e2ff11}{new\+\_\+bb}} ()
+\item 
+int \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a7b558f92266e0a4826d637a13b95d145}{get\+Used\+BB}} ()
+\item 
+void \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a48b831f315bc5bf02b67cab6464908d1}{new\+\_\+instruction}} (\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{Instruction}} \texorpdfstring{$\ast$}{*}ins)
+\item 
+int \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a1f28ce9e2714f9cf52927c8fa6e6afd3}{get\+Used\+Temp}} ()
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_afb4f03c99ba6df89abf37e20082fc176}{fresh\+Temp}} (Type type)
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir\+::\+Function}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a31100f183b48b2174a3db946c8dfc08e}{visit\+End}} ()
+\item 
+void \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a0bc338e50420a27c657e3bd54b445a54}{open\+Loop}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}break\+\_\+bb, \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}continue\+\_\+bb)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a99db94ec3c7eef3b1e7d9936abc8d514}{close\+Loop}} ()
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a7c5d8296a67239b6082b6fafe8f47348}{get\+Loop\+Break\+BB}} ()
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a565573f73ddfe0e87b11fb344ecfb0ca}{get\+Loop\+Continue\+BB}} ()
+\item 
+void \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a2b8df138fb72cd386fe3604657bc4b4e}{visit\+Alloca}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}temp, Type type)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a11cec09a75e8035233affd793dcaa398}{visit\+Assignment}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}src)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_ad4460d6d823c50426c960e9f6cc34fc5}{visit\+Literal}} (Const\+Value immediate, Type type)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1FuncEmitter_ae14f9024ff63a211be1f7c828007879b}{visit\+Return}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}ret=nullptr)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a5184183e368af0e5992b9cc8ea0dcb15}{visit\+Load\+Addr}} (Type type, std\+::string name)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a53469d2878ffba8376b3b17c26e4cd82}{visit\+Load}} (Type type, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}addr, bool not\+\_\+delete)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_ad6f3601b7550d2008127de97251d8487}{visit\+Element\+Ptr}} (Type type, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}addr, std\+::vector$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} $>$ indices)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a0d85db36961ce3dc8853ab1d0c8998cb}{visit\+Store}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}addr, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}value, bool not\+\_\+delete, int offset=0)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_aa780f21c3b350345ebcbdf431d55dfe5}{visit\+Binary}} (Binary\+Op op, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}lhs, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}rhs, Type type)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_afb1f6f59c4499347485c16f3e941a2c6}{visit\+Unary}} (Unary\+Op op, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}src, Type type)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a248213e6ba48afc820dc89475769502f}{visit\+Call}} (\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir\+::\+Function}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a8219ca3c21013e251e3ff5ead29867ef}{func}}, std\+::vector$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} $>$ args\+\_\+temp)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1FuncEmitter_ae35a8ca44f392f64aabe057c8a5c7426}{visit\+Cond\+Branch}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}cond, \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}true\+\_\+bb, \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}false\+\_\+bb)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a27f3115f99f7a4c2150bdd88fb81c991}{visit\+Cast}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}src, Type type)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir\+::\+Function}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a8219ca3c21013e251e3ff5ead29867ef}{func}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a9e75c46758e996b88ec3009cc34f4a7f}{cur\+\_\+bb}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a1316716f95c2dc121b3bf2b68f80eef0}{global\+\_\+map}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfrontend_1_1FuncEmitter_a79918b081d9160683b5fc649e74ec49d}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!FuncEmitter@{FuncEmitter}}
+\index{FuncEmitter@{FuncEmitter}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{FuncEmitter()}{FuncEmitter()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a79918b081d9160683b5fc649e74ec49d} 
+frontend\+::\+Func\+Emitter\+::\+Func\+Emitter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1Module}{Module}} \texorpdfstring{$\ast$}{*}}]{parent}{, }\item[{Type}]{var\+\_\+type}{, }\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Label}{instruction\+::\+Label}}}]{entry}{, }\item[{int}]{num\+Args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_acf1f750ee0566b195dd9a38a27019f3e}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!````~FuncEmitter@{\texorpdfstring{$\sim$}{\string~}FuncEmitter}}
+\index{````~FuncEmitter@{\texorpdfstring{$\sim$}{\string~}FuncEmitter}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}FuncEmitter()}{\string~FuncEmitter()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_acf1f750ee0566b195dd9a38a27019f3e} 
+virtual frontend\+::\+Func\+Emitter\+::\texorpdfstring{$\sim$}{\string~}\+Func\+Emitter (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfrontend_1_1FuncEmitter_a99db94ec3c7eef3b1e7d9936abc8d514}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!closeLoop@{closeLoop}}
+\index{closeLoop@{closeLoop}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{closeLoop()}{closeLoop()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a99db94ec3c7eef3b1e7d9936abc8d514} 
+void frontend\+::\+Func\+Emitter\+::close\+Loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_afb4f03c99ba6df89abf37e20082fc176}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!freshTemp@{freshTemp}}
+\index{freshTemp@{freshTemp}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{freshTemp()}{freshTemp()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_afb4f03c99ba6df89abf37e20082fc176} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::fresh\+Temp (\begin{DoxyParamCaption}\item[{Type}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a7c5d8296a67239b6082b6fafe8f47348}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!getLoopBreakBB@{getLoopBreakBB}}
+\index{getLoopBreakBB@{getLoopBreakBB}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{getLoopBreakBB()}{getLoopBreakBB()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a7c5d8296a67239b6082b6fafe8f47348} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::get\+Loop\+Break\+BB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a565573f73ddfe0e87b11fb344ecfb0ca}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!getLoopContinueBB@{getLoopContinueBB}}
+\index{getLoopContinueBB@{getLoopContinueBB}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{getLoopContinueBB()}{getLoopContinueBB()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a565573f73ddfe0e87b11fb344ecfb0ca} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::get\+Loop\+Continue\+BB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a7b558f92266e0a4826d637a13b95d145}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!getUsedBB@{getUsedBB}}
+\index{getUsedBB@{getUsedBB}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{getUsedBB()}{getUsedBB()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a7b558f92266e0a4826d637a13b95d145} 
+int frontend\+::\+Func\+Emitter\+::get\+Used\+BB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a1f28ce9e2714f9cf52927c8fa6e6afd3}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!getUsedTemp@{getUsedTemp}}
+\index{getUsedTemp@{getUsedTemp}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{getUsedTemp()}{getUsedTemp()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a1f28ce9e2714f9cf52927c8fa6e6afd3} 
+int frontend\+::\+Func\+Emitter\+::get\+Used\+Temp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a0bf577d18a0eae548300aca614e2ff11}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!new\_bb@{new\_bb}}
+\index{new\_bb@{new\_bb}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{new\_bb()}{new\_bb()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a0bf577d18a0eae548300aca614e2ff11} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::new\+\_\+bb (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a48b831f315bc5bf02b67cab6464908d1}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!new\_instruction@{new\_instruction}}
+\index{new\_instruction@{new\_instruction}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{new\_instruction()}{new\_instruction()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a48b831f315bc5bf02b67cab6464908d1} 
+void frontend\+::\+Func\+Emitter\+::new\+\_\+instruction (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{Instruction}} \texorpdfstring{$\ast$}{*}}]{ins}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a0bc338e50420a27c657e3bd54b445a54}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!openLoop@{openLoop}}
+\index{openLoop@{openLoop}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{openLoop()}{openLoop()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a0bc338e50420a27c657e3bd54b445a54} 
+void frontend\+::\+Func\+Emitter\+::open\+Loop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{break\+\_\+bb}{, }\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{continue\+\_\+bb}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a2b8df138fb72cd386fe3604657bc4b4e}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitAlloca@{visitAlloca}}
+\index{visitAlloca@{visitAlloca}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitAlloca()}{visitAlloca()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a2b8df138fb72cd386fe3604657bc4b4e} 
+void frontend\+::\+Func\+Emitter\+::visit\+Alloca (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{temp}{, }\item[{Type}]{type}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a11cec09a75e8035233affd793dcaa398}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitAssignment@{visitAssignment}}
+\index{visitAssignment@{visitAssignment}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitAssignment()}{visitAssignment()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a11cec09a75e8035233affd793dcaa398} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::visit\+Assignment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{src}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_aa780f21c3b350345ebcbdf431d55dfe5}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitBinary@{visitBinary}}
+\index{visitBinary@{visitBinary}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitBinary()}{visitBinary()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_aa780f21c3b350345ebcbdf431d55dfe5} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::visit\+Binary (\begin{DoxyParamCaption}\item[{Binary\+Op}]{op}{, }\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{lhs}{, }\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{rhs}{, }\item[{Type}]{type}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a248213e6ba48afc820dc89475769502f}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitCall@{visitCall}}
+\index{visitCall@{visitCall}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitCall()}{visitCall()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a248213e6ba48afc820dc89475769502f} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::visit\+Call (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir\+::\+Function}} \texorpdfstring{$\ast$}{*}}]{func}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} $>$}]{args\+\_\+temp}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a27f3115f99f7a4c2150bdd88fb81c991}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitCast@{visitCast}}
+\index{visitCast@{visitCast}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitCast()}{visitCast()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a27f3115f99f7a4c2150bdd88fb81c991} 
+void frontend\+::\+Func\+Emitter\+::visit\+Cast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{src}{, }\item[{Type}]{type}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_ae35a8ca44f392f64aabe057c8a5c7426}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitCondBranch@{visitCondBranch}}
+\index{visitCondBranch@{visitCondBranch}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitCondBranch()}{visitCondBranch()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_ae35a8ca44f392f64aabe057c8a5c7426} 
+void frontend\+::\+Func\+Emitter\+::visit\+Cond\+Branch (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{cond}{, }\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{true\+\_\+bb}{, }\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{false\+\_\+bb}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_ad6f3601b7550d2008127de97251d8487}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitElementPtr@{visitElementPtr}}
+\index{visitElementPtr@{visitElementPtr}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitElementPtr()}{visitElementPtr()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_ad6f3601b7550d2008127de97251d8487} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::visit\+Element\+Ptr (\begin{DoxyParamCaption}\item[{Type}]{type}{, }\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{addr}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} $>$}]{indices}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a31100f183b48b2174a3db946c8dfc08e}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitEnd@{visitEnd}}
+\index{visitEnd@{visitEnd}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitEnd()}{visitEnd()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a31100f183b48b2174a3db946c8dfc08e} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir\+::\+Function}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::visit\+End (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_ad4460d6d823c50426c960e9f6cc34fc5}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitLiteral@{visitLiteral}}
+\index{visitLiteral@{visitLiteral}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitLiteral()}{visitLiteral()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_ad4460d6d823c50426c960e9f6cc34fc5} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::visit\+Literal (\begin{DoxyParamCaption}\item[{Const\+Value}]{immediate}{, }\item[{Type}]{type}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a53469d2878ffba8376b3b17c26e4cd82}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitLoad@{visitLoad}}
+\index{visitLoad@{visitLoad}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitLoad()}{visitLoad()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a53469d2878ffba8376b3b17c26e4cd82} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::visit\+Load (\begin{DoxyParamCaption}\item[{Type}]{type}{, }\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{addr}{, }\item[{bool}]{not\+\_\+delete}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a5184183e368af0e5992b9cc8ea0dcb15}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitLoadAddr@{visitLoadAddr}}
+\index{visitLoadAddr@{visitLoadAddr}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitLoadAddr()}{visitLoadAddr()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a5184183e368af0e5992b9cc8ea0dcb15} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::visit\+Load\+Addr (\begin{DoxyParamCaption}\item[{Type}]{type}{, }\item[{std\+::string}]{name}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_ae14f9024ff63a211be1f7c828007879b}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitReturn@{visitReturn}}
+\index{visitReturn@{visitReturn}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitReturn()}{visitReturn()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_ae14f9024ff63a211be1f7c828007879b} 
+void frontend\+::\+Func\+Emitter\+::visit\+Return (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{ret}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a0d85db36961ce3dc8853ab1d0c8998cb}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitStore@{visitStore}}
+\index{visitStore@{visitStore}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitStore()}{visitStore()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a0d85db36961ce3dc8853ab1d0c8998cb} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::visit\+Store (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{addr}{, }\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{value}{, }\item[{bool}]{not\+\_\+delete}{, }\item[{int}]{offset}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_afb1f6f59c4499347485c16f3e941a2c6}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!visitUnary@{visitUnary}}
+\index{visitUnary@{visitUnary}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{visitUnary()}{visitUnary()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_afb1f6f59c4499347485c16f3e941a2c6} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::visit\+Unary (\begin{DoxyParamCaption}\item[{Unary\+Op}]{op}{, }\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{src}{, }\item[{Type}]{type}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfrontend_1_1FuncEmitter_a9e75c46758e996b88ec3009cc34f4a7f}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!cur\_bb@{cur\_bb}}
+\index{cur\_bb@{cur\_bb}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{cur\_bb}{cur\_bb}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a9e75c46758e996b88ec3009cc34f4a7f} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}}\texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::cur\+\_\+bb}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a8219ca3c21013e251e3ff5ead29867ef}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!func@{func}}
+\index{func@{func}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{func}{func}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a8219ca3c21013e251e3ff5ead29867ef} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir\+::\+Function}}\texorpdfstring{$\ast$}{*} frontend\+::\+Func\+Emitter\+::func}
+
+\Hypertarget{classfrontend_1_1FuncEmitter_a1316716f95c2dc121b3bf2b68f80eef0}\index{frontend::FuncEmitter@{frontend::FuncEmitter}!global\_map@{global\_map}}
+\index{global\_map@{global\_map}!frontend::FuncEmitter@{frontend::FuncEmitter}}
+\doxysubsubsection{\texorpdfstring{global\_map}{global\_map}}
+{\footnotesize\ttfamily \label{classfrontend_1_1FuncEmitter_a1316716f95c2dc121b3bf2b68f80eef0} 
+std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{classTemp}{Temp}}\texorpdfstring{$\ast$}{*}$>$ frontend\+::\+Func\+Emitter\+::global\+\_\+map}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/frontend/\mbox{\hyperlink{funcEmitter_8hpp}{func\+Emitter.\+hpp}}\item 
+src/frontend/\mbox{\hyperlink{funcEmitter_8cpp}{func\+Emitter.\+cpp}}\end{DoxyCompactItemize}
