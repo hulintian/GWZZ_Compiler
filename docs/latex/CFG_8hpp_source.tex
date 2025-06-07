@@ -1,0 +1,79 @@
+\doxysection{CFG.\+hpp}
+\hypertarget{CFG_8hpp_source}{}\label{CFG_8hpp_source}\index{src/IR/CFG.hpp@{src/IR/CFG.hpp}}
+\mbox{\hyperlink{CFG_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{IR_8hpp}{IR/IR.hpp}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{temp_8hpp}{IR/temp.hpp}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <list>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacemidend}{midend}}\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmidend_1_1CFG}{CFG}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00011\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir::Function}}\ *func;}
+\DoxyCodeLine{00012\ \ \ \ \ std::list<int>\ bb\_list;}
+\DoxyCodeLine{00013\ \ \ \ \ std::unordered\_set<int>\ jump\_in\_bb;}
+\DoxyCodeLine{00014\ \ \ \ \ std::unordered\_map<int,\ ir::BasicBlock\ *>\ bb\_map;}
+\DoxyCodeLine{00015\ \ \ \ \ std::unordered\_map<int,\ std::unordered\_set<int>>\ bb\_prev;}
+\DoxyCodeLine{00016\ \ \ \ \ std::unordered\_map<int,\ std::unordered\_set<int>>\ bb\_succ;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ add\_edge(\textcolor{keywordtype}{int}\ from,\ \textcolor{keywordtype}{int}\ to);}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ build\_bb\_edge();}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ remove\_unreachable\_bb();\ \textcolor{comment}{//\ proceed\ in\ build\_bb\_edge()}}
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1CFG_a730e06e0648cb664320ae940b451f6c1}{CFG}}(\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir::Function}}\ *func);}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir::Function}}*\ \mbox{\hyperlink{classmidend_1_1CFG_a60ab6cf0b1abb1d445ec5a6e0d13493d}{get\_func}}()\ \{\ \textcolor{keywordflow}{return}\ func;\ \}}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{inline}\ std::list<int>*\ \mbox{\hyperlink{classmidend_1_1CFG_aac125b82c69ffd5a67d65e30685e0887}{get\_bb\_list}}()\ \{\ \textcolor{keywordflow}{return}\ \&bb\_list;\ \}}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{inline}\ std::unordered\_map<int,\ ir::BasicBlock\ *>*\ \mbox{\hyperlink{classmidend_1_1CFG_aa92c0f64178cc6ecb5e72c1916d07432}{get\_bb\_map}}()\ \{\ \textcolor{keywordflow}{return}\ \&bb\_map;\ \}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{inline}\ std::unordered\_map<int,\ std::unordered\_set<int>>*\ \mbox{\hyperlink{classmidend_1_1CFG_aba463c0933ca18bd87dfa82005f0cc94}{get\_bb\_prev\_map}}()\ \{\ \textcolor{keywordflow}{return}\ \&bb\_prev;\ \}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{inline}\ std::unordered\_map<int,\ std::unordered\_set<int>>*\ \mbox{\hyperlink{classmidend_1_1CFG_a3d7e9ac9a09458e6aa7958127bbd266b}{get\_bb\_succ\_map}}()\ \{\ \textcolor{keywordflow}{return}\ \&bb\_succ;\ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}*\ \mbox{\hyperlink{classmidend_1_1CFG_a67ee0b060765d554b2a6448b20f736bc}{get\_bb}}(\textcolor{keywordtype}{int}\ bb)\ \{\ \textcolor{keywordflow}{return}\ bb\_map[bb];\ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{inline}\ std::unordered\_set<int>*\ \mbox{\hyperlink{classmidend_1_1CFG_a11a0035e625cb40f5fd239e046d82659}{get\_bb\_prev}}(\textcolor{keywordtype}{int}\ bb)\ \{\ \textcolor{keywordflow}{return}\ \&bb\_prev[bb];\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{inline}\ std::unordered\_set<int>*\ \mbox{\hyperlink{classmidend_1_1CFG_a504c1b3564f8f169abf5fb2ad7b9d6ca}{get\_bb\_succ}}(\textcolor{keywordtype}{int}\ bb)\ \{\ \textcolor{keywordflow}{return}\ \&bb\_succ[bb];\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ std::unordered\_set<ir::BasicBlock*>\ \mbox{\hyperlink{classmidend_1_1CFG_a953cc316426aab069fbb2cbe4766116f}{prev}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}*\ bb)\ \{\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ std::unordered\_set<ir::BasicBlock*>\ prevs;}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ i:\ *\mbox{\hyperlink{classmidend_1_1CFG_a11a0035e625cb40f5fd239e046d82659}{get\_bb\_prev}}(bb-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()))\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ prevs.insert(\mbox{\hyperlink{classmidend_1_1CFG_a67ee0b060765d554b2a6448b20f736bc}{get\_bb}}(i));}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ prevs;}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ \ \ \ \ std::unordered\_set<ir::BasicBlock*>\ \mbox{\hyperlink{classmidend_1_1CFG_a1963b9106b45320b78e79da862dfb0b8}{succ}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}*\ bb)\ \{\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ std::unordered\_set<ir::BasicBlock*>\ succs;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ i:\ *\mbox{\hyperlink{classmidend_1_1CFG_a504c1b3564f8f169abf5fb2ad7b9d6ca}{get\_bb\_succ}}(bb-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()))\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ succs.insert(\mbox{\hyperlink{classmidend_1_1CFG_a67ee0b060765d554b2a6448b20f736bc}{get\_bb}}(i));}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ succs;}
+\DoxyCodeLine{00043\ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmidend_1_1CFG_a8ffebc3821d640c3ea834909dbb3283f}{erase\_from\_prev}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}*\ bb,\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}*\ other)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ bb\_prev.at(bb-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()).erase(other-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}());}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmidend_1_1CFG_a55f4a47ab48ec1aa983803d7b95167f1}{erase\_from\_succ}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}*\ bb,\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}*\ other)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ bb\_succ.at(bb-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()).erase(other-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}());}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmidend_1_1CFG_a008a06117c2e800b83aa2952dc51490f}{insert\_succ}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}*\ bb,\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}*\ other)\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bb\_succ.count(bb-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()))}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ bb\_succ.at(bb-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()).insert(other-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}());}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ bb\_succ[bb-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()]\ =\ \{other-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()\};}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmidend_1_1CFG_aab3c4bc7f2738061b51db12b15373ce1}{insert\_prev}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}*\ bb,\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}*\ other)\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bb\_prev.count(bb-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()))}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ bb\_prev.at(bb-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()).insert(other-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}());}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ bb\_prev[bb-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()]\ =\ \{other-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a55f903c998528d8a0fb6baa3f57ded5d}{get\_index}}()\};}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmidend_1_1CFG_aa1e4803ae9bebd65b351bd2644508753}{print}}();}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmidend_1_1CFG_a9b58607f6ac079a74a8fd1565903a017}{rebuild}}();}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmidend_1_1CFG_a09c9bcd5efafcf304c00a2f9489e8020}{change\_succ}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *now\_bb,\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *old\_bb,\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *new\_bb);}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmidend_1_1CFG_a98dbd202b7a6aae6645a10e909452cea}{change\_prev}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *now\_bb,\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *old\_bb,\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *new\_bb);}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ not\ inpl}}
+\DoxyCodeLine{00067\ \textcolor{comment}{//\ \ \ \ \ void\ compute\_dom\_level(ir::BasicBlock\ *bb,\ int\ dom\_level);}}
+\DoxyCodeLine{00068\ \textcolor{comment}{//\ \ \ \ \ void\ compute\_dom();}}
+\DoxyCodeLine{00069\ \textcolor{comment}{//\ \ \ \ \ void\ compute\_rpo();}}
+\DoxyCodeLine{00070\ \textcolor{comment}{//\ \ \ \ \ void\ loop\_analysis();}}
+\DoxyCodeLine{00071\ \};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \}\ \textcolor{comment}{//\ namespace\ middleend}}
+
+\end{DoxyCode}

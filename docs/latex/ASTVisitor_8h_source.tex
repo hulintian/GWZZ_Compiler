@@ -5,256 +5,118 @@
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}grammar/Sysy22BaseVisitor.h"{}}}
-\DoxyCodeLine{00004\ }
-\DoxyCodeLine{00005\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classASTVisitor}{ASTVisitor}}\ :\ \textcolor{keyword}{public}\ Sysy22BaseVisitor\ \{}
-\DoxyCodeLine{00006\ }
-\DoxyCodeLine{00007\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitProg(Sysy22Parser::ProgContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00009\ \ \ \}}
-\DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitCompUnits(Sysy22Parser::CompUnitsContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00013\ \ \ \}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitCompUnit(Sysy22Parser::CompUnitContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00017\ \ \ \}}
-\DoxyCodeLine{00018\ }
-\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitDecl(Sysy22Parser::DeclContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00021\ \ \ \}}
-\DoxyCodeLine{00022\ }
-\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitConstDecl(Sysy22Parser::ConstDeclContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00025\ \ \ \}}
-\DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitConstDef(Sysy22Parser::ConstDefContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00029\ \ \ \}}
-\DoxyCodeLine{00030\ }
-\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitVarDecl(Sysy22Parser::VarDeclContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00033\ \ \ \}}
-\DoxyCodeLine{00034\ }
-\DoxyCodeLine{00035\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitVarDef(Sysy22Parser::VarDefContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00037\ \ \ \}}
-\DoxyCodeLine{00038\ }
-\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitInit(Sysy22Parser::InitContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00041\ \ \ \}}
-\DoxyCodeLine{00042\ }
-\DoxyCodeLine{00043\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitInitList(Sysy22Parser::InitListContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00045\ \ \ \}}
-\DoxyCodeLine{00046\ }
-\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitInt(Sysy22Parser::IntContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00049\ \ \ \}}
-\DoxyCodeLine{00050\ }
-\DoxyCodeLine{00051\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitFloat(Sysy22Parser::FloatContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00053\ \ \ \}}
-\DoxyCodeLine{00054\ }
-\DoxyCodeLine{00055\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitFuncDef(Sysy22Parser::FuncDefContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00057\ \ \ \}}
-\DoxyCodeLine{00058\ }
-\DoxyCodeLine{00059\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitFuncType(Sysy22Parser::FuncTypeContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00061\ \ \ \}}
-\DoxyCodeLine{00062\ }
-\DoxyCodeLine{00063\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitFuncFParams(Sysy22Parser::FuncFParamsContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00065\ \ \ \}}
-\DoxyCodeLine{00066\ }
-\DoxyCodeLine{00067\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitScalarParam(Sysy22Parser::ScalarParamContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00069\ \ \ \}}
-\DoxyCodeLine{00070\ }
-\DoxyCodeLine{00071\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitArrayParam(Sysy22Parser::ArrayParamContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00073\ \ \ \}}
-\DoxyCodeLine{00074\ }
-\DoxyCodeLine{00075\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitBlock(Sysy22Parser::BlockContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00077\ \ \ \}}
-\DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitBlockItem(Sysy22Parser::BlockItemContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00081\ \ \ \}}
-\DoxyCodeLine{00082\ }
-\DoxyCodeLine{00083\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitAssign(Sysy22Parser::AssignContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00085\ \ \ \}}
-\DoxyCodeLine{00086\ }
-\DoxyCodeLine{00087\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitExprStmt(Sysy22Parser::ExprStmtContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00089\ \ \ \}}
-\DoxyCodeLine{00090\ }
-\DoxyCodeLine{00091\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitBlockStmt(Sysy22Parser::BlockStmtContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00093\ \ \ \}}
-\DoxyCodeLine{00094\ }
-\DoxyCodeLine{00095\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitIfElse(Sysy22Parser::IfElseContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00097\ \ \ \}}
-\DoxyCodeLine{00098\ }
-\DoxyCodeLine{00099\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitWhile(Sysy22Parser::WhileContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00101\ \ \ \}}
-\DoxyCodeLine{00102\ }
-\DoxyCodeLine{00103\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitBreak(Sysy22Parser::BreakContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00105\ \ \ \}}
-\DoxyCodeLine{00106\ }
-\DoxyCodeLine{00107\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitContinue(Sysy22Parser::ContinueContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00109\ \ \ \}}
-\DoxyCodeLine{00110\ }
-\DoxyCodeLine{00111\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitReturn(Sysy22Parser::ReturnContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00113\ \ \ \}}
-\DoxyCodeLine{00114\ }
-\DoxyCodeLine{00115\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitExp(Sysy22Parser::ExpContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00117\ \ \ \}}
-\DoxyCodeLine{00118\ }
-\DoxyCodeLine{00119\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitCond(Sysy22Parser::CondContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00121\ \ \ \}}
-\DoxyCodeLine{00122\ }
-\DoxyCodeLine{00123\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitLVal(Sysy22Parser::LValContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00125\ \ \ \}}
-\DoxyCodeLine{00126\ }
-\DoxyCodeLine{00127\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitPrimaryExp\_(Sysy22Parser::PrimaryExp\_Context\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00129\ \ \ \}}
-\DoxyCodeLine{00130\ }
-\DoxyCodeLine{00131\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitLValExpr(Sysy22Parser::LValExprContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00133\ \ \ \}}
-\DoxyCodeLine{00134\ }
-\DoxyCodeLine{00135\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitIntConst(Sysy22Parser::IntConstContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00137\ \ \ \}}
-\DoxyCodeLine{00138\ }
-\DoxyCodeLine{00139\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitFloatConst(Sysy22Parser::FloatConstContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00141\ \ \ \}}
-\DoxyCodeLine{00142\ }
-\DoxyCodeLine{00143\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitNumber(Sysy22Parser::NumberContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00145\ \ \ \}}
-\DoxyCodeLine{00146\ }
-\DoxyCodeLine{00147\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitUnaryExp\_(Sysy22Parser::UnaryExp\_Context\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00149\ \ \ \}}
-\DoxyCodeLine{00150\ }
-\DoxyCodeLine{00151\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitCall(Sysy22Parser::CallContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00153\ \ \ \}}
-\DoxyCodeLine{00154\ }
-\DoxyCodeLine{00155\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitUnaryAdd(Sysy22Parser::UnaryAddContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00157\ \ \ \}}
-\DoxyCodeLine{00158\ }
-\DoxyCodeLine{00159\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitUnarySub(Sysy22Parser::UnarySubContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00161\ \ \ \}}
-\DoxyCodeLine{00162\ }
-\DoxyCodeLine{00163\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitNot(Sysy22Parser::NotContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00165\ \ \ \}}
-\DoxyCodeLine{00166\ }
-\DoxyCodeLine{00167\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitStringConst(Sysy22Parser::StringConstContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00169\ \ \ \}}
-\DoxyCodeLine{00170\ }
-\DoxyCodeLine{00171\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitFuncRParam(Sysy22Parser::FuncRParamContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00173\ \ \ \}}
-\DoxyCodeLine{00174\ }
-\DoxyCodeLine{00175\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitFuncRParams(Sysy22Parser::FuncRParamsContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00177\ \ \ \}}
-\DoxyCodeLine{00178\ }
-\DoxyCodeLine{00179\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitDiv(Sysy22Parser::DivContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00181\ \ \ \}}
-\DoxyCodeLine{00182\ }
-\DoxyCodeLine{00183\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitMod(Sysy22Parser::ModContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00185\ \ \ \}}
-\DoxyCodeLine{00186\ }
-\DoxyCodeLine{00187\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitMul(Sysy22Parser::MulContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00189\ \ \ \}}
-\DoxyCodeLine{00190\ }
-\DoxyCodeLine{00191\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitMulExp\_(Sysy22Parser::MulExp\_Context\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00193\ \ \ \}}
-\DoxyCodeLine{00194\ }
-\DoxyCodeLine{00195\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitAddExp\_(Sysy22Parser::AddExp\_Context\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00197\ \ \ \}}
-\DoxyCodeLine{00198\ }
-\DoxyCodeLine{00199\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitAdd(Sysy22Parser::AddContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00201\ \ \ \}}
-\DoxyCodeLine{00202\ }
-\DoxyCodeLine{00203\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitSub(Sysy22Parser::SubContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00205\ \ \ \}}
-\DoxyCodeLine{00206\ }
-\DoxyCodeLine{00207\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitGeq(Sysy22Parser::GeqContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00209\ \ \ \}}
-\DoxyCodeLine{00210\ }
-\DoxyCodeLine{00211\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitLt(Sysy22Parser::LtContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00213\ \ \ \}}
-\DoxyCodeLine{00214\ }
-\DoxyCodeLine{00215\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitRelExp\_(Sysy22Parser::RelExp\_Context\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00217\ \ \ \}}
-\DoxyCodeLine{00218\ }
-\DoxyCodeLine{00219\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitLeq(Sysy22Parser::LeqContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00221\ \ \ \}}
-\DoxyCodeLine{00222\ }
-\DoxyCodeLine{00223\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitGt(Sysy22Parser::GtContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00225\ \ \ \}}
-\DoxyCodeLine{00226\ }
-\DoxyCodeLine{00227\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitNeq(Sysy22Parser::NeqContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00229\ \ \ \}}
-\DoxyCodeLine{00230\ }
-\DoxyCodeLine{00231\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitEq(Sysy22Parser::EqContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00233\ \ \ \}}
-\DoxyCodeLine{00234\ }
-\DoxyCodeLine{00235\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitEqExp\_(Sysy22Parser::EqExp\_Context\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00236\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00237\ \ \ \}}
-\DoxyCodeLine{00238\ }
-\DoxyCodeLine{00239\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitLAndExp\_(Sysy22Parser::LAndExp\_Context\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00241\ \ \ \}}
-\DoxyCodeLine{00242\ }
-\DoxyCodeLine{00243\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitAnd(Sysy22Parser::AndContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00244\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00245\ \ \ \}}
-\DoxyCodeLine{00246\ }
-\DoxyCodeLine{00247\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitOr(Sysy22Parser::OrContext\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00249\ \ \ \}}
-\DoxyCodeLine{00250\ }
-\DoxyCodeLine{00251\ \ \ \textcolor{keyword}{virtual}\ std::any\ visitLOrExp\_(Sysy22Parser::LOrExp\_Context\ *ctx)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00252\ \ \ \ \ \textcolor{keywordflow}{return}\ visitChildren(ctx);}
-\DoxyCodeLine{00253\ \ \ \}}
-\DoxyCodeLine{00254\ \};}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{AST_8hpp}{AST.hpp}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}grammar/Sysy22Parser.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacefrontend}{frontend}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{using\ namespace\ }ast;}
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classfrontend_1_1ASTVisitor}{ASTVisitor}}\ :\ \textcolor{keyword}{public}\ Sysy22BaseVisitor\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{comment}{//\ 提醒使用返回值\ }}
+\DoxyCodeLine{00014\ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits}{CompUnits}}\ \textcolor{keyword}{const}\ \&\mbox{\hyperlink{classfrontend_1_1ASTVisitor_ae970a5e0965a0c648c967e58c18792c1}{compUnit}}()\ \{\ \textcolor{keywordflow}{return}\ *this-\/>\_compUnits;\ \}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_abf093f49239d6bbb9a8c94258206c0e1}{visitCompUnits}}(Sysy22Parser::CompUnitsContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a672db3ecffd2318028d7afa0d86ee9dd}{visitConstDecl}}(Sysy22Parser::ConstDeclContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a465bde3e89196e1567b26d30c3c43050}{visitInt}}(Sysy22Parser::IntContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a9a3becdcbe757fff2413ed3274212b7b}{visitFloat}}(Sysy22Parser::FloatContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a5f69b56905804ac634fdb3d7d2b5aed8}{visitVarDecl}}(Sysy22Parser::VarDeclContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a7ebc4965889d087ce012eedffaee1782}{visitInit}}(Sysy22Parser::InitContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a92c8b7562c80bec8ac5e1ac552c38d78}{visitInitList}}(Sysy22Parser::InitListContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a9eb5e2bb09cd623c240088fdd9005a00}{visitFuncDef}}(Sysy22Parser::FuncDefContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_af3e40be51061439b06d5a100e4ba46dc}{visitVoid}}(Sysy22Parser::VoidContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_ab80701ec5933c27b78b8b4a03417627a}{visitScalarParam}}(Sysy22Parser::ScalarParamContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_af778006ff2080b378f68f6c848600261}{visitArrayParam}}(Sysy22Parser::ArrayParamContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a9a5ae4d8aec5d6a18d8b9825aceb561d}{visitBlock}}(Sysy22Parser::BlockContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a4b15e6407e31edd0b12a7c1d6cafa5db}{visitAssignment}}(Sysy22Parser::AssignmentContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_ae37670df2080be55baf51c521a0a0cc3}{visitExprStmt}}(Sysy22Parser::ExprStmtContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_ac153b56abdecf9c89f03d976b6733c2b}{visitBlockStmt}}(Sysy22Parser::BlockStmtContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a1e2a290675b5191ad2f1f7b7e3c1c87b}{visitIfElse}}(Sysy22Parser::IfElseContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a1eabc5e7d2e0b752b6ad55abb4fdfd7d}{visitWhile}}(Sysy22Parser::WhileContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a30725c07203a291c04ba928d0f766dfc}{visitBreak}}(Sysy22Parser::BreakContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a4f0f8eb31e1fe3fe65a726f05eec6c62}{visitContinue}}(Sysy22Parser::ContinueContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a9a9f6c03453de7f11ae82efc389ff5c6}{visitReturn}}(Sysy22Parser::ReturnContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a32f376141519c6ed67bd121a80132df6}{visitLVal}}(Sysy22Parser::LValContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_ab777ba895c2c90b3ce031cea826a962c}{visitPrimaryExp\_}}(Sysy22Parser::PrimaryExp\_Context\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_ab66a31c172ac94221bf92bc5826bcd2f}{visitLValExpr}}(Sysy22Parser::LValExprContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_aa6e7adca8db01faf44a6242a327add9e}{visitDecConst}}(Sysy22Parser::DecConstContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_ad600a1535818d748e520150bbe38545e}{visitHexConst}}(Sysy22Parser::HexConstContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a10e165b49d90050cafe61dad52bce500}{visitOctConst}}(Sysy22Parser::OctConstContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a1ae87070df571299b565ee04dd590ecd}{visitDecFloatConst}}(Sysy22Parser::DecFloatConstContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a863114a0951f5b2bad8832e7ba410165}{visitHexFloatConst}}(Sysy22Parser::HexFloatConstContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a2184fa7d6c7f31f30fdd861936509b2d}{visitCall}}(Sysy22Parser::CallContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a1fec5ce43a944616f4900f682abe6ffd}{visitUnaryAdd}}(Sysy22Parser::UnaryAddContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a834e6eda3e0a826b282fe90928860dcc}{visitUnarySub}}(Sysy22Parser::UnarySubContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a428d6bdc2f5a79c05b3ee972d7417d55}{visitNot}}(Sysy22Parser::NotContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a1dbaa9f837c75cae4aa4c0d5d651cd53}{visitStringConst}}(Sysy22Parser::StringConstContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_aeae2fb1be965d9b74ea5809bdffbb097}{visitDiv}}(Sysy22Parser::DivContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a70e58fd5d0f10c7e15da3708e1965c07}{visitMod}}(Sysy22Parser::ModContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_adc13d1a549bee0bf46952124ee951a36}{visitMul}}(Sysy22Parser::MulContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_ac07bceccbbf12cc150a7e8d1e1b6e814}{visitAdd}}(Sysy22Parser::AddContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a873836a81657f53c2079445b652022c9}{visitSub}}(Sysy22Parser::SubContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a3abc116412e7f1aa9b716155bd4390b2}{visitGeq}}(Sysy22Parser::GeqContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a8065cc1922d7793c7c62f1a2c53e76d2}{visitLt}}(Sysy22Parser::LtContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a33eb2eb50654093d6e6f8c6a889cfe66}{visitLeq}}(Sysy22Parser::LeqContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a080cee8423a18bfb7dd8a98cfd2f4d94}{visitGt}}(Sysy22Parser::GtContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a77994f586f117de2d1f309067307f749}{visitNeq}}(Sysy22Parser::NeqContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a0be400b11cbfb7f764a99015f2906974}{visitEq}}(Sysy22Parser::EqContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_ab017f9235419595aa4581c9ef7d35459}{visitAnd}}(Sysy22Parser::AndContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_aba51ac8c07727d8665aacff700b32462}{visitOr}}(Sysy22Parser::OrContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \ std::any\ \mbox{\hyperlink{classfrontend_1_1ASTVisitor_a9c4c2c1185ec5348e48c932c94c02fed}{visitNumber}}(Sysy22Parser::NumberContext\ *context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00111\ \ \ \ \ std::vector<std::unique\_ptr<Expr>>\ }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ visitDimensions(\textcolor{keyword}{const}\ std::vector<Sysy22Parser::ExpContext*>\ \&ctxs);}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ std::unique\_ptr<CompUnits>\ \_compUnits;}
+\DoxyCodeLine{00115\ \};}
+\DoxyCodeLine{00116\ \}}
 
 \end{DoxyCode}

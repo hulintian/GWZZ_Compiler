@@ -1,0 +1,29 @@
+\doxysection{passes.\+hpp}
+\hypertarget{passes_8hpp_source}{}\label{passes_8hpp_source}\index{src/backend/passes.hpp@{src/backend/passes.hpp}}
+\mbox{\hyperlink{passes_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{program_8hpp}{backend/program.hpp}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{instr_8hpp}{backend/instr.hpp}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}common/regarch.hpp"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacebackend}{backend}}\{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }riscv\{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }Program;}
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }Function;}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacebackend_1_1riscv_a79738b4a7b971edb54e6f9e5da9156b4}{backend\_passes}}(Program\ *prog);}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacebackend_1_1riscv_a7894a40baf6b37b8b2faa957f4829822}{remove\_useless\_load}}(Function*\ func);}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacebackend_1_1riscv_a4d57f49ff3b030b7a15217181425954e}{clean\_control\_flow}}(Function*\ func);}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacebackend_1_1riscv_aaec506d923834473e3fa768b206a5cb5}{remove\_useless\_inst}}(Function\ *func);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacebackend_1_1riscv_a56decd2a7461c2222567e45a44acd1c5}{tail\_duplication}}(Program*\ prog,\ Function*\ func);}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \}}
+\DoxyCodeLine{00023\ \}}
+
+\end{DoxyCode}

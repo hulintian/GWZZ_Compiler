@@ -1,0 +1,68 @@
+\doxysection{Sema.\+hpp}
+\hypertarget{Sema_8hpp_source}{}\label{Sema_8hpp_source}\index{src/frontend/Sema.hpp@{src/frontend/Sema.hpp}}
+\mbox{\hyperlink{Sema_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}common/defines.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{AST_8hpp}{frontend/AST.hpp}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{SymbolTable_8hpp}{frontend/SymbolTable.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacefrontend}{frontend}}\ \{\ }
+\DoxyCodeLine{00012\ \ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ TODO\ :\ 类型检查\ 隐式类型转换\ 编译时求值\ 左值挂载}}
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classfrontend_1_1Sema}{Sema}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{structfrontend_1_1SymbolTable}{SymbolTable}}\ sym\_tab;}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//\ 类型检测}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ visit\_func(\textcolor{keyword}{const}\ \mbox{\hyperlink{classfrontend_1_1ast_1_1Func}{ast::Func}}\&);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ visit\_decls(\textcolor{keyword}{const}\ \mbox{\hyperlink{classfrontend_1_1ast_1_1Decl}{ast::Decl}}\&);}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ visit\_stmt(\textcolor{keyword}{const}\ \mbox{\hyperlink{classfrontend_1_1ast_1_1Stmt}{ast::Stmt}}\&);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ visit\_initialize(}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::unique\_ptr<ast::Initializer>>\ \&init\_list,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Type\ \&type,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ depth,}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ std::map<int,\ ConstValue>\ \&arr\_var,}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \&index);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ already\_exits\_var\_in\_current\_scope(\textcolor{keyword}{const}\ \mbox{\hyperlink{structfrontend_1_1SymbolTable}{SymbolTable}}\&\ table,\ \textcolor{keyword}{const}\ std::string\ name,\ \textcolor{keywordtype}{bool}\ is\_func);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ 挂载符号，把变量绑定到LValue上，IR生成时能够直接使用，符号表可以直接丢了}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ attach\_symbol(\textcolor{keyword}{const}\ \mbox{\hyperlink{classfrontend_1_1ast_1_1LValue}{ast::LValue}}\&);\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ 解析类型}}
+\DoxyCodeLine{00035\ \ \ \ \ std::optional<Type>\ visit\_expr\_aux(\textcolor{keyword}{const}\ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{ast::Expr}}*);}
+\DoxyCodeLine{00036\ \ \ \ \ std::optional<Type>\ visit\_expr(\textcolor{keyword}{const}\ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{ast::Expr}}*);}
+\DoxyCodeLine{00037\ \ \ \ \ std::optional<Type>\ visit\_expr(\textcolor{keyword}{const}\ std::unique\_ptr<ast::Expr>\&\ p)\{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ visit\_expr(p.get());}
+\DoxyCodeLine{00039\ \ \ \ \ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ 编译时求值（能计算的，定值）}}
+\DoxyCodeLine{00042\ \ \ \ \ std::optional<ConstValue>\ eval(\textcolor{keyword}{const}\ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{ast::Expr}}*);}
+\DoxyCodeLine{00043\ \ \ \ \ std::optional<ConstValue>\ \mbox{\hyperlink{namespacefrontend_a975951c8ca0cce1bb36a93885aa31752}{eval}}(\textcolor{keyword}{const}\ std::unique\_ptr<ast::Expr>\ \&p)\{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacefrontend_a975951c8ca0cce1bb36a93885aa31752}{eval}}(p.get());}
+\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ 隐式类型转换}}
+\DoxyCodeLine{00048\ \ \ \ \ ConstValue\ implicit\_cast(\textcolor{keywordtype}{int}\ d\_type,\ ConstValue\ val)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ std::optional<ConstValue>\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ parse\_scalar\_init(\textcolor{keyword}{const}\ std::unique\_ptr<ast::Expr>\ \&expr,}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Type\ \&type);}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ 解析类型}}
+\DoxyCodeLine{00054\ \ \ \ \ Type\ parse\_type(\textcolor{keyword}{const}\ std::unique\_ptr<ast::SysyType>\&);}
+\DoxyCodeLine{00055\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classfrontend_1_1Sema_abb18f14d65773516b9b580f1d412ee32}{visit\_compUnits}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits}{ast::CompUnits}}\&);}
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{classfrontend_1_1Sema_aa10b229fc683f65b58edd0084ccd784e}{Sema}}();}
+\DoxyCodeLine{00058\ \};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ ConstValue\ \mbox{\hyperlink{namespacefrontend_a975951c8ca0cce1bb36a93885aa31752}{eval}}(BinaryOp\ ,\ \textcolor{keyword}{const}\ ConstValue\&,\ \textcolor{keyword}{const}\ ConstValue\&);}
+\DoxyCodeLine{00061\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespacefrontend_a4eba3d1550efa1663d60f30cd4166bbc}{type\_compatible}}(\textcolor{keyword}{const}\ Type\&,\ \textcolor{keyword}{const}\ Type\&);}
+\DoxyCodeLine{00062\ \}}
+
+\end{DoxyCode}

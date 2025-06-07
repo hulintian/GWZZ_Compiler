@@ -5,6 +5,8 @@
 #include <map>
 #include <optional>
 
+#define TypeCase(res, type, expr) if (auto res = dynamic_cast<type>(expr))
+
 struct ConstValue {
     int type;
     union {int iv; float fv;};
@@ -21,7 +23,7 @@ struct ConstValue {
       return fv == b.fv;
     }
     bool operator != (const ConstValue &b) const { return !(this->operator==(b)); }
-std::string to_string() const { return type == Int ? std::to_string(iv) : std::to_string(fv); }
+    std::string to_string() const { return type == Int ? std::to_string(iv) : std::to_string(fv); }
 };
 
 /// 值 
@@ -29,7 +31,7 @@ struct Var {
   Type type;
   std::optional<ConstValue> val;
   std::unique_ptr<std::map<int, ConstValue>>
-      arr_val; // index -> value，未记录的项全部初始化为0
+      arr_val; 
 
   Var() {}
   Var(Type type_) : type{std::move(type_)} {}
@@ -41,11 +43,13 @@ struct Var {
 enum class UnaryOp { Add, Sub, Not };
 
 enum class BinaryOp {
+// arithmetic
   Add,  
   Sub,
   Mul,
   Div,
   Mod,
+// Logical
   Eq,
   Neq,
   Lt,
@@ -54,6 +58,7 @@ enum class BinaryOp {
   Geq,
   And,
   Or,
+// shift
   Shr,      // shift right
   Shl,      // shift left
   Ashl,     // arithmetic shift left

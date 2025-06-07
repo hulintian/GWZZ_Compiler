@@ -1,0 +1,77 @@
+\doxysection{frontend\+::ast\+::While\+Stmt Class Reference}
+\hypertarget{classfrontend_1_1ast_1_1WhileStmt}{}\label{classfrontend_1_1ast_1_1WhileStmt}\index{frontend::ast::WhileStmt@{frontend::ast::WhileStmt}}
+
+
+{\ttfamily \#include $<$AST.\+hpp$>$}
+
+Inheritance diagram for frontend\+::ast\+::While\+Stmt\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classfrontend_1_1ast_1_1WhileStmt}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfrontend_1_1ast_1_1WhileStmt_a8e53c2ecec046dc18a850bbaebe41834}{While\+Stmt}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{Expr}} $>$ \mbox{\hyperlink{classfrontend_1_1ast_1_1WhileStmt_ac9761e03832ee18a743b770897732744}{cond}}, std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Stmt}{Stmt}} $>$ \mbox{\hyperlink{classfrontend_1_1ast_1_1WhileStmt_aea04dabe1c922a178f5912db1d3c8ec0}{body}})
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1WhileStmt_abae3e49a5689e473bb077e51b8393ec4}{\texorpdfstring{$\sim$}{\string~}\+While\+Stmt}} ()=default
+\item 
+const std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{Expr}} $>$ \& \mbox{\hyperlink{classfrontend_1_1ast_1_1WhileStmt_ac9761e03832ee18a743b770897732744}{cond}} () const
+\item 
+const std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Stmt}{Stmt}} $>$ \& \mbox{\hyperlink{classfrontend_1_1ast_1_1WhileStmt_aea04dabe1c922a178f5912db1d3c8ec0}{body}} () const
+\item 
+void \mbox{\hyperlink{classfrontend_1_1ast_1_1WhileStmt_a6a9d22ccc066de966756bdc4e4031157}{print}} (std\+::ostream \&out, unsigned level) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfrontend_1_1ast_1_1Stmt}{frontend\+::ast\+::\+Stmt}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1Stmt_afe2e7c3185ebbedb6063046cb667aa35}{\texorpdfstring{$\sim$}{\string~}\+Stmt}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfrontend_1_1ast_1_1ASTNode}{frontend\+::ast\+::\+ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1ASTNode_aeebf803d00cd6d3210bbbc5838e791ed}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1WhileStmt_a8e53c2ecec046dc18a850bbaebe41834}\index{frontend::ast::WhileStmt@{frontend::ast::WhileStmt}!WhileStmt@{WhileStmt}}
+\index{WhileStmt@{WhileStmt}!frontend::ast::WhileStmt@{frontend::ast::WhileStmt}}
+\doxysubsubsection{\texorpdfstring{WhileStmt()}{WhileStmt()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1WhileStmt_a8e53c2ecec046dc18a850bbaebe41834} 
+frontend\+::ast\+::\+While\+Stmt\+::\+While\+Stmt (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{Expr}} $>$}]{cond}{, }\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Stmt}{Stmt}} $>$}]{body}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1WhileStmt_abae3e49a5689e473bb077e51b8393ec4}\index{frontend::ast::WhileStmt@{frontend::ast::WhileStmt}!````~WhileStmt@{\texorpdfstring{$\sim$}{\string~}WhileStmt}}
+\index{````~WhileStmt@{\texorpdfstring{$\sim$}{\string~}WhileStmt}!frontend::ast::WhileStmt@{frontend::ast::WhileStmt}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}WhileStmt()}{\string~WhileStmt()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1WhileStmt_abae3e49a5689e473bb077e51b8393ec4} 
+virtual frontend\+::ast\+::\+While\+Stmt\+::\texorpdfstring{$\sim$}{\string~}\+While\+Stmt (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1WhileStmt_aea04dabe1c922a178f5912db1d3c8ec0}\index{frontend::ast::WhileStmt@{frontend::ast::WhileStmt}!body@{body}}
+\index{body@{body}!frontend::ast::WhileStmt@{frontend::ast::WhileStmt}}
+\doxysubsubsection{\texorpdfstring{body()}{body()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1WhileStmt_aea04dabe1c922a178f5912db1d3c8ec0} 
+const std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Stmt}{Stmt}} $>$ \& frontend\+::ast\+::\+While\+Stmt\+::body (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1WhileStmt_ac9761e03832ee18a743b770897732744}\index{frontend::ast::WhileStmt@{frontend::ast::WhileStmt}!cond@{cond}}
+\index{cond@{cond}!frontend::ast::WhileStmt@{frontend::ast::WhileStmt}}
+\doxysubsubsection{\texorpdfstring{cond()}{cond()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1WhileStmt_ac9761e03832ee18a743b770897732744} 
+const std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{Expr}} $>$ \& frontend\+::ast\+::\+While\+Stmt\+::cond (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1WhileStmt_a6a9d22ccc066de966756bdc4e4031157}\index{frontend::ast::WhileStmt@{frontend::ast::WhileStmt}!print@{print}}
+\index{print@{print}!frontend::ast::WhileStmt@{frontend::ast::WhileStmt}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1WhileStmt_a6a9d22ccc066de966756bdc4e4031157} 
+void While\+Stmt\+::print (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out}{, }\item[{unsigned}]{level}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/frontend/\mbox{\hyperlink{AST_8hpp}{AST.\+hpp}}\item 
+src/frontend/\mbox{\hyperlink{AST_8cpp}{AST.\+cpp}}\end{DoxyCompactItemize}

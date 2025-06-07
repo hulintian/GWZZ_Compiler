@@ -1,0 +1,24 @@
+\doxysection{Use.\+hpp}
+\hypertarget{Use_8hpp_source}{}\label{Use_8hpp_source}\index{src/IR/Use.hpp@{src/IR/Use.hpp}}
+\mbox{\hyperlink{Use_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceir}{ir}}\ \{}
+\DoxyCodeLine{00004\ \textcolor{keyword}{class\ }Value;}
+\DoxyCodeLine{00005\ \textcolor{keyword}{class\ }User;}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structir_1_1Use}{Use}}\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ \mbox{\hyperlink{classir_1_1User}{User}}\ *\mbox{\hyperlink{structir_1_1Use_a171e53b8beae50c8ef43f1126b56d8b7}{\_user}};}
+\DoxyCodeLine{00009\ \ \ \ \ \mbox{\hyperlink{classir_1_1Value}{Value}}\ *\mbox{\hyperlink{structir_1_1Use_a72d0efc33f8650a8a3849db75a7bb2bd}{\_val}};\ \ \ \ \ \textcolor{comment}{//\ in\ value\ }}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{structir_1_1Use_ab9b350af28e9b2c8561b06df7c3f1831}{\_arg\_no}};\ \ \textcolor{comment}{//\ the\ position\ of\ the\ argument}}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00012\ \ \ \ \ \mbox{\hyperlink{structir_1_1Use_a99ee36de1bb7edb1dcddae91726a447c}{Use}}(\mbox{\hyperlink{classir_1_1User}{User}}\ *user,\ \mbox{\hyperlink{classir_1_1Value}{Value}}*\ val,\ \textcolor{keywordtype}{unsigned}\ no)\ :\ \mbox{\hyperlink{structir_1_1Use_a171e53b8beae50c8ef43f1126b56d8b7}{\_user}}(user),\ \mbox{\hyperlink{structir_1_1Use_a72d0efc33f8650a8a3849db75a7bb2bd}{\_val}}(val),\mbox{\hyperlink{structir_1_1Use_ab9b350af28e9b2c8561b06df7c3f1831}{\_arg\_no}}(no)\ \{\}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structir_1_1Use_a847f05986d3f46eed12feac777d8bb3b}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structir_1_1Use}{Use}}\ *another)\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structir_1_1Use_a171e53b8beae50c8ef43f1126b56d8b7}{\_user}}\ ==\ another-\/>\mbox{\hyperlink{structir_1_1Use_a171e53b8beae50c8ef43f1126b56d8b7}{\_user}}\ \&\&\ \mbox{\hyperlink{structir_1_1Use_ab9b350af28e9b2c8561b06df7c3f1831}{\_arg\_no}}\ ==\ another-\/>\mbox{\hyperlink{structir_1_1Use_ab9b350af28e9b2c8561b06df7c3f1831}{\_arg\_no}}\ \&\&\ \mbox{\hyperlink{structir_1_1Use_a72d0efc33f8650a8a3849db75a7bb2bd}{\_val}}\ ==\ another-\/>\mbox{\hyperlink{structir_1_1Use_a72d0efc33f8650a8a3849db75a7bb2bd}{\_val}};}
+\DoxyCodeLine{00016\ \ \ \ \ \}}
+\DoxyCodeLine{00017\ \};}
+\DoxyCodeLine{00018\ \};}
+
+\end{DoxyCode}

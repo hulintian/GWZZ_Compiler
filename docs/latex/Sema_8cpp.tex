@@ -1,0 +1,31 @@
+\doxysection{src/frontend/\+Sema.cpp File Reference}
+\hypertarget{Sema_8cpp}{}\label{Sema_8cpp}\index{src/frontend/Sema.cpp@{src/frontend/Sema.cpp}}
+{\ttfamily \#include "{}frontend/\+Sema.\+hpp"{}}\newline
+{\ttfamily \#include "{}Input\+Mismatch\+Exception.\+h"{}}\newline
+{\ttfamily \#include "{}common/defines.\+hpp"{}}\newline
+{\ttfamily \#include "{}common/type.\+hpp"{}}\newline
+{\ttfamily \#include "{}frontend/\+AST.\+hpp"{}}\newline
+{\ttfamily \#include "{}frontend/\+Symbol\+Table.\+hpp"{}}\newline
+{\ttfamily \#include "{}common/utils.\+hpp"{}}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$any$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$iterator$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include $<$system\+\_\+error$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacefrontend}{frontend}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespacefrontend_a4eba3d1550efa1663d60f30cd4166bbc}{frontend\+::type\+\_\+compatible}} (const Type \&t1, const Type \&t2)
+\item 
+Const\+Value \mbox{\hyperlink{namespacefrontend_a975951c8ca0cce1bb36a93885aa31752}{frontend\+::eval}} (Binary\+Op bop, const Const\+Value \&lhs, const Const\+Value \&rhs)
+\end{DoxyCompactItemize}

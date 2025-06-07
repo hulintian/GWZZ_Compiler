@@ -1,0 +1,173 @@
+\doxysection{midend\+::ir\+::Module Class Reference}
+\hypertarget{classmidend_1_1ir_1_1Module}{}\label{classmidend_1_1ir_1_1Module}\index{midend::ir::Module@{midend::ir::Module}}
+
+
+{\ttfamily \#include $<$IR.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Module_a732c5d33c14ee18c2a32703ba2f866ba}{Module}} ()=default
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Module_aa07b381a51e4b83b0e6692f5cd0b6d90}{Module}} (const std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*} $>$ \&functions, const std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}} \texorpdfstring{$\ast$}{*} $>$ global\+\_\+variables)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a82e1c189c4bd18436f2dd54f2bf08801}{get\+\_\+functions}} ()
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a1cbb11c6af7cfa573232d9997f5f5629}{get\+\_\+global\+\_\+variables}} ()
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1ir_1_1Module_aa3ffca776a676b694d7dc430258a2441}{get\+\_\+func\+\_\+map}} ()
+\item 
+void \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a8a911a73af7e64e4d8af32029e5ad6a1}{add\+\_\+function}} (\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}function)
+\item 
+void \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a6366f425eb0eeabe08c0600ef8b58590}{add\+\_\+global\+\_\+variable}} (\mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}} \texorpdfstring{$\ast$}{*}global\+\_\+variable)
+\item 
+bool \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a85769cbaa983c9a8007dda575b7800bd}{check\+\_\+global\+\_\+variables}} ()
+\item 
+void \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a6062a9c896804e5f49aae5175c970db0}{print}} (std\+::ostream \&out) const
+\item 
+virtual \mbox{\hyperlink{classmidend_1_1ir_1_1Module_aa76e4cca4c2c22a6b6816246d327cba7}{\texorpdfstring{$\sim$}{\string~}\+Module}} ()
+\item 
+void \mbox{\hyperlink{classmidend_1_1ir_1_1Module_adbd1bda8d677c5b0cf3061f970fe6522}{set\+\_\+use\+\_\+memset\+\_\+zero}} (bool \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a030ea02fd7b68609e1f113fb50c69fa4}{use\+\_\+memset\+\_\+zero}})
+\item 
+bool \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a8d7b133272fadbc753da3ae578062087}{get\+\_\+use\+\_\+memset\+\_\+zero}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a2258e06a628b85ba81737759c1b2bdde}{func\+\_\+map}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classmidend_1_1ir_1_1LibFunction}{Lib\+Function}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1ir_1_1Module_ada413636ac76c55d833b5db69a24dfe8}{lib\+\_\+funcs}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a298b1a18946c142148336fe4421b009b}{global\+\_\+var\+\_\+map}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a5e3af0b2cc3cc74b005189171fd07860}{\+\_\+funcs}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1ir_1_1Module_ae0e9ab9ac97a52a112e4a803ac2f9701}{\+\_\+global\+\_\+variables}}
+\item 
+bool \mbox{\hyperlink{classmidend_1_1ir_1_1Module_a030ea02fd7b68609e1f113fb50c69fa4}{use\+\_\+memset\+\_\+zero}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classmidend_1_1ir_1_1Module_a732c5d33c14ee18c2a32703ba2f866ba}\index{midend::ir::Module@{midend::ir::Module}!Module@{Module}}
+\index{Module@{Module}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{Module()}{Module()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a732c5d33c14ee18c2a32703ba2f866ba} 
+midend\+::ir\+::\+Module\+::\+Module (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [default]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_aa07b381a51e4b83b0e6692f5cd0b6d90}\index{midend::ir::Module@{midend::ir::Module}!Module@{Module}}
+\index{Module@{Module}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{Module()}{Module()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_aa07b381a51e4b83b0e6692f5cd0b6d90} 
+midend\+::ir\+::\+Module\+::\+Module (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*} $>$ \&}]{functions}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}} \texorpdfstring{$\ast$}{*} $>$}]{global\+\_\+variables}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_aa76e4cca4c2c22a6b6816246d327cba7}\index{midend::ir::Module@{midend::ir::Module}!````~Module@{\texorpdfstring{$\sim$}{\string~}Module}}
+\index{````~Module@{\texorpdfstring{$\sim$}{\string~}Module}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Module()}{\string~Module()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_aa76e4cca4c2c22a6b6816246d327cba7} 
+virtual midend\+::ir\+::\+Module\+::\texorpdfstring{$\sim$}{\string~}\+Module (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classmidend_1_1ir_1_1Module_a8a911a73af7e64e4d8af32029e5ad6a1}\index{midend::ir::Module@{midend::ir::Module}!add\_function@{add\_function}}
+\index{add\_function@{add\_function}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{add\_function()}{add\_function()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a8a911a73af7e64e4d8af32029e5ad6a1} 
+void midend\+::ir\+::\+Module\+::add\+\_\+function (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}}]{function}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_a6366f425eb0eeabe08c0600ef8b58590}\index{midend::ir::Module@{midend::ir::Module}!add\_global\_variable@{add\_global\_variable}}
+\index{add\_global\_variable@{add\_global\_variable}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{add\_global\_variable()}{add\_global\_variable()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a6366f425eb0eeabe08c0600ef8b58590} 
+void midend\+::ir\+::\+Module\+::add\+\_\+global\+\_\+variable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}} \texorpdfstring{$\ast$}{*}}]{global\+\_\+variable}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_a85769cbaa983c9a8007dda575b7800bd}\index{midend::ir::Module@{midend::ir::Module}!check\_global\_variables@{check\_global\_variables}}
+\index{check\_global\_variables@{check\_global\_variables}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{check\_global\_variables()}{check\_global\_variables()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a85769cbaa983c9a8007dda575b7800bd} 
+bool midend\+::ir\+::\+Module\+::check\+\_\+global\+\_\+variables (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_aa3ffca776a676b694d7dc430258a2441}\index{midend::ir::Module@{midend::ir::Module}!get\_func\_map@{get\_func\_map}}
+\index{get\_func\_map@{get\_func\_map}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{get\_func\_map()}{get\_func\_map()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_aa3ffca776a676b694d7dc430258a2441} 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*} $>$ midend\+::ir\+::\+Module\+::get\+\_\+func\+\_\+map (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_a82e1c189c4bd18436f2dd54f2bf08801}\index{midend::ir::Module@{midend::ir::Module}!get\_functions@{get\_functions}}
+\index{get\_functions@{get\_functions}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{get\_functions()}{get\_functions()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a82e1c189c4bd18436f2dd54f2bf08801} 
+std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} midend\+::ir\+::\+Module\+::get\+\_\+functions (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_a1cbb11c6af7cfa573232d9997f5f5629}\index{midend::ir::Module@{midend::ir::Module}!get\_global\_variables@{get\_global\_variables}}
+\index{get\_global\_variables@{get\_global\_variables}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{get\_global\_variables()}{get\_global\_variables()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a1cbb11c6af7cfa573232d9997f5f5629} 
+std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} midend\+::ir\+::\+Module\+::get\+\_\+global\+\_\+variables (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_a8d7b133272fadbc753da3ae578062087}\index{midend::ir::Module@{midend::ir::Module}!get\_use\_memset\_zero@{get\_use\_memset\_zero}}
+\index{get\_use\_memset\_zero@{get\_use\_memset\_zero}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{get\_use\_memset\_zero()}{get\_use\_memset\_zero()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a8d7b133272fadbc753da3ae578062087} 
+bool midend\+::ir\+::\+Module\+::get\+\_\+use\+\_\+memset\+\_\+zero (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_a6062a9c896804e5f49aae5175c970db0}\index{midend::ir::Module@{midend::ir::Module}!print@{print}}
+\index{print@{print}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a6062a9c896804e5f49aae5175c970db0} 
+void midend\+::ir\+::\+Module\+::print (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_adbd1bda8d677c5b0cf3061f970fe6522}\index{midend::ir::Module@{midend::ir::Module}!set\_use\_memset\_zero@{set\_use\_memset\_zero}}
+\index{set\_use\_memset\_zero@{set\_use\_memset\_zero}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{set\_use\_memset\_zero()}{set\_use\_memset\_zero()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_adbd1bda8d677c5b0cf3061f970fe6522} 
+void midend\+::ir\+::\+Module\+::set\+\_\+use\+\_\+memset\+\_\+zero (\begin{DoxyParamCaption}\item[{bool}]{use\+\_\+memset\+\_\+zero}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classmidend_1_1ir_1_1Module_a5e3af0b2cc3cc74b005189171fd07860}\index{midend::ir::Module@{midend::ir::Module}!\_funcs@{\_funcs}}
+\index{\_funcs@{\_funcs}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{\_funcs}{\_funcs}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a5e3af0b2cc3cc74b005189171fd07860} 
+std\+::vector$<$\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}}\texorpdfstring{$\ast$}{*}$>$ midend\+::ir\+::\+Module\+::\+\_\+funcs\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_ae0e9ab9ac97a52a112e4a803ac2f9701}\index{midend::ir::Module@{midend::ir::Module}!\_global\_variables@{\_global\_variables}}
+\index{\_global\_variables@{\_global\_variables}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{\_global\_variables}{\_global\_variables}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_ae0e9ab9ac97a52a112e4a803ac2f9701} 
+std\+::vector$<$\mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}}\texorpdfstring{$\ast$}{*}$>$ midend\+::ir\+::\+Module\+::\+\_\+global\+\_\+variables\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_a2258e06a628b85ba81737759c1b2bdde}\index{midend::ir::Module@{midend::ir::Module}!func\_map@{func\_map}}
+\index{func\_map@{func\_map}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{func\_map}{func\_map}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a2258e06a628b85ba81737759c1b2bdde} 
+std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{Function}}\texorpdfstring{$\ast$}{*}$>$ midend\+::ir\+::\+Module\+::func\+\_\+map}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_a298b1a18946c142148336fe4421b009b}\index{midend::ir::Module@{midend::ir::Module}!global\_var\_map@{global\_var\_map}}
+\index{global\_var\_map@{global\_var\_map}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{global\_var\_map}{global\_var\_map}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a298b1a18946c142148336fe4421b009b} 
+std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}}\texorpdfstring{$\ast$}{*}$>$ midend\+::ir\+::\+Module\+::global\+\_\+var\+\_\+map}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_ada413636ac76c55d833b5db69a24dfe8}\index{midend::ir::Module@{midend::ir::Module}!lib\_funcs@{lib\_funcs}}
+\index{lib\_funcs@{lib\_funcs}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{lib\_funcs}{lib\_funcs}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_ada413636ac76c55d833b5db69a24dfe8} 
+std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{classmidend_1_1ir_1_1LibFunction}{Lib\+Function}}\texorpdfstring{$\ast$}{*}$>$ midend\+::ir\+::\+Module\+::lib\+\_\+funcs}
+
+\Hypertarget{classmidend_1_1ir_1_1Module_a030ea02fd7b68609e1f113fb50c69fa4}\index{midend::ir::Module@{midend::ir::Module}!use\_memset\_zero@{use\_memset\_zero}}
+\index{use\_memset\_zero@{use\_memset\_zero}!midend::ir::Module@{midend::ir::Module}}
+\doxysubsubsection{\texorpdfstring{use\_memset\_zero}{use\_memset\_zero}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1Module_a030ea02fd7b68609e1f113fb50c69fa4} 
+bool midend\+::ir\+::\+Module\+::use\+\_\+memset\+\_\+zero = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{IR_8hpp}{IR.\+hpp}}\end{DoxyCompactItemize}

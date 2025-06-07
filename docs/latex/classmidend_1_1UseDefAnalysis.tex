@@ -1,0 +1,101 @@
+\doxysection{midend\+::Use\+Def\+Analysis Class Reference}
+\hypertarget{classmidend_1_1UseDefAnalysis}{}\label{classmidend_1_1UseDefAnalysis}\index{midend::UseDefAnalysis@{midend::UseDefAnalysis}}
+
+
+{\ttfamily \#include $<$use\+\_\+def\+\_\+analysis.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classmidend_1_1UseDefAnalysis_a8591114a066ded77db7561651e6de44d}{build\+\_\+use\+\_\+def}} ()
+\item 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}, std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*} $>$ $>$ \mbox{\hyperlink{classmidend_1_1UseDefAnalysis_ae617909d3a7aada52702e6cfbc4e41dc}{get\+\_\+usesets}} ()
+\item 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}, std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*} $>$ $>$ \mbox{\hyperlink{classmidend_1_1UseDefAnalysis_a3c9f03f1091d5c4cc8804d4ccef80d68}{get\+\_\+defsets}} ()
+\item 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1UseDefAnalysis_a56cabcd839055388dbd2775dec7e169d}{get\+\_\+useset}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}temp)
+\item 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1UseDefAnalysis_ae03777c5deda5a17cfd80b959bc4abbd}{get\+\_\+defset}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}temp)
+\item 
+\mbox{\hyperlink{classmidend_1_1UseDefAnalysis_af24b546ff26f5d1e0928dbf2477dbf2f}{Use\+Def\+Analysis}} (\mbox{\hyperlink{classmidend_1_1CFG}{CFG}} \texorpdfstring{$\ast$}{*}cfg)
+\item 
+void \mbox{\hyperlink{classmidend_1_1UseDefAnalysis_ab7401bb1a14b2cb82343671cfc256119}{change\+\_\+def}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}old, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}new\+\_\+temp, \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*}inst)
+\item 
+void \mbox{\hyperlink{classmidend_1_1UseDefAnalysis_ac0a1ece8fd7ed0a363484e83637717e9}{change\+\_\+use}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}old, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}new\+\_\+temp, \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*}inst)
+\item 
+void \mbox{\hyperlink{classmidend_1_1UseDefAnalysis_a3714240afd96cb3a9b1c0f4701cec478}{compute\+\_\+use\+\_\+def}} (\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*}inst)
+\item 
+void \mbox{\hyperlink{classmidend_1_1UseDefAnalysis_a6bf7256c568c21db62daeffba0e94986}{erase\+\_\+use\+\_\+def}} (\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*}inst)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classmidend_1_1UseDefAnalysis_af24b546ff26f5d1e0928dbf2477dbf2f}\index{midend::UseDefAnalysis@{midend::UseDefAnalysis}!UseDefAnalysis@{UseDefAnalysis}}
+\index{UseDefAnalysis@{UseDefAnalysis}!midend::UseDefAnalysis@{midend::UseDefAnalysis}}
+\doxysubsubsection{\texorpdfstring{UseDefAnalysis()}{UseDefAnalysis()}}
+{\footnotesize\ttfamily \label{classmidend_1_1UseDefAnalysis_af24b546ff26f5d1e0928dbf2477dbf2f} 
+midend\+::\+Use\+Def\+Analysis\+::\+Use\+Def\+Analysis (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1CFG}{CFG}} \texorpdfstring{$\ast$}{*}}]{cfg}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classmidend_1_1UseDefAnalysis_a8591114a066ded77db7561651e6de44d}\index{midend::UseDefAnalysis@{midend::UseDefAnalysis}!build\_use\_def@{build\_use\_def}}
+\index{build\_use\_def@{build\_use\_def}!midend::UseDefAnalysis@{midend::UseDefAnalysis}}
+\doxysubsubsection{\texorpdfstring{build\_use\_def()}{build\_use\_def()}}
+{\footnotesize\ttfamily \label{classmidend_1_1UseDefAnalysis_a8591114a066ded77db7561651e6de44d} 
+void midend\+::\+Use\+Def\+Analysis\+::build\+\_\+use\+\_\+def (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classmidend_1_1UseDefAnalysis_ab7401bb1a14b2cb82343671cfc256119}\index{midend::UseDefAnalysis@{midend::UseDefAnalysis}!change\_def@{change\_def}}
+\index{change\_def@{change\_def}!midend::UseDefAnalysis@{midend::UseDefAnalysis}}
+\doxysubsubsection{\texorpdfstring{change\_def()}{change\_def()}}
+{\footnotesize\ttfamily \label{classmidend_1_1UseDefAnalysis_ab7401bb1a14b2cb82343671cfc256119} 
+void midend\+::\+Use\+Def\+Analysis\+::change\+\_\+def (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{old}{, }\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{new\+\_\+temp}{, }\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*}}]{inst}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classmidend_1_1UseDefAnalysis_ac0a1ece8fd7ed0a363484e83637717e9}\index{midend::UseDefAnalysis@{midend::UseDefAnalysis}!change\_use@{change\_use}}
+\index{change\_use@{change\_use}!midend::UseDefAnalysis@{midend::UseDefAnalysis}}
+\doxysubsubsection{\texorpdfstring{change\_use()}{change\_use()}}
+{\footnotesize\ttfamily \label{classmidend_1_1UseDefAnalysis_ac0a1ece8fd7ed0a363484e83637717e9} 
+void midend\+::\+Use\+Def\+Analysis\+::change\+\_\+use (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{old}{, }\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{new\+\_\+temp}{, }\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*}}]{inst}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classmidend_1_1UseDefAnalysis_a3714240afd96cb3a9b1c0f4701cec478}\index{midend::UseDefAnalysis@{midend::UseDefAnalysis}!compute\_use\_def@{compute\_use\_def}}
+\index{compute\_use\_def@{compute\_use\_def}!midend::UseDefAnalysis@{midend::UseDefAnalysis}}
+\doxysubsubsection{\texorpdfstring{compute\_use\_def()}{compute\_use\_def()}}
+{\footnotesize\ttfamily \label{classmidend_1_1UseDefAnalysis_a3714240afd96cb3a9b1c0f4701cec478} 
+void midend\+::\+Use\+Def\+Analysis\+::compute\+\_\+use\+\_\+def (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*}}]{inst}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classmidend_1_1UseDefAnalysis_a6bf7256c568c21db62daeffba0e94986}\index{midend::UseDefAnalysis@{midend::UseDefAnalysis}!erase\_use\_def@{erase\_use\_def}}
+\index{erase\_use\_def@{erase\_use\_def}!midend::UseDefAnalysis@{midend::UseDefAnalysis}}
+\doxysubsubsection{\texorpdfstring{erase\_use\_def()}{erase\_use\_def()}}
+{\footnotesize\ttfamily \label{classmidend_1_1UseDefAnalysis_a6bf7256c568c21db62daeffba0e94986} 
+void midend\+::\+Use\+Def\+Analysis\+::erase\+\_\+use\+\_\+def (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*}}]{inst}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classmidend_1_1UseDefAnalysis_ae03777c5deda5a17cfd80b959bc4abbd}\index{midend::UseDefAnalysis@{midend::UseDefAnalysis}!get\_defset@{get\_defset}}
+\index{get\_defset@{get\_defset}!midend::UseDefAnalysis@{midend::UseDefAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_defset()}{get\_defset()}}
+{\footnotesize\ttfamily \label{classmidend_1_1UseDefAnalysis_ae03777c5deda5a17cfd80b959bc4abbd} 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*} $>$ midend\+::\+Use\+Def\+Analysis\+::get\+\_\+defset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{temp}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classmidend_1_1UseDefAnalysis_a3c9f03f1091d5c4cc8804d4ccef80d68}\index{midend::UseDefAnalysis@{midend::UseDefAnalysis}!get\_defsets@{get\_defsets}}
+\index{get\_defsets@{get\_defsets}!midend::UseDefAnalysis@{midend::UseDefAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_defsets()}{get\_defsets()}}
+{\footnotesize\ttfamily \label{classmidend_1_1UseDefAnalysis_a3c9f03f1091d5c4cc8804d4ccef80d68} 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}, std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*} $>$ $>$ midend\+::\+Use\+Def\+Analysis\+::get\+\_\+defsets (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classmidend_1_1UseDefAnalysis_a56cabcd839055388dbd2775dec7e169d}\index{midend::UseDefAnalysis@{midend::UseDefAnalysis}!get\_useset@{get\_useset}}
+\index{get\_useset@{get\_useset}!midend::UseDefAnalysis@{midend::UseDefAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_useset()}{get\_useset()}}
+{\footnotesize\ttfamily \label{classmidend_1_1UseDefAnalysis_a56cabcd839055388dbd2775dec7e169d} 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*} $>$ midend\+::\+Use\+Def\+Analysis\+::get\+\_\+useset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{temp}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classmidend_1_1UseDefAnalysis_ae617909d3a7aada52702e6cfbc4e41dc}\index{midend::UseDefAnalysis@{midend::UseDefAnalysis}!get\_usesets@{get\_usesets}}
+\index{get\_usesets@{get\_usesets}!midend::UseDefAnalysis@{midend::UseDefAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_usesets()}{get\_usesets()}}
+{\footnotesize\ttfamily \label{classmidend_1_1UseDefAnalysis_ae617909d3a7aada52702e6cfbc4e41dc} 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}, std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir\+::\+Instruction}} \texorpdfstring{$\ast$}{*} $>$ $>$ midend\+::\+Use\+Def\+Analysis\+::get\+\_\+usesets (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{use__def__analysis_8hpp}{use\+\_\+def\+\_\+analysis.\+hpp}}\item 
+src/\+IR/\mbox{\hyperlink{use__def__analysis_8cpp}{use\+\_\+def\+\_\+analysis.\+cpp}}\end{DoxyCompactItemize}

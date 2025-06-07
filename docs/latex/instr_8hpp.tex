@@ -1,0 +1,145 @@
+\doxysection{src/backend/instr.hpp File Reference}
+\hypertarget{instr_8hpp}{}\label{instr_8hpp}\index{src/backend/instr.hpp@{src/backend/instr.hpp}}
+{\ttfamily \#include "{}backend/program.\+hpp"{}}\newline
+{\ttfamily \#include "{}common/regarch.\+hpp"{}}\newline
+{\ttfamily \#include $<$set$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structbackend_1_1riscv_1_1Edge}{backend\+::riscv\+::\+Edge}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{backend\+::riscv\+::\+Instr}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1RiscvLabel}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Riscv\+Label}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Unary}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Unary}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Binary}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Binary}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1BinaryInt}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Binary\+Int}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1BinaryImm}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Binary\+Imm}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadImm}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Imm}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Convert}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Convert}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm}{backend\+::riscv\+::\+Riscv\+Instr\+::\+ADDImm}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1SLTIU}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SLTIU}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Jump}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Jump}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Branch}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Branch}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Call}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Call}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Return}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Return}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Double}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Load}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Load}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Store}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Store}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1StoreDouble}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Store\+Double}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Sext}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Sext}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Move}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Move}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadLabelAddr}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Load\+Label\+Addr}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacebackend}{backend}}
+\item 
+namespace \mbox{\hyperlink{namespacebackend_1_1riscv}{backend\+::riscv}}
+\item 
+namespace \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr}{backend\+::riscv\+::\+Riscv\+Instr}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768}{backend\+::riscv\+::\+Operation\+Type}} \{ \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a1806e62edd279608775b14d03c526062}{backend\+::riscv\+::\+Int\+ALU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a6f56b9c585cdab384e978b18c4931115}{backend\+::riscv\+::\+Int\+MULALU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768aff83499c6fda6c6166ae1b51e8c7425e}{backend\+::riscv\+::\+Int\+DIVALU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a9e801c8cf32c2eb39df1ea5af11c3478}{backend\+::riscv\+::\+Float\+ALU}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a01c85682ecb72f180e36abe12bf287e2}{backend\+::riscv\+::\+Float\+MULALU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768aec25e49baa64ddbf1d16df5938f50594}{backend\+::riscv\+::\+Float\+DIVALU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768adcd9350dd49ef784bdefa22bd64d169f}{backend\+::riscv\+::\+Store\+Unit}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a481815c11c6f62aa26342e7bb99e5c75}{backend\+::riscv\+::\+Load\+Unit}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a4fd435ccf3e515d64e7ee46a0fbf6b45}{backend\+::riscv\+::\+Branch\+Unit}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a22659969c8b854e9298bdbd99ce3b92d}{backend\+::riscv\+::\+Li\+Unit}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768abf1f68b5e28fac017f873f4d73749c4f}{backend\+::riscv\+::\+Int\+ALU2}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Rv\+Unary\+Op}} \{ \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50abb96fe3088894c7e6d6adb08bcee2d9c}{backend\+::riscv\+::\+Riscv\+Instr\+::\+NEG}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a0a60c8a8c9b202fb985715fc490c1581}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SNEZ}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a893ad63ffefa30a4dd35c6749e3c5c10}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SEQZ}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a2ce0bad01dcd9070ab5e06bb615046ef}{backend\+::riscv\+::\+Riscv\+Instr\+::\+NOT}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a279afd1c9e8d5c21cd6a478165bdc529}{backend\+::riscv\+::\+Riscv\+Instr\+::\+FNEGS}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Rv\+Binary\+Op}} \{ \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a2e344f84aba09bf5d1cfdf6d1cac87cb}{backend\+::riscv\+::\+Riscv\+Instr\+::\+MAX}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ade56d887a006cd9d79de4678455f4d81}{backend\+::riscv\+::\+Riscv\+Instr\+::\+MIN}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a0a07f716da55664bfc4dd70f873feadc}{backend\+::riscv\+::\+Riscv\+Instr\+::\+ADD}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a657471e708068514d8e4a8ef69b10ce2}{backend\+::riscv\+::\+Riscv\+Instr\+::\+ADDF}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a1ee12bcb6920bb302492a663189a1ecb}{backend\+::riscv\+::\+Riscv\+Instr\+::\+ADDUW}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ad1e57c0739ca0a9ca90daa87c62e0c24}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SUB}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac5e70a627c0c7091440e44197e5554cc}{backend\+::riscv\+::\+Riscv\+Instr\+::\+MUL}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535af12696832e5c62c6468ad1871768f3b6}{backend\+::riscv\+::\+Riscv\+Instr\+::\+DIV}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ab9aac588b601c7be22ef591dc3be8e0e}{backend\+::riscv\+::\+Riscv\+Instr\+::\+REM}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a5a1215aa1ea691b9be7cea8248a9bc81}{backend\+::riscv\+::\+Riscv\+Instr\+::\+OR}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535abba9ec5b1ee4e2c23831372167c361cb}{backend\+::riscv\+::\+Riscv\+Instr\+::\+AND}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac3ed874e24479fae25b95c71e0975749}{backend\+::riscv\+::\+Riscv\+Instr\+::\+XOR}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac4b322de41cece5042f8388cd61e6b73}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SLT}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a1ec587f3c39834a639699b913fad411a}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SLTU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a4989fe8941f6c818b30a95c298ab377f}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SLL}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a854e09cb7797c8c086ca8cf71250c209}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SRL}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535afc70827fb30bb81c1e9f61993bc73914}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SRLF}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535aaff9239e832366da0bf50d06f266fbb3}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SRAF}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a2f6604837e42921c24832ecf9574fa14}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SAL}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a6cce3629c82035bff3a8fabc0f50abec}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SLLF}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a72dc4eca3b6b8dd94addeaac54af2866}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SRA}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac71339e7735f754087c33808acfa12fc}{backend\+::riscv\+::\+Riscv\+Instr\+::\+FADDS}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ae04f3730b6feabe48b820886e61dca46}{backend\+::riscv\+::\+Riscv\+Instr\+::\+FMULS}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535adf60c19ebb660fe2fc5bbc1bbd5aed80}{backend\+::riscv\+::\+Riscv\+Instr\+::\+FDIVS}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a6bcfccd397f100e8a7730cac7d019739}{backend\+::riscv\+::\+Riscv\+Instr\+::\+FLT}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a0f48ba92bcf60657168690a5923a0241}{backend\+::riscv\+::\+Riscv\+Instr\+::\+FLE}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535aa47c445dc1027090c9f354153efe28bf}{backend\+::riscv\+::\+Riscv\+Instr\+::\+FEQ}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ade219550c57ded6c00074787a6fc0be5}{backend\+::riscv\+::\+Riscv\+Instr\+::\+FSUBS}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535abd4dd1228cf2a2e7e3e6b623244f6973}{backend\+::riscv\+::\+Riscv\+Instr\+::\+FMODS}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535affac2e4100bb8ea7ce5f32d1e0ce97d2}{backend\+::riscv\+::\+Riscv\+Instr\+::\+MULUH}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a4789b8fd148121a04c9568cbec298bfd}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SH1\+ADD}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a8b7756c553432fa7d1712412dd92005a}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SH3\+ADD}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a3c974765442d981288105ad666bc09aa}{backend\+::riscv\+::\+Riscv\+Instr\+::\+SH2\+ADD}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Rv\+Compare\+Op}} \{ \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca135e546f9fabb556431d724b888086c9}{backend\+::riscv\+::\+Riscv\+Instr\+::\+EQ}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca45e530f7555f26ed46d467fa44c2651e}{backend\+::riscv\+::\+Riscv\+Instr\+::\+NE}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca707694fc8d63c567823df1e0ccf54ea3}{backend\+::riscv\+::\+Riscv\+Instr\+::\+BLT}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca4e21c841042d8afd8c25db9320512e35}{backend\+::riscv\+::\+Riscv\+Instr\+::\+BLE}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5ccab5f781de50a4482e7cc7401226b78265}{backend\+::riscv\+::\+Riscv\+Instr\+::\+BGT}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca587bf5b7ccf446efb0b9fe55a5ef2c7c}{backend\+::riscv\+::\+Riscv\+Instr\+::\+BGE}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca102f518ef4be40adbe8e7f181b6f6d43}{backend\+::riscv\+::\+Riscv\+Instr\+::\+BEQ}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca83c625b24629a4be577b742e10f8e5bb}{backend\+::riscv\+::\+Riscv\+Instr\+::\+BNE}}
+ \}
+\end{DoxyCompactItemize}

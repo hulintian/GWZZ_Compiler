@@ -1,0 +1,50 @@
+\doxysection{Constant.\+hpp}
+\hypertarget{Constant_8hpp_source}{}\label{Constant_8hpp_source}\index{src/IR/Constant.hpp@{src/IR/Constant.hpp}}
+\mbox{\hyperlink{Constant_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Type_8hpp}{IR/Type.hpp}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Use_8hpp}{IR/Use.hpp}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{User_8hpp}{IR/User.hpp}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceir}{ir}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1Constant}{Constant}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classir_1_1User}{User}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00011\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00012\ \ \ \ \ \mbox{\hyperlink{classir_1_1Constant_a24feb4f6f86d0eac0273eb3baf9a928d}{Constant}}(\mbox{\hyperlink{classir_1_1Type}{Type}}*\ ty,\ \textcolor{keyword}{const}\ std::string\ \&name)\ :\ \mbox{\hyperlink{classir_1_1User}{User}}(ty,\ name)\ \{\}}
+\DoxyCodeLine{00013\ \};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1IntConstant}{IntConstant}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classir_1_1Constant}{Constant}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{int}\ const\_int\_val\ =\ 0;}
+\DoxyCodeLine{00018\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{classir_1_1IntConstant_a6a0fd7d7adfce871bdc536bbb66e88dd}{IntConstant}}(\textcolor{keywordtype}{int}\ val,\ \textcolor{keyword}{const}\ std::string\&\ name)\ :\ \mbox{\hyperlink{classir_1_1Constant}{Constant}}(new\ \mbox{\hyperlink{classir_1_1IntegerType}{IntegerType}}(32),\ name),\ const\_int\_val(val)\ \{\}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classir_1_1IntConstant_a7570b8a578ec1ac2d07baf462ced68a8}{get\_val}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ const\_int\_val;\ \}}
+\DoxyCodeLine{00022\ \};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1FloatConstant}{FloatConstant}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classir_1_1Constant}{Constant}}\ \{}
+\DoxyCodeLine{00025\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ const\_float\_val\ =\ 0;}
+\DoxyCodeLine{00027\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{classir_1_1FloatConstant_acdbb0de7ae754d0c5733abcac8d5b2e0}{FloatConstant}}(\textcolor{keywordtype}{int}\ val,\ \textcolor{keyword}{const}\ std::string\&\ name)\ :\ \mbox{\hyperlink{classir_1_1Constant}{Constant}}(new\ \mbox{\hyperlink{classir_1_1FloatType}{FloatType}}(),\ name),\ const\_float\_val(val)\ \{\}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classir_1_1FloatConstant_a9a9b78f245efa7c50784637c7f117459}{get\_val}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ const\_float\_val;\ \}}
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1ArrayConstant}{ArrayConstant}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classir_1_1Constant}{Constant}}\ \{}
+\DoxyCodeLine{00034\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Constant*>\ array;}
+\DoxyCodeLine{00036\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{classir_1_1ArrayConstant_a7607f75effb97e78a703698096d8a32f}{ArrayConstant}}(\mbox{\hyperlink{classir_1_1ArrayType}{ArrayType}}\ *ty,\ \textcolor{keyword}{const}\ std::vector<Constant*>\ val,\ \textcolor{keyword}{const}\ std::string\ \&name)\ :\ \mbox{\hyperlink{classir_1_1Constant}{Constant}}(ty,\ name),\ array(std::move(val))\ \{\}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classir_1_1Constant}{Constant}}*\ \mbox{\hyperlink{classir_1_1ArrayConstant_a1c9b215f6ff837e0f2d738cae6baed86}{get}}(\textcolor{keywordtype}{int}\ idx)\textcolor{keyword}{\ const\ }\{\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ assert(idx\ <\ array.size()\ \&\&\ \textcolor{stringliteral}{"{}Index\ out\ of\ range.\(\backslash\)n"{}});}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ array[idx];}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \}}
+
+\end{DoxyCode}

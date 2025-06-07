@@ -1,0 +1,192 @@
+\doxysection{backend\+::riscv Namespace Reference}
+\hypertarget{namespacebackend_1_1riscv}{}\label{namespacebackend_1_1riscv}\index{backend::riscv@{backend::riscv}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr}{Riscv\+Instr}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock}{Basic\+Block}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1ColoringRegAllocator}{Coloring\+Reg\+Allocator}}
+\item 
+struct \mbox{\hyperlink{structbackend_1_1riscv_1_1Edge}{Edge}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1GlobalObject}{Global\+Object}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1Program}{Program}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1StackObject}{Stack\+Object}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespacebackend_1_1riscv_a28f05c288ec9d4bf2c21c0fcc22f7696}{Reg\+Value}} = std\+::variant$<$int, std\+::string, \mbox{\hyperlink{classbackend_1_1riscv_1_1StackObject}{Stack\+Object}} \texorpdfstring{$\ast$}{*}$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768}{Operation\+Type}} \{ \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a1806e62edd279608775b14d03c526062}{Int\+ALU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a6f56b9c585cdab384e978b18c4931115}{Int\+MULALU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768aff83499c6fda6c6166ae1b51e8c7425e}{Int\+DIVALU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a9e801c8cf32c2eb39df1ea5af11c3478}{Float\+ALU}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a01c85682ecb72f180e36abe12bf287e2}{Float\+MULALU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768aec25e49baa64ddbf1d16df5938f50594}{Float\+DIVALU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768adcd9350dd49ef784bdefa22bd64d169f}{Store\+Unit}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a481815c11c6f62aa26342e7bb99e5c75}{Load\+Unit}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a4fd435ccf3e515d64e7ee46a0fbf6b45}{Branch\+Unit}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a22659969c8b854e9298bdbd99ce3b92d}{Li\+Unit}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768abf1f68b5e28fac017f873f4d73749c4f}{Int\+ALU2}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_a79738b4a7b971edb54e6f9e5da9156b4}{backend\+\_\+passes}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Program}{Program}} \texorpdfstring{$\ast$}{*}prog)
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_a56decd2a7461c2222567e45a44acd1c5}{tail\+\_\+duplication}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Program}{Program}} \texorpdfstring{$\ast$}{*}prog, \mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}func)
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_a35ed6bbde584f9267a76027208cec5fc}{post\+\_\+order\+\_\+dfs}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}bb, std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \&visited\+\_\+bbs, std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \&order)
+\item 
+bool \mbox{\hyperlink{namespacebackend_1_1riscv_abe7a6b7d7989286a906158c879bbd7ab}{clean\+\_\+cf\+\_\+one\+\_\+pass}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}func)
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_a4d57f49ff3b030b7a15217181425954e}{clean\+\_\+control\+\_\+flow}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}func)
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_a7894a40baf6b37b8b2faa957f4829822}{remove\+\_\+useless\+\_\+load}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}func)
+\item 
+void \mbox{\hyperlink{namespacebackend_1_1riscv_aaec506d923834473e3fa768b206a5cb5}{remove\+\_\+useless\+\_\+inst}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}func)
+\item 
+\mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768}{Operation\+Type}} \mbox{\hyperlink{namespacebackend_1_1riscv_a1b71408efb29a9e763c96187f3464b53}{get\+\_\+type}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}inst)
+\item 
+int \mbox{\hyperlink{namespacebackend_1_1riscv_abc6d3a58832ac8fbf8df48a86dfae422}{get\+\_\+latency}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}inst)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespacebackend_1_1riscv_a28f05c288ec9d4bf2c21c0fcc22f7696}\index{backend::riscv@{backend::riscv}!RegValue@{RegValue}}
+\index{RegValue@{RegValue}!backend::riscv@{backend::riscv}}
+\doxysubsubsection{\texorpdfstring{RegValue}{RegValue}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_a28f05c288ec9d4bf2c21c0fcc22f7696} 
+using \mbox{\hyperlink{namespacebackend_1_1riscv_a28f05c288ec9d4bf2c21c0fcc22f7696}{backend\+::riscv\+::\+Reg\+Value}} = std\+::variant$<$int, std\+::string, \mbox{\hyperlink{classbackend_1_1riscv_1_1StackObject}{Stack\+Object}} \texorpdfstring{$\ast$}{*}$>$}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768}\index{backend::riscv@{backend::riscv}!OperationType@{OperationType}}
+\index{OperationType@{OperationType}!backend::riscv@{backend::riscv}}
+\doxysubsubsection{\texorpdfstring{OperationType}{OperationType}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768}{backend\+::riscv\+::\+Operation\+Type}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IntALU@{IntALU}!backend::riscv@{backend::riscv}}\index{backend::riscv@{backend::riscv}!IntALU@{IntALU}}}\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a1806e62edd279608775b14d03c526062}\label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+Int\+ALU&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IntMULALU@{IntMULALU}!backend::riscv@{backend::riscv}}\index{backend::riscv@{backend::riscv}!IntMULALU@{IntMULALU}}}\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a6f56b9c585cdab384e978b18c4931115}\label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+Int\+MULALU&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IntDIVALU@{IntDIVALU}!backend::riscv@{backend::riscv}}\index{backend::riscv@{backend::riscv}!IntDIVALU@{IntDIVALU}}}\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768aff83499c6fda6c6166ae1b51e8c7425e}\label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+Int\+DIVALU&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FloatALU@{FloatALU}!backend::riscv@{backend::riscv}}\index{backend::riscv@{backend::riscv}!FloatALU@{FloatALU}}}\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a9e801c8cf32c2eb39df1ea5af11c3478}\label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+Float\+ALU&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FloatMULALU@{FloatMULALU}!backend::riscv@{backend::riscv}}\index{backend::riscv@{backend::riscv}!FloatMULALU@{FloatMULALU}}}\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a01c85682ecb72f180e36abe12bf287e2}\label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+Float\+MULALU&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FloatDIVALU@{FloatDIVALU}!backend::riscv@{backend::riscv}}\index{backend::riscv@{backend::riscv}!FloatDIVALU@{FloatDIVALU}}}\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768aec25e49baa64ddbf1d16df5938f50594}\label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+Float\+DIVALU&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{StoreUnit@{StoreUnit}!backend::riscv@{backend::riscv}}\index{backend::riscv@{backend::riscv}!StoreUnit@{StoreUnit}}}\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768adcd9350dd49ef784bdefa22bd64d169f}\label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+Store\+Unit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LoadUnit@{LoadUnit}!backend::riscv@{backend::riscv}}\index{backend::riscv@{backend::riscv}!LoadUnit@{LoadUnit}}}\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a481815c11c6f62aa26342e7bb99e5c75}\label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+Load\+Unit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BranchUnit@{BranchUnit}!backend::riscv@{backend::riscv}}\index{backend::riscv@{backend::riscv}!BranchUnit@{BranchUnit}}}\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a4fd435ccf3e515d64e7ee46a0fbf6b45}\label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+Branch\+Unit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LiUnit@{LiUnit}!backend::riscv@{backend::riscv}}\index{backend::riscv@{backend::riscv}!LiUnit@{LiUnit}}}\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768a22659969c8b854e9298bdbd99ce3b92d}\label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+Li\+Unit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IntALU2@{IntALU2}!backend::riscv@{backend::riscv}}\index{backend::riscv@{backend::riscv}!IntALU2@{IntALU2}}}\Hypertarget{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768abf1f68b5e28fac017f873f4d73749c4f}\label{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768} 
+Int\+ALU2&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacebackend_1_1riscv_a79738b4a7b971edb54e6f9e5da9156b4}\index{backend::riscv@{backend::riscv}!backend\_passes@{backend\_passes}}
+\index{backend\_passes@{backend\_passes}!backend::riscv@{backend::riscv}}
+\doxysubsubsection{\texorpdfstring{backend\_passes()}{backend\_passes()}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_a79738b4a7b971edb54e6f9e5da9156b4} 
+void backend\+::riscv\+::backend\+\_\+passes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Program}{Program}} \texorpdfstring{$\ast$}{*}}]{prog}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespacebackend_1_1riscv_abe7a6b7d7989286a906158c879bbd7ab}\index{backend::riscv@{backend::riscv}!clean\_cf\_one\_pass@{clean\_cf\_one\_pass}}
+\index{clean\_cf\_one\_pass@{clean\_cf\_one\_pass}!backend::riscv@{backend::riscv}}
+\doxysubsubsection{\texorpdfstring{clean\_cf\_one\_pass()}{clean\_cf\_one\_pass()}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_abe7a6b7d7989286a906158c879bbd7ab} 
+bool backend\+::riscv\+::clean\+\_\+cf\+\_\+one\+\_\+pass (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}}]{func}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespacebackend_1_1riscv_a4d57f49ff3b030b7a15217181425954e}\index{backend::riscv@{backend::riscv}!clean\_control\_flow@{clean\_control\_flow}}
+\index{clean\_control\_flow@{clean\_control\_flow}!backend::riscv@{backend::riscv}}
+\doxysubsubsection{\texorpdfstring{clean\_control\_flow()}{clean\_control\_flow()}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_a4d57f49ff3b030b7a15217181425954e} 
+void backend\+::riscv\+::clean\+\_\+control\+\_\+flow (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}}]{func}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespacebackend_1_1riscv_abc6d3a58832ac8fbf8df48a86dfae422}\index{backend::riscv@{backend::riscv}!get\_latency@{get\_latency}}
+\index{get\_latency@{get\_latency}!backend::riscv@{backend::riscv}}
+\doxysubsubsection{\texorpdfstring{get\_latency()}{get\_latency()}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_abc6d3a58832ac8fbf8df48a86dfae422} 
+int backend\+::riscv\+::get\+\_\+latency (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}}]{inst}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespacebackend_1_1riscv_a1b71408efb29a9e763c96187f3464b53}\index{backend::riscv@{backend::riscv}!get\_type@{get\_type}}
+\index{get\_type@{get\_type}!backend::riscv@{backend::riscv}}
+\doxysubsubsection{\texorpdfstring{get\_type()}{get\_type()}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_a1b71408efb29a9e763c96187f3464b53} 
+\mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768}{Operation\+Type}} backend\+::riscv\+::get\+\_\+type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}}]{inst}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespacebackend_1_1riscv_a35ed6bbde584f9267a76027208cec5fc}\index{backend::riscv@{backend::riscv}!post\_order\_dfs@{post\_order\_dfs}}
+\index{post\_order\_dfs@{post\_order\_dfs}!backend::riscv@{backend::riscv}}
+\doxysubsubsection{\texorpdfstring{post\_order\_dfs()}{post\_order\_dfs()}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_a35ed6bbde584f9267a76027208cec5fc} 
+void backend\+::riscv\+::post\+\_\+order\+\_\+dfs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb}{, }\item[{std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \&}]{visited\+\_\+bbs}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \&}]{order}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespacebackend_1_1riscv_aaec506d923834473e3fa768b206a5cb5}\index{backend::riscv@{backend::riscv}!remove\_useless\_inst@{remove\_useless\_inst}}
+\index{remove\_useless\_inst@{remove\_useless\_inst}!backend::riscv@{backend::riscv}}
+\doxysubsubsection{\texorpdfstring{remove\_useless\_inst()}{remove\_useless\_inst()}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_aaec506d923834473e3fa768b206a5cb5} 
+void backend\+::riscv\+::remove\+\_\+useless\+\_\+inst (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}}]{func}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespacebackend_1_1riscv_a7894a40baf6b37b8b2faa957f4829822}\index{backend::riscv@{backend::riscv}!remove\_useless\_load@{remove\_useless\_load}}
+\index{remove\_useless\_load@{remove\_useless\_load}!backend::riscv@{backend::riscv}}
+\doxysubsubsection{\texorpdfstring{remove\_useless\_load()}{remove\_useless\_load()}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_a7894a40baf6b37b8b2faa957f4829822} 
+void backend\+::riscv\+::remove\+\_\+useless\+\_\+load (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}}]{func}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespacebackend_1_1riscv_a56decd2a7461c2222567e45a44acd1c5}\index{backend::riscv@{backend::riscv}!tail\_duplication@{tail\_duplication}}
+\index{tail\_duplication@{tail\_duplication}!backend::riscv@{backend::riscv}}
+\doxysubsubsection{\texorpdfstring{tail\_duplication()}{tail\_duplication()}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_a56decd2a7461c2222567e45a44acd1c5} 
+void backend\+::riscv\+::tail\+\_\+duplication (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Program}{Program}} \texorpdfstring{$\ast$}{*}}]{prog}{, }\item[{\mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{Function}} \texorpdfstring{$\ast$}{*}}]{func}{}\end{DoxyParamCaption})}
+

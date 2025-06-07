@@ -1,0 +1,92 @@
+\doxysection{frontend\+::Scope\+Stack Class Reference}
+\hypertarget{classfrontend_1_1ScopeStack}{}\label{classfrontend_1_1ScopeStack}\index{frontend::ScopeStack@{frontend::ScopeStack}}
+
+
+{\ttfamily \#include $<$Symbol\+Table.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classfrontend_1_1ScopeStack_a82104140dd723025a75932659c14b402}{enter\+\_\+scope}} (bool is\+\_\+loop=false)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1ScopeStack_a8fad4d2a337eb5a5751acf3c0c3f67fd}{exit\+\_\+scope}} ()
+\item 
+\mbox{\hyperlink{classfrontend_1_1ScopeStack_ad31b387d1bf21be6a329ab1a630e3375}{Scope\+Stack}} ()
+\item 
+\mbox{\hyperlink{structfrontend_1_1Scope}{Scope}} \& \mbox{\hyperlink{classfrontend_1_1ScopeStack_ae9f289cc01e908f18eba3fff52f72e15}{cur\+\_\+scope}} ()
+\item 
+Var \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1ScopeStack_a335ed15babfbe0725c1e17d229ab2492}{lookup}} (const std\+::string \&name) const
+\item 
+const std\+::shared\+\_\+ptr$<$ Var $>$ \& \mbox{\hyperlink{classfrontend_1_1ScopeStack_ab07b5e15bf1e0a601dfc36ebb5dc23c0}{get\+Var}} (const std\+::string \&name)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1ScopeStack_a60484a4c5c602d5247e12804f93d4a5f}{insert}} (const std\+::string \&name, std\+::shared\+\_\+ptr$<$ Var $>$ \&\&var)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1ScopeStack_a79ca3b20b972b155561dc980985eead0}{insert}} (const std\+::string \&name, const std\+::shared\+\_\+ptr$<$ Var $>$ \&var)
+\item 
+const \mbox{\hyperlink{structfrontend_1_1Scope}{Scope}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1ScopeStack_a0337b643b46aa96ab43cd088cfc7bbc8}{nearset\+\_\+loop}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfrontend_1_1ScopeStack_ad31b387d1bf21be6a329ab1a630e3375}\index{frontend::ScopeStack@{frontend::ScopeStack}!ScopeStack@{ScopeStack}}
+\index{ScopeStack@{ScopeStack}!frontend::ScopeStack@{frontend::ScopeStack}}
+\doxysubsubsection{\texorpdfstring{ScopeStack()}{ScopeStack()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ScopeStack_ad31b387d1bf21be6a329ab1a630e3375} 
+frontend\+::\+Scope\+Stack\+::\+Scope\+Stack (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfrontend_1_1ScopeStack_ae9f289cc01e908f18eba3fff52f72e15}\index{frontend::ScopeStack@{frontend::ScopeStack}!cur\_scope@{cur\_scope}}
+\index{cur\_scope@{cur\_scope}!frontend::ScopeStack@{frontend::ScopeStack}}
+\doxysubsubsection{\texorpdfstring{cur\_scope()}{cur\_scope()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ScopeStack_ae9f289cc01e908f18eba3fff52f72e15} 
+\mbox{\hyperlink{structfrontend_1_1Scope}{Scope}} \& frontend\+::\+Scope\+Stack\+::cur\+\_\+scope (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ScopeStack_a82104140dd723025a75932659c14b402}\index{frontend::ScopeStack@{frontend::ScopeStack}!enter\_scope@{enter\_scope}}
+\index{enter\_scope@{enter\_scope}!frontend::ScopeStack@{frontend::ScopeStack}}
+\doxysubsubsection{\texorpdfstring{enter\_scope()}{enter\_scope()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ScopeStack_a82104140dd723025a75932659c14b402} 
+void frontend\+::\+Scope\+Stack\+::enter\+\_\+scope (\begin{DoxyParamCaption}\item[{bool}]{is\+\_\+loop}{ = {\ttfamily false}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ScopeStack_a8fad4d2a337eb5a5751acf3c0c3f67fd}\index{frontend::ScopeStack@{frontend::ScopeStack}!exit\_scope@{exit\_scope}}
+\index{exit\_scope@{exit\_scope}!frontend::ScopeStack@{frontend::ScopeStack}}
+\doxysubsubsection{\texorpdfstring{exit\_scope()}{exit\_scope()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ScopeStack_a8fad4d2a337eb5a5751acf3c0c3f67fd} 
+void frontend\+::\+Scope\+Stack\+::exit\+\_\+scope (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ScopeStack_ab07b5e15bf1e0a601dfc36ebb5dc23c0}\index{frontend::ScopeStack@{frontend::ScopeStack}!getVar@{getVar}}
+\index{getVar@{getVar}!frontend::ScopeStack@{frontend::ScopeStack}}
+\doxysubsubsection{\texorpdfstring{getVar()}{getVar()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ScopeStack_ab07b5e15bf1e0a601dfc36ebb5dc23c0} 
+const std\+::shared\+\_\+ptr$<$ Var $>$ \& frontend\+::\+Scope\+Stack\+::get\+Var (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ScopeStack_a79ca3b20b972b155561dc980985eead0}\index{frontend::ScopeStack@{frontend::ScopeStack}!insert@{insert}}
+\index{insert@{insert}!frontend::ScopeStack@{frontend::ScopeStack}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ScopeStack_a79ca3b20b972b155561dc980985eead0} 
+void frontend\+::\+Scope\+Stack\+::insert (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const std\+::shared\+\_\+ptr$<$ Var $>$ \&}]{var}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ScopeStack_a60484a4c5c602d5247e12804f93d4a5f}\index{frontend::ScopeStack@{frontend::ScopeStack}!insert@{insert}}
+\index{insert@{insert}!frontend::ScopeStack@{frontend::ScopeStack}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ScopeStack_a60484a4c5c602d5247e12804f93d4a5f} 
+void frontend\+::\+Scope\+Stack\+::insert (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{std\+::shared\+\_\+ptr$<$ Var $>$ \&\&}]{var}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ScopeStack_a335ed15babfbe0725c1e17d229ab2492}\index{frontend::ScopeStack@{frontend::ScopeStack}!lookup@{lookup}}
+\index{lookup@{lookup}!frontend::ScopeStack@{frontend::ScopeStack}}
+\doxysubsubsection{\texorpdfstring{lookup()}{lookup()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ScopeStack_a335ed15babfbe0725c1e17d229ab2492} 
+Var \texorpdfstring{$\ast$}{*} frontend\+::\+Scope\+Stack\+::lookup (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ScopeStack_a0337b643b46aa96ab43cd088cfc7bbc8}\index{frontend::ScopeStack@{frontend::ScopeStack}!nearset\_loop@{nearset\_loop}}
+\index{nearset\_loop@{nearset\_loop}!frontend::ScopeStack@{frontend::ScopeStack}}
+\doxysubsubsection{\texorpdfstring{nearset\_loop()}{nearset\_loop()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ScopeStack_a0337b643b46aa96ab43cd088cfc7bbc8} 
+const \mbox{\hyperlink{structfrontend_1_1Scope}{Scope}} \texorpdfstring{$\ast$}{*} frontend\+::\+Scope\+Stack\+::nearset\+\_\+loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/frontend/\mbox{\hyperlink{SymbolTable_8hpp}{Symbol\+Table.\+hpp}}\end{DoxyCompactItemize}

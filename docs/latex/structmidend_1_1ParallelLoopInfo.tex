@@ -1,0 +1,127 @@
+\doxysection{midend\+::Parallel\+Loop\+Info Struct Reference}
+\hypertarget{structmidend_1_1ParallelLoopInfo}{}\label{structmidend_1_1ParallelLoopInfo}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+
+
+{\ttfamily \#include $<$loop\+\_\+analysis.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a8e42b186cb43545805321d9897024af2}{profitable}} (\mbox{\hyperlink{classmidend_1_1Loop}{Loop}} \texorpdfstring{$\ast$}{*}loop, const std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \&loop\+\_\+bbs, \mbox{\hyperlink{classmidend_1_1UseDefAnalysis}{Use\+Def\+Analysis}} \texorpdfstring{$\ast$}{*}uda\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a36362fdd6c55f36074597a2548376473}{valid}}
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a16015ec0f0c2e016544563387965bbab}{start\+\_\+reg}}
+\item 
+int \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a570a996ec0806cb16d6f3db59bba181b}{step}}
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_aa8aa5bc542187ec00318b851f6f4c8c1}{end\+\_\+reg}}
+\item 
+Binary\+Op \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a181a2bf63f79ed81f3c4ee5874d11680}{bop}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_ad16b8eb88c72b46326880d151a715123}{into\+\_\+entry}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_abf6677b5f8e4c3c19d82e5bc7c21b760}{entry}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_ac4c38fcb1de0a3d00918b649c17ebd79}{exit\+\_\+prev}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a2241d5e7b141e759b920d66e58bb6640}{exit}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Phi}{ir\+::instruction\+::\+Phi}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a1579e4a01fe346ed4e1b9bd8c36890a0}{entry\+\_\+ind\+\_\+phi}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir\+::instruction\+::\+Binary}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a3372628c9be882d67c19ed5fd6d27af7}{cond\+\_\+cmp}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir\+::instruction\+::\+Binary}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a9bf0e548bb7ace31665891ce9562cc9b}{binary\+\_\+upd}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structmidend_1_1ParallelLoopInfo_a8e42b186cb43545805321d9897024af2}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!profitable@{profitable}}
+\index{profitable@{profitable}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{profitable()}{profitable()}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_a8e42b186cb43545805321d9897024af2} 
+bool midend\+::\+Parallel\+Loop\+Info\+::profitable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1Loop}{Loop}} \texorpdfstring{$\ast$}{*}}]{loop}{, }\item[{const std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \&}]{loop\+\_\+bbs}{, }\item[{\mbox{\hyperlink{classmidend_1_1UseDefAnalysis}{Use\+Def\+Analysis}} \texorpdfstring{$\ast$}{*}}]{uda\+\_\+}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structmidend_1_1ParallelLoopInfo_a9bf0e548bb7ace31665891ce9562cc9b}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!binary\_upd@{binary\_upd}}
+\index{binary\_upd@{binary\_upd}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{binary\_upd}{binary\_upd}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_a9bf0e548bb7ace31665891ce9562cc9b} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir\+::instruction\+::\+Binary}}\texorpdfstring{$\ast$}{*} midend\+::\+Parallel\+Loop\+Info\+::binary\+\_\+upd}
+
+\Hypertarget{structmidend_1_1ParallelLoopInfo_a181a2bf63f79ed81f3c4ee5874d11680}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!bop@{bop}}
+\index{bop@{bop}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{bop}{bop}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_a181a2bf63f79ed81f3c4ee5874d11680} 
+Binary\+Op midend\+::\+Parallel\+Loop\+Info\+::bop}
+
+\Hypertarget{structmidend_1_1ParallelLoopInfo_a3372628c9be882d67c19ed5fd6d27af7}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!cond\_cmp@{cond\_cmp}}
+\index{cond\_cmp@{cond\_cmp}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{cond\_cmp}{cond\_cmp}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_a3372628c9be882d67c19ed5fd6d27af7} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir\+::instruction\+::\+Binary}}\texorpdfstring{$\ast$}{*} midend\+::\+Parallel\+Loop\+Info\+::cond\+\_\+cmp}
+
+\Hypertarget{structmidend_1_1ParallelLoopInfo_aa8aa5bc542187ec00318b851f6f4c8c1}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!end\_reg@{end\_reg}}
+\index{end\_reg@{end\_reg}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{end\_reg}{end\_reg}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_aa8aa5bc542187ec00318b851f6f4c8c1} 
+\mbox{\hyperlink{classTemp}{Temp}}\texorpdfstring{$\ast$}{*} midend\+::\+Parallel\+Loop\+Info\+::end\+\_\+reg}
+
+\Hypertarget{structmidend_1_1ParallelLoopInfo_abf6677b5f8e4c3c19d82e5bc7c21b760}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!entry@{entry}}
+\index{entry@{entry}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{entry}{entry}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_abf6677b5f8e4c3c19d82e5bc7c21b760} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}}\texorpdfstring{$\ast$}{*} midend\+::\+Parallel\+Loop\+Info\+::entry}
+
+\Hypertarget{structmidend_1_1ParallelLoopInfo_a1579e4a01fe346ed4e1b9bd8c36890a0}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!entry\_ind\_phi@{entry\_ind\_phi}}
+\index{entry\_ind\_phi@{entry\_ind\_phi}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{entry\_ind\_phi}{entry\_ind\_phi}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_a1579e4a01fe346ed4e1b9bd8c36890a0} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Phi}{ir\+::instruction\+::\+Phi}}\texorpdfstring{$\ast$}{*} midend\+::\+Parallel\+Loop\+Info\+::entry\+\_\+ind\+\_\+phi}
+
+\Hypertarget{structmidend_1_1ParallelLoopInfo_a2241d5e7b141e759b920d66e58bb6640}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!exit@{exit}}
+\index{exit@{exit}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{exit}{exit}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_a2241d5e7b141e759b920d66e58bb6640} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}}\texorpdfstring{$\ast$}{*} midend\+::\+Parallel\+Loop\+Info\+::exit}
+
+\Hypertarget{structmidend_1_1ParallelLoopInfo_ac4c38fcb1de0a3d00918b649c17ebd79}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!exit\_prev@{exit\_prev}}
+\index{exit\_prev@{exit\_prev}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{exit\_prev}{exit\_prev}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_ac4c38fcb1de0a3d00918b649c17ebd79} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}}\texorpdfstring{$\ast$}{*} midend\+::\+Parallel\+Loop\+Info\+::exit\+\_\+prev}
+
+\Hypertarget{structmidend_1_1ParallelLoopInfo_ad16b8eb88c72b46326880d151a715123}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!into\_entry@{into\_entry}}
+\index{into\_entry@{into\_entry}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{into\_entry}{into\_entry}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_ad16b8eb88c72b46326880d151a715123} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}}\texorpdfstring{$\ast$}{*} midend\+::\+Parallel\+Loop\+Info\+::into\+\_\+entry}
+
+\Hypertarget{structmidend_1_1ParallelLoopInfo_a16015ec0f0c2e016544563387965bbab}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!start\_reg@{start\_reg}}
+\index{start\_reg@{start\_reg}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{start\_reg}{start\_reg}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_a16015ec0f0c2e016544563387965bbab} 
+\mbox{\hyperlink{classTemp}{Temp}}\texorpdfstring{$\ast$}{*} midend\+::\+Parallel\+Loop\+Info\+::start\+\_\+reg}
+
+\Hypertarget{structmidend_1_1ParallelLoopInfo_a570a996ec0806cb16d6f3db59bba181b}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!step@{step}}
+\index{step@{step}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{step}{step}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_a570a996ec0806cb16d6f3db59bba181b} 
+int midend\+::\+Parallel\+Loop\+Info\+::step}
+
+\Hypertarget{structmidend_1_1ParallelLoopInfo_a36362fdd6c55f36074597a2548376473}\index{midend::ParallelLoopInfo@{midend::ParallelLoopInfo}!valid@{valid}}
+\index{valid@{valid}!midend::ParallelLoopInfo@{midend::ParallelLoopInfo}}
+\doxysubsubsection{\texorpdfstring{valid}{valid}}
+{\footnotesize\ttfamily \label{structmidend_1_1ParallelLoopInfo_a36362fdd6c55f36074597a2548376473} 
+bool midend\+::\+Parallel\+Loop\+Info\+::valid}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{loop__analysis_8hpp}{loop\+\_\+analysis.\+hpp}}\end{DoxyCompactItemize}

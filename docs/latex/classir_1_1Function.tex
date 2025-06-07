@@ -1,0 +1,144 @@
+\doxysection{ir\+::Function Class Reference}
+\hypertarget{classir_1_1Function}{}\label{classir_1_1Function}\index{ir::Function@{ir::Function}}
+
+
+ir中的函数的内存表示  
+
+
+
+
+{\ttfamily \#include $<$Function.\+hpp$>$}
+
+Inheritance diagram for ir\+::Function\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classir_1_1Function}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classir_1_1FunctionType}{Function\+Type}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Function_a4cfaaf52baca23050004610d02aff7a5}{get\+\_\+type}} () const
+\begin{DoxyCompactList}\small\item\em 这个方法获得的是函数的整个类型表示 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Function_a5cb20ea10090e057f90a6f8081e75897}{get\+\_\+ret\+\_\+type}} () const
+\begin{DoxyCompactList}\small\item\em 这个方法获得的是函数的返回值类型表示 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classir_1_1User}{ir\+::\+User}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classir_1_1User_aead61f61f67cd3ba8d633e22c5182fbd}{User}} (\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*}t, const std\+::string \&name)
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*} $>$ \& \mbox{\hyperlink{classir_1_1User_a4c18bd200bd8ea2384e03da87944326c}{get\+\_\+operands}} () const
+\item 
+\mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1User_aee673334255f090a5bcbffe18385b4a4}{get\+\_\+operand}} (unsigned i) const
+\item 
+void \mbox{\hyperlink{classir_1_1User_aaec89d0041ca067ed35a1a0f06639435}{set\+\_\+operands}} (unsigned i, \mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*}use)
+\item 
+void \mbox{\hyperlink{classir_1_1User_ab063a5b489277f7a17e59cdfdb776e8b}{add\+\_\+operand}} (unsigned i, \mbox{\hyperlink{classir_1_1Value}{Value}} \texorpdfstring{$\ast$}{*}val)
+\item 
+void \mbox{\hyperlink{classir_1_1User_a20b1d078e961f075210dea2002a19604}{add\+\_\+operands}} (\mbox{\hyperlink{classir_1_1Value}{Value}} \texorpdfstring{$\ast$}{*}val)
+\item 
+unsigned \mbox{\hyperlink{classir_1_1User_aecd6d6665183a09b7df5fac3bd2a3284}{get\+\_\+num\+\_\+operand}} () const
+\item 
+void \mbox{\hyperlink{classir_1_1User_a821ee0c33077b32b835106d216cfd42f}{remove\+\_\+use\+\_\+of\+\_\+ops}} ()
+\item 
+void \mbox{\hyperlink{classir_1_1User_aaebe841831e06a33b40be74c5bbb4153}{remove\+\_\+operand}} (unsigned idx1)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classir_1_1Value}{ir\+::\+Value}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classir_1_1Value_a7ffabad9ae14e963c4dcafdc26bb4adc}{Value}} (\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*}t, const std\+::string \&name)
+\item 
+virtual \mbox{\hyperlink{classir_1_1Value_a2b418ec14e23134dc2fd575151ad0ed0}{\texorpdfstring{$\sim$}{\string~}\+Value}} ()
+\item 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_a7cec08801029c90aecf9fc40ae13ee02}{get\+\_\+type}} () const
+\item 
+std\+::string \mbox{\hyperlink{classir_1_1Value_a6b7f8b95bebfcda98cbff56cc8135ac9}{get\+\_\+name}} () const
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classir_1_1Value_afb7745b86b29e8162b555cf587b0c604}{get\+\_\+use\+\_\+list}} () const
+\item 
+void \mbox{\hyperlink{classir_1_1Value_afa24f28368449611127e67b134ec459c}{set\+\_\+name}} (std\+::string name)
+\item 
+void \mbox{\hyperlink{classir_1_1Value_a7d35c398977e6f95c4161b5ec9197183}{add\+\_\+use}} (\mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*}val, unsigned arg\+\_\+no)
+\item 
+void \mbox{\hyperlink{classir_1_1Value_a7cb473544649a4d1030186be2c56de99}{replace\+\_\+all\+\_\+use\+\_\+with}} (\mbox{\hyperlink{classir_1_1Value}{Value}} \texorpdfstring{$\ast$}{*}new\+\_\+val)
+\item 
+void \mbox{\hyperlink{classir_1_1Value_a39618e99294569b06b811310a892f209}{remove\+\_\+use}} (\mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*}use)
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_ae7e2270c59229538ea1a9e496cf979fb}{as}} ()
+\item 
+{\footnotesize template$<$typename T $>$ }\\const T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_a953d6d80eebe1e7e403b6dc8582df439}{as}} ()
+\item 
+{\footnotesize template$<$typename T $>$ }\\bool \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_a29b694bce4f177a7e25eb8730adc5c99}{is}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Function_a15903a254c5eca8d9a1afc7c995c33a3}{create\+\_\+function}} (\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*}type, std\+::string func\+\_\+name, std\+::vector$<$ \mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} $>$ arg\+\_\+types, std\+::vector$<$ \mbox{\hyperlink{classir_1_1Value}{Value}} \texorpdfstring{$\ast$}{*} $>$ args, \mbox{\hyperlink{classir_1_1Module}{Module}} \texorpdfstring{$\ast$}{*}parent)
+\begin{DoxyCompactList}\small\item\em 这个方法间接调用函数的构造方法 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classir_1_1Value}{Value}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classir_1_1Function_ac6dec1bbb835c104e118c91b6e4e24d1}{var\+\_\+map}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ir中的函数的内存表示 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classir_1_1Function_a15903a254c5eca8d9a1afc7c995c33a3}\index{ir::Function@{ir::Function}!create\_function@{create\_function}}
+\index{create\_function@{create\_function}!ir::Function@{ir::Function}}
+\doxysubsubsection{\texorpdfstring{create\_function()}{create\_function()}}
+{\footnotesize\ttfamily \label{classir_1_1Function_a15903a254c5eca8d9a1afc7c995c33a3} 
+static \mbox{\hyperlink{classir_1_1Function}{Function}} \texorpdfstring{$\ast$}{*} ir\+::\+Function\+::create\+\_\+function (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*}}]{type}{, }\item[{std\+::string}]{func\+\_\+name}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} $>$}]{arg\+\_\+types}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{classir_1_1Value}{Value}} \texorpdfstring{$\ast$}{*} $>$}]{args}{, }\item[{\mbox{\hyperlink{classir_1_1Module}{Module}} \texorpdfstring{$\ast$}{*}}]{parent}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+这个方法间接调用函数的构造方法 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \doxylink{classir_1_1Function}{Function}\textquotesingle{}s return type \\
+\hline
+{\em func\+\_\+name} & \doxylink{classir_1_1Function}{Function}\textquotesingle{}s name \\
+\hline
+{\em arg\+\_\+types} & \doxylink{classir_1_1Function}{Function}\textquotesingle{}s argument types \\
+\hline
+{\em args} & \doxylink{classir_1_1Function}{Function}\textquotesingle{}s arguments \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classir_1_1Function_a5cb20ea10090e057f90a6f8081e75897}\index{ir::Function@{ir::Function}!get\_ret\_type@{get\_ret\_type}}
+\index{get\_ret\_type@{get\_ret\_type}!ir::Function@{ir::Function}}
+\doxysubsubsection{\texorpdfstring{get\_ret\_type()}{get\_ret\_type()}}
+{\footnotesize\ttfamily \label{classir_1_1Function_a5cb20ea10090e057f90a6f8081e75897} 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} ir\+::\+Function\+::get\+\_\+ret\+\_\+type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+这个方法获得的是函数的返回值类型表示 
+
+\Hypertarget{classir_1_1Function_a4cfaaf52baca23050004610d02aff7a5}\index{ir::Function@{ir::Function}!get\_type@{get\_type}}
+\index{get\_type@{get\_type}!ir::Function@{ir::Function}}
+\doxysubsubsection{\texorpdfstring{get\_type()}{get\_type()}}
+{\footnotesize\ttfamily \label{classir_1_1Function_a4cfaaf52baca23050004610d02aff7a5} 
+\mbox{\hyperlink{classir_1_1FunctionType}{Function\+Type}} \texorpdfstring{$\ast$}{*} ir\+::\+Function\+::get\+\_\+type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+这个方法获得的是函数的整个类型表示 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classir_1_1Function_ac6dec1bbb835c104e118c91b6e4e24d1}\index{ir::Function@{ir::Function}!var\_map@{var\_map}}
+\index{var\_map@{var\_map}!ir::Function@{ir::Function}}
+\doxysubsubsection{\texorpdfstring{var\_map}{var\_map}}
+{\footnotesize\ttfamily \label{classir_1_1Function_ac6dec1bbb835c104e118c91b6e4e24d1} 
+std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{classir_1_1Value}{Value}}\texorpdfstring{$\ast$}{*}$>$ ir\+::\+Function\+::var\+\_\+map}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{Function_8hpp}{Function.\+hpp}}\item 
+src/\+IR/\mbox{\hyperlink{Function_8cpp}{Function.\+cpp}}\end{DoxyCompactItemize}

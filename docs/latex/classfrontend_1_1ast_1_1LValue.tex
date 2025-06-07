@@ -1,0 +1,98 @@
+\doxysection{frontend\+::ast\+::LValue Class Reference}
+\hypertarget{classfrontend_1_1ast_1_1LValue}{}\label{classfrontend_1_1ast_1_1LValue}\index{frontend::ast::LValue@{frontend::ast::LValue}}
+
+
+{\ttfamily \#include $<$AST.\+hpp$>$}
+
+Inheritance diagram for frontend\+::ast\+::LValue\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classfrontend_1_1ast_1_1LValue}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfrontend_1_1ast_1_1LValue_a3a461bb11a3d4b860daff6b4fa153580}{LValue}} (\mbox{\hyperlink{classfrontend_1_1ast_1_1Ident}{Ident}} \mbox{\hyperlink{classfrontend_1_1ast_1_1LValue_a5346df87e43391839f9bfdafa5ace7c5}{ident}}, std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{Expr}} $>$ $>$ \mbox{\hyperlink{classfrontend_1_1ast_1_1LValue_aa04a50db36f58e181dd41ea6b369659c}{indices}}=\{\})
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1LValue_a01b16b774500037ab1097f20727c60ec}{\texorpdfstring{$\sim$}{\string~}\+LValue}} ()=default
+\item 
+const \mbox{\hyperlink{classfrontend_1_1ast_1_1Ident}{Ident}} \& \mbox{\hyperlink{classfrontend_1_1ast_1_1LValue_a5346df87e43391839f9bfdafa5ace7c5}{ident}} () const
+\item 
+const std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{Expr}} $>$ $>$ \& \mbox{\hyperlink{classfrontend_1_1ast_1_1LValue_aa04a50db36f58e181dd41ea6b369659c}{indices}} () const
+\item 
+void \mbox{\hyperlink{classfrontend_1_1ast_1_1LValue_a030d67a953f6ebbae768fcce122a70a9}{print}} (std\+::ostream \&out, unsigned level) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{frontend\+::ast\+::\+Expr}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfrontend_1_1ast_1_1Expr_a2b66c5540dafeec062fe558ed1418a91}{Expr}} ()
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr_a8babdba13ed285059bc2106e169e8160}{\texorpdfstring{$\sim$}{\string~}\+Expr}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfrontend_1_1ast_1_1ASTNode}{frontend\+::ast\+::\+ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1ASTNode_aeebf803d00cd6d3210bbbc5838e791ed}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ Var $>$ \mbox{\hyperlink{classfrontend_1_1ast_1_1LValue_abbb9461a125dc8b56387ad663217ac48}{var}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{frontend\+::ast\+::\+Expr}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::optional$<$ Type $>$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr_af829a4f128554df2b98aa07e04e0bce4}{type}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1LValue_a3a461bb11a3d4b860daff6b4fa153580}\index{frontend::ast::LValue@{frontend::ast::LValue}!LValue@{LValue}}
+\index{LValue@{LValue}!frontend::ast::LValue@{frontend::ast::LValue}}
+\doxysubsubsection{\texorpdfstring{LValue()}{LValue()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1LValue_a3a461bb11a3d4b860daff6b4fa153580} 
+frontend\+::ast\+::\+LValue\+::\+LValue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfrontend_1_1ast_1_1Ident}{Ident}}}]{ident}{, }\item[{std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{Expr}} $>$ $>$}]{indices}{ = {\ttfamily \{\}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1LValue_a01b16b774500037ab1097f20727c60ec}\index{frontend::ast::LValue@{frontend::ast::LValue}!````~LValue@{\texorpdfstring{$\sim$}{\string~}LValue}}
+\index{````~LValue@{\texorpdfstring{$\sim$}{\string~}LValue}!frontend::ast::LValue@{frontend::ast::LValue}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}LValue()}{\string~LValue()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1LValue_a01b16b774500037ab1097f20727c60ec} 
+virtual frontend\+::ast\+::\+LValue\+::\texorpdfstring{$\sim$}{\string~}\+LValue (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1LValue_a5346df87e43391839f9bfdafa5ace7c5}\index{frontend::ast::LValue@{frontend::ast::LValue}!ident@{ident}}
+\index{ident@{ident}!frontend::ast::LValue@{frontend::ast::LValue}}
+\doxysubsubsection{\texorpdfstring{ident()}{ident()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1LValue_a5346df87e43391839f9bfdafa5ace7c5} 
+const \mbox{\hyperlink{classfrontend_1_1ast_1_1Ident}{Ident}} \& frontend\+::ast\+::\+LValue\+::ident (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1LValue_aa04a50db36f58e181dd41ea6b369659c}\index{frontend::ast::LValue@{frontend::ast::LValue}!indices@{indices}}
+\index{indices@{indices}!frontend::ast::LValue@{frontend::ast::LValue}}
+\doxysubsubsection{\texorpdfstring{indices()}{indices()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1LValue_aa04a50db36f58e181dd41ea6b369659c} 
+const std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{Expr}} $>$ $>$ \& frontend\+::ast\+::\+LValue\+::indices (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1LValue_a030d67a953f6ebbae768fcce122a70a9}\index{frontend::ast::LValue@{frontend::ast::LValue}!print@{print}}
+\index{print@{print}!frontend::ast::LValue@{frontend::ast::LValue}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1LValue_a030d67a953f6ebbae768fcce122a70a9} 
+void LValue\+::print (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out}{, }\item[{unsigned}]{level}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1LValue_abbb9461a125dc8b56387ad663217ac48}\index{frontend::ast::LValue@{frontend::ast::LValue}!var@{var}}
+\index{var@{var}!frontend::ast::LValue@{frontend::ast::LValue}}
+\doxysubsubsection{\texorpdfstring{var}{var}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1LValue_abbb9461a125dc8b56387ad663217ac48} 
+std\+::shared\+\_\+ptr$<$Var$>$ frontend\+::ast\+::\+LValue\+::var\hspace{0.3cm}{\ttfamily [mutable]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/frontend/\mbox{\hyperlink{AST_8hpp}{AST.\+hpp}}\item 
+src/frontend/\mbox{\hyperlink{AST_8cpp}{AST.\+cpp}}\end{DoxyCompactItemize}
