@@ -4,5 +4,7 @@ build
 bin/
 gen
 tmp/
+tests/
 
+*.gdb
 /.cache/
