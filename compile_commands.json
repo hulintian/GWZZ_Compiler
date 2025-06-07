@@ -1,121 +1,38 @@
 [
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/clang",
       "-std=c++17",
       "-Wall",
+      "-g",
       "-fPIE",
       "-Isrc",
       "-I/usr/include/antlr4-runtime",
       "-c",
       "-o",
-      "build/src/main.o",
-      "src/main.cpp"
+      "build/frontend/Sema.o",
+      "src/frontend/Sema.cpp"
     ],
     "directory": "/home/hlt/sysy22",
-    "file": "/home/hlt/sysy22/src/main.cpp",
-    "output": "/home/hlt/sysy22/build/src/main.o"
+    "file": "/home/hlt/sysy22/src/frontend/Sema.cpp",
+    "output": "/home/hlt/sysy22/build/frontend/Sema.o"
   },
   {
     "arguments": [
-      "/usr/bin/clang++",
+      "/usr/bin/clang",
       "-std=c++17",
       "-Wall",
+      "-g",
       "-fPIE",
       "-Isrc",
       "-I/usr/include/antlr4-runtime",
       "-c",
       "-o",
-      "src/grammar/Sysy22Lexer.o",
-      "src/main.cpp"
+      "build/frontend/emit_ir.o",
+      "src/frontend/emit_ir.cpp"
     ],
     "directory": "/home/hlt/sysy22",
-    "file": "/home/hlt/sysy22/src/main.cpp",
-    "output": "/home/hlt/sysy22/src/grammar/Sysy22Lexer.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang++",
-      "-std=c++17",
-      "-Wall",
-      "-fPIE",
-      "-Isrc",
-      "-I/usr/include/antlr4-runtime",
-      "-c",
-      "-o",
-      "src/grammar/Sysy22Parser.o",
-      "src/main.cpp"
-    ],
-    "directory": "/home/hlt/sysy22",
-    "file": "/home/hlt/sysy22/src/main.cpp",
-    "output": "/home/hlt/sysy22/src/grammar/Sysy22Parser.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang++",
-      "-std=c++17",
-      "-Wall",
-      "-fPIE",
-      "-Isrc",
-      "-I/usr/include/antlr4-runtime",
-      "-c",
-      "-o",
-      "src/grammar/Sysy22Listener.o",
-      "src/main.cpp"
-    ],
-    "directory": "/home/hlt/sysy22",
-    "file": "/home/hlt/sysy22/src/main.cpp",
-    "output": "/home/hlt/sysy22/src/grammar/Sysy22Listener.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang++",
-      "-std=c++17",
-      "-Wall",
-      "-fPIE",
-      "-Isrc",
-      "-I/usr/include/antlr4-runtime",
-      "-c",
-      "-o",
-      "src/grammar/Sysy22BaseListener.o",
-      "src/main.cpp"
-    ],
-    "directory": "/home/hlt/sysy22",
-    "file": "/home/hlt/sysy22/src/main.cpp",
-    "output": "/home/hlt/sysy22/src/grammar/Sysy22BaseListener.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang++",
-      "-std=c++17",
-      "-Wall",
-      "-fPIE",
-      "-Isrc",
-      "-I/usr/include/antlr4-runtime",
-      "-c",
-      "-o",
-      "src/grammar/Sysy22Visitor.o",
-      "src/main.cpp"
-    ],
-    "directory": "/home/hlt/sysy22",
-    "file": "/home/hlt/sysy22/src/main.cpp",
-    "output": "/home/hlt/sysy22/src/grammar/Sysy22Visitor.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang++",
-      "-std=c++17",
-      "-Wall",
-      "-fPIE",
-      "-Isrc",
-      "-I/usr/include/antlr4-runtime",
-      "-c",
-      "-o",
-      "src/grammar/Sysy22BaseVisitor.o",
-      "src/main.cpp"
-    ],
-    "directory": "/home/hlt/sysy22",
-    "file": "/home/hlt/sysy22/src/main.cpp",
-    "output": "/home/hlt/sysy22/src/grammar/Sysy22BaseVisitor.o"
+    "file": "/home/hlt/sysy22/src/frontend/emit_ir.cpp",
+    "output": "/home/hlt/sysy22/build/frontend/emit_ir.o"
   }
 ]

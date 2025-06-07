@@ -88,9 +88,233 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div class="header">
+  <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">AST.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="AST_8hpp_source.html">frontend/AST.hpp</a>&quot;</code><br />
+<code>#include &quot;common/defines.hpp&quot;</code><br />
+<code>#include &quot;common/type.hpp&quot;</code><br />
+<code>#include &quot;common/utils.hpp&quot;</code><br />
+<code>#include &lt;string_view&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:af5ae9a0a40bac4a8d2e00fc5ec16e490" id="r_af5ae9a0a40bac4a8d2e00fc5ec16e490"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5ae9a0a40bac4a8d2e00fc5ec16e490">AstScalarType</a> = <a class="el" href="classfrontend_1_1ast_1_1ScalarType.html">frontend::ast::ScalarType</a></td></tr>
+<tr class="separator:af5ae9a0a40bac4a8d2e00fc5ec16e490"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a9c0aa5efb00220cc9fdd9753da51f3d6" id="r_a9c0aa5efb00220cc9fdd9753da51f3d6"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c0aa5efb00220cc9fdd9753da51f3d6">op_string</a> (UnaryOp op)</td></tr>
+<tr class="separator:a9c0aa5efb00220cc9fdd9753da51f3d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a736d2f988e24e2573cccb1a594b2df62" id="r_a736d2f988e24e2573cccb1a594b2df62"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a736d2f988e24e2573cccb1a594b2df62">op_string</a> (BinaryOp op)</td></tr>
+<tr class="separator:a736d2f988e24e2573cccb1a594b2df62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a485351cacd6ca78c418b7d3647bb25dc" id="r_a485351cacd6ca78c418b7d3647bb25dc"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a485351cacd6ca78c418b7d3647bb25dc">type_string</a> (int t)</td></tr>
+<tr class="separator:a485351cacd6ca78c418b7d3647bb25dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad05a828f230a83e78710d6b178748e7a" id="r_ad05a828f230a83e78710d6b178748e7a"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad05a828f230a83e78710d6b178748e7a">type_string</a> (const <a class="el" href="#af5ae9a0a40bac4a8d2e00fc5ec16e490">AstScalarType</a> *t)</td></tr>
+<tr class="separator:ad05a828f230a83e78710d6b178748e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31ec93876cf3e58268f755ffc036cb05" id="r_a31ec93876cf3e58268f755ffc036cb05"><td class="memItemLeft" align="right" valign="top">ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31ec93876cf3e58268f755ffc036cb05">operator&lt;&lt;</a> (ostream &amp;os, const std::unique_ptr&lt; <a class="el" href="#af5ae9a0a40bac4a8d2e00fc5ec16e490">AstScalarType</a> &gt; &amp;type)</td></tr>
+<tr class="separator:a31ec93876cf3e58268f755ffc036cb05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae91a916b7d087eccaad2e786d04d1bbe" id="r_ae91a916b7d087eccaad2e786d04d1bbe"><td class="memItemLeft" align="right" valign="top">ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae91a916b7d087eccaad2e786d04d1bbe">operator&lt;&lt;</a> (ostream &amp;os, const <a class="el" href="classfrontend_1_1ast_1_1Ident.html">Ident</a> &amp;ident)</td></tr>
+<tr class="separator:ae91a916b7d087eccaad2e786d04d1bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac524521f5b7ff1fe72dd9bbef749ab26" id="r_ac524521f5b7ff1fe72dd9bbef749ab26"><td class="memItemLeft" align="right" valign="top">ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac524521f5b7ff1fe72dd9bbef749ab26">operator&lt;&lt;</a> (ostream &amp;os, const <a class="el" href="classfrontend_1_1ast_1_1ArrayType.html">ArrayType</a> &amp;type)</td></tr>
+<tr class="separator:ac524521f5b7ff1fe72dd9bbef749ab26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43f0e1027f7ddc2903a124982af832ee" id="r_a43f0e1027f7ddc2903a124982af832ee"><td class="memItemLeft" align="right" valign="top">ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43f0e1027f7ddc2903a124982af832ee">operator&lt;&lt;</a> (ostream &amp;os, const std::unique_ptr&lt; <a class="el" href="classfrontend_1_1ast_1_1SysyType.html">SysyType</a> &gt; &amp;type)</td></tr>
+<tr class="separator:a43f0e1027f7ddc2903a124982af832ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31ab379c32c28ec62739950905f42212" id="r_a31ab379c32c28ec62739950905f42212"><td class="memItemLeft" align="right" valign="top">ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31ab379c32c28ec62739950905f42212">operator&lt;&lt;</a> (ostream &amp;os, const <a class="el" href="classfrontend_1_1ast_1_1Param.html">Param</a> &amp;param)</td></tr>
+<tr class="separator:a31ab379c32c28ec62739950905f42212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="af5ae9a0a40bac4a8d2e00fc5ec16e490" name="af5ae9a0a40bac4a8d2e00fc5ec16e490"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5ae9a0a40bac4a8d2e00fc5ec16e490">&#9670;&#160;</a></span>AstScalarType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#af5ae9a0a40bac4a8d2e00fc5ec16e490">AstScalarType</a> = <a class="el" href="classfrontend_1_1ast_1_1ScalarType.html">frontend::ast::ScalarType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a736d2f988e24e2573cccb1a594b2df62" name="a736d2f988e24e2573cccb1a594b2df62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a736d2f988e24e2573cccb1a594b2df62">&#9670;&#160;</a></span>op_string() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string_view op_string </td>
+          <td>(</td>
+          <td class="paramtype">BinaryOp</td>          <td class="paramname"><span class="paramname"><em>op</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9c0aa5efb00220cc9fdd9753da51f3d6" name="a9c0aa5efb00220cc9fdd9753da51f3d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c0aa5efb00220cc9fdd9753da51f3d6">&#9670;&#160;</a></span>op_string() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string_view op_string </td>
+          <td>(</td>
+          <td class="paramtype">UnaryOp</td>          <td class="paramname"><span class="paramname"><em>op</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac524521f5b7ff1fe72dd9bbef749ab26" name="ac524521f5b7ff1fe72dd9bbef749ab26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac524521f5b7ff1fe72dd9bbef749ab26">&#9670;&#160;</a></span>operator&lt;&lt;() <span class="overload">[1/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ostream &amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">ostream &amp;</td>          <td class="paramname"><span class="paramname"><em>os</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classfrontend_1_1ast_1_1ArrayType.html">ArrayType</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae91a916b7d087eccaad2e786d04d1bbe" name="ae91a916b7d087eccaad2e786d04d1bbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae91a916b7d087eccaad2e786d04d1bbe">&#9670;&#160;</a></span>operator&lt;&lt;() <span class="overload">[2/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ostream &amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">ostream &amp;</td>          <td class="paramname"><span class="paramname"><em>os</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classfrontend_1_1ast_1_1Ident.html">Ident</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ident</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a31ab379c32c28ec62739950905f42212" name="a31ab379c32c28ec62739950905f42212"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31ab379c32c28ec62739950905f42212">&#9670;&#160;</a></span>operator&lt;&lt;() <span class="overload">[3/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ostream &amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">ostream &amp;</td>          <td class="paramname"><span class="paramname"><em>os</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classfrontend_1_1ast_1_1Param.html">Param</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>param</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a31ec93876cf3e58268f755ffc036cb05" name="a31ec93876cf3e58268f755ffc036cb05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31ec93876cf3e58268f755ffc036cb05">&#9670;&#160;</a></span>operator&lt;&lt;() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ostream &amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">ostream &amp;</td>          <td class="paramname"><span class="paramname"><em>os</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::unique_ptr&lt; <a class="el" href="#af5ae9a0a40bac4a8d2e00fc5ec16e490">AstScalarType</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a43f0e1027f7ddc2903a124982af832ee" name="a43f0e1027f7ddc2903a124982af832ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43f0e1027f7ddc2903a124982af832ee">&#9670;&#160;</a></span>operator&lt;&lt;() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ostream &amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">ostream &amp;</td>          <td class="paramname"><span class="paramname"><em>os</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::unique_ptr&lt; <a class="el" href="classfrontend_1_1ast_1_1SysyType.html">SysyType</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad05a828f230a83e78710d6b178748e7a" name="ad05a828f230a83e78710d6b178748e7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad05a828f230a83e78710d6b178748e7a">&#9670;&#160;</a></span>type_string() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string_view type_string </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#af5ae9a0a40bac4a8d2e00fc5ec16e490">AstScalarType</a> *</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a485351cacd6ca78c418b7d3647bb25dc" name="a485351cacd6ca78c418b7d3647bb25dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a485351cacd6ca78c418b7d3647bb25dc">&#9670;&#160;</a></span>type_string() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string_view type_string </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,0 +1,148 @@
+\doxysection{src/backend/program.cpp File Reference}
+\hypertarget{program_8cpp}{}\label{program_8cpp}\index{src/backend/program.cpp@{src/backend/program.cpp}}
+{\ttfamily \#include "{}backend/program.\+hpp"{}}\newline
+{\ttfamily \#include "{}backend/instr.\+hpp"{}}\newline
+{\ttfamily \#include "{}backend/reg\+Allocator.\+hpp"{}}\newline
+{\ttfamily \#include "{}common/utils.\+hpp"{}}\newline
+{\ttfamily \#include "{}common/regarch.\+hpp"{}}\newline
+{\ttfamily \#include "{}IR/\+IR.\+hpp"{}}\newline
+{\ttfamily \#include "{}IR/\+CFG.\+hpp"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include $<$stack$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$initializer\+\_\+list$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structMultiplier}{Multiplier}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacebackend}{backend}}
+\item 
+namespace \mbox{\hyperlink{namespacebackend_1_1riscv}{backend\+::riscv}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{program_8cpp_a735940798cce52ef20c852ff35efb7ee}{get\+Value}}(x)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{program_8cpp_a8c5fd446931a6560edb3780a7ca59662}{Uint32}} = unsigned int
+\item 
+using \mbox{\hyperlink{program_8cpp_a421548e8ff0841e61c2fd5880123592e}{Uint64}} = unsigned long long
+\item 
+using \mbox{\hyperlink{program_8cpp_af0db107d2f4a027f25335c5cbd88ebad}{Int32}} = int
+\item 
+using \mbox{\hyperlink{program_8cpp_a5c133fa7dd2e03f6e0608ecdda7b8de0}{Int64}} = long long
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{program_8cpp_aebac2acc1e82ad4fc194874271820ce8}{log2}} (int x)
+\item 
+bool \mbox{\hyperlink{program_8cpp_ad209b51783ddb3be5497d6cbe6a3e8af}{is\+Power\+Of\+Two}} (int x)
+\item 
+int \mbox{\hyperlink{program_8cpp_a868dbb98d06676b3404a62e87fc7fdb1}{clz}} (\mbox{\hyperlink{program_8cpp_a8c5fd446931a6560edb3780a7ca59662}{Uint32}} x)
+\item 
+int \mbox{\hyperlink{program_8cpp_a84e7a50d4f04bb329e288ce9454a6470}{ctz}} (\mbox{\hyperlink{program_8cpp_a8c5fd446931a6560edb3780a7ca59662}{Uint32}} x)
+\item 
+\mbox{\hyperlink{structMultiplier}{Multiplier}} \mbox{\hyperlink{program_8cpp_a96ee97a7dc6a272b8bc18e22680d2abc}{choose\+Multiplier}} (\mbox{\hyperlink{program_8cpp_a8c5fd446931a6560edb3780a7ca59662}{Uint32}} d, int p)
+\item 
+\mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768}{Operation\+Type}} \mbox{\hyperlink{namespacebackend_1_1riscv_a1b71408efb29a9e763c96187f3464b53}{backend\+::riscv\+::get\+\_\+type}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}inst)
+\item 
+int \mbox{\hyperlink{namespacebackend_1_1riscv_abc6d3a58832ac8fbf8df48a86dfae422}{backend\+::riscv\+::get\+\_\+latency}} (\mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*}inst)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr int \mbox{\hyperlink{program_8cpp_a8eee69f4f513623c72ccbaea4e0fb706}{N}} = 32
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{program_8cpp_a735940798cce52ef20c852ff35efb7ee}\index{program.cpp@{program.cpp}!getValue@{getValue}}
+\index{getValue@{getValue}!program.cpp@{program.cpp}}
+\doxysubsubsection{\texorpdfstring{getValue}{getValue}}
+{\footnotesize\ttfamily \label{program_8cpp_a735940798cce52ef20c852ff35efb7ee} 
+\#define get\+Value(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(x.type\ ==\ Int\ ?\ x.iv\ :\ x.fv)}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{program_8cpp_af0db107d2f4a027f25335c5cbd88ebad}\index{program.cpp@{program.cpp}!Int32@{Int32}}
+\index{Int32@{Int32}!program.cpp@{program.cpp}}
+\doxysubsubsection{\texorpdfstring{Int32}{Int32}}
+{\footnotesize\ttfamily \label{program_8cpp_af0db107d2f4a027f25335c5cbd88ebad} 
+using \mbox{\hyperlink{program_8cpp_af0db107d2f4a027f25335c5cbd88ebad}{Int32}} = int}
+
+\Hypertarget{program_8cpp_a5c133fa7dd2e03f6e0608ecdda7b8de0}\index{program.cpp@{program.cpp}!Int64@{Int64}}
+\index{Int64@{Int64}!program.cpp@{program.cpp}}
+\doxysubsubsection{\texorpdfstring{Int64}{Int64}}
+{\footnotesize\ttfamily \label{program_8cpp_a5c133fa7dd2e03f6e0608ecdda7b8de0} 
+using \mbox{\hyperlink{program_8cpp_a5c133fa7dd2e03f6e0608ecdda7b8de0}{Int64}} = long long}
+
+\Hypertarget{program_8cpp_a8c5fd446931a6560edb3780a7ca59662}\index{program.cpp@{program.cpp}!Uint32@{Uint32}}
+\index{Uint32@{Uint32}!program.cpp@{program.cpp}}
+\doxysubsubsection{\texorpdfstring{Uint32}{Uint32}}
+{\footnotesize\ttfamily \label{program_8cpp_a8c5fd446931a6560edb3780a7ca59662} 
+using \mbox{\hyperlink{program_8cpp_a8c5fd446931a6560edb3780a7ca59662}{Uint32}} = unsigned int}
+
+\Hypertarget{program_8cpp_a421548e8ff0841e61c2fd5880123592e}\index{program.cpp@{program.cpp}!Uint64@{Uint64}}
+\index{Uint64@{Uint64}!program.cpp@{program.cpp}}
+\doxysubsubsection{\texorpdfstring{Uint64}{Uint64}}
+{\footnotesize\ttfamily \label{program_8cpp_a421548e8ff0841e61c2fd5880123592e} 
+using \mbox{\hyperlink{program_8cpp_a421548e8ff0841e61c2fd5880123592e}{Uint64}} = unsigned long long}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{program_8cpp_a96ee97a7dc6a272b8bc18e22680d2abc}\index{program.cpp@{program.cpp}!chooseMultiplier@{chooseMultiplier}}
+\index{chooseMultiplier@{chooseMultiplier}!program.cpp@{program.cpp}}
+\doxysubsubsection{\texorpdfstring{chooseMultiplier()}{chooseMultiplier()}}
+{\footnotesize\ttfamily \label{program_8cpp_a96ee97a7dc6a272b8bc18e22680d2abc} 
+\mbox{\hyperlink{structMultiplier}{Multiplier}} choose\+Multiplier (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{program_8cpp_a8c5fd446931a6560edb3780a7ca59662}{Uint32}}}]{d}{, }\item[{int}]{p}{}\end{DoxyParamCaption})}
+
+\Hypertarget{program_8cpp_a868dbb98d06676b3404a62e87fc7fdb1}\index{program.cpp@{program.cpp}!clz@{clz}}
+\index{clz@{clz}!program.cpp@{program.cpp}}
+\doxysubsubsection{\texorpdfstring{clz()}{clz()}}
+{\footnotesize\ttfamily \label{program_8cpp_a868dbb98d06676b3404a62e87fc7fdb1} 
+int clz (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{program_8cpp_a8c5fd446931a6560edb3780a7ca59662}{Uint32}}}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{program_8cpp_a84e7a50d4f04bb329e288ce9454a6470}\index{program.cpp@{program.cpp}!ctz@{ctz}}
+\index{ctz@{ctz}!program.cpp@{program.cpp}}
+\doxysubsubsection{\texorpdfstring{ctz()}{ctz()}}
+{\footnotesize\ttfamily \label{program_8cpp_a84e7a50d4f04bb329e288ce9454a6470} 
+int ctz (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{program_8cpp_a8c5fd446931a6560edb3780a7ca59662}{Uint32}}}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{program_8cpp_ad209b51783ddb3be5497d6cbe6a3e8af}\index{program.cpp@{program.cpp}!isPowerOfTwo@{isPowerOfTwo}}
+\index{isPowerOfTwo@{isPowerOfTwo}!program.cpp@{program.cpp}}
+\doxysubsubsection{\texorpdfstring{isPowerOfTwo()}{isPowerOfTwo()}}
+{\footnotesize\ttfamily \label{program_8cpp_ad209b51783ddb3be5497d6cbe6a3e8af} 
+bool is\+Power\+Of\+Two (\begin{DoxyParamCaption}\item[{int}]{x}{}\end{DoxyParamCaption})}
+
+\Hypertarget{program_8cpp_aebac2acc1e82ad4fc194874271820ce8}\index{program.cpp@{program.cpp}!log2@{log2}}
+\index{log2@{log2}!program.cpp@{program.cpp}}
+\doxysubsubsection{\texorpdfstring{log2()}{log2()}}
+{\footnotesize\ttfamily \label{program_8cpp_aebac2acc1e82ad4fc194874271820ce8} 
+int log2 (\begin{DoxyParamCaption}\item[{int}]{x}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{program_8cpp_a8eee69f4f513623c72ccbaea4e0fb706}\index{program.cpp@{program.cpp}!N@{N}}
+\index{N@{N}!program.cpp@{program.cpp}}
+\doxysubsubsection{\texorpdfstring{N}{N}}
+{\footnotesize\ttfamily \label{program_8cpp_a8eee69f4f513623c72ccbaea4e0fb706} 
+int N = 32\hspace{0.3cm}{\ttfamily [constexpr]}}
+

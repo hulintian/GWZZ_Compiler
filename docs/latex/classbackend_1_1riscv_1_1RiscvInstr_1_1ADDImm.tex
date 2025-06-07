@@ -1,0 +1,133 @@
+\doxysection{backend\+::riscv\+::Riscv\+Instr\+::ADDImm Class Reference}
+\hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm}{}\label{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm}\index{backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}}
+
+
+{\ttfamily \#include $<$instr.\+hpp$>$}
+
+Inheritance diagram for backend\+::riscv\+::Riscv\+Instr\+::ADDImm\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_acae04386340db65012d2ce871805d679}{ADDImm}} (const Reg \&\+\_\+dst, const Reg \&\+\_\+src, int32\+\_\+t \+\_\+value)
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a6fe4124e6caeab3c97d46cc1f8088d07}{get\+\_\+val}} ()
+\item 
+virtual std\+::vector$<$ Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_adba670cdfb18b1223087aa7d7b40935d}{def\+\_\+reg}} () override
+\item 
+virtual std\+::vector$<$ Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a44caaa042d84fc758a3ae6281c8a99b7}{use\+\_\+reg}} () override
+\item 
+virtual std\+::vector$<$ Reg \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a3331c3c2cd8eb00265164be60294e308}{regs}} () override
+\item 
+virtual \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a06441c3a31717a6cf0dffe026d63f046}{tonative}} (std\+::vector$<$ Reg $>$ \+\_\+def, std\+::vector$<$ Reg $>$ \+\_\+use) override
+\item 
+virtual void \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a317cace0b6d1a7ae9efce2ea543175b0}{gen\+\_\+asm}} (std\+::ostream \&out) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{backend\+::riscv\+::\+Instr}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a1509ab4ebe934ee216d29172d7fdf771}{replace\+\_\+reg}} (Reg src, Reg dst)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{backend\+::riscv\+::\+Instr}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::set$<$ Riscv\+Reg\+::\+Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a00e2981a30c8c60e421e94975d7c99db}{live\+\_\+in}}
+\item 
+std\+::set$<$ Riscv\+Reg\+::\+Reg $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a181aab3c8d595a81edc4101f0b63c1d3}{live\+\_\+out}}
+\item 
+std\+::unordered\+\_\+set$<$ std\+::pair$<$ int, \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$ $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_ae41f1fc9a6810a7d0ab43d9994b96c11}{edges\+\_\+out}}
+\item 
+std\+::unordered\+\_\+set$<$ std\+::pair$<$ int, \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} $>$ $>$ \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a2497679fb19b1eb3b31e48670a38c662}{edges\+\_\+in}}
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_ad6f98c6ed0f40616be65632cb5283a01}{rely\+\_\+count}} = 0
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a3709888d96272c7dfd0be4700fc714c7}{latency}}
+\item 
+\mbox{\hyperlink{namespacebackend_1_1riscv_a3cb6539ecee64d0baed0ff777e8d0768}{Operation\+Type}} \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a4aa056b5252fce7e4b0a1828e19f4e99}{type}}
+\item 
+bool \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_ab0d6166c0c3c43b9ca41cfb59402e36b}{finished}} = false
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a5b9189665dc2141155d4ff4ebba25647}{start\+\_\+time}}
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_afd70113ef95cdf2eb1279feb3c760ea8}{cost}}
+\item 
+int \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a96de9decd82026954d1460c71cb949ec}{temp}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_acae04386340db65012d2ce871805d679}\index{backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}!ADDImm@{ADDImm}}
+\index{ADDImm@{ADDImm}!backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}}
+\doxysubsubsection{\texorpdfstring{ADDImm()}{ADDImm()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_acae04386340db65012d2ce871805d679} 
+backend\+::riscv\+::\+Riscv\+Instr\+::\+ADDImm\+::\+ADDImm (\begin{DoxyParamCaption}\item[{const Reg \&}]{\+\_\+dst}{, }\item[{const Reg \&}]{\+\_\+src}{, }\item[{int32\+\_\+t}]{\+\_\+value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_adba670cdfb18b1223087aa7d7b40935d}\index{backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}!def\_reg@{def\_reg}}
+\index{def\_reg@{def\_reg}!backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}}
+\doxysubsubsection{\texorpdfstring{def\_reg()}{def\_reg()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_adba670cdfb18b1223087aa7d7b40935d} 
+virtual std\+::vector$<$ Reg $>$ backend\+::riscv\+::\+Riscv\+Instr\+::\+ADDImm\+::def\+\_\+reg (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a7995d42d88f5deecde447380a5894c77}{backend\+::riscv\+::\+Instr}}.
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a317cace0b6d1a7ae9efce2ea543175b0}\index{backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}!gen\_asm@{gen\_asm}}
+\index{gen\_asm@{gen\_asm}!backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}}
+\doxysubsubsection{\texorpdfstring{gen\_asm()}{gen\_asm()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a317cace0b6d1a7ae9efce2ea543175b0} 
+virtual void backend\+::riscv\+::\+Riscv\+Instr\+::\+ADDImm\+::gen\+\_\+asm (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a084cd7d989187b62bc41831ef805a6f0}{backend\+::riscv\+::\+Instr}}.
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a6fe4124e6caeab3c97d46cc1f8088d07}\index{backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}!get\_val@{get\_val}}
+\index{get\_val@{get\_val}!backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}}
+\doxysubsubsection{\texorpdfstring{get\_val()}{get\_val()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a6fe4124e6caeab3c97d46cc1f8088d07} 
+int backend\+::riscv\+::\+Riscv\+Instr\+::\+ADDImm\+::get\+\_\+val (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a3331c3c2cd8eb00265164be60294e308}\index{backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}!regs@{regs}}
+\index{regs@{regs}!backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}}
+\doxysubsubsection{\texorpdfstring{regs()}{regs()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a3331c3c2cd8eb00265164be60294e308} 
+virtual std\+::vector$<$ Reg \texorpdfstring{$\ast$}{*} $>$ backend\+::riscv\+::\+Riscv\+Instr\+::\+ADDImm\+::regs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a486c4cab6c5c52ff595f3cf9f05cf563}{backend\+::riscv\+::\+Instr}}.
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a06441c3a31717a6cf0dffe026d63f046}\index{backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}!tonative@{tonative}}
+\index{tonative@{tonative}!backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}}
+\doxysubsubsection{\texorpdfstring{tonative()}{tonative()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a06441c3a31717a6cf0dffe026d63f046} 
+virtual \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr}{Instr}} \texorpdfstring{$\ast$}{*} backend\+::riscv\+::\+Riscv\+Instr\+::\+ADDImm\+::tonative (\begin{DoxyParamCaption}\item[{std\+::vector$<$ Reg $>$}]{\+\_\+def}{, }\item[{std\+::vector$<$ Reg $>$}]{\+\_\+use}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_a5517c2d4a85760c014a43f26b0a1aa92}{backend\+::riscv\+::\+Instr}}.
+
+\Hypertarget{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a44caaa042d84fc758a3ae6281c8a99b7}\index{backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}!use\_reg@{use\_reg}}
+\index{use\_reg@{use\_reg}!backend::riscv::RiscvInstr::ADDImm@{backend::riscv::RiscvInstr::ADDImm}}
+\doxysubsubsection{\texorpdfstring{use\_reg()}{use\_reg()}}
+{\footnotesize\ttfamily \label{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm_a44caaa042d84fc758a3ae6281c8a99b7} 
+virtual std\+::vector$<$ Reg $>$ backend\+::riscv\+::\+Riscv\+Instr\+::\+ADDImm\+::use\+\_\+reg (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classbackend_1_1riscv_1_1Instr_af080722dec46b1743e24014c4252f2af}{backend\+::riscv\+::\+Instr}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/backend/\mbox{\hyperlink{instr_8hpp}{instr.\+hpp}}\end{DoxyCompactItemize}

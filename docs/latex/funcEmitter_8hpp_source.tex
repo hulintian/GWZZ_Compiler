@@ -1,0 +1,76 @@
+\doxysection{func\+Emitter.\+hpp}
+\hypertarget{funcEmitter_8hpp_source}{}\label{funcEmitter_8hpp_source}\index{src/frontend/funcEmitter.hpp@{src/frontend/funcEmitter.hpp}}
+\mbox{\hyperlink{funcEmitter_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{AST_8hpp}{frontend/AST.hpp}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{IR_8hpp}{IR/IR.hpp}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{temp_8hpp}{IR/temp.hpp}}"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacefrontend}{frontend}}\{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespacemidend}{midend}};}
+\DoxyCodeLine{00010\ \textcolor{keyword}{using\ namespace\ }ir;}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classfrontend_1_1FuncEmitter}{FuncEmitter}}\{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{int}\ nextTempId;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{int}\ nextBBId;}
+\DoxyCodeLine{00016\ \ \ \ \ std::vector<ir::BasicBlock*>\ break\_bb\_stack;}
+\DoxyCodeLine{00017\ \ \ \ \ std::vector<ir::BasicBlock*>\ continue\_bb\_stack;}
+\DoxyCodeLine{00018\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir::Function}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a8219ca3c21013e251e3ff5ead29867ef}{func}};}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a9e75c46758e996b88ec3009cc34f4a7f}{cur\_bb}};}
+\DoxyCodeLine{00021\ \ \ \ \ std::unordered\_map<std::string,\ Temp*>\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a1316716f95c2dc121b3bf2b68f80eef0}{global\_map}};}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a79918b081d9160683b5fc649e74ec49d}{FuncEmitter}}(\mbox{\hyperlink{classmidend_1_1ir_1_1Module}{Module}}\ *parent,\ Type\ var\_type,\ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Label}{instruction::Label}}\ entry,\ \textcolor{keywordtype}{int}\ numArgs)\{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a8219ca3c21013e251e3ff5ead29867ef}{func}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir::Function}}(parent,\ var\_type,\ std::vector<DataMeta*>(),\ entry.\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Label_ac63369c31324966720b38c2643c73a47}{get\_label}}());}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ nextTempId\ =\ 0;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ nextBBId\ =\ 0;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a9e75c46758e996b88ec3009cc34f4a7f}{cur\_bb}}\ =\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a0bf577d18a0eae548300aca614e2ff11}{new\_bb}}();}
+\DoxyCodeLine{00027\ \ \ \ \ \};}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_acf1f750ee0566b195dd9a38a27019f3e}{\string~FuncEmitter}}()\ \{\};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a0bf577d18a0eae548300aca614e2ff11}{new\_bb}}()\{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ bb\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}(\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a8219ca3c21013e251e3ff5ead29867ef}{func}},\ std::vector<Instruction\ *>(),\ nextBBId++);}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a8219ca3c21013e251e3ff5ead29867ef}{func}}-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1Function_ac907a9a815d63dc80557220807692134}{add\_bb}}(bb);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ bb;}
+\DoxyCodeLine{00034\ \ \ \ \ \}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a7b558f92266e0a4826d637a13b95d145}{getUsedBB}}()\{\ \textcolor{keywordflow}{return}\ nextBBId;\ \};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a48b831f315bc5bf02b67cab6464908d1}{new\_instruction}}(\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{Instruction}}\ *ins)\{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a9e75c46758e996b88ec3009cc34f4a7f}{cur\_bb}}-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a107153e2d9a86e7c6a099335439c99ab}{add\_inst}}(ins);}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ ins-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a5efd03ef4d8475322197253c518594b3}{set\_parent}}(\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a9e75c46758e996b88ec3009cc34f4a7f}{cur\_bb}});}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a1f28ce9e2714f9cf52927c8fa6e6afd3}{getUsedTemp}}()\{\ \textcolor{keywordflow}{return}\ nextTempId;\ \};}
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_afb4f03c99ba6df89abf37e20082fc176}{freshTemp}}(Type\ type)\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classTemp}{Temp}}(nextTempId++,\ type);\ \}}
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir::Function}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a31100f183b48b2174a3db946c8dfc08e}{visitEnd}}();}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a0bc338e50420a27c657e3bd54b445a54}{openLoop}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}\ *break\_bb,\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}\ *continue\_bb)\{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ break\_bb\_stack.push\_back(break\_bb);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ continue\_bb\_stack.push\_back(continue\_bb);}
+\DoxyCodeLine{00047\ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a99db94ec3c7eef3b1e7d9936abc8d514}{closeLoop}}()\{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ break\_bb\_stack.pop\_back();}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ continue\_bb\_stack.pop\_back();}
+\DoxyCodeLine{00051\ \ \ \ \ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a7c5d8296a67239b6082b6fafe8f47348}{getLoopBreakBB}}()\{\ \textcolor{keywordflow}{return}\ break\_bb\_stack.back();\}}
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a565573f73ddfe0e87b11fb344ecfb0ca}{getLoopContinueBB}}()\{\ \textcolor{keywordflow}{return}\ continue\_bb\_stack.back();\}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a2b8df138fb72cd386fe3604657bc4b4e}{visitAlloca}}(\mbox{\hyperlink{classTemp}{Temp}}\ *temp,\ Type\ type);}
+\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a11cec09a75e8035233affd793dcaa398}{visitAssignment}}(\mbox{\hyperlink{classTemp}{Temp}}\ *dst,\ \mbox{\hyperlink{classTemp}{Temp}}\ *src);}
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_ad4460d6d823c50426c960e9f6cc34fc5}{visitLiteral}}(ConstValue\ immediate,\ Type\ type);}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_ae14f9024ff63a211be1f7c828007879b}{visitReturn}}(\mbox{\hyperlink{classTemp}{Temp}}\ *\ ret\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a5184183e368af0e5992b9cc8ea0dcb15}{visitLoadAddr}}(Type\ type,\ std::string\ name);}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a53469d2878ffba8376b3b17c26e4cd82}{visitLoad}}(Type\ type,\ \mbox{\hyperlink{classTemp}{Temp}}\ *addr,\ \textcolor{keywordtype}{bool}\ not\_delete);}
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_ad6f3601b7550d2008127de97251d8487}{visitElementPtr}}(Type\ type,\ \mbox{\hyperlink{classTemp}{Temp}}\ *addr,\ std::vector<Temp\ *>\ indices);}
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a0d85db36961ce3dc8853ab1d0c8998cb}{visitStore}}(\mbox{\hyperlink{classTemp}{Temp}}\ *addr,\ \mbox{\hyperlink{classTemp}{Temp}}\ *value,\ \textcolor{keywordtype}{bool}\ not\_delete,\ \textcolor{keywordtype}{int}\ offset\ =\ 0);}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_aa780f21c3b350345ebcbdf431d55dfe5}{visitBinary}}(BinaryOp\ op,\ \mbox{\hyperlink{classTemp}{Temp}}\ *lhs,\ \mbox{\hyperlink{classTemp}{Temp}}\ *rhs,\ Type\ type);}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_afb1f6f59c4499347485c16f3e941a2c6}{visitUnary}}(UnaryOp\ op,\ \mbox{\hyperlink{classTemp}{Temp}}\ *src,\ Type\ type);}
+\DoxyCodeLine{00065\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a248213e6ba48afc820dc89475769502f}{visitCall}}(\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir::Function}}\ *\mbox{\hyperlink{classfrontend_1_1FuncEmitter_a8219ca3c21013e251e3ff5ead29867ef}{func}},\ std::vector<Temp\ *>\ args\_temp);}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_ae35a8ca44f392f64aabe057c8a5c7426}{visitCondBranch}}(\mbox{\hyperlink{classTemp}{Temp}}\ *cond,\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}\ *true\_bb,\ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}\ *false\_bb);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classfrontend_1_1FuncEmitter_a27f3115f99f7a4c2150bdd88fb81c991}{visitCast}}(\mbox{\hyperlink{classTemp}{Temp}}\ *dst,\ \mbox{\hyperlink{classTemp}{Temp}}\ *src,\ Type\ type);}
+\DoxyCodeLine{00068\ \};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \}\ \textcolor{comment}{//\ namespace\ middleend}}
+
+\end{DoxyCode}

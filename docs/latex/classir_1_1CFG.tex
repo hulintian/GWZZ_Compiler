@@ -1,0 +1,76 @@
+\doxysection{ir\+::CFG Class Reference}
+\hypertarget{classir_1_1CFG}{}\label{classir_1_1CFG}\index{ir::CFG@{ir::CFG}}
+
+
+辅助类，用于管理\+Function 中的\+Basic\+Block的控制关系  
+
+
+
+
+{\ttfamily \#include $<$Function.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classir_1_1CFG_a6f94bb9192796c7673f737b863b0a0c7}{CFG}} ()
+\item 
+\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1CFG_a58e8d18b9321a8c9d47243c82c91f5e4}{get\+\_\+current\+\_\+\+BB}} ()
+\item 
+void \mbox{\hyperlink{classir_1_1CFG_a438cfa0857ca67bd729eec98731a9057}{insert\+\_\+entry\+\_\+block}} (\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}bb)
+\item 
+void \mbox{\hyperlink{classir_1_1CFG_a36013bea7a31eba540bc0499cb1514fe}{insert\+\_\+basicblock}} (\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}bb)
+\item 
+void \mbox{\hyperlink{classir_1_1CFG_af5710ca1ba7f46f25bdae33cba787b72}{add\+\_\+prev}} (\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}now, \mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}prev)
+\item 
+void \mbox{\hyperlink{classir_1_1CFG_a924345a5cf0d1b7869f5071e53d74e84}{add\+\_\+next}} (\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}now, \mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}next)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+辅助类，用于管理\+Function 中的\+Basic\+Block的控制关系 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classir_1_1CFG_a6f94bb9192796c7673f737b863b0a0c7}\index{ir::CFG@{ir::CFG}!CFG@{CFG}}
+\index{CFG@{CFG}!ir::CFG@{ir::CFG}}
+\doxysubsubsection{\texorpdfstring{CFG()}{CFG()}}
+{\footnotesize\ttfamily \label{classir_1_1CFG_a6f94bb9192796c7673f737b863b0a0c7} 
+ir\+::\+CFG\+::\+CFG (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classir_1_1CFG_a924345a5cf0d1b7869f5071e53d74e84}\index{ir::CFG@{ir::CFG}!add\_next@{add\_next}}
+\index{add\_next@{add\_next}!ir::CFG@{ir::CFG}}
+\doxysubsubsection{\texorpdfstring{add\_next()}{add\_next()}}
+{\footnotesize\ttfamily \label{classir_1_1CFG_a924345a5cf0d1b7869f5071e53d74e84} 
+void ir\+::\+CFG\+::add\+\_\+next (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{now}{, }\item[{\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{next}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classir_1_1CFG_af5710ca1ba7f46f25bdae33cba787b72}\index{ir::CFG@{ir::CFG}!add\_prev@{add\_prev}}
+\index{add\_prev@{add\_prev}!ir::CFG@{ir::CFG}}
+\doxysubsubsection{\texorpdfstring{add\_prev()}{add\_prev()}}
+{\footnotesize\ttfamily \label{classir_1_1CFG_af5710ca1ba7f46f25bdae33cba787b72} 
+void ir\+::\+CFG\+::add\+\_\+prev (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{now}{, }\item[{\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{prev}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classir_1_1CFG_a58e8d18b9321a8c9d47243c82c91f5e4}\index{ir::CFG@{ir::CFG}!get\_current\_BB@{get\_current\_BB}}
+\index{get\_current\_BB@{get\_current\_BB}!ir::CFG@{ir::CFG}}
+\doxysubsubsection{\texorpdfstring{get\_current\_BB()}{get\_current\_BB()}}
+{\footnotesize\ttfamily \label{classir_1_1CFG_a58e8d18b9321a8c9d47243c82c91f5e4} 
+\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} ir\+::\+CFG\+::get\+\_\+current\+\_\+\+BB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classir_1_1CFG_a36013bea7a31eba540bc0499cb1514fe}\index{ir::CFG@{ir::CFG}!insert\_basicblock@{insert\_basicblock}}
+\index{insert\_basicblock@{insert\_basicblock}!ir::CFG@{ir::CFG}}
+\doxysubsubsection{\texorpdfstring{insert\_basicblock()}{insert\_basicblock()}}
+{\footnotesize\ttfamily \label{classir_1_1CFG_a36013bea7a31eba540bc0499cb1514fe} 
+void ir\+::\+CFG\+::insert\+\_\+basicblock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classir_1_1CFG_a438cfa0857ca67bd729eec98731a9057}\index{ir::CFG@{ir::CFG}!insert\_entry\_block@{insert\_entry\_block}}
+\index{insert\_entry\_block@{insert\_entry\_block}!ir::CFG@{ir::CFG}}
+\doxysubsubsection{\texorpdfstring{insert\_entry\_block()}{insert\_entry\_block()}}
+{\footnotesize\ttfamily \label{classir_1_1CFG_a438cfa0857ca67bd729eec98731a9057} 
+void ir\+::\+CFG\+::insert\+\_\+entry\+\_\+block (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{Function_8hpp}{Function.\+hpp}}\end{DoxyCompactItemize}

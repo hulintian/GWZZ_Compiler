@@ -1,0 +1,324 @@
+\doxysection{backend\+::riscv\+::Riscv\+Instr Namespace Reference}
+\hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr}{}\label{namespacebackend_1_1riscv_1_1RiscvInstr}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm}{ADDImm}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Binary}{Binary}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1BinaryImm}{Binary\+Imm}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1BinaryInt}{Binary\+Int}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Branch}{Branch}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Call}{Call}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Convert}{Convert}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Jump}{Jump}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Load}{Load}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadDouble}{Load\+Double}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadImm}{Load\+Imm}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1LoadLabelAddr}{Load\+Label\+Addr}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Move}{Move}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Return}{Return}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1RiscvLabel}{Riscv\+Label}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Sext}{Sext}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1SLTIU}{SLTIU}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Store}{Store}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1StoreDouble}{Store\+Double}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1RiscvInstr_1_1Unary}{Unary}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50}{Rv\+Unary\+Op}} \{ \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50abb96fe3088894c7e6d6adb08bcee2d9c}{NEG}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a0a60c8a8c9b202fb985715fc490c1581}{SNEZ}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a893ad63ffefa30a4dd35c6749e3c5c10}{SEQZ}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a2ce0bad01dcd9070ab5e06bb615046ef}{NOT}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a279afd1c9e8d5c21cd6a478165bdc529}{FNEGS}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535}{Rv\+Binary\+Op}} \{ \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a2e344f84aba09bf5d1cfdf6d1cac87cb}{MAX}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ade56d887a006cd9d79de4678455f4d81}{MIN}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a0a07f716da55664bfc4dd70f873feadc}{ADD}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a657471e708068514d8e4a8ef69b10ce2}{ADDF}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a1ee12bcb6920bb302492a663189a1ecb}{ADDUW}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ad1e57c0739ca0a9ca90daa87c62e0c24}{SUB}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac5e70a627c0c7091440e44197e5554cc}{MUL}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535af12696832e5c62c6468ad1871768f3b6}{DIV}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ab9aac588b601c7be22ef591dc3be8e0e}{REM}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a5a1215aa1ea691b9be7cea8248a9bc81}{OR}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535abba9ec5b1ee4e2c23831372167c361cb}{AND}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac3ed874e24479fae25b95c71e0975749}{XOR}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac4b322de41cece5042f8388cd61e6b73}{SLT}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a1ec587f3c39834a639699b913fad411a}{SLTU}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a4989fe8941f6c818b30a95c298ab377f}{SLL}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a854e09cb7797c8c086ca8cf71250c209}{SRL}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535afc70827fb30bb81c1e9f61993bc73914}{SRLF}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535aaff9239e832366da0bf50d06f266fbb3}{SRAF}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a2f6604837e42921c24832ecf9574fa14}{SAL}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a6cce3629c82035bff3a8fabc0f50abec}{SLLF}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a72dc4eca3b6b8dd94addeaac54af2866}{SRA}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac71339e7735f754087c33808acfa12fc}{FADDS}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ae04f3730b6feabe48b820886e61dca46}{FMULS}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535adf60c19ebb660fe2fc5bbc1bbd5aed80}{FDIVS}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a6bcfccd397f100e8a7730cac7d019739}{FLT}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a0f48ba92bcf60657168690a5923a0241}{FLE}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535aa47c445dc1027090c9f354153efe28bf}{FEQ}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ade219550c57ded6c00074787a6fc0be5}{FSUBS}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535abd4dd1228cf2a2e7e3e6b623244f6973}{FMODS}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535affac2e4100bb8ea7ce5f32d1e0ce97d2}{MULUH}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a4789b8fd148121a04c9568cbec298bfd}{SH1\+ADD}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a8b7756c553432fa7d1712412dd92005a}{SH3\+ADD}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a3c974765442d981288105ad666bc09aa}{SH2\+ADD}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc}{Rv\+Compare\+Op}} \{ \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca135e546f9fabb556431d724b888086c9}{EQ}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca45e530f7555f26ed46d467fa44c2651e}{NE}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca707694fc8d63c567823df1e0ccf54ea3}{BLT}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca4e21c841042d8afd8c25db9320512e35}{BLE}}
+, \newline
+\mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5ccab5f781de50a4482e7cc7401226b78265}{BGT}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca587bf5b7ccf446efb0b9fe55a5ef2c7c}{BGE}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca102f518ef4be40adbe8e7f181b6f6d43}{BEQ}}
+, \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca83c625b24629a4be577b742e10f8e5bb}{BNE}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!RvBinaryOp@{RvBinaryOp}}
+\index{RvBinaryOp@{RvBinaryOp}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}
+\doxysubsubsection{\texorpdfstring{RvBinaryOp}{RvBinaryOp}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Rv\+Binary\+Op}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MAX@{MAX}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!MAX@{MAX}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a2e344f84aba09bf5d1cfdf6d1cac87cb}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+MAX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MIN@{MIN}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!MIN@{MIN}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ade56d887a006cd9d79de4678455f4d81}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+MIN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ADD@{ADD}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!ADD@{ADD}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a0a07f716da55664bfc4dd70f873feadc}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+ADD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ADDF@{ADDF}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!ADDF@{ADDF}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a657471e708068514d8e4a8ef69b10ce2}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+ADDF&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ADDUW@{ADDUW}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!ADDUW@{ADDUW}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a1ee12bcb6920bb302492a663189a1ecb}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+ADDUW&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SUB@{SUB}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SUB@{SUB}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ad1e57c0739ca0a9ca90daa87c62e0c24}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SUB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MUL@{MUL}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!MUL@{MUL}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac5e70a627c0c7091440e44197e5554cc}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+MUL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DIV@{DIV}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!DIV@{DIV}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535af12696832e5c62c6468ad1871768f3b6}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+DIV&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REM@{REM}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!REM@{REM}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ab9aac588b601c7be22ef591dc3be8e0e}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+REM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OR@{OR}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!OR@{OR}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a5a1215aa1ea691b9be7cea8248a9bc81}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+OR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AND@{AND}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!AND@{AND}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535abba9ec5b1ee4e2c23831372167c361cb}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+AND&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{XOR@{XOR}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!XOR@{XOR}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac3ed874e24479fae25b95c71e0975749}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+XOR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SLT@{SLT}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SLT@{SLT}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac4b322de41cece5042f8388cd61e6b73}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SLT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SLTU@{SLTU}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SLTU@{SLTU}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a1ec587f3c39834a639699b913fad411a}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SLTU&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SLL@{SLL}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SLL@{SLL}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a4989fe8941f6c818b30a95c298ab377f}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SLL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SRL@{SRL}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SRL@{SRL}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a854e09cb7797c8c086ca8cf71250c209}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SRL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SRLF@{SRLF}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SRLF@{SRLF}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535afc70827fb30bb81c1e9f61993bc73914}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SRLF&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SRAF@{SRAF}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SRAF@{SRAF}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535aaff9239e832366da0bf50d06f266fbb3}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SRAF&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SAL@{SAL}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SAL@{SAL}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a2f6604837e42921c24832ecf9574fa14}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SLLF@{SLLF}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SLLF@{SLLF}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a6cce3629c82035bff3a8fabc0f50abec}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SLLF&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SRA@{SRA}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SRA@{SRA}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a72dc4eca3b6b8dd94addeaac54af2866}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SRA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FADDS@{FADDS}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!FADDS@{FADDS}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ac71339e7735f754087c33808acfa12fc}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+FADDS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FMULS@{FMULS}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!FMULS@{FMULS}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ae04f3730b6feabe48b820886e61dca46}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+FMULS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FDIVS@{FDIVS}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!FDIVS@{FDIVS}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535adf60c19ebb660fe2fc5bbc1bbd5aed80}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+FDIVS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLT@{FLT}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!FLT@{FLT}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a6bcfccd397f100e8a7730cac7d019739}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+FLT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLE@{FLE}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!FLE@{FLE}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a0f48ba92bcf60657168690a5923a0241}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+FLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FEQ@{FEQ}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!FEQ@{FEQ}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535aa47c445dc1027090c9f354153efe28bf}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+FEQ&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FSUBS@{FSUBS}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!FSUBS@{FSUBS}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535ade219550c57ded6c00074787a6fc0be5}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+FSUBS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FMODS@{FMODS}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!FMODS@{FMODS}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535abd4dd1228cf2a2e7e3e6b623244f6973}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+FMODS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MULUH@{MULUH}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!MULUH@{MULUH}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535affac2e4100bb8ea7ce5f32d1e0ce97d2}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+MULUH&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SH1ADD@{SH1ADD}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SH1ADD@{SH1ADD}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a4789b8fd148121a04c9568cbec298bfd}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SH1\+ADD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SH3ADD@{SH3ADD}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SH3ADD@{SH3ADD}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a8b7756c553432fa7d1712412dd92005a}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SH3\+ADD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SH2ADD@{SH2ADD}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SH2ADD@{SH2ADD}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535a3c974765442d981288105ad666bc09aa}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a9fcfdbaf7b366d2c454c0c7f8f47e535} 
+SH2\+ADD&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!RvCompareOp@{RvCompareOp}}
+\index{RvCompareOp@{RvCompareOp}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}
+\doxysubsubsection{\texorpdfstring{RvCompareOp}{RvCompareOp}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc} 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Rv\+Compare\+Op}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EQ@{EQ}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!EQ@{EQ}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca135e546f9fabb556431d724b888086c9}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc} 
+EQ&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NE@{NE}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!NE@{NE}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca45e530f7555f26ed46d467fa44c2651e}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc} 
+NE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BLT@{BLT}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!BLT@{BLT}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca707694fc8d63c567823df1e0ccf54ea3}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc} 
+BLT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BLE@{BLE}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!BLE@{BLE}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca4e21c841042d8afd8c25db9320512e35}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc} 
+BLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BGT@{BGT}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!BGT@{BGT}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5ccab5f781de50a4482e7cc7401226b78265}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc} 
+BGT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BGE@{BGE}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!BGE@{BGE}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca587bf5b7ccf446efb0b9fe55a5ef2c7c}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc} 
+BGE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BEQ@{BEQ}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!BEQ@{BEQ}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca102f518ef4be40adbe8e7f181b6f6d43}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc} 
+BEQ&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BNE@{BNE}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!BNE@{BNE}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cca83c625b24629a4be577b742e10f8e5bb}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a1f08299cbeaf47d6bc70eb565388e5cc} 
+BNE&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!RvUnaryOp@{RvUnaryOp}}
+\index{RvUnaryOp@{RvUnaryOp}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}
+\doxysubsubsection{\texorpdfstring{RvUnaryOp}{RvUnaryOp}}
+{\footnotesize\ttfamily \label{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50} 
+enum \mbox{\hyperlink{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50}{backend\+::riscv\+::\+Riscv\+Instr\+::\+Rv\+Unary\+Op}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NEG@{NEG}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!NEG@{NEG}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50abb96fe3088894c7e6d6adb08bcee2d9c}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50} 
+NEG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SNEZ@{SNEZ}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SNEZ@{SNEZ}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a0a60c8a8c9b202fb985715fc490c1581}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50} 
+SNEZ&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SEQZ@{SEQZ}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!SEQZ@{SEQZ}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a893ad63ffefa30a4dd35c6749e3c5c10}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50} 
+SEQZ&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NOT@{NOT}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!NOT@{NOT}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a2ce0bad01dcd9070ab5e06bb615046ef}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50} 
+NOT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FNEGS@{FNEGS}!backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}}\index{backend::riscv::RiscvInstr@{backend::riscv::RiscvInstr}!FNEGS@{FNEGS}}}\Hypertarget{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50a279afd1c9e8d5c21cd6a478165bdc529}\label{namespacebackend_1_1riscv_1_1RiscvInstr_a298c737b4d6e0d76b8236495b3348a50} 
+FNEGS&\\
+\hline
+
+\end{DoxyEnumFields}

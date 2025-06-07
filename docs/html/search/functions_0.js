@@ -1,4 +1,29 @@
 var searchData=
 [
-  ['main_0',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]]
+  ['add_5farg_5ftemp_0',['add_arg_temp',['../classmidend_1_1ir_1_1Function.html#a3f418854a6e43f880625b237d7eb1d8e',1,'midend::ir::Function']]],
+  ['add_5fargs_1',['add_args',['../classmidend_1_1ir_1_1Function.html#aebc74a2616923eab6dc636322ec17e45',1,'midend::ir::Function']]],
+  ['add_5fbb_2',['add_bb',['../classmidend_1_1ir_1_1Function.html#ac907a9a815d63dc80557220807692134',1,'midend::ir::Function']]],
+  ['add_5fedge_3',['add_edge',['../classbackend_1_1riscv_1_1Function.html#aecf76f86f2eda9012ca0c13da0a5c35e',1,'backend::riscv::Function']]],
+  ['add_5ffunction_4',['add_function',['../classmidend_1_1ir_1_1Module.html#a8a911a73af7e64e4d8af32029e5ad6a1',1,'midend::ir::Module']]],
+  ['add_5fglobal_5fload_5',['add_global_load',['../classmidend_1_1ir_1_1instruction_1_1Call.html#a1cd08fdb4372e9d4c61652b44eb67eb1',1,'midend::ir::instruction::Call']]],
+  ['add_5fglobal_5fvariable_6',['add_global_variable',['../classmidend_1_1ir_1_1Module.html#a6366f425eb0eeabe08c0600ef8b58590',1,'midend::ir::Module']]],
+  ['add_5finst_7',['add_inst',['../classmidend_1_1ir_1_1BasicBlock.html#a107153e2d9a86e7c6a099335439c99ab',1,'midend::ir::BasicBlock']]],
+  ['add_5finst_5fafter_5finst_8',['add_inst_after_inst',['../classmidend_1_1ir_1_1BasicBlock.html#a99613b2d10acb1a982bbf012d069b624',1,'midend::ir::BasicBlock']]],
+  ['add_5finst_5fat_9',['add_inst_at',['../classmidend_1_1ir_1_1BasicBlock.html#a8de5275f43257f0a6a335abb631b98ce',1,'midend::ir::BasicBlock']]],
+  ['add_5finst_5fat_5ffront_10',['add_inst_at_front',['../classmidend_1_1ir_1_1BasicBlock.html#aed636e54623c761c6fcc88558afd1de9',1,'midend::ir::BasicBlock']]],
+  ['add_5finst_5fbefore_5fterminal_11',['add_inst_before_terminal',['../classmidend_1_1ir_1_1BasicBlock.html#a5814128aff51023dc33fb84a9872f0ad',1,'midend::ir::BasicBlock']]],
+  ['add_5finstr_12',['add_instr',['../classbackend_1_1riscv_1_1BasicBlock.html#aa250764ea49b984d84371b6d4df9603d',1,'backend::riscv::BasicBlock::add_instr(Instr *instr, std::list&lt; Instr * &gt;::iterator pos)'],['../classbackend_1_1riscv_1_1BasicBlock.html#a5d2f4a1f6bda58fcdb30b42e1d7a49c4',1,'backend::riscv::BasicBlock::add_instr(Instr *instr, int pos)']]],
+  ['add_5fpair_13',['add_pair',['../classmidend_1_1ir_1_1instruction_1_1Phi.html#a46e5780545ac4af38873179609cbfcd0',1,'midend::ir::instruction::Phi']]],
+  ['add_5fsrc_5fand_5fbb_14',['add_src_and_bb',['../classmidend_1_1ir_1_1instruction_1_1Phi.html#abf3c10045da87d35ef9bc168c378ceeb',1,'midend::ir::instruction::Phi']]],
+  ['addimm_15',['ADDImm',['../classbackend_1_1riscv_1_1RiscvInstr_1_1ADDImm.html#acae04386340db65012d2ce871805d679',1,'backend::riscv::RiscvInstr::ADDImm']]],
+  ['alloc_5freg_16',['alloc_reg',['../classbackend_1_1riscv_1_1ColoringRegAllocator.html#af4a3532605de79153f66986e4ccd8690',1,'backend::riscv::ColoringRegAllocator']]],
+  ['alloca_17',['Alloca',['../classmidend_1_1ir_1_1instruction_1_1Alloca.html#a744b154749d8f5cf791a5477665ee996',1,'midend::ir::instruction::Alloca::Alloca()=default'],['../classmidend_1_1ir_1_1instruction_1_1Alloca.html#a119bfa7832ef6741797fb4bf003ef1ac',1,'midend::ir::instruction::Alloca::Alloca(Temp *addr, Type type)']]],
+  ['analyzelivenessforeachinstr_18',['analyzeLivenessForEachInstr',['../classbackend_1_1riscv_1_1BasicBlock.html#a652d2624e9555f303cdaffcf8565429c',1,'backend::riscv::BasicBlock']]],
+  ['analyzelivenessforeachinstrafteralloc_19',['analyzeLivenessForEachInstrAfterAlloc',['../classbackend_1_1riscv_1_1BasicBlock.html#a0f3528e1f4396628cc6b3b41cedb7270',1,'backend::riscv::BasicBlock']]],
+  ['args_20',['args',['../classfrontend_1_1ast_1_1Call.html#a596a681942a0f53d2ad83e701e5e9817',1,'frontend::ast::Call']]],
+  ['arrayload_21',['ArrayLoad',['../classmidend_1_1ir_1_1instruction_1_1ArrayLoad.html#ad9226a1aa8adecc551af531479ddb9f1',1,'midend::ir::instruction::ArrayLoad::ArrayLoad()=default'],['../classmidend_1_1ir_1_1instruction_1_1ArrayLoad.html#a20335b11e01f96449907d5841225dd96',1,'midend::ir::instruction::ArrayLoad::ArrayLoad(Temp *dst, Temp *dep, Temp *addr, int offset, bool before_call=false)']]],
+  ['arraystore_22',['ArrayStore',['../classmidend_1_1ir_1_1instruction_1_1ArrayStore.html#a885fe2a5c4f20a9c1c620e353e90a4a7',1,'midend::ir::instruction::ArrayStore::ArrayStore()=default'],['../classmidend_1_1ir_1_1instruction_1_1ArrayStore.html#a027a88b7a86a4146282069f22f8dc4ca',1,'midend::ir::instruction::ArrayStore::ArrayStore(Temp *dst, Temp *dep, Temp *addr, Temp *src, int offset, bool after_call=false)']]],
+  ['arraytype_23',['ArrayType',['../classfrontend_1_1ast_1_1ArrayType.html#af1366387cade7b7d3d5f6dd4ea5e9c9d',1,'frontend::ast::ArrayType']]],
+  ['assign_24',['Assign',['../classmidend_1_1ir_1_1instruction_1_1Assign.html#a46b33ba7c9884b2b7a5a8ec25f284f39',1,'midend::ir::instruction::Assign::Assign()=default'],['../classmidend_1_1ir_1_1instruction_1_1Assign.html#aaf4e087b3ecd536a2ee5e262a230f082',1,'midend::ir::instruction::Assign::Assign(Temp *dst, Temp *src)']]],
+  ['assignment_25',['Assignment',['../classfrontend_1_1ast_1_1Assignment.html#a1648fbba270711db358baff355527146',1,'frontend::ast::Assignment']]]
 ];

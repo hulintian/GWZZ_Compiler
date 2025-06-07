@@ -1,0 +1,78 @@
+\doxysection{frontend\+::ast\+::Comp\+Units Class Reference}
+\hypertarget{classfrontend_1_1ast_1_1CompUnits}{}\label{classfrontend_1_1ast_1_1CompUnits}\index{frontend::ast::CompUnits@{frontend::ast::CompUnits}}
+
+
+{\ttfamily \#include $<$AST.\+hpp$>$}
+
+Inheritance diagram for frontend\+::ast\+::Comp\+Units\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classfrontend_1_1ast_1_1CompUnits}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits_a2ae5afd3afedda2c276edff43e45489a}{Child}} = std\+::variant$<$std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classfrontend_1_1ast_1_1Decl}{Decl}}$>$, std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classfrontend_1_1ast_1_1Func}{Func}}$>$$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits_a540103b459302c1991352f3fd665b12d}{Comp\+Units}} (std\+::vector$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits_a2ae5afd3afedda2c276edff43e45489a}{Child}} $>$ \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits_a3e1afc07c5483c18141a4b616ae0acbd}{children}})
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits_af5cb3ccfb825337397c8cb6173c597cc}{\texorpdfstring{$\sim$}{\string~}\+Comp\+Units}} ()=default
+\item 
+void \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits_aff75a2a1292daff86cc6e12eed49a4e1}{print}} (std\+::ostream \&out, unsigned level) const override
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits_a2ae5afd3afedda2c276edff43e45489a}{Child}} $>$ \& \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits_a3e1afc07c5483c18141a4b616ae0acbd}{children}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfrontend_1_1ast_1_1ASTNode}{frontend\+::ast\+::\+ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1ASTNode_aeebf803d00cd6d3210bbbc5838e791ed}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1CompUnits_a2ae5afd3afedda2c276edff43e45489a}\index{frontend::ast::CompUnits@{frontend::ast::CompUnits}!Child@{Child}}
+\index{Child@{Child}!frontend::ast::CompUnits@{frontend::ast::CompUnits}}
+\doxysubsubsection{\texorpdfstring{Child}{Child}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1CompUnits_a2ae5afd3afedda2c276edff43e45489a} 
+using \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits_a2ae5afd3afedda2c276edff43e45489a}{frontend\+::ast\+::\+Comp\+Units\+::\+Child}} = std\+::variant$<$std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classfrontend_1_1ast_1_1Decl}{Decl}}$>$, std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classfrontend_1_1ast_1_1Func}{Func}}$>$$>$}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1CompUnits_a540103b459302c1991352f3fd665b12d}\index{frontend::ast::CompUnits@{frontend::ast::CompUnits}!CompUnits@{CompUnits}}
+\index{CompUnits@{CompUnits}!frontend::ast::CompUnits@{frontend::ast::CompUnits}}
+\doxysubsubsection{\texorpdfstring{CompUnits()}{CompUnits()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1CompUnits_a540103b459302c1991352f3fd665b12d} 
+frontend\+::ast\+::\+Comp\+Units\+::\+Comp\+Units (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits_a2ae5afd3afedda2c276edff43e45489a}{Child}} $>$}]{children}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1CompUnits_af5cb3ccfb825337397c8cb6173c597cc}\index{frontend::ast::CompUnits@{frontend::ast::CompUnits}!````~CompUnits@{\texorpdfstring{$\sim$}{\string~}CompUnits}}
+\index{````~CompUnits@{\texorpdfstring{$\sim$}{\string~}CompUnits}!frontend::ast::CompUnits@{frontend::ast::CompUnits}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}CompUnits()}{\string~CompUnits()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1CompUnits_af5cb3ccfb825337397c8cb6173c597cc} 
+virtual frontend\+::ast\+::\+Comp\+Units\+::\texorpdfstring{$\sim$}{\string~}\+Comp\+Units (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1CompUnits_a3e1afc07c5483c18141a4b616ae0acbd}\index{frontend::ast::CompUnits@{frontend::ast::CompUnits}!children@{children}}
+\index{children@{children}!frontend::ast::CompUnits@{frontend::ast::CompUnits}}
+\doxysubsubsection{\texorpdfstring{children()}{children()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1CompUnits_a3e1afc07c5483c18141a4b616ae0acbd} 
+const std\+::vector$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits_a2ae5afd3afedda2c276edff43e45489a}{Child}} $>$ \& frontend\+::ast\+::\+Comp\+Units\+::children (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1CompUnits_aff75a2a1292daff86cc6e12eed49a4e1}\index{frontend::ast::CompUnits@{frontend::ast::CompUnits}!print@{print}}
+\index{print@{print}!frontend::ast::CompUnits@{frontend::ast::CompUnits}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1CompUnits_aff75a2a1292daff86cc6e12eed49a4e1} 
+void Comp\+Units\+::print (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out}{, }\item[{unsigned}]{level}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/frontend/\mbox{\hyperlink{AST_8hpp}{AST.\+hpp}}\item 
+src/frontend/\mbox{\hyperlink{AST_8cpp}{AST.\+cpp}}\end{DoxyCompactItemize}

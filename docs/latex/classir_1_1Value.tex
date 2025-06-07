@@ -1,0 +1,125 @@
+\doxysection{ir\+::Value Class Reference}
+\hypertarget{classir_1_1Value}{}\label{classir_1_1Value}\index{ir::Value@{ir::Value}}
+
+
+{\ttfamily \#include $<$Value.\+hpp$>$}
+
+Inheritance diagram for ir\+::Value\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{classir_1_1Value}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classir_1_1Value_a7ffabad9ae14e963c4dcafdc26bb4adc}{Value}} (\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*}t, const std\+::string \&name)
+\item 
+virtual \mbox{\hyperlink{classir_1_1Value_a2b418ec14e23134dc2fd575151ad0ed0}{\texorpdfstring{$\sim$}{\string~}\+Value}} ()
+\item 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_a7cec08801029c90aecf9fc40ae13ee02}{get\+\_\+type}} () const
+\item 
+std\+::string \mbox{\hyperlink{classir_1_1Value_a6b7f8b95bebfcda98cbff56cc8135ac9}{get\+\_\+name}} () const
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classir_1_1Value_afb7745b86b29e8162b555cf587b0c604}{get\+\_\+use\+\_\+list}} () const
+\item 
+void \mbox{\hyperlink{classir_1_1Value_afa24f28368449611127e67b134ec459c}{set\+\_\+name}} (std\+::string name)
+\item 
+void \mbox{\hyperlink{classir_1_1Value_a7d35c398977e6f95c4161b5ec9197183}{add\+\_\+use}} (\mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*}val, unsigned arg\+\_\+no)
+\item 
+void \mbox{\hyperlink{classir_1_1Value_a7cb473544649a4d1030186be2c56de99}{replace\+\_\+all\+\_\+use\+\_\+with}} (\mbox{\hyperlink{classir_1_1Value}{Value}} \texorpdfstring{$\ast$}{*}new\+\_\+val)
+\item 
+void \mbox{\hyperlink{classir_1_1Value_a39618e99294569b06b811310a892f209}{remove\+\_\+use}} (\mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*}use)
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_ae7e2270c59229538ea1a9e496cf979fb}{as}} ()
+\item 
+{\footnotesize template$<$typename T $>$ }\\const T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_a953d6d80eebe1e7e403b6dc8582df439}{as}} ()
+\item 
+{\footnotesize template$<$typename T $>$ }\\bool \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_a29b694bce4f177a7e25eb8730adc5c99}{is}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classir_1_1Value_a7ffabad9ae14e963c4dcafdc26bb4adc}\index{ir::Value@{ir::Value}!Value@{Value}}
+\index{Value@{Value}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{Value()}{Value()}}
+{\footnotesize\ttfamily \label{classir_1_1Value_a7ffabad9ae14e963c4dcafdc26bb4adc} 
+ir\+::\+Value\+::\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*}}]{t}{, }\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1Value_a2b418ec14e23134dc2fd575151ad0ed0}\index{ir::Value@{ir::Value}!````~Value@{\texorpdfstring{$\sim$}{\string~}Value}}
+\index{````~Value@{\texorpdfstring{$\sim$}{\string~}Value}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Value()}{\string~Value()}}
+{\footnotesize\ttfamily \label{classir_1_1Value_a2b418ec14e23134dc2fd575151ad0ed0} 
+virtual ir\+::\+Value\+::\texorpdfstring{$\sim$}{\string~}\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classir_1_1Value_a7d35c398977e6f95c4161b5ec9197183}\index{ir::Value@{ir::Value}!add\_use@{add\_use}}
+\index{add\_use@{add\_use}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{add\_use()}{add\_use()}}
+{\footnotesize\ttfamily \label{classir_1_1Value_a7d35c398977e6f95c4161b5ec9197183} 
+void ir\+::\+Value\+::add\+\_\+use (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*}}]{val}{, }\item[{unsigned}]{arg\+\_\+no}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1Value_ae7e2270c59229538ea1a9e496cf979fb}\index{ir::Value@{ir::Value}!as@{as}}
+\index{as@{as}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{as()}{as()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classir_1_1Value_ae7e2270c59229538ea1a9e496cf979fb} 
+template$<$typename T $>$ \\
+T \texorpdfstring{$\ast$}{*} ir\+::\+Value\+::as (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1Value_a953d6d80eebe1e7e403b6dc8582df439}\index{ir::Value@{ir::Value}!as@{as}}
+\index{as@{as}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{as()}{as()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classir_1_1Value_a953d6d80eebe1e7e403b6dc8582df439} 
+template$<$typename T $>$ \\
+const T \texorpdfstring{$\ast$}{*} ir\+::\+Value\+::as (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+\Hypertarget{classir_1_1Value_a6b7f8b95bebfcda98cbff56cc8135ac9}\index{ir::Value@{ir::Value}!get\_name@{get\_name}}
+\index{get\_name@{get\_name}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{get\_name()}{get\_name()}}
+{\footnotesize\ttfamily \label{classir_1_1Value_a6b7f8b95bebfcda98cbff56cc8135ac9} 
+std\+::string ir\+::\+Value\+::get\+\_\+name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1Value_a7cec08801029c90aecf9fc40ae13ee02}\index{ir::Value@{ir::Value}!get\_type@{get\_type}}
+\index{get\_type@{get\_type}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{get\_type()}{get\_type()}}
+{\footnotesize\ttfamily \label{classir_1_1Value_a7cec08801029c90aecf9fc40ae13ee02} 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} ir\+::\+Value\+::get\+\_\+type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1Value_afb7745b86b29e8162b555cf587b0c604}\index{ir::Value@{ir::Value}!get\_use\_list@{get\_use\_list}}
+\index{get\_use\_list@{get\_use\_list}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{get\_use\_list()}{get\_use\_list()}}
+{\footnotesize\ttfamily \label{classir_1_1Value_afb7745b86b29e8162b555cf587b0c604} 
+const std\+::vector$<$ \mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*} $>$ ir\+::\+Value\+::get\+\_\+use\+\_\+list (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1Value_a29b694bce4f177a7e25eb8730adc5c99}\index{ir::Value@{ir::Value}!is@{is}}
+\index{is@{is}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{is()}{is()}}
+{\footnotesize\ttfamily \label{classir_1_1Value_a29b694bce4f177a7e25eb8730adc5c99} 
+template$<$typename T $>$ \\
+bool \texorpdfstring{$\ast$}{*} ir\+::\+Value\+::is (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+\Hypertarget{classir_1_1Value_a39618e99294569b06b811310a892f209}\index{ir::Value@{ir::Value}!remove\_use@{remove\_use}}
+\index{remove\_use@{remove\_use}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{remove\_use()}{remove\_use()}}
+{\footnotesize\ttfamily \label{classir_1_1Value_a39618e99294569b06b811310a892f209} 
+void ir\+::\+Value\+::remove\+\_\+use (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*}}]{use}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1Value_a7cb473544649a4d1030186be2c56de99}\index{ir::Value@{ir::Value}!replace\_all\_use\_with@{replace\_all\_use\_with}}
+\index{replace\_all\_use\_with@{replace\_all\_use\_with}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{replace\_all\_use\_with()}{replace\_all\_use\_with()}}
+{\footnotesize\ttfamily \label{classir_1_1Value_a7cb473544649a4d1030186be2c56de99} 
+void ir\+::\+Value\+::replace\+\_\+all\+\_\+use\+\_\+with (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classir_1_1Value}{Value}} \texorpdfstring{$\ast$}{*}}]{new\+\_\+val}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classir_1_1Value_afa24f28368449611127e67b134ec459c}\index{ir::Value@{ir::Value}!set\_name@{set\_name}}
+\index{set\_name@{set\_name}!ir::Value@{ir::Value}}
+\doxysubsubsection{\texorpdfstring{set\_name()}{set\_name()}}
+{\footnotesize\ttfamily \label{classir_1_1Value_afa24f28368449611127e67b134ec459c} 
+void ir\+::\+Value\+::set\+\_\+name (\begin{DoxyParamCaption}\item[{std\+::string}]{name}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{Value_8hpp}{Value.\+hpp}}\end{DoxyCompactItemize}

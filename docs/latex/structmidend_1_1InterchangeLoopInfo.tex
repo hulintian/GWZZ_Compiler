@@ -1,0 +1,81 @@
+\doxysection{midend\+::Interchange\+Loop\+Info Struct Reference}
+\hypertarget{structmidend_1_1InterchangeLoopInfo}{}\label{structmidend_1_1InterchangeLoopInfo}\index{midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}}
+
+
+{\ttfamily \#include $<$loop\+\_\+analysis.\+hpp$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a2a93182cf5c3be3155e914ef0013750a}{valid}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_ac4ff0537fb272b8b85755eb4b71d456a}{entry}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_abffb937adc169c7fb799ffea1a6cba06}{exit\+\_\+prev}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a8ccfab131a097793de97376f0ebde90b}{exit}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Phi}{ir\+::instruction\+::\+Phi}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a2f6a92ec9c4758988d5eb67a0f873f84}{ind\+\_\+phi}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir\+::instruction\+::\+Binary}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a1b7206a4854f8136f97cc8738666deb1}{ind\+\_\+upd}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir\+::instruction\+::\+Binary}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a5a6c67689d8a67aab631acf84228347d}{ind\+\_\+cond}}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1CondBranch}{ir\+::instruction\+::\+Cond\+Branch}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_aa825e05bdbc8e1192f7082ee2e20ef1e}{ind\+\_\+br}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structmidend_1_1InterchangeLoopInfo_ac4ff0537fb272b8b85755eb4b71d456a}\index{midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}!entry@{entry}}
+\index{entry@{entry}!midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}}
+\doxysubsubsection{\texorpdfstring{entry}{entry}}
+{\footnotesize\ttfamily \label{structmidend_1_1InterchangeLoopInfo_ac4ff0537fb272b8b85755eb4b71d456a} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}}\texorpdfstring{$\ast$}{*} midend\+::\+Interchange\+Loop\+Info\+::entry}
+
+\Hypertarget{structmidend_1_1InterchangeLoopInfo_a8ccfab131a097793de97376f0ebde90b}\index{midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}!exit@{exit}}
+\index{exit@{exit}!midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}}
+\doxysubsubsection{\texorpdfstring{exit}{exit}}
+{\footnotesize\ttfamily \label{structmidend_1_1InterchangeLoopInfo_a8ccfab131a097793de97376f0ebde90b} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}}\texorpdfstring{$\ast$}{*} midend\+::\+Interchange\+Loop\+Info\+::exit}
+
+\Hypertarget{structmidend_1_1InterchangeLoopInfo_abffb937adc169c7fb799ffea1a6cba06}\index{midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}!exit\_prev@{exit\_prev}}
+\index{exit\_prev@{exit\_prev}!midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}}
+\doxysubsubsection{\texorpdfstring{exit\_prev}{exit\_prev}}
+{\footnotesize\ttfamily \label{structmidend_1_1InterchangeLoopInfo_abffb937adc169c7fb799ffea1a6cba06} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}}\texorpdfstring{$\ast$}{*} midend\+::\+Interchange\+Loop\+Info\+::exit\+\_\+prev}
+
+\Hypertarget{structmidend_1_1InterchangeLoopInfo_aa825e05bdbc8e1192f7082ee2e20ef1e}\index{midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}!ind\_br@{ind\_br}}
+\index{ind\_br@{ind\_br}!midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}}
+\doxysubsubsection{\texorpdfstring{ind\_br}{ind\_br}}
+{\footnotesize\ttfamily \label{structmidend_1_1InterchangeLoopInfo_aa825e05bdbc8e1192f7082ee2e20ef1e} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1CondBranch}{ir\+::instruction\+::\+Cond\+Branch}}\texorpdfstring{$\ast$}{*} midend\+::\+Interchange\+Loop\+Info\+::ind\+\_\+br}
+
+\Hypertarget{structmidend_1_1InterchangeLoopInfo_a5a6c67689d8a67aab631acf84228347d}\index{midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}!ind\_cond@{ind\_cond}}
+\index{ind\_cond@{ind\_cond}!midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}}
+\doxysubsubsection{\texorpdfstring{ind\_cond}{ind\_cond}}
+{\footnotesize\ttfamily \label{structmidend_1_1InterchangeLoopInfo_a5a6c67689d8a67aab631acf84228347d} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir\+::instruction\+::\+Binary}}\texorpdfstring{$\ast$}{*} midend\+::\+Interchange\+Loop\+Info\+::ind\+\_\+cond}
+
+\Hypertarget{structmidend_1_1InterchangeLoopInfo_a2f6a92ec9c4758988d5eb67a0f873f84}\index{midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}!ind\_phi@{ind\_phi}}
+\index{ind\_phi@{ind\_phi}!midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}}
+\doxysubsubsection{\texorpdfstring{ind\_phi}{ind\_phi}}
+{\footnotesize\ttfamily \label{structmidend_1_1InterchangeLoopInfo_a2f6a92ec9c4758988d5eb67a0f873f84} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Phi}{ir\+::instruction\+::\+Phi}}\texorpdfstring{$\ast$}{*} midend\+::\+Interchange\+Loop\+Info\+::ind\+\_\+phi}
+
+\Hypertarget{structmidend_1_1InterchangeLoopInfo_a1b7206a4854f8136f97cc8738666deb1}\index{midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}!ind\_upd@{ind\_upd}}
+\index{ind\_upd@{ind\_upd}!midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}}
+\doxysubsubsection{\texorpdfstring{ind\_upd}{ind\_upd}}
+{\footnotesize\ttfamily \label{structmidend_1_1InterchangeLoopInfo_a1b7206a4854f8136f97cc8738666deb1} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir\+::instruction\+::\+Binary}}\texorpdfstring{$\ast$}{*} midend\+::\+Interchange\+Loop\+Info\+::ind\+\_\+upd}
+
+\Hypertarget{structmidend_1_1InterchangeLoopInfo_a2a93182cf5c3be3155e914ef0013750a}\index{midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}!valid@{valid}}
+\index{valid@{valid}!midend::InterchangeLoopInfo@{midend::InterchangeLoopInfo}}
+\doxysubsubsection{\texorpdfstring{valid}{valid}}
+{\footnotesize\ttfamily \label{structmidend_1_1InterchangeLoopInfo_a2a93182cf5c3be3155e914ef0013750a} 
+bool midend\+::\+Interchange\+Loop\+Info\+::valid}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{loop__analysis_8hpp}{loop\+\_\+analysis.\+hpp}}\end{DoxyCompactItemize}

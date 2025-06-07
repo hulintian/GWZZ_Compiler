@@ -1,2 +1,99 @@
 \doxysection{src/frontend/\+AST.cpp File Reference}
 \hypertarget{AST_8cpp}{}\label{AST_8cpp}\index{src/frontend/AST.cpp@{src/frontend/AST.cpp}}
+{\ttfamily \#include "{}frontend/\+AST.\+hpp"{}}\newline
+{\ttfamily \#include "{}common/defines.\+hpp"{}}\newline
+{\ttfamily \#include "{}common/type.\+hpp"{}}\newline
+{\ttfamily \#include "{}common/utils.\+hpp"{}}\newline
+{\ttfamily \#include $<$string\+\_\+view$>$}\newline
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{AST_8cpp_af5ae9a0a40bac4a8d2e00fc5ec16e490}{Ast\+Scalar\+Type}} = \mbox{\hyperlink{classfrontend_1_1ast_1_1ScalarType}{frontend\+::ast\+::\+Scalar\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string\+\_\+view \mbox{\hyperlink{AST_8cpp_a9c0aa5efb00220cc9fdd9753da51f3d6}{op\+\_\+string}} (Unary\+Op op)
+\item 
+std\+::string\+\_\+view \mbox{\hyperlink{AST_8cpp_a736d2f988e24e2573cccb1a594b2df62}{op\+\_\+string}} (Binary\+Op op)
+\item 
+std\+::string\+\_\+view \mbox{\hyperlink{AST_8cpp_a485351cacd6ca78c418b7d3647bb25dc}{type\+\_\+string}} (int t)
+\item 
+std\+::string\+\_\+view \mbox{\hyperlink{AST_8cpp_ad05a828f230a83e78710d6b178748e7a}{type\+\_\+string}} (const \mbox{\hyperlink{AST_8cpp_af5ae9a0a40bac4a8d2e00fc5ec16e490}{Ast\+Scalar\+Type}} \texorpdfstring{$\ast$}{*}t)
+\item 
+ostream \& \mbox{\hyperlink{AST_8cpp_a31ec93876cf3e58268f755ffc036cb05}{operator$<$$<$}} (ostream \&os, const std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{AST_8cpp_af5ae9a0a40bac4a8d2e00fc5ec16e490}{Ast\+Scalar\+Type}} $>$ \&type)
+\item 
+ostream \& \mbox{\hyperlink{AST_8cpp_ae91a916b7d087eccaad2e786d04d1bbe}{operator$<$$<$}} (ostream \&os, const \mbox{\hyperlink{classfrontend_1_1ast_1_1Ident}{Ident}} \&ident)
+\item 
+ostream \& \mbox{\hyperlink{AST_8cpp_ac524521f5b7ff1fe72dd9bbef749ab26}{operator$<$$<$}} (ostream \&os, const \mbox{\hyperlink{classfrontend_1_1ast_1_1ArrayType}{Array\+Type}} \&type)
+\item 
+ostream \& \mbox{\hyperlink{AST_8cpp_a43f0e1027f7ddc2903a124982af832ee}{operator$<$$<$}} (ostream \&os, const std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1SysyType}{Sysy\+Type}} $>$ \&type)
+\item 
+ostream \& \mbox{\hyperlink{AST_8cpp_a31ab379c32c28ec62739950905f42212}{operator$<$$<$}} (ostream \&os, const \mbox{\hyperlink{classfrontend_1_1ast_1_1Param}{Param}} \&param)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{AST_8cpp_af5ae9a0a40bac4a8d2e00fc5ec16e490}\index{AST.cpp@{AST.cpp}!AstScalarType@{AstScalarType}}
+\index{AstScalarType@{AstScalarType}!AST.cpp@{AST.cpp}}
+\doxysubsubsection{\texorpdfstring{AstScalarType}{AstScalarType}}
+{\footnotesize\ttfamily \label{AST_8cpp_af5ae9a0a40bac4a8d2e00fc5ec16e490} 
+using \mbox{\hyperlink{AST_8cpp_af5ae9a0a40bac4a8d2e00fc5ec16e490}{Ast\+Scalar\+Type}} = \mbox{\hyperlink{classfrontend_1_1ast_1_1ScalarType}{frontend\+::ast\+::\+Scalar\+Type}}}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{AST_8cpp_a736d2f988e24e2573cccb1a594b2df62}\index{AST.cpp@{AST.cpp}!op\_string@{op\_string}}
+\index{op\_string@{op\_string}!AST.cpp@{AST.cpp}}
+\doxysubsubsection{\texorpdfstring{op\_string()}{op\_string()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{AST_8cpp_a736d2f988e24e2573cccb1a594b2df62} 
+std\+::string\+\_\+view op\+\_\+string (\begin{DoxyParamCaption}\item[{Binary\+Op}]{op}{}\end{DoxyParamCaption})}
+
+\Hypertarget{AST_8cpp_a9c0aa5efb00220cc9fdd9753da51f3d6}\index{AST.cpp@{AST.cpp}!op\_string@{op\_string}}
+\index{op\_string@{op\_string}!AST.cpp@{AST.cpp}}
+\doxysubsubsection{\texorpdfstring{op\_string()}{op\_string()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{AST_8cpp_a9c0aa5efb00220cc9fdd9753da51f3d6} 
+std\+::string\+\_\+view op\+\_\+string (\begin{DoxyParamCaption}\item[{Unary\+Op}]{op}{}\end{DoxyParamCaption})}
+
+\Hypertarget{AST_8cpp_ac524521f5b7ff1fe72dd9bbef749ab26}\index{AST.cpp@{AST.cpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!AST.cpp@{AST.cpp}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily \label{AST_8cpp_ac524521f5b7ff1fe72dd9bbef749ab26} 
+ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{ostream \&}]{os}{, }\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1ArrayType}{Array\+Type}} \&}]{type}{}\end{DoxyParamCaption})}
+
+\Hypertarget{AST_8cpp_ae91a916b7d087eccaad2e786d04d1bbe}\index{AST.cpp@{AST.cpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!AST.cpp@{AST.cpp}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily \label{AST_8cpp_ae91a916b7d087eccaad2e786d04d1bbe} 
+ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{ostream \&}]{os}{, }\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1Ident}{Ident}} \&}]{ident}{}\end{DoxyParamCaption})}
+
+\Hypertarget{AST_8cpp_a31ab379c32c28ec62739950905f42212}\index{AST.cpp@{AST.cpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!AST.cpp@{AST.cpp}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily \label{AST_8cpp_a31ab379c32c28ec62739950905f42212} 
+ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{ostream \&}]{os}{, }\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1Param}{Param}} \&}]{param}{}\end{DoxyParamCaption})}
+
+\Hypertarget{AST_8cpp_a31ec93876cf3e58268f755ffc036cb05}\index{AST.cpp@{AST.cpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!AST.cpp@{AST.cpp}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily \label{AST_8cpp_a31ec93876cf3e58268f755ffc036cb05} 
+ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{ostream \&}]{os}{, }\item[{const std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{AST_8cpp_af5ae9a0a40bac4a8d2e00fc5ec16e490}{Ast\+Scalar\+Type}} $>$ \&}]{type}{}\end{DoxyParamCaption})}
+
+\Hypertarget{AST_8cpp_a43f0e1027f7ddc2903a124982af832ee}\index{AST.cpp@{AST.cpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!AST.cpp@{AST.cpp}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily \label{AST_8cpp_a43f0e1027f7ddc2903a124982af832ee} 
+ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{ostream \&}]{os}{, }\item[{const std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classfrontend_1_1ast_1_1SysyType}{Sysy\+Type}} $>$ \&}]{type}{}\end{DoxyParamCaption})}
+
+\Hypertarget{AST_8cpp_ad05a828f230a83e78710d6b178748e7a}\index{AST.cpp@{AST.cpp}!type\_string@{type\_string}}
+\index{type\_string@{type\_string}!AST.cpp@{AST.cpp}}
+\doxysubsubsection{\texorpdfstring{type\_string()}{type\_string()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{AST_8cpp_ad05a828f230a83e78710d6b178748e7a} 
+std\+::string\+\_\+view type\+\_\+string (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{AST_8cpp_af5ae9a0a40bac4a8d2e00fc5ec16e490}{Ast\+Scalar\+Type}} \texorpdfstring{$\ast$}{*}}]{t}{}\end{DoxyParamCaption})}
+
+\Hypertarget{AST_8cpp_a485351cacd6ca78c418b7d3647bb25dc}\index{AST.cpp@{AST.cpp}!type\_string@{type\_string}}
+\index{type\_string@{type\_string}!AST.cpp@{AST.cpp}}
+\doxysubsubsection{\texorpdfstring{type\_string()}{type\_string()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{AST_8cpp_a485351cacd6ca78c418b7d3647bb25dc} 
+std\+::string\+\_\+view type\+\_\+string (\begin{DoxyParamCaption}\item[{int}]{t}{}\end{DoxyParamCaption})}
+

@@ -1,0 +1,117 @@
+\doxysection{midend\+::Dominator\+Tree\+\_\+ Class Reference}
+\hypertarget{classmidend_1_1DominatorTree__}{}\label{classmidend_1_1DominatorTree__}\index{midend::DominatorTree\_@{midend::DominatorTree\_}}
+
+
+{\ttfamily \#include $<$dominator\+\_\+tree.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1DominatorTree___a85d009231bf1d86aba81ff159ba85f53}{get\+\_\+po}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}bb)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1DominatorTree___a92a57ef5e15cf30ba4e116672c32ecc1}{get\+\_\+preo}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}bb)
+\item 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1DominatorTree___a8795d7cb67375c6dc736c64ac58f272e}{get\+\_\+dom}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}bb)
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1DominatorTree___a2f86a6a0b39a368b5d7fce67899e7045}{get\+\_\+idom}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}bb)
+\item 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1DominatorTree___abdefe77202ff2710b48ecd29f63b5e6c}{get\+\_\+dominate}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}bb)
+\item 
+int \mbox{\hyperlink{classmidend_1_1DominatorTree___aaba4a697d9a346f559a212c3f9670d38}{get\+\_\+dom\+\_\+depth}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}bb)
+\item 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1DominatorTree___a52f3d8eb3dfea13d655635a1016081b6}{get\+\_\+dom\+\_\+frontier}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}bb)
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1DominatorTree___ad53773bcb98ce98e1e0be29d2f773142}{find\+\_\+lca}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}bb1, \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}bb2)
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir\+::\+Function}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1DominatorTree___a83c88d129442731d1072a55d28d43d3f}{get\+\_\+func}} ()
+\item 
+\mbox{\hyperlink{classmidend_1_1CFG}{CFG}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1DominatorTree___a3ad7f320363aae37d7d5c0ae53995e44}{get\+\_\+cfg}} ()
+\item 
+\mbox{\hyperlink{classmidend_1_1DominatorTree___a819a504c126cacd5617cbd4a25001013}{\texorpdfstring{$\sim$}{\string~}\+Dominator\+Tree\+\_\+}} ()
+\item 
+\mbox{\hyperlink{classmidend_1_1DominatorTree___a116ee5dd57a633831baac510bc0bdcae}{Dominator\+Tree\+\_\+}} (\mbox{\hyperlink{classmidend_1_1CFG}{CFG}} \texorpdfstring{$\ast$}{*}cfg)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classmidend_1_1DominatorTree___a819a504c126cacd5617cbd4a25001013}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!````~DominatorTree\_@{\texorpdfstring{$\sim$}{\string~}DominatorTree\_}}
+\index{````~DominatorTree\_@{\texorpdfstring{$\sim$}{\string~}DominatorTree\_}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}DominatorTree\_()}{\string~DominatorTree\_()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___a819a504c126cacd5617cbd4a25001013} 
+midend\+::\+Dominator\+Tree\+\_\+\+::\texorpdfstring{$\sim$}{\string~}\+Dominator\+Tree\+\_\+ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1DominatorTree___a116ee5dd57a633831baac510bc0bdcae}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!DominatorTree\_@{DominatorTree\_}}
+\index{DominatorTree\_@{DominatorTree\_}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{DominatorTree\_()}{DominatorTree\_()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___a116ee5dd57a633831baac510bc0bdcae} 
+midend\+::\+Dominator\+Tree\+\_\+\+::\+Dominator\+Tree\+\_\+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1CFG}{CFG}} \texorpdfstring{$\ast$}{*}}]{cfg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classmidend_1_1DominatorTree___ad53773bcb98ce98e1e0be29d2f773142}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!find\_lca@{find\_lca}}
+\index{find\_lca@{find\_lca}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{find\_lca()}{find\_lca()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___ad53773bcb98ce98e1e0be29d2f773142} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} midend\+::\+Dominator\+Tree\+\_\+\+::find\+\_\+lca (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb1}{, }\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb2}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classmidend_1_1DominatorTree___a3ad7f320363aae37d7d5c0ae53995e44}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!get\_cfg@{get\_cfg}}
+\index{get\_cfg@{get\_cfg}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{get\_cfg()}{get\_cfg()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___a3ad7f320363aae37d7d5c0ae53995e44} 
+\mbox{\hyperlink{classmidend_1_1CFG}{CFG}} \texorpdfstring{$\ast$}{*} midend\+::\+Dominator\+Tree\+\_\+\+::get\+\_\+cfg (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1DominatorTree___a8795d7cb67375c6dc736c64ac58f272e}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!get\_dom@{get\_dom}}
+\index{get\_dom@{get\_dom}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{get\_dom()}{get\_dom()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___a8795d7cb67375c6dc736c64ac58f272e} 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ midend\+::\+Dominator\+Tree\+\_\+\+::get\+\_\+dom (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1DominatorTree___aaba4a697d9a346f559a212c3f9670d38}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!get\_dom\_depth@{get\_dom\_depth}}
+\index{get\_dom\_depth@{get\_dom\_depth}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{get\_dom\_depth()}{get\_dom\_depth()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___aaba4a697d9a346f559a212c3f9670d38} 
+int midend\+::\+Dominator\+Tree\+\_\+\+::get\+\_\+dom\+\_\+depth (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1DominatorTree___a52f3d8eb3dfea13d655635a1016081b6}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!get\_dom\_frontier@{get\_dom\_frontier}}
+\index{get\_dom\_frontier@{get\_dom\_frontier}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{get\_dom\_frontier()}{get\_dom\_frontier()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___a52f3d8eb3dfea13d655635a1016081b6} 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ midend\+::\+Dominator\+Tree\+\_\+\+::get\+\_\+dom\+\_\+frontier (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1DominatorTree___abdefe77202ff2710b48ecd29f63b5e6c}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!get\_dominate@{get\_dominate}}
+\index{get\_dominate@{get\_dominate}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{get\_dominate()}{get\_dominate()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___abdefe77202ff2710b48ecd29f63b5e6c} 
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ midend\+::\+Dominator\+Tree\+\_\+\+::get\+\_\+dominate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1DominatorTree___a83c88d129442731d1072a55d28d43d3f}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!get\_func@{get\_func}}
+\index{get\_func@{get\_func}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{get\_func()}{get\_func()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___a83c88d129442731d1072a55d28d43d3f} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir\+::\+Function}} \texorpdfstring{$\ast$}{*} midend\+::\+Dominator\+Tree\+\_\+\+::get\+\_\+func (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1DominatorTree___a2f86a6a0b39a368b5d7fce67899e7045}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!get\_idom@{get\_idom}}
+\index{get\_idom@{get\_idom}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{get\_idom()}{get\_idom()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___a2f86a6a0b39a368b5d7fce67899e7045} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} midend\+::\+Dominator\+Tree\+\_\+\+::get\+\_\+idom (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1DominatorTree___a85d009231bf1d86aba81ff159ba85f53}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!get\_po@{get\_po}}
+\index{get\_po@{get\_po}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{get\_po()}{get\_po()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___a85d009231bf1d86aba81ff159ba85f53} 
+std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ midend\+::\+Dominator\+Tree\+\_\+\+::get\+\_\+po (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classmidend_1_1DominatorTree___a92a57ef5e15cf30ba4e116672c32ecc1}\index{midend::DominatorTree\_@{midend::DominatorTree\_}!get\_preo@{get\_preo}}
+\index{get\_preo@{get\_preo}!midend::DominatorTree\_@{midend::DominatorTree\_}}
+\doxysubsubsection{\texorpdfstring{get\_preo()}{get\_preo()}}
+{\footnotesize\ttfamily \label{classmidend_1_1DominatorTree___a92a57ef5e15cf30ba4e116672c32ecc1} 
+std\+::vector$<$ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} $>$ midend\+::\+Dominator\+Tree\+\_\+\+::get\+\_\+preo (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{bb}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{dominator__tree_8hpp}{dominator\+\_\+tree.\+hpp}}\item 
+src/\+IR/\mbox{\hyperlink{dominator__tree_8cpp}{dominator\+\_\+tree.\+cpp}}\end{DoxyCompactItemize}

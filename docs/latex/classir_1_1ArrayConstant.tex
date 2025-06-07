@@ -1,0 +1,95 @@
+\doxysection{ir\+::Array\+Constant Class Reference}
+\hypertarget{classir_1_1ArrayConstant}{}\label{classir_1_1ArrayConstant}\index{ir::ArrayConstant@{ir::ArrayConstant}}
+
+
+{\ttfamily \#include $<$Constant.\+hpp$>$}
+
+Inheritance diagram for ir\+::Array\+Constant\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classir_1_1ArrayConstant}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classir_1_1ArrayConstant_a7607f75effb97e78a703698096d8a32f}{Array\+Constant}} (\mbox{\hyperlink{classir_1_1ArrayType}{Array\+Type}} \texorpdfstring{$\ast$}{*}ty, const std\+::vector$<$ \mbox{\hyperlink{classir_1_1Constant}{Constant}} \texorpdfstring{$\ast$}{*} $>$ val, const std\+::string \&name)
+\item 
+const \mbox{\hyperlink{classir_1_1Constant}{Constant}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1ArrayConstant_a1c9b215f6ff837e0f2d738cae6baed86}{get}} (int idx) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classir_1_1Constant}{ir\+::\+Constant}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classir_1_1Constant_a24feb4f6f86d0eac0273eb3baf9a928d}{Constant}} (\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*}ty, const std\+::string \&name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classir_1_1User}{ir\+::\+User}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classir_1_1User_aead61f61f67cd3ba8d633e22c5182fbd}{User}} (\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*}t, const std\+::string \&name)
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*} $>$ \& \mbox{\hyperlink{classir_1_1User_a4c18bd200bd8ea2384e03da87944326c}{get\+\_\+operands}} () const
+\item 
+\mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1User_aee673334255f090a5bcbffe18385b4a4}{get\+\_\+operand}} (unsigned i) const
+\item 
+void \mbox{\hyperlink{classir_1_1User_aaec89d0041ca067ed35a1a0f06639435}{set\+\_\+operands}} (unsigned i, \mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*}use)
+\item 
+void \mbox{\hyperlink{classir_1_1User_ab063a5b489277f7a17e59cdfdb776e8b}{add\+\_\+operand}} (unsigned i, \mbox{\hyperlink{classir_1_1Value}{Value}} \texorpdfstring{$\ast$}{*}val)
+\item 
+void \mbox{\hyperlink{classir_1_1User_a20b1d078e961f075210dea2002a19604}{add\+\_\+operands}} (\mbox{\hyperlink{classir_1_1Value}{Value}} \texorpdfstring{$\ast$}{*}val)
+\item 
+unsigned \mbox{\hyperlink{classir_1_1User_aecd6d6665183a09b7df5fac3bd2a3284}{get\+\_\+num\+\_\+operand}} () const
+\item 
+void \mbox{\hyperlink{classir_1_1User_a821ee0c33077b32b835106d216cfd42f}{remove\+\_\+use\+\_\+of\+\_\+ops}} ()
+\item 
+void \mbox{\hyperlink{classir_1_1User_aaebe841831e06a33b40be74c5bbb4153}{remove\+\_\+operand}} (unsigned idx1)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classir_1_1Value}{ir\+::\+Value}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classir_1_1Value_a7ffabad9ae14e963c4dcafdc26bb4adc}{Value}} (\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*}t, const std\+::string \&name)
+\item 
+virtual \mbox{\hyperlink{classir_1_1Value_a2b418ec14e23134dc2fd575151ad0ed0}{\texorpdfstring{$\sim$}{\string~}\+Value}} ()
+\item 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_a7cec08801029c90aecf9fc40ae13ee02}{get\+\_\+type}} () const
+\item 
+std\+::string \mbox{\hyperlink{classir_1_1Value_a6b7f8b95bebfcda98cbff56cc8135ac9}{get\+\_\+name}} () const
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classir_1_1Value_afb7745b86b29e8162b555cf587b0c604}{get\+\_\+use\+\_\+list}} () const
+\item 
+void \mbox{\hyperlink{classir_1_1Value_afa24f28368449611127e67b134ec459c}{set\+\_\+name}} (std\+::string name)
+\item 
+void \mbox{\hyperlink{classir_1_1Value_a7d35c398977e6f95c4161b5ec9197183}{add\+\_\+use}} (\mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*}val, unsigned arg\+\_\+no)
+\item 
+void \mbox{\hyperlink{classir_1_1Value_a7cb473544649a4d1030186be2c56de99}{replace\+\_\+all\+\_\+use\+\_\+with}} (\mbox{\hyperlink{classir_1_1Value}{Value}} \texorpdfstring{$\ast$}{*}new\+\_\+val)
+\item 
+void \mbox{\hyperlink{classir_1_1Value_a39618e99294569b06b811310a892f209}{remove\+\_\+use}} (\mbox{\hyperlink{structir_1_1Use}{Use}} \texorpdfstring{$\ast$}{*}use)
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_ae7e2270c59229538ea1a9e496cf979fb}{as}} ()
+\item 
+{\footnotesize template$<$typename T $>$ }\\const T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_a953d6d80eebe1e7e403b6dc8582df439}{as}} ()
+\item 
+{\footnotesize template$<$typename T $>$ }\\bool \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Value_a29b694bce4f177a7e25eb8730adc5c99}{is}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classir_1_1ArrayConstant_a7607f75effb97e78a703698096d8a32f}\index{ir::ArrayConstant@{ir::ArrayConstant}!ArrayConstant@{ArrayConstant}}
+\index{ArrayConstant@{ArrayConstant}!ir::ArrayConstant@{ir::ArrayConstant}}
+\doxysubsubsection{\texorpdfstring{ArrayConstant()}{ArrayConstant()}}
+{\footnotesize\ttfamily \label{classir_1_1ArrayConstant_a7607f75effb97e78a703698096d8a32f} 
+ir\+::\+Array\+Constant\+::\+Array\+Constant (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classir_1_1ArrayType}{Array\+Type}} \texorpdfstring{$\ast$}{*}}]{ty}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{classir_1_1Constant}{Constant}} \texorpdfstring{$\ast$}{*} $>$}]{val}{, }\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classir_1_1ArrayConstant_a1c9b215f6ff837e0f2d738cae6baed86}\index{ir::ArrayConstant@{ir::ArrayConstant}!get@{get}}
+\index{get@{get}!ir::ArrayConstant@{ir::ArrayConstant}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{classir_1_1ArrayConstant_a1c9b215f6ff837e0f2d738cae6baed86} 
+const \mbox{\hyperlink{classir_1_1Constant}{Constant}} \texorpdfstring{$\ast$}{*} ir\+::\+Array\+Constant\+::get (\begin{DoxyParamCaption}\item[{int}]{idx}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{Constant_8hpp}{Constant.\+hpp}}\end{DoxyCompactItemize}

@@ -114,3 +114,26 @@ inline std::string type_string(Type t) {
         s+="*";
     return s;
 }
+
+inline std::string type_llvm_string(Type type, bool no_ptr = false) {
+    if (type.base_type == Void)
+        return "void";
+    std::string s;
+    if(type.base_type == Int)
+        s = "i32";
+    else if(type.base_type == Float)
+        s = "float";
+    else
+        s = "i32"; // string
+    if (!type.is_array())
+        return s;
+    bool pointer = false;
+    int i = 0;
+    if(type.dims[0] == 0){
+        pointer = true;
+        i = 1;
+    }
+    if (pointer && !no_ptr)
+        s += "*";
+    return s;
+}

@@ -1,0 +1,71 @@
+\doxysection{midend\+::Loop Class Reference}
+\hypertarget{classmidend_1_1Loop}{}\label{classmidend_1_1Loop}\index{midend::Loop@{midend::Loop}}
+
+
+{\ttfamily \#include $<$loop\+\_\+analysis.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmidend_1_1Loop_a49ff8c1fa422084447ddb621866121bf}{Loop}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classmidend_1_1Loop_a2f1c3d3fd8196161ce29b6c64053d4e6}{header\+\_\+}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1Loop_a2f1c3d3fd8196161ce29b6c64053d4e6}{header\+\_\+}}
+\item 
+\mbox{\hyperlink{classmidend_1_1Loop}{Loop}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1Loop_a7b2ca1aa2d8598102193b3c27b1dc141}{parent\+\_\+}}
+\item 
+\mbox{\hyperlink{classmidend_1_1Loop}{Loop}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1Loop_aa6e2296f9d1dac9ea5c33a469672693b}{child\+\_\+}}
+\item 
+int \mbox{\hyperlink{classmidend_1_1Loop_a6ac8478c3204c6eda28df0e7edad6d48}{depth\+\_\+}}
+\item 
+bool \mbox{\hyperlink{classmidend_1_1Loop_a83711ac4a826b54d7a69bae7bd0f2735}{unrolled}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classmidend_1_1Loop_a49ff8c1fa422084447ddb621866121bf}\index{midend::Loop@{midend::Loop}!Loop@{Loop}}
+\index{Loop@{Loop}!midend::Loop@{midend::Loop}}
+\doxysubsubsection{\texorpdfstring{Loop()}{Loop()}}
+{\footnotesize\ttfamily \label{classmidend_1_1Loop_a49ff8c1fa422084447ddb621866121bf} 
+midend\+::\+Loop\+::\+Loop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{header\+\_\+}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classmidend_1_1Loop_aa6e2296f9d1dac9ea5c33a469672693b}\index{midend::Loop@{midend::Loop}!child\_@{child\_}}
+\index{child\_@{child\_}!midend::Loop@{midend::Loop}}
+\doxysubsubsection{\texorpdfstring{child\_}{child\_}}
+{\footnotesize\ttfamily \label{classmidend_1_1Loop_aa6e2296f9d1dac9ea5c33a469672693b} 
+\mbox{\hyperlink{classmidend_1_1Loop}{Loop}}\texorpdfstring{$\ast$}{*} midend\+::\+Loop\+::child\+\_\+}
+
+\Hypertarget{classmidend_1_1Loop_a6ac8478c3204c6eda28df0e7edad6d48}\index{midend::Loop@{midend::Loop}!depth\_@{depth\_}}
+\index{depth\_@{depth\_}!midend::Loop@{midend::Loop}}
+\doxysubsubsection{\texorpdfstring{depth\_}{depth\_}}
+{\footnotesize\ttfamily \label{classmidend_1_1Loop_a6ac8478c3204c6eda28df0e7edad6d48} 
+int midend\+::\+Loop\+::depth\+\_\+}
+
+\Hypertarget{classmidend_1_1Loop_a2f1c3d3fd8196161ce29b6c64053d4e6}\index{midend::Loop@{midend::Loop}!header\_@{header\_}}
+\index{header\_@{header\_}!midend::Loop@{midend::Loop}}
+\doxysubsubsection{\texorpdfstring{header\_}{header\_}}
+{\footnotesize\ttfamily \label{classmidend_1_1Loop_a2f1c3d3fd8196161ce29b6c64053d4e6} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir\+::\+Basic\+Block}}\texorpdfstring{$\ast$}{*} midend\+::\+Loop\+::header\+\_\+}
+
+\Hypertarget{classmidend_1_1Loop_a7b2ca1aa2d8598102193b3c27b1dc141}\index{midend::Loop@{midend::Loop}!parent\_@{parent\_}}
+\index{parent\_@{parent\_}!midend::Loop@{midend::Loop}}
+\doxysubsubsection{\texorpdfstring{parent\_}{parent\_}}
+{\footnotesize\ttfamily \label{classmidend_1_1Loop_a7b2ca1aa2d8598102193b3c27b1dc141} 
+\mbox{\hyperlink{classmidend_1_1Loop}{Loop}}\texorpdfstring{$\ast$}{*} midend\+::\+Loop\+::parent\+\_\+}
+
+\Hypertarget{classmidend_1_1Loop_a83711ac4a826b54d7a69bae7bd0f2735}\index{midend::Loop@{midend::Loop}!unrolled@{unrolled}}
+\index{unrolled@{unrolled}!midend::Loop@{midend::Loop}}
+\doxysubsubsection{\texorpdfstring{unrolled}{unrolled}}
+{\footnotesize\ttfamily \label{classmidend_1_1Loop_a83711ac4a826b54d7a69bae7bd0f2735} 
+bool midend\+::\+Loop\+::unrolled = false}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{loop__analysis_8hpp}{loop\+\_\+analysis.\+hpp}}\end{DoxyCompactItemize}

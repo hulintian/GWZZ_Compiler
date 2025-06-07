@@ -1,0 +1,113 @@
+\doxysection{frontend\+::Symbol\+Table Struct Reference}
+\hypertarget{structfrontend_1_1SymbolTable}{}\label{structfrontend_1_1SymbolTable}\index{frontend::SymbolTable@{frontend::SymbolTable}}
+
+
+{\ttfamily \#include $<$Symbol\+Table.\+hpp$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structfrontend_1_1SymbolTable_1_1Function}{Function}}
+\item 
+struct \mbox{\hyperlink{structfrontend_1_1SymbolTable_1_1LibFunc}{Lib\+Func}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structfrontend_1_1SymbolTable_abc9902511e1f8aab6615204daf8f6474}{Symbol\+Table}} ()
+\item 
+bool \mbox{\hyperlink{structfrontend_1_1SymbolTable_a4c380bae05ca270a01630382b719a781}{is\+\_\+in\+\_\+global\+\_\+scope}} () const
+\item 
+void \mbox{\hyperlink{structfrontend_1_1SymbolTable_af89cc7abdc8b7741babb6951f8db08a6}{insert}} (const std\+::string \&name, std\+::shared\+\_\+ptr$<$ Var $>$ \&\&value)
+\item 
+Var \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structfrontend_1_1SymbolTable_a39a3efdcd75e2cec01a7d6f1e51699e4}{lookup}} (const std\+::string \&name) const
+\item 
+const std\+::shared\+\_\+ptr$<$ Var $>$ \& \mbox{\hyperlink{structfrontend_1_1SymbolTable_af5c234456add0d94285d16b64131b9a2}{get\+Var}} (const std\+::string \&name) const
+\item 
+\mbox{\hyperlink{namespacefrontend_aca795ec177c374f9fada7442d5eeacee}{Var\+Tab}} \mbox{\hyperlink{structfrontend_1_1SymbolTable_a523b0d06b5c130126f75bf4e5c513013}{curr\+\_\+vars}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{structfrontend_1_1SymbolTable_1_1Function}{Function}} $>$ \mbox{\hyperlink{structfrontend_1_1SymbolTable_a2a85b9663c04298bb47242b961b740cd}{func\+\_\+table}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{structfrontend_1_1SymbolTable_1_1LibFunc}{Lib\+Func}} $>$ \mbox{\hyperlink{structfrontend_1_1SymbolTable_a30924ca22715d8457cec53927f4b887f}{lib\+\_\+func\+\_\+table}}
+\item 
+\mbox{\hyperlink{namespacefrontend_aca795ec177c374f9fada7442d5eeacee}{Var\+Tab}} \mbox{\hyperlink{structfrontend_1_1SymbolTable_a8faaf4987727610f38d5b70403e20747}{global\+\_\+variables}}
+\item 
+\mbox{\hyperlink{structfrontend_1_1SymbolTable_1_1Function}{Function}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structfrontend_1_1SymbolTable_a7a0a201bc3917b121f44deb92757becd}{cur\+\_\+func}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structfrontend_1_1SymbolTable_abc9902511e1f8aab6615204daf8f6474}\index{frontend::SymbolTable@{frontend::SymbolTable}!SymbolTable@{SymbolTable}}
+\index{SymbolTable@{SymbolTable}!frontend::SymbolTable@{frontend::SymbolTable}}
+\doxysubsubsection{\texorpdfstring{SymbolTable()}{SymbolTable()}}
+{\footnotesize\ttfamily \label{structfrontend_1_1SymbolTable_abc9902511e1f8aab6615204daf8f6474} 
+frontend\+::\+Symbol\+Table\+::\+Symbol\+Table (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structfrontend_1_1SymbolTable_a523b0d06b5c130126f75bf4e5c513013}\index{frontend::SymbolTable@{frontend::SymbolTable}!curr\_vars@{curr\_vars}}
+\index{curr\_vars@{curr\_vars}!frontend::SymbolTable@{frontend::SymbolTable}}
+\doxysubsubsection{\texorpdfstring{curr\_vars()}{curr\_vars()}}
+{\footnotesize\ttfamily \label{structfrontend_1_1SymbolTable_a523b0d06b5c130126f75bf4e5c513013} 
+\mbox{\hyperlink{namespacefrontend_aca795ec177c374f9fada7442d5eeacee}{Var\+Tab}} frontend\+::\+Symbol\+Table\+::curr\+\_\+vars (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{structfrontend_1_1SymbolTable_af5c234456add0d94285d16b64131b9a2}\index{frontend::SymbolTable@{frontend::SymbolTable}!getVar@{getVar}}
+\index{getVar@{getVar}!frontend::SymbolTable@{frontend::SymbolTable}}
+\doxysubsubsection{\texorpdfstring{getVar()}{getVar()}}
+{\footnotesize\ttfamily \label{structfrontend_1_1SymbolTable_af5c234456add0d94285d16b64131b9a2} 
+const std\+::shared\+\_\+ptr$<$ Var $>$ \& frontend\+::\+Symbol\+Table\+::get\+Var (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{structfrontend_1_1SymbolTable_af89cc7abdc8b7741babb6951f8db08a6}\index{frontend::SymbolTable@{frontend::SymbolTable}!insert@{insert}}
+\index{insert@{insert}!frontend::SymbolTable@{frontend::SymbolTable}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily \label{structfrontend_1_1SymbolTable_af89cc7abdc8b7741babb6951f8db08a6} 
+void frontend\+::\+Symbol\+Table\+::insert (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{std\+::shared\+\_\+ptr$<$ Var $>$ \&\&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{structfrontend_1_1SymbolTable_a4c380bae05ca270a01630382b719a781}\index{frontend::SymbolTable@{frontend::SymbolTable}!is\_in\_global\_scope@{is\_in\_global\_scope}}
+\index{is\_in\_global\_scope@{is\_in\_global\_scope}!frontend::SymbolTable@{frontend::SymbolTable}}
+\doxysubsubsection{\texorpdfstring{is\_in\_global\_scope()}{is\_in\_global\_scope()}}
+{\footnotesize\ttfamily \label{structfrontend_1_1SymbolTable_a4c380bae05ca270a01630382b719a781} 
+bool frontend\+::\+Symbol\+Table\+::is\+\_\+in\+\_\+global\+\_\+scope (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{structfrontend_1_1SymbolTable_a39a3efdcd75e2cec01a7d6f1e51699e4}\index{frontend::SymbolTable@{frontend::SymbolTable}!lookup@{lookup}}
+\index{lookup@{lookup}!frontend::SymbolTable@{frontend::SymbolTable}}
+\doxysubsubsection{\texorpdfstring{lookup()}{lookup()}}
+{\footnotesize\ttfamily \label{structfrontend_1_1SymbolTable_a39a3efdcd75e2cec01a7d6f1e51699e4} 
+Var \texorpdfstring{$\ast$}{*} frontend\+::\+Symbol\+Table\+::lookup (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structfrontend_1_1SymbolTable_a7a0a201bc3917b121f44deb92757becd}\index{frontend::SymbolTable@{frontend::SymbolTable}!cur\_func@{cur\_func}}
+\index{cur\_func@{cur\_func}!frontend::SymbolTable@{frontend::SymbolTable}}
+\doxysubsubsection{\texorpdfstring{cur\_func}{cur\_func}}
+{\footnotesize\ttfamily \label{structfrontend_1_1SymbolTable_a7a0a201bc3917b121f44deb92757becd} 
+\mbox{\hyperlink{structfrontend_1_1SymbolTable_1_1Function}{Function}}\texorpdfstring{$\ast$}{*} frontend\+::\+Symbol\+Table\+::cur\+\_\+func}
+
+\Hypertarget{structfrontend_1_1SymbolTable_a2a85b9663c04298bb47242b961b740cd}\index{frontend::SymbolTable@{frontend::SymbolTable}!func\_table@{func\_table}}
+\index{func\_table@{func\_table}!frontend::SymbolTable@{frontend::SymbolTable}}
+\doxysubsubsection{\texorpdfstring{func\_table}{func\_table}}
+{\footnotesize\ttfamily \label{structfrontend_1_1SymbolTable_a2a85b9663c04298bb47242b961b740cd} 
+std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{structfrontend_1_1SymbolTable_1_1Function}{Function}}$>$ frontend\+::\+Symbol\+Table\+::func\+\_\+table}
+
+\Hypertarget{structfrontend_1_1SymbolTable_a8faaf4987727610f38d5b70403e20747}\index{frontend::SymbolTable@{frontend::SymbolTable}!global\_variables@{global\_variables}}
+\index{global\_variables@{global\_variables}!frontend::SymbolTable@{frontend::SymbolTable}}
+\doxysubsubsection{\texorpdfstring{global\_variables}{global\_variables}}
+{\footnotesize\ttfamily \label{structfrontend_1_1SymbolTable_a8faaf4987727610f38d5b70403e20747} 
+\mbox{\hyperlink{namespacefrontend_aca795ec177c374f9fada7442d5eeacee}{Var\+Tab}} frontend\+::\+Symbol\+Table\+::global\+\_\+variables}
+
+\Hypertarget{structfrontend_1_1SymbolTable_a30924ca22715d8457cec53927f4b887f}\index{frontend::SymbolTable@{frontend::SymbolTable}!lib\_func\_table@{lib\_func\_table}}
+\index{lib\_func\_table@{lib\_func\_table}!frontend::SymbolTable@{frontend::SymbolTable}}
+\doxysubsubsection{\texorpdfstring{lib\_func\_table}{lib\_func\_table}}
+{\footnotesize\ttfamily \label{structfrontend_1_1SymbolTable_a30924ca22715d8457cec53927f4b887f} 
+std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{structfrontend_1_1SymbolTable_1_1LibFunc}{Lib\+Func}}$>$ frontend\+::\+Symbol\+Table\+::lib\+\_\+func\+\_\+table}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/frontend/\mbox{\hyperlink{SymbolTable_8hpp}{Symbol\+Table.\+hpp}}\end{DoxyCompactItemize}
