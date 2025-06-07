@@ -1,0 +1,157 @@
+\doxysection{frontend\+::Gen\+Ir Class Reference}
+\hypertarget{classfrontend_1_1GenIr}{}\label{classfrontend_1_1GenIr}\index{frontend::GenIr@{frontend::GenIr}}
+
+
+{\ttfamily \#include $<$emit\+\_\+ir.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfrontend_1_1GenIr_adbbc38b3d70cf8766798ea66361d6a70}{Gen\+Ir}} ()
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1GenIr_adf20110faf7fa7261ccecfd8a26cba50}{\texorpdfstring{$\sim$}{\string~}\+Gen\+Ir}} ()
+\item 
+Type \mbox{\hyperlink{classfrontend_1_1GenIr_afc6ec3e80074e484e3550f8e3f0f4662}{get\+Type}} (const \mbox{\hyperlink{classfrontend_1_1ast_1_1Func}{ast\+::\+Func}} \texorpdfstring{$\ast$}{*}func)
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Module}{Module}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1GenIr_a9b15c0a2b1d763444791993a205f92f9}{transform}} (const \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits}{ast\+::\+Comp\+Units}} \&ast)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1GenIr_aa92a05846bbcb3479fdf1051851e472e}{visit\+Parameter}} (const \mbox{\hyperlink{classfrontend_1_1ast_1_1Param}{ast\+::\+Param}} \&param, \mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}func\+Emitter)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1GenIr_a14059aef8ad058d57698f56ccb51a168}{visit\+Statement}} (const \mbox{\hyperlink{classfrontend_1_1ast_1_1Stmt}{ast\+::\+Stmt}} \&stmt, \mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}func\+Emitter)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1GenIr_ae03e01c6918e4b123d76516b481a3466}{visit\+Declaration}} (const \mbox{\hyperlink{classfrontend_1_1ast_1_1Decl}{ast\+::\+Decl}} \&decl, \mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}func\+Emitter)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1GenIr_a60fc5d5f3e2a4a7aad768797b13e4775}{visit\+If}} (const \mbox{\hyperlink{classfrontend_1_1ast_1_1IfStmt}{ast\+::\+If\+Stmt}} \&if\+\_\+stmt, \mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}func\+Emitter)
+\item 
+void \mbox{\hyperlink{classfrontend_1_1GenIr_aec3aca846c8c4dd54a26337ed6ae1ba3}{visit\+While}} (const \mbox{\hyperlink{classfrontend_1_1ast_1_1WhileStmt}{ast\+::\+While\+Stmt}} \&while\+\_\+stmt, \mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}func\+Emitter)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1GenIr_a3da0a725d92d0050ea8032ffa98b8187}{visit\+Arith\+Expr}} (const \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{ast\+::\+Expr}} \texorpdfstring{$\ast$}{*}expr, \mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}func\+Emitter, int literal\+\_\+type=-\/1)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1GenIr_ab7f29877aa2415b4dc56b4e7d380df03}{visit\+Logic\+Expr}} (const \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{ast\+::\+Expr}} \texorpdfstring{$\ast$}{*}expr, \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}true\+\_\+bb, \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}false\+\_\+bb, \mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}func\+Emitter)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1GenIr_ab1eef95e753e55e955744ac368c734e8}{visit\+LValue}} (const \mbox{\hyperlink{classfrontend_1_1ast_1_1LValue}{ast\+::\+LValue}} \texorpdfstring{$\ast$}{*}lvalue, \mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}func\+Emitter, bool return\+\_\+addr\+\_\+when\+\_\+scalar)
+\item 
+int \mbox{\hyperlink{classfrontend_1_1GenIr_a219912f1035442e34b52ffa0817043e1}{visit\+Initializer}} (Type var\+\_\+type, \mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}} \texorpdfstring{$\ast$}{*}data, \mbox{\hyperlink{classfrontend_1_1ast_1_1Initializer}{ast\+::\+Initializer}} \texorpdfstring{$\ast$}{*}initializer, int idx, \mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}func\+Emitter, int max\+\_\+size, bool is\+\_\+zero\+\_\+init)
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classfrontend_1_1GenIr_a2f98645911e8c3943278d732787429ea}{visit\+Cast}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}temp, Type to\+\_\+type, \mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}func\+Emitter)
+\item 
+Const\+Value \mbox{\hyperlink{classfrontend_1_1GenIr_a318c6860ca961bcf2da5e8c2b5c1855f}{visit\+Const\+Expr}} (\mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{ast\+::\+Expr}} \texorpdfstring{$\ast$}{*}expr)
+\item 
+Const\+Value \mbox{\hyperlink{classfrontend_1_1GenIr_ae16ff2d5197e40e8764e9f2d706a89f1}{visit\+Const\+LValue}} (\mbox{\hyperlink{classfrontend_1_1ast_1_1LValue}{ast\+::\+LValue}} \texorpdfstring{$\ast$}{*}lvalue)
+\item 
+std\+::vector$<$ Const\+Value $>$ \mbox{\hyperlink{classfrontend_1_1GenIr_a499e48659dea533caa885f7b47462d99}{visit\+Const\+Initializer}} (\mbox{\hyperlink{classfrontend_1_1ast_1_1Initializer}{ast\+::\+Initializer}} \texorpdfstring{$\ast$}{*}initializer, Type var\+\_\+type, int max\+\_\+size)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfrontend_1_1GenIr_adbbc38b3d70cf8766798ea66361d6a70}\index{frontend::GenIr@{frontend::GenIr}!GenIr@{GenIr}}
+\index{GenIr@{GenIr}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{GenIr()}{GenIr()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_adbbc38b3d70cf8766798ea66361d6a70} 
+frontend\+::\+Gen\+Ir\+::\+Gen\+Ir (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classfrontend_1_1GenIr_adf20110faf7fa7261ccecfd8a26cba50}\index{frontend::GenIr@{frontend::GenIr}!````~GenIr@{\texorpdfstring{$\sim$}{\string~}GenIr}}
+\index{````~GenIr@{\texorpdfstring{$\sim$}{\string~}GenIr}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GenIr()}{\string~GenIr()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_adf20110faf7fa7261ccecfd8a26cba50} 
+virtual frontend\+::\+Gen\+Ir\+::\texorpdfstring{$\sim$}{\string~}\+Gen\+Ir (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfrontend_1_1GenIr_afc6ec3e80074e484e3550f8e3f0f4662}\index{frontend::GenIr@{frontend::GenIr}!getType@{getType}}
+\index{getType@{getType}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_afc6ec3e80074e484e3550f8e3f0f4662} 
+Type frontend\+::\+Gen\+Ir\+::get\+Type (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1Func}{ast\+::\+Func}} \texorpdfstring{$\ast$}{*}}]{func}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_a9b15c0a2b1d763444791993a205f92f9}\index{frontend::GenIr@{frontend::GenIr}!transform@{transform}}
+\index{transform@{transform}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{transform()}{transform()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_a9b15c0a2b1d763444791993a205f92f9} 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Module}{Module}} \texorpdfstring{$\ast$}{*} frontend\+::\+Gen\+Ir\+::transform (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1CompUnits}{ast\+::\+Comp\+Units}} \&}]{ast}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_a3da0a725d92d0050ea8032ffa98b8187}\index{frontend::GenIr@{frontend::GenIr}!visitArithExpr@{visitArithExpr}}
+\index{visitArithExpr@{visitArithExpr}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitArithExpr()}{visitArithExpr()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_a3da0a725d92d0050ea8032ffa98b8187} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Gen\+Ir\+::visit\+Arith\+Expr (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{ast\+::\+Expr}} \texorpdfstring{$\ast$}{*}}]{expr}{, }\item[{\mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}}]{func\+Emitter}{, }\item[{int}]{literal\+\_\+type}{ = {\ttfamily -\/1}}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_a2f98645911e8c3943278d732787429ea}\index{frontend::GenIr@{frontend::GenIr}!visitCast@{visitCast}}
+\index{visitCast@{visitCast}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitCast()}{visitCast()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_a2f98645911e8c3943278d732787429ea} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Gen\+Ir\+::visit\+Cast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{temp}{, }\item[{Type}]{to\+\_\+type}{, }\item[{\mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}}]{func\+Emitter}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_a318c6860ca961bcf2da5e8c2b5c1855f}\index{frontend::GenIr@{frontend::GenIr}!visitConstExpr@{visitConstExpr}}
+\index{visitConstExpr@{visitConstExpr}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitConstExpr()}{visitConstExpr()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_a318c6860ca961bcf2da5e8c2b5c1855f} 
+Const\+Value frontend\+::\+Gen\+Ir\+::visit\+Const\+Expr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{ast\+::\+Expr}} \texorpdfstring{$\ast$}{*}}]{expr}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_a499e48659dea533caa885f7b47462d99}\index{frontend::GenIr@{frontend::GenIr}!visitConstInitializer@{visitConstInitializer}}
+\index{visitConstInitializer@{visitConstInitializer}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitConstInitializer()}{visitConstInitializer()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_a499e48659dea533caa885f7b47462d99} 
+std\+::vector$<$ Const\+Value $>$ frontend\+::\+Gen\+Ir\+::visit\+Const\+Initializer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfrontend_1_1ast_1_1Initializer}{ast\+::\+Initializer}} \texorpdfstring{$\ast$}{*}}]{initializer}{, }\item[{Type}]{var\+\_\+type}{, }\item[{int}]{max\+\_\+size}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_ae16ff2d5197e40e8764e9f2d706a89f1}\index{frontend::GenIr@{frontend::GenIr}!visitConstLValue@{visitConstLValue}}
+\index{visitConstLValue@{visitConstLValue}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitConstLValue()}{visitConstLValue()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_ae16ff2d5197e40e8764e9f2d706a89f1} 
+Const\+Value frontend\+::\+Gen\+Ir\+::visit\+Const\+LValue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfrontend_1_1ast_1_1LValue}{ast\+::\+LValue}} \texorpdfstring{$\ast$}{*}}]{lvalue}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_ae03e01c6918e4b123d76516b481a3466}\index{frontend::GenIr@{frontend::GenIr}!visitDeclaration@{visitDeclaration}}
+\index{visitDeclaration@{visitDeclaration}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitDeclaration()}{visitDeclaration()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_ae03e01c6918e4b123d76516b481a3466} 
+void frontend\+::\+Gen\+Ir\+::visit\+Declaration (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1Decl}{ast\+::\+Decl}} \&}]{decl}{, }\item[{\mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}}]{func\+Emitter}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_a60fc5d5f3e2a4a7aad768797b13e4775}\index{frontend::GenIr@{frontend::GenIr}!visitIf@{visitIf}}
+\index{visitIf@{visitIf}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitIf()}{visitIf()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_a60fc5d5f3e2a4a7aad768797b13e4775} 
+void frontend\+::\+Gen\+Ir\+::visit\+If (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1IfStmt}{ast\+::\+If\+Stmt}} \&}]{if\+\_\+stmt}{, }\item[{\mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}}]{func\+Emitter}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_a219912f1035442e34b52ffa0817043e1}\index{frontend::GenIr@{frontend::GenIr}!visitInitializer@{visitInitializer}}
+\index{visitInitializer@{visitInitializer}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitInitializer()}{visitInitializer()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_a219912f1035442e34b52ffa0817043e1} 
+int frontend\+::\+Gen\+Ir\+::visit\+Initializer (\begin{DoxyParamCaption}\item[{Type}]{var\+\_\+type}{, }\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{Data\+Meta}} \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{\mbox{\hyperlink{classfrontend_1_1ast_1_1Initializer}{ast\+::\+Initializer}} \texorpdfstring{$\ast$}{*}}]{initializer}{, }\item[{int}]{idx}{, }\item[{\mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}}]{func\+Emitter}{, }\item[{int}]{max\+\_\+size}{, }\item[{bool}]{is\+\_\+zero\+\_\+init}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_ab7f29877aa2415b4dc56b4e7d380df03}\index{frontend::GenIr@{frontend::GenIr}!visitLogicExpr@{visitLogicExpr}}
+\index{visitLogicExpr@{visitLogicExpr}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitLogicExpr()}{visitLogicExpr()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_ab7f29877aa2415b4dc56b4e7d380df03} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Gen\+Ir\+::visit\+Logic\+Expr (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1Expr}{ast\+::\+Expr}} \texorpdfstring{$\ast$}{*}}]{expr}{, }\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{true\+\_\+bb}{, }\item[{\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}}]{false\+\_\+bb}{, }\item[{\mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}}]{func\+Emitter}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_ab1eef95e753e55e955744ac368c734e8}\index{frontend::GenIr@{frontend::GenIr}!visitLValue@{visitLValue}}
+\index{visitLValue@{visitLValue}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitLValue()}{visitLValue()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_ab1eef95e753e55e955744ac368c734e8} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} frontend\+::\+Gen\+Ir\+::visit\+LValue (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1LValue}{ast\+::\+LValue}} \texorpdfstring{$\ast$}{*}}]{lvalue}{, }\item[{\mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}}]{func\+Emitter}{, }\item[{bool}]{return\+\_\+addr\+\_\+when\+\_\+scalar}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_aa92a05846bbcb3479fdf1051851e472e}\index{frontend::GenIr@{frontend::GenIr}!visitParameter@{visitParameter}}
+\index{visitParameter@{visitParameter}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitParameter()}{visitParameter()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_aa92a05846bbcb3479fdf1051851e472e} 
+void frontend\+::\+Gen\+Ir\+::visit\+Parameter (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1Param}{ast\+::\+Param}} \&}]{param}{, }\item[{\mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}}]{func\+Emitter}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_a14059aef8ad058d57698f56ccb51a168}\index{frontend::GenIr@{frontend::GenIr}!visitStatement@{visitStatement}}
+\index{visitStatement@{visitStatement}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitStatement()}{visitStatement()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_a14059aef8ad058d57698f56ccb51a168} 
+void frontend\+::\+Gen\+Ir\+::visit\+Statement (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1Stmt}{ast\+::\+Stmt}} \&}]{stmt}{, }\item[{\mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}}]{func\+Emitter}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classfrontend_1_1GenIr_aec3aca846c8c4dd54a26337ed6ae1ba3}\index{frontend::GenIr@{frontend::GenIr}!visitWhile@{visitWhile}}
+\index{visitWhile@{visitWhile}!frontend::GenIr@{frontend::GenIr}}
+\doxysubsubsection{\texorpdfstring{visitWhile()}{visitWhile()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1GenIr_aec3aca846c8c4dd54a26337ed6ae1ba3} 
+void frontend\+::\+Gen\+Ir\+::visit\+While (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classfrontend_1_1ast_1_1WhileStmt}{ast\+::\+While\+Stmt}} \&}]{while\+\_\+stmt}{, }\item[{\mbox{\hyperlink{classfrontend_1_1FuncEmitter}{Func\+Emitter}} \texorpdfstring{$\ast$}{*}}]{func\+Emitter}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/frontend/\mbox{\hyperlink{emit__ir_8hpp}{emit\+\_\+ir.\+hpp}}\item 
+src/frontend/\mbox{\hyperlink{emit__ir_8cpp}{emit\+\_\+ir.\+cpp}}\end{DoxyCompactItemize}

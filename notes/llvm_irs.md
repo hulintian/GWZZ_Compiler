@@ -37,7 +37,7 @@
 # Why need Phi instruction
 
 - answer by chatgpt
-
+- PHI node only in 
 ### **`phi` 指令 vs. 直接操作内存**
 LLVM IR 采用 **SSA（静态单赋值，Static Single Assignment）** 形式，这要求 **每个变量只能被赋值一次**。`phi` 指令是 SSA 形式下**合并不同控制流路径上的值**的机制，而内存操作（`load`/`store`）是最终的物理指令，用于实际的数据存取。
 

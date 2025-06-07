@@ -1,0 +1,35 @@
+\doxysection{src/backend/program.hpp File Reference}
+\hypertarget{program_8hpp}{}\label{program_8hpp}\index{src/backend/program.hpp@{src/backend/program.hpp}}
+{\ttfamily \#include $<$variant$>$}\newline
+{\ttfamily \#include $<$set$>$}\newline
+{\ttfamily \#include $<$queue$>$}\newline
+{\ttfamily \#include $<$list$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+set$>$}\newline
+{\ttfamily \#include "{}IR/\+IR.\+hpp"{}}\newline
+{\ttfamily \#include "{}common/regarch.\+hpp"{}}\newline
+{\ttfamily \#include "{}IR/loop\+\_\+analysis.\+hpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1StackObject}{backend\+::riscv\+::\+Stack\+Object}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1BasicBlock}{backend\+::riscv\+::\+Basic\+Block}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1Function}{backend\+::riscv\+::\+Function}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1GlobalObject}{backend\+::riscv\+::\+Global\+Object}}
+\item 
+class \mbox{\hyperlink{classbackend_1_1riscv_1_1Program}{backend\+::riscv\+::\+Program}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacebackend}{backend}}
+\item 
+namespace \mbox{\hyperlink{namespacebackend_1_1riscv}{backend\+::riscv}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespacebackend_1_1riscv_a28f05c288ec9d4bf2c21c0fcc22f7696}{backend\+::riscv\+::\+Reg\+Value}} = std\+::variant$<$int, std\+::string, \mbox{\hyperlink{classbackend_1_1riscv_1_1StackObject}{Stack\+Object}} \texorpdfstring{$\ast$}{*}$>$
+\end{DoxyCompactItemize}

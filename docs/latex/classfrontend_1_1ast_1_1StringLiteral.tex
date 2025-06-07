@@ -1,0 +1,78 @@
+\doxysection{frontend\+::ast\+::String\+Literal Class Reference}
+\hypertarget{classfrontend_1_1ast_1_1StringLiteral}{}\label{classfrontend_1_1ast_1_1StringLiteral}\index{frontend::ast::StringLiteral@{frontend::ast::StringLiteral}}
+
+
+{\ttfamily \#include $<$AST.\+hpp$>$}
+
+Inheritance diagram for frontend\+::ast\+::String\+Literal\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classfrontend_1_1ast_1_1StringLiteral}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classfrontend_1_1ast_1_1StringLiteral_a7793ef663b239a1198bb67f44475e4ce}{Value}} = std\+::string
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfrontend_1_1ast_1_1StringLiteral_af78688158f08ef100cce81882a9f36ca}{String\+Literal}} (std\+::string \mbox{\hyperlink{classfrontend_1_1ast_1_1StringLiteral_afcdfce9556fbe63e02d5b2c5beed6637}{value}})
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1StringLiteral_a0a7b8cfcfc1347ae80eea2212da5f727}{\texorpdfstring{$\sim$}{\string~}\+String\+Literal}} ()=default
+\item 
+const \mbox{\hyperlink{classfrontend_1_1ast_1_1StringLiteral_a7793ef663b239a1198bb67f44475e4ce}{Value}} \& \mbox{\hyperlink{classfrontend_1_1ast_1_1StringLiteral_afcdfce9556fbe63e02d5b2c5beed6637}{value}} () const
+\item 
+void \mbox{\hyperlink{classfrontend_1_1ast_1_1StringLiteral_a4af418e012e181bf11d0a20ca3c54590}{print}} (std\+::ostream \&out, unsigned level) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfrontend_1_1ast_1_1ASTNode}{frontend\+::ast\+::\+ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classfrontend_1_1ast_1_1ASTNode_aeebf803d00cd6d3210bbbc5838e791ed}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1StringLiteral_a7793ef663b239a1198bb67f44475e4ce}\index{frontend::ast::StringLiteral@{frontend::ast::StringLiteral}!Value@{Value}}
+\index{Value@{Value}!frontend::ast::StringLiteral@{frontend::ast::StringLiteral}}
+\doxysubsubsection{\texorpdfstring{Value}{Value}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1StringLiteral_a7793ef663b239a1198bb67f44475e4ce} 
+using \mbox{\hyperlink{classfrontend_1_1ast_1_1StringLiteral_a7793ef663b239a1198bb67f44475e4ce}{frontend\+::ast\+::\+String\+Literal\+::\+Value}} = std\+::string}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1StringLiteral_af78688158f08ef100cce81882a9f36ca}\index{frontend::ast::StringLiteral@{frontend::ast::StringLiteral}!StringLiteral@{StringLiteral}}
+\index{StringLiteral@{StringLiteral}!frontend::ast::StringLiteral@{frontend::ast::StringLiteral}}
+\doxysubsubsection{\texorpdfstring{StringLiteral()}{StringLiteral()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1StringLiteral_af78688158f08ef100cce81882a9f36ca} 
+frontend\+::ast\+::\+String\+Literal\+::\+String\+Literal (\begin{DoxyParamCaption}\item[{std\+::string}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1StringLiteral_a0a7b8cfcfc1347ae80eea2212da5f727}\index{frontend::ast::StringLiteral@{frontend::ast::StringLiteral}!````~StringLiteral@{\texorpdfstring{$\sim$}{\string~}StringLiteral}}
+\index{````~StringLiteral@{\texorpdfstring{$\sim$}{\string~}StringLiteral}!frontend::ast::StringLiteral@{frontend::ast::StringLiteral}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}StringLiteral()}{\string~StringLiteral()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1StringLiteral_a0a7b8cfcfc1347ae80eea2212da5f727} 
+virtual frontend\+::ast\+::\+String\+Literal\+::\texorpdfstring{$\sim$}{\string~}\+String\+Literal (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfrontend_1_1ast_1_1StringLiteral_a4af418e012e181bf11d0a20ca3c54590}\index{frontend::ast::StringLiteral@{frontend::ast::StringLiteral}!print@{print}}
+\index{print@{print}!frontend::ast::StringLiteral@{frontend::ast::StringLiteral}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1StringLiteral_a4af418e012e181bf11d0a20ca3c54590} 
+void String\+Literal\+::print (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out}{, }\item[{unsigned}]{level}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+\Hypertarget{classfrontend_1_1ast_1_1StringLiteral_afcdfce9556fbe63e02d5b2c5beed6637}\index{frontend::ast::StringLiteral@{frontend::ast::StringLiteral}!value@{value}}
+\index{value@{value}!frontend::ast::StringLiteral@{frontend::ast::StringLiteral}}
+\doxysubsubsection{\texorpdfstring{value()}{value()}}
+{\footnotesize\ttfamily \label{classfrontend_1_1ast_1_1StringLiteral_afcdfce9556fbe63e02d5b2c5beed6637} 
+const \mbox{\hyperlink{classfrontend_1_1ast_1_1StringLiteral_a7793ef663b239a1198bb67f44475e4ce}{Value}} \& frontend\+::ast\+::\+String\+Literal\+::value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/frontend/\mbox{\hyperlink{AST_8hpp}{AST.\+hpp}}\item 
+src/frontend/\mbox{\hyperlink{AST_8cpp}{AST.\+cpp}}\end{DoxyCompactItemize}

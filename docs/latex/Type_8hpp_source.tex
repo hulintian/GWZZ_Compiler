@@ -1,0 +1,132 @@
+\doxysection{Type.\+hpp}
+\hypertarget{Type_8hpp_source}{}\label{Type_8hpp_source}\index{src/IR/Type.hpp@{src/IR/Type.hpp}}
+\mbox{\hyperlink{Type_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ IR\ type\ }}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ contains\ VoidType,\ IntegerType,\ FloatType\ \ \ \ \ \ \ \ -\/-\/\ the\ type\ of\ insts\ }}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ ArrayType,\ PointerType\ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ LabelType\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/-\/\ the\ type\ of\ lables}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ FunctionType\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/-\/\ the\ func\ of\ function}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Module_8hpp}{IR/Module.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceir}{ir}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1Type}{Type}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{enum}\ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{TypeID}}\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a73d9277ff3c39666a8ada04ccb845f58}{VoidTypeID}}\ =\ 0,}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a7d0765aee478b7b25ee2a1f0e79e8b33}{FloatTypeID}},}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95af291364952b01020c5849b5366b9af98}{IntegerTypeID}},}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a55f7189c190425a2f7734a2e545e832b}{ArrayTypeID}},}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a8e77e67078ae07253e7a34e2cab21000}{PointerTypeID}},}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a3b5ce50e7aa6d440b7fae510c9551ff4}{FunctionTypeID}},}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95ab3157eff3d1d56b8c258e0867bc880fd}{LabelTypeID}},}
+\DoxyCodeLine{00025\ \ \ \ \ \};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classir_1_1Type_a7eec226cb6a2cd980990b37a106d81b7}{isVoidType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_id\ ==\ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a73d9277ff3c39666a8ada04ccb845f58}{VoidTypeID}};\ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classir_1_1Type_af1eeabb224443fbd278fb660b57a918b}{isFloatType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_id\ ==\ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a7d0765aee478b7b25ee2a1f0e79e8b33}{FloatTypeID}};\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classir_1_1Type_a4e71939e2f222bedf5cbbbf1ad9b2ba5}{isIntegerType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_id\ ==\ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95af291364952b01020c5849b5366b9af98}{IntegerTypeID}};\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ for\ bool\ type}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classir_1_1Type_a3df3d267f01dda3c4d9f0e5cf5d6396b}{isInteger1Type}}()\ \textcolor{keyword}{const}\ ;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ for\ array\ index}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classir_1_1Type_a95cf15a2207fad907d6dffb6beae8b32}{isInteger64Type}}()\ \textcolor{keyword}{const}\ ;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classir_1_1Type_ac4135908421687b0fd6578cc2f4d293b}{isArrayType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_id\ ==\ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a55f7189c190425a2f7734a2e545e832b}{ArrayTypeID}};\ \}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classir_1_1Type_aa78e690c6cbaf1edfd661f5aa9806c64}{isPointerType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_id\ ==\ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a8e77e67078ae07253e7a34e2cab21000}{PointerTypeID}};\ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classir_1_1Type_a1034ad015f4104dcec70e91a6082c9a3}{isLabelType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_id\ ==\ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95ab3157eff3d1d56b8c258e0867bc880fd}{LabelTypeID}};\ \}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classir_1_1Type_a2b44f4651564e233c5c224ab953fb0f0}{isFunctionType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_id\ ==\ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a3b5ce50e7aa6d440b7fae510c9551ff4}{FunctionTypeID}};\ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classir_1_1Type_a85bcf094f2f3b7ff9d36e52744fc1b1f}{is\_base\_type}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classir_1_1Type_af1eeabb224443fbd278fb660b57a918b}{isFloatType}}()\ ||\ \mbox{\hyperlink{classir_1_1Type_a4e71939e2f222bedf5cbbbf1ad9b2ba5}{isIntegerType}}()\ ;\ }
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classir_1_1Type_a1ff6d75a00bafb7216e78a997be283ca}{Type}}(\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{TypeID}}\ \textcolor{keywordtype}{id})\ :\ \_id(id)\ \{\}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ \mbox{\hyperlink{classir_1_1Type_a8d086c60a5d7f6921b1b0bbc1a8db73f}{get\_ptr\_element\_type}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ \mbox{\hyperlink{classir_1_1Type_a163b72a4925b26b11496426cfb53d2de}{get\_array\_element\_type}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{TypeID}}\ \mbox{\hyperlink{classir_1_1Type_acbe546407a1d6bc5c575655fde7c57f1}{get\_type\_id}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_id;\ \}}
+\DoxyCodeLine{00050\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{TypeID}}\ \_id;}
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{classir_1_1Module}{Module}}\ *\_m;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ point\ to\ module}}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ Derived\ type\ classes}}
+\DoxyCodeLine{00056\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1VoidType}{VoidType}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classir_1_1Type}{Type}}\ \{}
+\DoxyCodeLine{00057\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{classir_1_1VoidType_a06e5ec32920122c6d0308968a6c3f952}{VoidType}}()\ :\ \mbox{\hyperlink{classir_1_1Type}{Type}}(\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{TypeID}}::\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a73d9277ff3c39666a8ada04ccb845f58}{VoidTypeID}})\ \{\}}
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1FloatType}{FloatType}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classir_1_1Type}{Type}}\ \{}
+\DoxyCodeLine{00062\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{classir_1_1FloatType_a8c28e8e836057fbda23687fcee0718d8}{FloatType}}()\ :\ \mbox{\hyperlink{classir_1_1Type}{Type}}(\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{TypeID}}::\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a7d0765aee478b7b25ee2a1f0e79e8b33}{FloatTypeID}})\ \{\}}
+\DoxyCodeLine{00064\ \};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1IntegerType}{IntegerType}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classir_1_1Type}{Type}}\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ int\_bits;}
+\DoxyCodeLine{00068\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00069\ \ \ \ \ \mbox{\hyperlink{classir_1_1IntegerType_ae28b4cece82ba584f4381c4278634f45}{IntegerType}}(\textcolor{keywordtype}{unsigned}\ num\_bits)\ :\ \mbox{\hyperlink{classir_1_1Type}{Type}}(\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{TypeID}}::\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95af291364952b01020c5849b5366b9af98}{IntegerTypeID}}),\ int\_bits(num\_bits)\ \{\}}
+\DoxyCodeLine{00070\ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{classir_1_1IntegerType_ab220df25eddebc34d928676aeb0f5679}{get\_bits}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ int\_bits;\ \}}
+\DoxyCodeLine{00072\ \};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1ArrayType}{ArrayType}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classir_1_1Type}{Type}}\ \{}
+\DoxyCodeLine{00076\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{classir_1_1ArrayType_a353d00928b0889cf0e1f754c60ee5e30}{ArrayType}}(\mbox{\hyperlink{classir_1_1Type}{Type}}*\ elementType,\ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ base\_type,\ \textcolor{keywordtype}{unsigned}\ size)\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{classir_1_1Type}{Type}}(\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{TypeID}}::\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a55f7189c190425a2f7734a2e545e832b}{ArrayTypeID}}),\ \_elementType(elementType),\ \_base\_type(base\_type),\ \_size(size)\ \{\}}
+\DoxyCodeLine{00079\ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ aka\ get\ next\ dim}}
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ \mbox{\hyperlink{classir_1_1ArrayType_a2edbade64c5120fa8a4ce7130e683f87}{getElementType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_elementType;\ \}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//\ get\ base\ type}}
+\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ \mbox{\hyperlink{classir_1_1ArrayType_a360ce16de2771a996b647947b1d8f499}{getBaseType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_base\_type;\ \}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{classir_1_1ArrayType_a6f5bcbfd90c39ca4be5176eb0a9e71fa}{getSize}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_size;\ \}}
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ \mbox{\hyperlink{classir_1_1ArrayType_a61b873878b957ff819b0843f046e09b8}{get\_next\_dim}}()\textcolor{keyword}{\ const\ }\{\}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{classir_1_1ArrayType_abf7976972f8b213800c9e9cb20bdb786}{get\_dim\_size}}()\textcolor{keyword}{\ const\ }\{\}}
+\DoxyCodeLine{00088\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00089\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ \_elementType;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ elements\ }}
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ \_base\_type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ array's\ base\ type}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \_size;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ number\ of\ elements}}
+\DoxyCodeLine{00092\ \};}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1PointerType}{PointerType}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classir_1_1Type}{Type}}\ \{}
+\DoxyCodeLine{00095\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{classir_1_1PointerType_a862f2de383708d9904170fc429a708d2}{PointerType}}(\mbox{\hyperlink{classir_1_1Type}{Type}}*\ type)\ :\ \mbox{\hyperlink{classir_1_1Type}{Type}}(\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{TypeID}}::\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a8e77e67078ae07253e7a34e2cab21000}{PointerTypeID}}),\ \_pointeeType(type)\ \{\}}
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ \mbox{\hyperlink{classir_1_1PointerType_aa9db04d0bd1bfd7ceeafa56544f04247}{getPointeeType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_pointeeType;\ \}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ \_pointeeType;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ base\ type}}
+\DoxyCodeLine{00101\ \};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1LabelType}{LabelType}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classir_1_1Type}{Type}}\ \{}
+\DoxyCodeLine{00104\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{classir_1_1LabelType_a6e1e149ba406ee19348558268fe0f87e}{LabelType}}()\ :\ \mbox{\hyperlink{classir_1_1Type}{Type}}(\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{TypeID}}::\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95ab3157eff3d1d56b8c258e0867bc880fd}{LabelTypeID}})\ \{\}}
+\DoxyCodeLine{00106\ \};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classir_1_1FunctionType}{FunctionType}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classir_1_1Type}{Type}}\ \{}
+\DoxyCodeLine{00109\ private\ :}
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ \_ret\_type;}
+\DoxyCodeLine{00111\ \ \ \ \ std::vector<Type*>\ \_params;}
+\DoxyCodeLine{00112\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{classir_1_1FunctionType_a3556b12b653c191e8d90d7acce723590}{FunctionType}}(\mbox{\hyperlink{classir_1_1Type}{Type}}*\ ret,\ std::vector<Type*>\ args)\ :\ \mbox{\hyperlink{classir_1_1Type}{Type}}(\mbox{\hyperlink{classir_1_1Type}{Type}}::\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a3b5ce50e7aa6d440b7fae510c9551ff4}{FunctionTypeID}}),\ \_ret\_type(ret),\ \_params(std::move(args))\ \{\}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{classir_1_1FunctionType_a57bda7e2935f12bf88b8548f0ae76c12}{number\_of\_args}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_params.size();\ \}}
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}*\ \mbox{\hyperlink{classir_1_1FunctionType_a282d503a1a68f5b661d4560eacb17577}{get\_param\_type}}(\textcolor{keywordtype}{unsigned}\ i)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ assert(i\ <\ \mbox{\hyperlink{classir_1_1FunctionType_a57bda7e2935f12bf88b8548f0ae76c12}{number\_of\_args}}()\ \&\&\ \textcolor{stringliteral}{"{}Out\ of\ function's\ parameters\ range.\(\backslash\)n"{}});}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_params[i];}
+\DoxyCodeLine{00119\ \ \ \ \ \}}
+\DoxyCodeLine{00120\ \ \ \ \ std::vector<Type*>::iterator\ \mbox{\hyperlink{classir_1_1FunctionType_aa1b5f429b929a60b38daf5bb6bc08a41}{param\_begin}}()\ \ \{\ \textcolor{keywordflow}{return}\ \_params.begin();\ \}}
+\DoxyCodeLine{00121\ \ \ \ \ std::vector<Type*>::iterator\ \mbox{\hyperlink{classir_1_1FunctionType_a94d041094abdd609ed4bfc5aacc3523e}{param\_end}}()\ \ \ \ \{\ \textcolor{keywordflow}{return}\ \_params.end();\ \}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Type*>\ \&\mbox{\hyperlink{classir_1_1FunctionType_a2331a716722f10d5c9aa1407bb3a7264}{get\_params\_type}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_params;\ \}}
+\DoxyCodeLine{00123\ \ \ \ \ \mbox{\hyperlink{classir_1_1Type}{Type}}\ *\mbox{\hyperlink{classir_1_1FunctionType_a5b494676922c8dd80e9728f5ab309420}{get\_return\_type}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \_ret\_type;\ \}}
+\DoxyCodeLine{00124\ \};}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \}}
+
+\end{DoxyCode}

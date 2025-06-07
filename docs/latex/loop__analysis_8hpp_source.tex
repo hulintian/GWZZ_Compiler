@@ -1,0 +1,266 @@
+\doxysection{loop\+\_\+analysis.\+hpp}
+\hypertarget{loop__analysis_8hpp_source}{}\label{loop__analysis_8hpp_source}\index{src/IR/loop\_analysis.hpp@{src/IR/loop\_analysis.hpp}}
+\mbox{\hyperlink{loop__analysis_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{IR_8hpp}{IR/IR.hpp}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{CFG_8hpp}{IR/CFG.hpp}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{dominator__tree_8hpp}{IR/dominator\_tree.hpp}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{use__def__analysis_8hpp}{IR/use\_def\_analysis.hpp}}"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacemidend}{midend}}\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmidend_1_1Loop}{Loop}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *\mbox{\hyperlink{classmidend_1_1Loop_a2f1c3d3fd8196161ce29b6c64053d4e6}{header\_}};\ \textcolor{comment}{//\ NOTE:\ 目前针对同一个header只有一个loop，不考虑嵌套的情况}}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1Loop}{Loop}}\ *\mbox{\hyperlink{classmidend_1_1Loop_a7b2ca1aa2d8598102193b3c27b1dc141}{parent\_}};}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1Loop}{Loop}}\ *\mbox{\hyperlink{classmidend_1_1Loop_aa6e2296f9d1dac9ea5c33a469672693b}{child\_}};}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classmidend_1_1Loop_a6ac8478c3204c6eda28df0e7edad6d48}{depth\_}};}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classmidend_1_1Loop_a83711ac4a826b54d7a69bae7bd0f2735}{unrolled}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1Loop_a49ff8c1fa422084447ddb621866121bf}{Loop}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *\mbox{\hyperlink{classmidend_1_1Loop_a2f1c3d3fd8196161ce29b6c64053d4e6}{header\_}})\ :\ \mbox{\hyperlink{classmidend_1_1Loop_a2f1c3d3fd8196161ce29b6c64053d4e6}{header\_}}(\mbox{\hyperlink{classmidend_1_1Loop_a2f1c3d3fd8196161ce29b6c64053d4e6}{header\_}}),\ \mbox{\hyperlink{classmidend_1_1Loop_a7b2ca1aa2d8598102193b3c27b1dc141}{parent\_}}(nullptr),\ \mbox{\hyperlink{classmidend_1_1Loop_aa6e2296f9d1dac9ea5c33a469672693b}{child\_}}(nullptr),\ \mbox{\hyperlink{classmidend_1_1Loop_a6ac8478c3204c6eda28df0e7edad6d48}{depth\_}}(-\/1)\ \{\}}
+\DoxyCodeLine{00019\ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ Simple\ loop:\ one\ exit,\ one\ back\ edge\ to\ entry\ (and\ only\ one\ exit\_prev),\ cond\_var\ appear\ twice\ (phi,\ update)}}
+\DoxyCodeLine{00022\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo}{SimpleLoopInfo}}\ \{}
+\DoxyCodeLine{00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_ac2af8ff590a1a4bd07d242bf632b18ac}{SimpleLoopInfo}}(\textcolor{keywordtype}{int}\ loop\_t,\ \textcolor{keywordtype}{int}\ inst\_c):\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_aa017ba35496dec6fc135e815d3e3bb3d}{loop\_type}}(loop\_t),\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_aafbb54da2af9ce793780ac5719c5fa82}{inst\_cnt}}(inst\_c)\ \{\};}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_ab16fe3897fde5c76559788c4b44d2ac0}{valid}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_aa017ba35496dec6fc135e815d3e3bb3d}{loop\_type}};\ \textcolor{comment}{//\ 0:\ nothing\ special;\ 1:\ i\ =\ c0,\ i\ </<=\ c1,\ i++;\ 2:\ i\ =\ c0,\ i\ </<=\ n,\ i++}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a652216759a301d855507e11230a244f7}{start}}\ =\ 0;\ \textcolor{comment}{//\ const\ start}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_ac6ee9f6f7bc554d07fbddf9452ce6fd2}{step}};\ \textcolor{comment}{//\ const\ step}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_afbda9c1555abfe25890942be88a6fa89}{end}};\ \textcolor{comment}{//\ const\ end,\ available\ when\ type\ =\ 1}}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a650d4e9d7ae6c0d5425917086114f309}{end\_reg}};}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a8781c591eef6f8547d8e9ef134c6ab2e}{new\_end\_reg}};}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_aebb05cc7a733340aa16e85aa0d84c9b9}{cond\_reg}};}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_ae595e18fcedc253668d0fbe0d3a4d4f0}{upd\_reg}};\ \textcolor{comment}{//\ +1\ 后结果}}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a6ef6af3fc0890ec6000df6ec1cbd1cc1}{imm\_reg}};\ \textcolor{comment}{//\ 最开始的\ i}}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a34512970e1a79eed25faed0393aa97fd}{for\_last\_bb}};\ \textcolor{comment}{//\ 用来\ +5}}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_ab53f132784943b61ef1e9364b3b28152}{cmp\_reg}};}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_ab09ca6e2c464fe373765427c9c01909f}{indvar\_reg}};\ \textcolor{comment}{//\ ind\ var\ after\ updated\ in\ loop}}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_ac0c4849aba962ad95f9997caeadbebb4}{new\_cmp\_reg}};\ \textcolor{comment}{//\ +5\ 后的比较}}
+\DoxyCodeLine{00039\ \ \ \ \ BinaryOp\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a4063c60a8168d8fb457c6ba3eed3a2ab}{cond\_op}};}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir::instruction::Binary}}\ *\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_abc5bef334a77bda9b31d916bdac792cc}{into\_cond}};\ \textcolor{comment}{//\ comparation\ at\ init,\ outside\ loop}}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Branch}{ir::instruction::Branch}}\ *\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a488d1019acda576eabaf3cb9412c5bcb}{into\_br}};\ \textcolor{comment}{//\ br\ at\ init,\ outside\ loop}}
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir::instruction::Binary}}\ *\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_ac2d3862652ed7d13140e3e1eb06a57ef}{upd}};}
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir::instruction::Binary}}\ *\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_ab9f7c1f0aa9f008c878749691b714e09}{cmp}};}
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1CondBranch}{ir::instruction::CondBranch}}\ *\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a1bec0c99af859035010adb42507c82f8}{brch}};}
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadImm4}{ir::instruction::LoadImm4}}\ *\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a49f29150392dc6a0d0f56762dded26e4}{start\_imm}};}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_aafbb54da2af9ce793780ac5719c5fa82}{inst\_cnt}};}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a836fe7c74c390a1f64f343ae86b614d5}{exit\_prev}};}
+\DoxyCodeLine{00048\ \ \ \ \ std::vector<ir::BasicBlock*>\ \mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a0c7e3f1cf416aaacc17c5c00f5066c79}{exit\_prevs}};}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a49f7e2a8680171506693e9e6f95064cb}{exit}};}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_aef2c29be2dba2f5f8839f20e3b02e49e}{into\_entry}};}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a2284ba3f5668ecbf25cc27311cc81219}{new\_into\_entry}};}
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1SimpleLoopInfo_a71ee8795b5028e769d3261ccaec8b9dd}{header}};}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo}{InterchangeLoopInfo}}\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a2a93182cf5c3be3155e914ef0013750a}{valid}};}
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_ac4ff0537fb272b8b85755eb4b71d456a}{entry}};}
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_abffb937adc169c7fb799ffea1a6cba06}{exit\_prev}};}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a8ccfab131a097793de97376f0ebde90b}{exit}};}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Phi}{ir::instruction::Phi}}\ *\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a2f6a92ec9c4758988d5eb67a0f873f84}{ind\_phi}};}
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir::instruction::Binary}}\ *\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a1b7206a4854f8136f97cc8738666deb1}{ind\_upd}};}
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir::instruction::Binary}}\ *\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a5a6c67689d8a67aab631acf84228347d}{ind\_cond}};}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1CondBranch}{ir::instruction::CondBranch}}\ *\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_aa825e05bdbc8e1192f7082ee2e20ef1e}{ind\_br}};}
+\DoxyCodeLine{00064\ \};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{using\ }\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}};}
+\DoxyCodeLine{00067\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmidend_1_1ParallelLoopInfo}{ParallelLoopInfo}}\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a36362fdd6c55f36074597a2548376473}{valid}};}
+\DoxyCodeLine{00069\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a16015ec0f0c2e016544563387965bbab}{start\_reg}};\ \textcolor{comment}{//\ reg\ start}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a570a996ec0806cb16d6f3db59bba181b}{step}};\ \textcolor{comment}{//\ const\ step}}
+\DoxyCodeLine{00071\ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_aa8aa5bc542187ec00318b851f6f4c8c1}{end\_reg}};\ \textcolor{comment}{//\ reg\ end}}
+\DoxyCodeLine{00072\ \ \ \ \ BinaryOp\ \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a181a2bf63f79ed81f3c4ee5874d11680}{bop}};}
+\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_ad16b8eb88c72b46326880d151a715123}{into\_entry}};}
+\DoxyCodeLine{00074\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_abf6677b5f8e4c3c19d82e5bc7c21b760}{entry}};}
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_ac4c38fcb1de0a3d00918b649c17ebd79}{exit\_prev}};}
+\DoxyCodeLine{00076\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{BasicBlock}}\ *\mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a2241d5e7b141e759b920d66e58bb6640}{exit}};}
+\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Phi}{ir::instruction::Phi}}\ *\mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a1579e4a01fe346ed4e1b9bd8c36890a0}{entry\_ind\_phi}};}
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir::instruction::Binary}}\ *\mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a3372628c9be882d67c19ed5fd6d27af7}{cond\_cmp}};}
+\DoxyCodeLine{00079\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{ir::instruction::Binary}}\ *\mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a9bf0e548bb7ace31665891ce9562cc9b}{binary\_upd}};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a8e42b186cb43545805321d9897024af2}{profitable}}(\mbox{\hyperlink{classmidend_1_1Loop}{Loop}}\ *loop,\ \textcolor{keyword}{const}\ std::unordered\_set<BasicBlock\ *>\ \&loop\_bbs,\ \mbox{\hyperlink{classmidend_1_1UseDefAnalysis}{UseDefAnalysis}}*\ uda\_)\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (loop-\/>\mbox{\hyperlink{classmidend_1_1Loop_aa6e2296f9d1dac9ea5c33a469672693b}{child\_}}\ ==\ \textcolor{keyword}{nullptr})\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ don't\ parallel\ single\ layer\ loop}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (loop-\/>header\_-\/>get\_parent()-\/>get\_name().length()\ !=\ 2)\ return\ false;}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (loop-\/>header\_-\/>get\_parent()-\/>get\_name()[0]\ !=\ 'm')\ return\ false;}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (loop-\/>header\_-\/>get\_parent()-\/>param\_size()\ !=\ 4)\ return\ false;}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ wr\_perpendicular\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ std::unordered\_set<Temp*>\ write\_set,\ read\_set;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ bb\ :\ loop\_bbs)\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}check\ profitable【loop\ bb】"{};\ bb-\/>print(std::cout);}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&insn\ :\ *bb-\/>get\_insts())\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TypeCase\ (load,\ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Load}{ir::instruction::Load}}\ *,\ insn)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!uda\_-\/>\mbox{\hyperlink{classmidend_1_1UseDefAnalysis_a3c9f03f1091d5c4cc8804d4ccef80d68}{get\_defsets}}().count(load-\/>get\_addr()))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TypeCase\ (gep,\ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1ElementPtr}{ir::instruction::ElementPtr}}\ *,\ *uda\_-\/>\mbox{\hyperlink{classmidend_1_1UseDefAnalysis_ae03777c5deda5a17cfd80b959bc4abbd}{get\_defset}}(load-\/>get\_addr()).begin())\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ read\_set.insert(gep-\/>get\_base());}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ TypeCase(loadaddr,\ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr}{ir::instruction::LoadAddr}}\ *,\ *uda\_-\/>\mbox{\hyperlink{classmidend_1_1UseDefAnalysis_ae03777c5deda5a17cfd80b959bc4abbd}{get\_defset}}(load-\/>get\_addr()).begin())\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ read\_set.insert(loadaddr-\/>get\_addr());}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TypeCase\ (store,\ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Store}{ir::instruction::Store}}\ *,\ insn)\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!uda\_-\/>\mbox{\hyperlink{classmidend_1_1UseDefAnalysis_a3c9f03f1091d5c4cc8804d4ccef80d68}{get\_defsets}}().count(store-\/>get\_addr()))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TypeCase\ (gep,\ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1ElementPtr}{ir::instruction::ElementPtr}}\ *,\ *uda\_-\/>\mbox{\hyperlink{classmidend_1_1UseDefAnalysis_ae03777c5deda5a17cfd80b959bc4abbd}{get\_defset}}(store-\/>get\_addr()).begin())\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ write\_set.insert(gep-\/>get\_base());}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ r\ :\ gep-\/>get\_indices())\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (uda\_-\/>\mbox{\hyperlink{classmidend_1_1UseDefAnalysis_a3c9f03f1091d5c4cc8804d4ccef80d68}{get\_defsets}}().count(r))\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TypeCase\ (ld,\ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Load}{ir::instruction::Load}}\ *,\ *uda\_-\/>\mbox{\hyperlink{classmidend_1_1UseDefAnalysis_ae03777c5deda5a17cfd80b959bc4abbd}{get\_defset}}(r).begin())\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ indirect\ index}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ TypeCase\ (loadaddr,\ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr}{ir::instruction::LoadAddr}}\ *,\ *uda\_-\/>\mbox{\hyperlink{classmidend_1_1UseDefAnalysis_ae03777c5deda5a17cfd80b959bc4abbd}{get\_defset}}(store-\/>get\_addr()).begin())\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ write\_set.insert(loadaddr-\/>get\_addr());}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TypeCase\ (call,\ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Call}{ir::instruction::Call}}\ *,\ insn)\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ false;}}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (program-\/>functions.count(call-\/>getfunc())\ \&\&\ program-\/>functions.at(call-\/>getfunc()).is\_only\_load\_param())\ \{}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ auto\ \&types\ =\ program-\/>functions.at(call-\/>func).sig.param\_types;}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ int\ n\_params\ =\ types.size();}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ for\ (int\ i\ =\ 0;\ i\ <\ n\_params;\ i++)\ \{}}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (types[i].is\_array())\ \{}}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ read\_set.insert(call-\/>args[i]);}}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \}}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \}}}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ w\ :\ write\_set)\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (read\_set.count(w))\ \{\ std::cout\ <<\ \textcolor{stringliteral}{"{}read\ write\ conflict\(\backslash\)n"{}};\ wr\_perpendicular\ =\ \textcolor{keyword}{false};\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (wr\_perpendicular)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}*\ ind\_var\ =\ \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a1579e4a01fe346ed4e1b9bd8c36890a0}{entry\_ind\_phi}}-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Phi_a9e800000eeca91ab6db0a30bc6564748}{get\_dst}}();}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ use\_i\ :\ uda\_-\/>\mbox{\hyperlink{classmidend_1_1UseDefAnalysis_a56cabcd839055388dbd2775dec7e169d}{get\_useset}}(ind\_var))\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (use\_i\ ==\ \mbox{\hyperlink{structmidend_1_1ParallelLoopInfo_a9bf0e548bb7ace31665891ce9562cc9b}{binary\_upd}})\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ TypeCase\ (dummy,\ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1ElementPtr}{ir::instruction::ElementPtr}}\ *,\ use\_i)\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ i\ only\ used\ for\ array\ index}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00140\ \ \ \ \ \}}
+\DoxyCodeLine{00141\ \};}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmidend_1_1LoopAnalysis}{LoopAnalysis}}\ \{}
+\DoxyCodeLine{00144\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00145\ \ \ \ \ std::unordered\_map<ir::BasicBlock\ *,\ Loop\ *>\ loop\_map\_;}
+\DoxyCodeLine{00146\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{ir::Function}}\ *func\_;}
+\DoxyCodeLine{00147\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1CFG}{CFG}}\ *cfg\_;}
+\DoxyCodeLine{00148\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1DominatorTree__}{DominatorTree\_}}\ *dom\_tree\_;}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{void}\ build\_loop();}
+\DoxyCodeLine{00150\ \ \ \ \ }
+\DoxyCodeLine{00151\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00152\ \ \ \ \ }
+\DoxyCodeLine{00153\ \ \ \ \ std::vector<Loop*>\ \mbox{\hyperlink{classmidend_1_1LoopAnalysis_aca879af37ac6e79c0a991de72ad57315}{loops}};}
+\DoxyCodeLine{00154\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1Loop}{Loop}}\ *\mbox{\hyperlink{classmidend_1_1LoopAnalysis_a30dec42f664ddde06dda2043179d88f2}{get\_loop}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *bb)\ \{}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (loop\_map\_.find(bb)\ !=\ loop\_map\_.end())\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ loop\_map\_[bb];}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00159\ \ \ \ \ \}}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmidend_1_1LoopAnalysis_a87cb5e5a688a7a85366b94e11f3c0eb8}{set\_loop}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *bb,\ \mbox{\hyperlink{classmidend_1_1Loop}{Loop}}*\ loop)\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ loop\_map\_[bb]\ =\ loop;}
+\DoxyCodeLine{00163\ \ \ \ \ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classmidend_1_1LoopAnalysis_a753a59f1dd8daea8939cbcfd677e2080}{get\_loop\_depth}}(\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *bb)\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (loop\_map\_.find(bb)\ !=\ loop\_map\_.end())\ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ loop\_map\_[bb]-\/>depth\_;}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00170\ \ \ \ \ \}}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1LoopAnalysis_ac06259ce801cf6e045f067f8954b134b}{\string~LoopAnalysis}}()\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ dom\_tree\_;}
+\DoxyCodeLine{00174\ \ \ \ \ \}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1LoopAnalysis_abdabbbf6e05d8963ad333a011f88f4c4}{LoopAnalysis}}(\mbox{\hyperlink{classmidend_1_1CFG}{CFG}}\ *cfg)\ :\ cfg\_(cfg)\ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ func\_\ =\ cfg-\/>\mbox{\hyperlink{classmidend_1_1CFG_a60ab6cf0b1abb1d445ec5a6e0d13493d}{get\_func}}();}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ dom\_tree\_\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classmidend_1_1DominatorTree__}{DominatorTree\_}}(cfg);}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ build\_loop();}
+\DoxyCodeLine{00180\ \ \ \ \ \}}
+\DoxyCodeLine{00181\ \};}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo}{TightlyNestedLoopInfo}}\ \{}
+\DoxyCodeLine{00184\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_adc44813938873daaedd441a5274ec6ee}{valid}};}
+\DoxyCodeLine{00186\ \ \ \ \ \mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo}{InterchangeLoopInfo}}\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_a752aeb671c2575a1c6c3ec00f430be2b}{inner}},\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afa5755e6c0816d0735b20282ab14d577}{outer}};}
+\DoxyCodeLine{00187\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1CFG}{CFG}}\ *\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_ae7e8fcac45555544a926b15b0f05658c}{cfg\_}};}
+\DoxyCodeLine{00188\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1DominatorTree__}{DominatorTree\_}}\ *\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afec099bfe71fd1bd9e42d622b3cb87b1}{dom\_tree\_}};}
+\DoxyCodeLine{00189\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1LoopAnalysis}{LoopAnalysis}}\ *\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_ac1ccc0a8729f5d86e4f3786b3bf2aae5}{la\_}};}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_a09018ebf9a219c8c89a0357f3a33fdf1}{TightlyNestedLoopInfo}}(\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo}{InterchangeLoopInfo}}\ \_inner,\ \mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo}{InterchangeLoopInfo}}\ \_outer,\ \mbox{\hyperlink{classmidend_1_1LoopAnalysis}{LoopAnalysis}}*\ la,\ \mbox{\hyperlink{classmidend_1_1DominatorTree__}{DominatorTree\_}}*\ dom,\ \mbox{\hyperlink{classmidend_1_1CFG}{CFG}}\ *\ cfg)\ :\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_adc44813938873daaedd441a5274ec6ee}{valid}}(false),\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_a752aeb671c2575a1c6c3ec00f430be2b}{inner}}(\_inner),\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afa5755e6c0816d0735b20282ab14d577}{outer}}(\_outer),\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_ac1ccc0a8729f5d86e4f3786b3bf2aae5}{la\_}}(la),\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afec099bfe71fd1bd9e42d622b3cb87b1}{dom\_tree\_}}(dom),\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_ae7e8fcac45555544a926b15b0f05658c}{cfg\_}}(cfg)\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_a752aeb671c2575a1c6c3ec00f430be2b}{inner}}.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a2a93182cf5c3be3155e914ef0013750a}{valid}}\ ||\ !\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afa5755e6c0816d0735b20282ab14d577}{outer}}.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a2a93182cf5c3be3155e914ef0013750a}{valid}})\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}get\ tightly\ nested\ loop\ info\(\backslash\)n"{};}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ check\ condition\ for\ tightly\ nested\ loops}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ if\ (\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afec099bfe71fd1bd9e42d622b3cb87b1}{dom\_tree\_}}-\/>\mbox{\hyperlink{classmidend_1_1DominatorTree___a2f86a6a0b39a368b5d7fce67899e7045}{get\_idom}}(\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_a752aeb671c2575a1c6c3ec00f430be2b}{inner}}.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_ac4ff0537fb272b8b85755eb4b71d456a}{entry}})\ !=\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afa5755e6c0816d0735b20282ab14d577}{outer}}.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_ac4ff0537fb272b8b85755eb4b71d456a}{entry}})\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ if\ (\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afa5755e6c0816d0735b20282ab14d577}{outer}}.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_abffb937adc169c7fb799ffea1a6cba06}{exit\_prev}}\ !=\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_a752aeb671c2575a1c6c3ec00f430be2b}{inner}}.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a8ccfab131a097793de97376f0ebde90b}{exit}})\ \textcolor{keywordflow}{return};\ }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}【outer.entry】"{};\ (outer.entry)-\/>print(std::cout);}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ ((*outer.entry-\/>get\_instructions()).size()\ !=\ 2)\ return;\ //\ phi\ +\ br}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ ((*outer.entry-\/>get\_instructions()).front()\ !=\ outer.ind\_phi)\ \{\ std::cout\ <<\ "{}case\ 3\(\backslash\)n"{};\ return;\ \}}}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&insns\ =\ *\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afa5755e6c0816d0735b20282ab14d577}{outer}}.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_abffb937adc169c7fb799ffea1a6cba06}{exit\_prev}}-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock_a04f2fee7699557f893c29e8fee3160e3}{get\_insts}}();}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}【outer.exit\_prev】"{};\ (outer.exit\_prev)-\/>print(std::cout);}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (insns.size()\ !=\ 3)\ return;\ //\ upd\ +\ cmp\ +\ br}}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ find\_inst\ =\ [\&insns](\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{ir::Instruction}}\ *inst)\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ for\ (auto\ \&insn\ :\ insns)\ \{}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ (insn\ ==\ inst)\ return\ true;}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!find\_inst(\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afa5755e6c0816d0735b20282ab14d577}{outer}}.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a1b7206a4854f8136f97cc8738666deb1}{ind\_upd}}))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ if\ (!find\_inst(\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afa5755e6c0816d0735b20282ab14d577}{outer}}.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a5a6c67689d8a67aab631acf84228347d}{ind\_cond}}))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ if\ (!find\_inst(\mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_afa5755e6c0816d0735b20282ab14d577}{outer}}.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_aa825e05bdbc8e1192f7082ee2e20ef1e}{ind\_br}}))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_adc44813938873daaedd441a5274ec6ee}{valid}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00213\ \ \ \ \ \}}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classmidend_1_1TightlyNestedLoopInfo_a70e8f6e579745d09b0d50d6952dc6626}{profitable}}(\mbox{\hyperlink{classmidend_1_1Loop}{Loop}}\ *inner\_loop)\ \{\ \textcolor{comment}{//\ detect\ a[j][i]\ and\ no\ a[i][j]}}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ in\_loop\ =\ [inner\_loop](\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{ir::BasicBlock}}\ *b,\ \mbox{\hyperlink{classmidend_1_1LoopAnalysis}{LoopAnalysis}}*\ la\_)\ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmidend_1_1Loop}{Loop}}\ *l\ =\ la\_-\/>\mbox{\hyperlink{classmidend_1_1LoopAnalysis_a30dec42f664ddde06dda2043179d88f2}{get\_loop}}(b);}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (l\ !=\ \textcolor{keyword}{nullptr}\ \&\&\ l\ !=\ inner\_loop)\ \{}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\ =\ l-\/>\mbox{\hyperlink{classmidend_1_1Loop_a7b2ca1aa2d8598102193b3c27b1dc141}{parent\_}};}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ l\ ==\ inner\_loop;}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ std::vector<ir::BasicBlock\ *>\ stack;}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ std::unordered\_set<ir::BasicBlock\ *>\ loop\_bbs;}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ stack.push\_back(inner\_loop-\/>\mbox{\hyperlink{classmidend_1_1Loop_a2f1c3d3fd8196161ce29b6c64053d4e6}{header\_}});}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}check\ profitable\(\backslash\)n"{};}}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (stack.size())\ \{}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ bb\ =\ stack.back();}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ stack.pop\_back();}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (in\_loop(bb,\ la\_))\ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ loop\_bbs.insert(bb);}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ each\ :\ dom\_tree\_-\/>\mbox{\hyperlink{classmidend_1_1DominatorTree___abdefe77202ff2710b48ecd29f63b5e6c}{get\_dominate}}(bb))\ \{}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stack.push\_back(each);}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}got\ loop\ bbs\(\backslash\)n"{};}}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ order\_found\ =\ \textcolor{keyword}{false},\ reverse\_found\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTemp}{Temp}}\ *reg\_i\ =\ outer.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a2f6a92ec9c4758988d5eb67a0f873f84}{ind\_phi}}-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Phi_a9e800000eeca91ab6db0a30bc6564748}{get\_dst}}(),\ *reg\_j\ =\ inner.\mbox{\hyperlink{structmidend_1_1InterchangeLoopInfo_a2f6a92ec9c4758988d5eb67a0f873f84}{ind\_phi}}-\/>\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Phi_a9e800000eeca91ab6db0a30bc6564748}{get\_dst}}();}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}【outer.ind\_phi】"{};\ (outer.ind\_phi)-\/>print(std::cout);}}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}【inner.ind\_phi】"{};\ (inner.ind\_phi)-\/>print(std::cout);}}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&bb\ :\ loop\_bbs)\ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}【loop\ bb】"{};\ bb-\/>print(std::cout);}}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&insn\ :\ *bb-\/>get\_insts())\ \{}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TypeCase\ (gep,\ \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1ElementPtr}{ir::instruction::ElementPtr}}\ *,\ insn)\ \{}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gep-\/>get\_indices().size()\ ==\ 2)\ \{}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gep-\/>get\_indices()[0]\ ==\ reg\_i\ \&\&\ gep-\/>get\_indices()[1]\ ==\ reg\_j)\ order\_found\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gep-\/>get\_indices()[0]\ ==\ reg\_j\ \&\&\ gep-\/>get\_indices()[1]\ ==\ reg\_i)\ reverse\_found\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (order\_found)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!reverse\_found)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00256\ \ \ \ \ \}}
+\DoxyCodeLine{00257\ \};}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \}\ \textcolor{comment}{//\ namespace\ middleend}}
+
+\end{DoxyCode}

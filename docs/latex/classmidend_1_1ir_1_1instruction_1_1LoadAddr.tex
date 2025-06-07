@@ -1,0 +1,167 @@
+\doxysection{midend\+::ir\+::instruction\+::Load\+Addr Class Reference}
+\hypertarget{classmidend_1_1ir_1_1instruction_1_1LoadAddr}{}\label{classmidend_1_1ir_1_1instruction_1_1LoadAddr}\index{midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}}
+
+
+{\ttfamily \#include $<$IR.\+hpp$>$}
+
+Inheritance diagram for midend\+::ir\+::instruction\+::Load\+Addr\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classmidend_1_1ir_1_1instruction_1_1LoadAddr}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr_a6e345a05a729bfaa9ba4ddf2f3798963}{Load\+Addr}} ()=default
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr_ab51465fb623b846422bddce7df61100d}{Load\+Addr}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}addr, std\+::string name, Type type)
+\item 
+std\+::string \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr_acd01253ce09d57427776035c6d9aeb11}{to\+\_\+str}} ()
+\item 
+std\+::string \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr_abed04bab2d9dd10a2022707b04ed5205}{to\+\_\+llvm\+\_\+str}} (int \&\mbox{\hyperlink{namespacemidend_1_1ir_1_1instruction_ab9fb987835433d315e4dfbe8451acfdd}{llvm\+\_\+temp\+\_\+cnt}})
+\item 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr_adc2983f55f5619f8b79182a74f0bd546}{get\+\_\+addr}} () const
+\item 
+std\+::string \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr_ad90a07f5998232100526ebe6756872db}{get\+\_\+name}} () const
+\item 
+bool \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr_ae8d7c90c7b09abe003943114fcb49f57}{is\+\_\+output\+\_\+inst}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{midend\+::ir\+::\+Instruction}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a8a0b01b018238873fc79e365ee4b6dea}{Instruction}} ()=default
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_ab4e99b07926159c92d757749943616dc}{Instruction}} (\mbox{\hyperlink{namespacemidend_1_1ir_ad972506a7a5910b6900b17a78e03bb0f}{IRInst\+Kind}} inst\+\_\+kind, const std\+::vector$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} $>$ \&dsts, const std\+::vector$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} $>$ \&srcs)
+\item 
+\mbox{\hyperlink{namespacemidend_1_1ir_ad972506a7a5910b6900b17a78e03bb0f}{IRInst\+Kind}} \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_ac01ebd0c4a4d3fa7e88d16fe387da415}{get\+\_\+inst\+\_\+kind}} () const
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a242e2cc4312718762cfc373c3ce22c8e}{get\+\_\+parent}} () const
+\item 
+void \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a5efd03ef4d8475322197253c518594b3}{set\+\_\+parent}} (\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*}parent)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a880bbc5f13ce32f214ea366318cf5bfe}{get\+\_\+dst}} ()
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a41e762496339175a3ca8c1f422ef270c}{get\+\_\+src}} ()
+\item 
+void \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a8af8e911e7c9d880753721371f3bda1e}{print}} (std\+::ostream \&out)
+\item 
+void \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_abe42bca38c2be221da2b19745c6aaf90}{change\+\_\+use}} (\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}old\+\_\+temp, \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}new\+\_\+temp)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classmidend_1_1ir_1_1Value}{midend\+::ir\+::\+Value}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Value_a52b0602cd827b9d82a032ffdf74ac709}{Value}} ()=default
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1Value_ae03f314605824bd7ac262cbf2259e883}{Value}} (\mbox{\hyperlink{namespacemidend_1_1ir_aa73c5e4a21c24ac9fb1f853756fda366}{IRValue\+Type}} type, const std\+::string \&name="{}"{})
+\item 
+std\+::string \mbox{\hyperlink{classmidend_1_1ir_1_1Value_a4ebdb3727fa2b65c1f61b1cd34aa3fd0}{to\+\_\+str}} ()
+\item 
+\mbox{\hyperlink{namespacemidend_1_1ir_aa73c5e4a21c24ac9fb1f853756fda366}{IRValue\+Type}} \mbox{\hyperlink{classmidend_1_1ir_1_1Value_a2886bd601235c200b2d91c949ff50818}{get\+\_\+type}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{classmidend_1_1ir_1_1Value_a52f8443e79ae8c940c8fa3e278ba97b7}{get\+\_\+name}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Type \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr_a53ca171debe1601521c37005ae72afeb}{type\+\_\+}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr_a46644e343a296a37ada3eb4a3d32122d}{name\+\_\+}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{midend\+::ir\+::\+Instruction}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{Basic\+Block}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a58756e7cad606d2fae32373f508fa3cb}{\+\_\+parent}}
+\item 
+\mbox{\hyperlink{namespacemidend_1_1ir_ad972506a7a5910b6900b17a78e03bb0f}{IRInst\+Kind}} \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_ab4bbbde80e237222a472e9510f706bd4}{\+\_\+inst\+\_\+kind}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a9a5e6e1bd6be00b3d8382c20929ead75}{\+\_\+dsts}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a5960a6abe1ff924147fa73298707f6a9}{\+\_\+srcs}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classmidend_1_1ir_1_1Value}{midend\+::ir\+::\+Value}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacemidend_1_1ir_aa73c5e4a21c24ac9fb1f853756fda366}{IRValue\+Type}} \mbox{\hyperlink{classmidend_1_1ir_1_1Value_ac1b2c6677b8c57ec33fdcf06d1141032}{\+\_\+type}}
+\item 
+std\+::string \mbox{\hyperlink{classmidend_1_1ir_1_1Value_af89329fc2bc652a1cb3dfd7d529c5ca8}{\+\_\+name}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classmidend_1_1ir_1_1instruction_1_1LoadAddr_a6e345a05a729bfaa9ba4ddf2f3798963}\index{midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}!LoadAddr@{LoadAddr}}
+\index{LoadAddr@{LoadAddr}!midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}}
+\doxysubsubsection{\texorpdfstring{LoadAddr()}{LoadAddr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1instruction_1_1LoadAddr_a6e345a05a729bfaa9ba4ddf2f3798963} 
+midend\+::ir\+::instruction\+::\+Load\+Addr\+::\+Load\+Addr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [default]}}
+
+\Hypertarget{classmidend_1_1ir_1_1instruction_1_1LoadAddr_ab51465fb623b846422bddce7df61100d}\index{midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}!LoadAddr@{LoadAddr}}
+\index{LoadAddr@{LoadAddr}!midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}}
+\doxysubsubsection{\texorpdfstring{LoadAddr()}{LoadAddr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1instruction_1_1LoadAddr_ab51465fb623b846422bddce7df61100d} 
+midend\+::ir\+::instruction\+::\+Load\+Addr\+::\+Load\+Addr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*}}]{addr}{, }\item[{std\+::string}]{name}{, }\item[{Type}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classmidend_1_1ir_1_1instruction_1_1LoadAddr_adc2983f55f5619f8b79182a74f0bd546}\index{midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}!get\_addr@{get\_addr}}
+\index{get\_addr@{get\_addr}!midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}}
+\doxysubsubsection{\texorpdfstring{get\_addr()}{get\_addr()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1instruction_1_1LoadAddr_adc2983f55f5619f8b79182a74f0bd546} 
+\mbox{\hyperlink{classTemp}{Temp}} \texorpdfstring{$\ast$}{*} midend\+::ir\+::instruction\+::\+Load\+Addr\+::get\+\_\+addr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1instruction_1_1LoadAddr_ad90a07f5998232100526ebe6756872db}\index{midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}!get\_name@{get\_name}}
+\index{get\_name@{get\_name}!midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}}
+\doxysubsubsection{\texorpdfstring{get\_name()}{get\_name()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1instruction_1_1LoadAddr_ad90a07f5998232100526ebe6756872db} 
+std\+::string midend\+::ir\+::instruction\+::\+Load\+Addr\+::get\+\_\+name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1instruction_1_1LoadAddr_ae8d7c90c7b09abe003943114fcb49f57}\index{midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}!is\_output\_inst@{is\_output\_inst}}
+\index{is\_output\_inst@{is\_output\_inst}!midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}}
+\doxysubsubsection{\texorpdfstring{is\_output\_inst()}{is\_output\_inst()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1instruction_1_1LoadAddr_ae8d7c90c7b09abe003943114fcb49f57} 
+bool midend\+::ir\+::instruction\+::\+Load\+Addr\+::is\+\_\+output\+\_\+inst (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classmidend_1_1ir_1_1instruction_1_1LoadAddr_abed04bab2d9dd10a2022707b04ed5205}\index{midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}!to\_llvm\_str@{to\_llvm\_str}}
+\index{to\_llvm\_str@{to\_llvm\_str}!midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}}
+\doxysubsubsection{\texorpdfstring{to\_llvm\_str()}{to\_llvm\_str()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1instruction_1_1LoadAddr_abed04bab2d9dd10a2022707b04ed5205} 
+std\+::string midend\+::ir\+::instruction\+::\+Load\+Addr\+::to\+\_\+llvm\+\_\+str (\begin{DoxyParamCaption}\item[{int \&}]{llvm\+\_\+temp\+\_\+cnt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a0e7a1f81b8396728f4290e6b942cd5be}{midend\+::ir\+::\+Instruction}}.
+
+\Hypertarget{classmidend_1_1ir_1_1instruction_1_1LoadAddr_acd01253ce09d57427776035c6d9aeb11}\index{midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}!to\_str@{to\_str}}
+\index{to\_str@{to\_str}!midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}}
+\doxysubsubsection{\texorpdfstring{to\_str()}{to\_str()}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1instruction_1_1LoadAddr_acd01253ce09d57427776035c6d9aeb11} 
+std\+::string midend\+::ir\+::instruction\+::\+Load\+Addr\+::to\+\_\+str (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction_a911289a09f0cf6f7579a7d9a3f085ba4}{midend\+::ir\+::\+Instruction}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classmidend_1_1ir_1_1instruction_1_1LoadAddr_a46644e343a296a37ada3eb4a3d32122d}\index{midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}!name\_@{name\_}}
+\index{name\_@{name\_}!midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}}
+\doxysubsubsection{\texorpdfstring{name\_}{name\_}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1instruction_1_1LoadAddr_a46644e343a296a37ada3eb4a3d32122d} 
+std\+::string midend\+::ir\+::instruction\+::\+Load\+Addr\+::name\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{classmidend_1_1ir_1_1instruction_1_1LoadAddr_a53ca171debe1601521c37005ae72afeb}\index{midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}!type\_@{type\_}}
+\index{type\_@{type\_}!midend::ir::instruction::LoadAddr@{midend::ir::instruction::LoadAddr}}
+\doxysubsubsection{\texorpdfstring{type\_}{type\_}}
+{\footnotesize\ttfamily \label{classmidend_1_1ir_1_1instruction_1_1LoadAddr_a53ca171debe1601521c37005ae72afeb} 
+Type midend\+::ir\+::instruction\+::\+Load\+Addr\+::type\+\_\+}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{IR_8hpp}{IR.\+hpp}}\end{DoxyCompactItemize}

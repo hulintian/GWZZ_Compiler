@@ -113,4 +113,4 @@ StringConst : '"' (~['"\\\r\n] | Escaped)* '"';
 
 WhiteSpace  :   [ \t\r\n]   -> skip;
 LineComment : '//' ~[\r\n]* -> skip;
-BlockComment:   '/*'    .*?     '/*'    ->  skip;
+BlockComment:   '/*'    .*?     '*/'    ->  skip;

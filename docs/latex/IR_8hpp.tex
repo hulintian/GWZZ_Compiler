@@ -1,0 +1,119 @@
+\doxysection{src/\+IR/\+IR.hpp File Reference}
+\hypertarget{IR_8hpp}{}\label{IR_8hpp}\index{src/IR/IR.hpp@{src/IR/IR.hpp}}
+{\ttfamily \#include "{}common/type.\+hpp"{}}\newline
+{\ttfamily \#include "{}common/utils.\+hpp"{}}\newline
+{\ttfamily \#include "{}common/defines.\+hpp"{}}\newline
+{\ttfamily \#include "{}IR/temp.\+hpp"{}}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$execution$>$}\newline
+{\ttfamily \#include $<$ostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+set$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+{\ttfamily \#include $<$variant$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1DataMeta}{midend\+::ir\+::\+Data\+Meta}}
+\begin{DoxyCompactList}\small\item\em meta data \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1DataVar}{midend\+::ir\+::\+Data\+Var}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1DataArray}{midend\+::ir\+::\+Data\+Array}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1Value}{midend\+::ir\+::\+Value}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1Instruction}{midend\+::ir\+::\+Instruction}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1BasicBlock}{midend\+::ir\+::\+Basic\+Block}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1Function}{midend\+::ir\+::\+Function}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1LibFunction}{midend\+::ir\+::\+Lib\+Function}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Assign}{midend\+::ir\+::instruction\+::\+Assign}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Alloca}{midend\+::ir\+::instruction\+::\+Alloca}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Load}{midend\+::ir\+::instruction\+::\+Load}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Store}{midend\+::ir\+::instruction\+::\+Store}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Binary}{midend\+::ir\+::instruction\+::\+Binary}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1BinaryImm}{midend\+::ir\+::instruction\+::\+Binary\+Imm}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Branch}{midend\+::ir\+::instruction\+::\+Branch}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1CondBranch}{midend\+::ir\+::instruction\+::\+Cond\+Branch}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Label}{midend\+::ir\+::instruction\+::\+Label}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Call}{midend\+::ir\+::instruction\+::\+Call}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Cast}{midend\+::ir\+::instruction\+::\+Cast}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1ElementPtr}{midend\+::ir\+::instruction\+::\+Element\+Ptr}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Phi}{midend\+::ir\+::instruction\+::\+Phi}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Return}{midend\+::ir\+::instruction\+::\+Return}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Unary}{midend\+::ir\+::instruction\+::\+Unary}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1ArrayLoad}{midend\+::ir\+::instruction\+::\+Array\+Load}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1ArrayStore}{midend\+::ir\+::instruction\+::\+Array\+Store}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadImm4}{midend\+::ir\+::instruction\+::\+Load\+Imm4}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1LoadAddr}{midend\+::ir\+::instruction\+::\+Load\+Addr}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Maximum}{midend\+::ir\+::instruction\+::\+Maximum}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1instruction_1_1Minimum}{midend\+::ir\+::instruction\+::\+Minimum}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1Module}{midend\+::ir\+::\+Module}}
+\item 
+class \mbox{\hyperlink{classmidend_1_1ir_1_1User}{midend\+::ir\+::\+User}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacemidend}{midend}}
+\item 
+namespace \mbox{\hyperlink{namespacemidend_1_1ir}{midend\+::ir}}
+\item 
+namespace \mbox{\hyperlink{namespacemidend_1_1ir_1_1instruction}{midend\+::ir\+::instruction}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacemidend_1_1ir_aa73c5e4a21c24ac9fb1f853756fda366}{midend\+::ir\+::\+IRValue\+Type}} \{ \newline
+\mbox{\hyperlink{namespacemidend_1_1ir_aa73c5e4a21c24ac9fb1f853756fda366a0120f558ceca638840250f0add821efb}{midend\+::ir\+::\+Argument\+\_\+\+VAL}}
+, \mbox{\hyperlink{namespacemidend_1_1ir_aa73c5e4a21c24ac9fb1f853756fda366a6634a613d9101b7c8370e4a7a1c1cceb}{midend\+::ir\+::\+Basic\+Block\+\_\+\+VAL}}
+, \mbox{\hyperlink{namespacemidend_1_1ir_aa73c5e4a21c24ac9fb1f853756fda366adf1abb33f100a16862be06690bc1e3a3}{midend\+::ir\+::\+Constant\+\_\+\+VAL}}
+, \mbox{\hyperlink{namespacemidend_1_1ir_aa73c5e4a21c24ac9fb1f853756fda366a40e11eeb6b51b9e9a72b790255ff28b1}{midend\+::ir\+::\+Function\+\_\+\+VAL}}
+, \newline
+\mbox{\hyperlink{namespacemidend_1_1ir_aa73c5e4a21c24ac9fb1f853756fda366a2f5595b8bacea9b25b5f61267858a4b8}{midend\+::ir\+::\+Global\+Variable\+\_\+\+VAL}}
+, \mbox{\hyperlink{namespacemidend_1_1ir_aa73c5e4a21c24ac9fb1f853756fda366a11e3bb732e6128fd4b7ab00c3cf05abc}{midend\+::ir\+::\+Instruction\+\_\+\+VAL}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespacemidend_1_1ir_ad972506a7a5910b6900b17a78e03bb0f}{midend\+::ir\+::\+IRInst\+Kind}} \{ \newline
+\mbox{\hyperlink{namespacemidend_1_1ir_ad972506a7a5910b6900b17a78e03bb0faeab77d2b32fc1fc6a1454d10c6b4eb4e}{midend\+::ir\+::\+LABEL\+\_\+\+INST}}
+, \mbox{\hyperlink{namespacemidend_1_1ir_ad972506a7a5910b6900b17a78e03bb0fa774c83fa17ff565ecd8c594fb5aacaa7}{midend\+::ir\+::\+INST\+\_\+\+SEQ}}
+, \mbox{\hyperlink{namespacemidend_1_1ir_ad972506a7a5910b6900b17a78e03bb0fa220dab6714955890dda0f9a2fc6d4e31}{midend\+::ir\+::\+INST\+\_\+\+JUMP}}
+, \mbox{\hyperlink{namespacemidend_1_1ir_ad972506a7a5910b6900b17a78e03bb0fafaf74de50a95733e6bada379219127fe}{midend\+::ir\+::\+INST\+\_\+\+JUMP\+\_\+\+COND}}
+, \newline
+\mbox{\hyperlink{namespacemidend_1_1ir_ad972506a7a5910b6900b17a78e03bb0fa549bc912abcf0ccf8c4ba164be73934f}{midend\+::ir\+::\+INST\+\_\+\+CALL}}
+, \mbox{\hyperlink{namespacemidend_1_1ir_ad972506a7a5910b6900b17a78e03bb0fa3108f37473f6d92d89810c5abb462024}{midend\+::ir\+::\+INST\+\_\+\+RET}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \& \mbox{\hyperlink{namespacemidend_1_1ir_1_1instruction_ab9fb987835433d315e4dfbe8451acfdd}{midend\+::ir\+::instruction\+::llvm\+\_\+temp\+\_\+cnt}}
+\end{DoxyCompactItemize}

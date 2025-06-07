@@ -1,0 +1,128 @@
+\doxysection{ir\+::Function\+Type Class Reference}
+\hypertarget{classir_1_1FunctionType}{}\label{classir_1_1FunctionType}\index{ir::FunctionType@{ir::FunctionType}}
+
+
+{\ttfamily \#include $<$Type.\+hpp$>$}
+
+Inheritance diagram for ir\+::Function\+Type\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classir_1_1FunctionType}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classir_1_1FunctionType_a3556b12b653c191e8d90d7acce723590}{Function\+Type}} (\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*}ret, std\+::vector$<$ \mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} $>$ args)
+\item 
+unsigned \mbox{\hyperlink{classir_1_1FunctionType_a57bda7e2935f12bf88b8548f0ae76c12}{number\+\_\+of\+\_\+args}} () const
+\item 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1FunctionType_a282d503a1a68f5b661d4560eacb17577}{get\+\_\+param\+\_\+type}} (unsigned i) const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} $>$\+::iterator \mbox{\hyperlink{classir_1_1FunctionType_aa1b5f429b929a60b38daf5bb6bc08a41}{param\+\_\+begin}} ()
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} $>$\+::iterator \mbox{\hyperlink{classir_1_1FunctionType_a94d041094abdd609ed4bfc5aacc3523e}{param\+\_\+end}} ()
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} $>$ \& \mbox{\hyperlink{classir_1_1FunctionType_a2331a716722f10d5c9aa1407bb3a7264}{get\+\_\+params\+\_\+type}} () const
+\item 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1FunctionType_a5b494676922c8dd80e9728f5ab309420}{get\+\_\+return\+\_\+type}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classir_1_1Type}{ir\+::\+Type}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classir_1_1Type_a7eec226cb6a2cd980990b37a106d81b7}{is\+Void\+Type}} () const
+\item 
+bool \mbox{\hyperlink{classir_1_1Type_af1eeabb224443fbd278fb660b57a918b}{is\+Float\+Type}} () const
+\item 
+bool \mbox{\hyperlink{classir_1_1Type_a4e71939e2f222bedf5cbbbf1ad9b2ba5}{is\+Integer\+Type}} () const
+\item 
+bool \mbox{\hyperlink{classir_1_1Type_a3df3d267f01dda3c4d9f0e5cf5d6396b}{is\+Integer1\+Type}} () const
+\item 
+bool \mbox{\hyperlink{classir_1_1Type_a95cf15a2207fad907d6dffb6beae8b32}{is\+Integer64\+Type}} () const
+\item 
+bool \mbox{\hyperlink{classir_1_1Type_ac4135908421687b0fd6578cc2f4d293b}{is\+Array\+Type}} () const
+\item 
+bool \mbox{\hyperlink{classir_1_1Type_aa78e690c6cbaf1edfd661f5aa9806c64}{is\+Pointer\+Type}} () const
+\item 
+bool \mbox{\hyperlink{classir_1_1Type_a1034ad015f4104dcec70e91a6082c9a3}{is\+Label\+Type}} () const
+\item 
+bool \mbox{\hyperlink{classir_1_1Type_a2b44f4651564e233c5c224ab953fb0f0}{is\+Function\+Type}} () const
+\item 
+bool \mbox{\hyperlink{classir_1_1Type_a85bcf094f2f3b7ff9d36e52744fc1b1f}{is\+\_\+base\+\_\+type}} () const
+\item 
+\mbox{\hyperlink{classir_1_1Type_a1ff6d75a00bafb7216e78a997be283ca}{Type}} (\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{Type\+ID}} id)
+\item 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Type_a8d086c60a5d7f6921b1b0bbc1a8db73f}{get\+\_\+ptr\+\_\+element\+\_\+type}} () const
+\item 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classir_1_1Type_a163b72a4925b26b11496426cfb53d2de}{get\+\_\+array\+\_\+element\+\_\+type}} () const
+\item 
+const \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{Type\+ID}} \mbox{\hyperlink{classir_1_1Type_acbe546407a1d6bc5c575655fde7c57f1}{get\+\_\+type\+\_\+id}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Types inherited from \mbox{\hyperlink{classir_1_1Type}{ir\+::\+Type}}}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95}{Type\+ID}} \{ \newline
+\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a73d9277ff3c39666a8ada04ccb845f58}{Void\+Type\+ID}} = 0
+, \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a7d0765aee478b7b25ee2a1f0e79e8b33}{Float\+Type\+ID}}
+, \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95af291364952b01020c5849b5366b9af98}{Integer\+Type\+ID}}
+, \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a55f7189c190425a2f7734a2e545e832b}{Array\+Type\+ID}}
+, \newline
+\mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a8e77e67078ae07253e7a34e2cab21000}{Pointer\+Type\+ID}}
+, \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95a3b5ce50e7aa6d440b7fae510c9551ff4}{Function\+Type\+ID}}
+, \mbox{\hyperlink{classir_1_1Type_a2e6ce86c5cfa5f8e2d1f7ee6ec06dd95ab3157eff3d1d56b8c258e0867bc880fd}{Label\+Type\+ID}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classir_1_1FunctionType_a3556b12b653c191e8d90d7acce723590}\index{ir::FunctionType@{ir::FunctionType}!FunctionType@{FunctionType}}
+\index{FunctionType@{FunctionType}!ir::FunctionType@{ir::FunctionType}}
+\doxysubsubsection{\texorpdfstring{FunctionType()}{FunctionType()}}
+{\footnotesize\ttfamily \label{classir_1_1FunctionType_a3556b12b653c191e8d90d7acce723590} 
+ir\+::\+Function\+Type\+::\+Function\+Type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*}}]{ret}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} $>$}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classir_1_1FunctionType_a282d503a1a68f5b661d4560eacb17577}\index{ir::FunctionType@{ir::FunctionType}!get\_param\_type@{get\_param\_type}}
+\index{get\_param\_type@{get\_param\_type}!ir::FunctionType@{ir::FunctionType}}
+\doxysubsubsection{\texorpdfstring{get\_param\_type()}{get\_param\_type()}}
+{\footnotesize\ttfamily \label{classir_1_1FunctionType_a282d503a1a68f5b661d4560eacb17577} 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} ir\+::\+Function\+Type\+::get\+\_\+param\+\_\+type (\begin{DoxyParamCaption}\item[{unsigned}]{i}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1FunctionType_a2331a716722f10d5c9aa1407bb3a7264}\index{ir::FunctionType@{ir::FunctionType}!get\_params\_type@{get\_params\_type}}
+\index{get\_params\_type@{get\_params\_type}!ir::FunctionType@{ir::FunctionType}}
+\doxysubsubsection{\texorpdfstring{get\_params\_type()}{get\_params\_type()}}
+{\footnotesize\ttfamily \label{classir_1_1FunctionType_a2331a716722f10d5c9aa1407bb3a7264} 
+const std\+::vector$<$ \mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} $>$ \& ir\+::\+Function\+Type\+::get\+\_\+params\+\_\+type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1FunctionType_a5b494676922c8dd80e9728f5ab309420}\index{ir::FunctionType@{ir::FunctionType}!get\_return\_type@{get\_return\_type}}
+\index{get\_return\_type@{get\_return\_type}!ir::FunctionType@{ir::FunctionType}}
+\doxysubsubsection{\texorpdfstring{get\_return\_type()}{get\_return\_type()}}
+{\footnotesize\ttfamily \label{classir_1_1FunctionType_a5b494676922c8dd80e9728f5ab309420} 
+\mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} ir\+::\+Function\+Type\+::get\+\_\+return\+\_\+type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1FunctionType_a57bda7e2935f12bf88b8548f0ae76c12}\index{ir::FunctionType@{ir::FunctionType}!number\_of\_args@{number\_of\_args}}
+\index{number\_of\_args@{number\_of\_args}!ir::FunctionType@{ir::FunctionType}}
+\doxysubsubsection{\texorpdfstring{number\_of\_args()}{number\_of\_args()}}
+{\footnotesize\ttfamily \label{classir_1_1FunctionType_a57bda7e2935f12bf88b8548f0ae76c12} 
+unsigned ir\+::\+Function\+Type\+::number\+\_\+of\+\_\+args (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1FunctionType_aa1b5f429b929a60b38daf5bb6bc08a41}\index{ir::FunctionType@{ir::FunctionType}!param\_begin@{param\_begin}}
+\index{param\_begin@{param\_begin}!ir::FunctionType@{ir::FunctionType}}
+\doxysubsubsection{\texorpdfstring{param\_begin()}{param\_begin()}}
+{\footnotesize\ttfamily \label{classir_1_1FunctionType_aa1b5f429b929a60b38daf5bb6bc08a41} 
+std\+::vector$<$ \mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} $>$\+::iterator ir\+::\+Function\+Type\+::param\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classir_1_1FunctionType_a94d041094abdd609ed4bfc5aacc3523e}\index{ir::FunctionType@{ir::FunctionType}!param\_end@{param\_end}}
+\index{param\_end@{param\_end}!ir::FunctionType@{ir::FunctionType}}
+\doxysubsubsection{\texorpdfstring{param\_end()}{param\_end()}}
+{\footnotesize\ttfamily \label{classir_1_1FunctionType_a94d041094abdd609ed4bfc5aacc3523e} 
+std\+::vector$<$ \mbox{\hyperlink{classir_1_1Type}{Type}} \texorpdfstring{$\ast$}{*} $>$\+::iterator ir\+::\+Function\+Type\+::param\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+IR/\mbox{\hyperlink{Type_8hpp}{Type.\+hpp}}\end{DoxyCompactItemize}

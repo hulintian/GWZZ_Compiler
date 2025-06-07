@@ -8,21 +8,17 @@
 #include <memory>
 #include <optional>
 #include <vector>
-namespace frontend {
-
+namespace frontend { 
+ 
 // TODO : 类型检查 隐式类型转换 编译时求值 左值挂载
 class Sema {
 private:
     SymbolTable sym_tab;
 
+    // 类型检测
     void visit_func(const ast::Func&);
     void visit_decls(const ast::Decl&);
-    bool already_exits_var_in_current_scope(const SymbolTable& table, const std::string name, bool is_func);
-
-    // 挂载符号，把变量绑定到LValue上，IR生成时能够直接使用，符号表可以直接丢了
-    void attach_symbol(const ast::LValue&);
-
-    // 
+    void visit_stmt(const ast::Stmt&);
     void visit_initialize(
             const std::vector<std::unique_ptr<ast::Initializer>> &init_list,
             const Type &type,
@@ -30,10 +26,12 @@ private:
             std::map<int, ConstValue> &arr_var,
             int &index);
 
-    void visit_stmt(const ast::Stmt&);
+    bool already_exits_var_in_current_scope(const SymbolTable& table, const std::string name, bool is_func);
 
-   
+    // 挂载符号，把变量绑定到LValue上，IR生成时能够直接使用，符号表可以直接丢了
+    void attach_symbol(const ast::LValue&); 
 
+    // 解析类型
     std::optional<Type> visit_expr_aux(const ast::Expr*);
     std::optional<Type> visit_expr(const ast::Expr*);
     std::optional<Type> visit_expr(const std::unique_ptr<ast::Expr>& p){
