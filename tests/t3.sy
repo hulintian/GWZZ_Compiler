@@ -1,0 +1,6 @@
+int main() {
+
+    int arr[5000];
+    arr[1000] = 0xafffffff;
+    return 0;
+}
