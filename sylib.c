@@ -44,6 +44,10 @@ void putfarray(int n, float a[]) {
     printf("\n");
 }
 
+void putline() {
+    printf("\n");
+}
+
 void putf(char a[], ...) {
     va_list args;
     va_start(args, a);

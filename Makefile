@@ -53,3 +53,10 @@ test:
 	echo $(OBJECTS)
 	# echo $(SOURCES)
 	# echo $(DEPS)
+
+
+TARGET_MACHINE = user@192.168.2.136:~/compiler_test
+
+.PHONY: p2board
+p2board:
+	rsync tests/*.s $(TARGET_MACHINE) --progress
