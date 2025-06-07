@@ -1,0 +1,14 @@
+int add(int a, int b) { return a+b; }
+
+float b( ) {
+    int sum = add(1, 2);
+    return 1.1 + sum;
+}
+
+int c = 1;
+int main( ) {
+    putf(b());
+    putf(c);
+    return 10 + 20;
+}
+
