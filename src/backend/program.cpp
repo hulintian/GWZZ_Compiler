@@ -71,60 +71,60 @@ void Program::gen_asm(std::ostream &out) {
     out << "    .globl main\n";
     out << "    .text\n";
 
-    out << "__create_threads:\n";
-    out << "    li a5, 3\n";
-    out << ".Label1:\n";
-    out << "    li a0, 273\n"; // flag
-    out << "    mv a1, sp\n"; // sp
-    out << "    li a2, 0\n";
-    out << "    li a3, 0\n";
-    out << "    li a4, 0\n";
-    out << "    li a7, 220\n";  // SYS_clone 
-    out << "    ecall\n";
-    out << "    li a1, -1\n";
-    out << "    beq a0, a1, .Label1\n";
-    out << "    beqz a0, .Label2\n";  // child process
-    out << "    addi a5, a5, -1\n";
-    out << "    bnez a5, .Label1\n";  // last needed fork
-    out << ".Label2:\n";
-    out << "    mv a0, a5\n";
-    out << "    ret\n";
-    out << "\n";
+    // out << "__create_threads:\n";
+    // out << "    li a5, 3\n";
+    // out << ".Label1:\n";
+    // out << "    li a0, 273\n"; // flag
+    // out << "    mv a1, sp\n"; // sp
+    // out << "    li a2, 0\n";
+    // out << "    li a3, 0\n";
+    // out << "    li a4, 0\n";
+    // out << "    li a7, 220\n";  // SYS_clone 
+    // out << "    ecall\n";
+    // out << "    li a1, -1\n";
+    // out << "    beq a0, a1, .Label1\n";
+    // out << "    beqz a0, .Label2\n";  // child process
+    // out << "    addi a5, a5, -1\n";
+    // out << "    bnez a5, .Label1\n";  // last needed fork
+    // out << ".Label2:\n";
+    // out << "    mv a0, a5\n";
+    // out << "    ret\n";
+    // out << "\n";
 
-    out << "__join_threads:\n";
-    out << "    li a1, 3\n";
-    out << "    mv a5, a0\n";
-    out << "    beq a0, a1, .Label3\n"; // tid=3 exits directly
-    out << ".Label4:\n";
-    out << "    li a0, 0\n";  // P_ALL
-    out << "    li a1, 0\n";
-    out << "    li a2, 0\n";
-    out << "    li a3, 4\n"; // WEXITED
-    out << "    li a7, 95\n";  // SYS_waitid
-    out << "    ecall\n";
-    out << "    li a3, -1\n";
-    out << "    beq a3, a0, .Label4\n"; // wait failed
-    out << "    bnez a5, .Label3\n"; // tid=0 returns to normal control flow
+    // out << "__join_threads:\n";
+    // out << "    li a1, 3\n";
+    // out << "    mv a5, a0\n";
+    // out << "    beq a0, a1, .Label3\n"; // tid=3 exits directly
+    // out << ".Label4:\n";
+    // out << "    li a0, 0\n";  // P_ALL
+    // out << "    li a1, 0\n";
+    // out << "    li a2, 0\n";
+    // out << "    li a3, 4\n"; // WEXITED
+    // out << "    li a7, 95\n";  // SYS_waitid
+    // out << "    ecall\n";
+    // out << "    li a3, -1\n";
+    // out << "    beq a3, a0, .Label4\n"; // wait failed
+    // out << "    bnez a5, .Label3\n"; // tid=0 returns to normal control flow
 
-    out << ".sleep:\n";
-    out << "    li a0, 0\n"; // sleep for 0.5 second
-    out << "    sd a0, -16(sp)\n";
-    out << "    li a0, 1\n";
-    out << "    slli a0, a0, 29\n";
-    out << "    sd a0, -8(sp)\n";
-    out << "    addi sp, sp, -16\n";
-    out << "    mv a0, sp\n";
-    out << "    li a7, 101\n";  // sys_nanosleep
-    out << "    addi sp, sp, 16\n";
-    out << "    ecall\n";
-    out << "    bnez a0, .sleep\n";
+    // out << ".sleep:\n";
+    // out << "    li a0, 0\n"; // sleep for 0.5 second
+    // out << "    sd a0, -16(sp)\n";
+    // out << "    li a0, 1\n";
+    // out << "    slli a0, a0, 29\n";
+    // out << "    sd a0, -8(sp)\n";
+    // out << "    addi sp, sp, -16\n";
+    // out << "    mv a0, sp\n";
+    // out << "    li a7, 101\n";  // sys_nanosleep
+    // out << "    addi sp, sp, 16\n";
+    // out << "    ecall\n";
+    // out << "    bnez a0, .sleep\n";
 
-    out << "    ret\n";
-    out << ".Label3:\n";
-    out << "    li a0, 0\n";
-    out << "    li a7, 93\n";  // sys_exit
-    out << "    ecall\n";
-    out << "\n";
+    // out << "    ret\n";
+    // out << ".Label3:\n";
+    // out << "    li a0, 0\n";
+    // out << "    li a7, 93\n";  // sys_exit
+    // out << "    ecall\n";
+    // out << "\n";
 
     // memset zero function
     if (use_memset_zero) {
@@ -1690,7 +1690,7 @@ void BasicBlock::gen_asm(std::ostream &out){
 Function::Function(Program *prog, ir::Function *ir_func): name_(ir_func->get_name()), reg_n(ir_func->get_temp_used()), stack_object_size_(0), stack_spill_size_(0) {
     this->call_funcs.clear();
     CFG* cfg = new CFG(ir_func);
-    midend::LoopAnalysis* la = new midend::LoopAnalysis(cfg);
+    // midend::LoopAnalysis* la = new midend::LoopAnalysis(cfg);
 
     // construct entry bb
     BasicBlock* entry_bb = new BasicBlock(".entry_" + name_);
@@ -1764,9 +1764,9 @@ Function::Function(Program *prog, ir::Function *ir_func): name_(ir_func->get_nam
     for(auto bb : *ir_func->get_basic_blocks()) {
         BasicBlock* new_bb = new BasicBlock(".L" + std::to_string(prog->bb_num++));
         new_bb->set_label_used(true);
-        if (la->get_loop(bb) != nullptr) {
-            new_bb->loop_level = la->get_loop_depth(bb);
-        }
+        // if (la->get_loop(bb) != nullptr) {
+        //     new_bb->loop_level = la->get_loop_depth(bb);
+        // }
         prog->bb_map[bb] = new_bb;
         bbs.push_back(std::move(new_bb));
     }
