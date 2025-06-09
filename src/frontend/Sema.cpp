@@ -32,6 +32,8 @@ Sema::Sema() {
             .variadic = false};
     funcs["putint"] = {
             .return_type = std::nullopt, .params_type = {Type{Int}}, .variadic = false};
+    funcs["putintl"] = {
+            .return_type = std::nullopt, .params_type = {Type{Int}}, .variadic = false};
     funcs["putch"] = {
             .return_type = std::nullopt, .params_type = {Type{Int}}, .variadic = false};
     funcs["putfloat"] = {.return_type = std::nullopt,

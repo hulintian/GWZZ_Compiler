@@ -22,6 +22,7 @@ namespace frontend {
         lib["getarray"] = new LibFunction(module, Type(Int), std::vector<DataMeta*>{new DataMeta(Type(Int, std::vector<int>{0}), false, "")}, "getarray");
         lib["getfarray"] = new LibFunction(module, Type(Int), std::vector<DataMeta*>{new DataMeta(Type(Float, std::vector<int>{0}), false, "")}, "getfarray");
         lib["putint"] = new LibFunction(module, Type(Void), std::vector<DataMeta*>{new DataMeta(Type(Int), false, "")}, "putint");
+        lib["putintl"] = new LibFunction(module, Type(Void), std::vector<DataMeta*>{new DataMeta(Type(Int), false, "")}, "putintl");
         lib["putch"] = new LibFunction(module, Type(Void), std::vector<DataMeta*>{new DataMeta(Type(Int), false, "")}, "putch");
         lib["putfloat"] = new LibFunction(module, Type(Void), std::vector<DataMeta*>{new DataMeta(Type(Float), false, "")}, "putfloat");
         lib["putarray"] = new LibFunction(module, Type(Void), std::vector<DataMeta*>{new DataMeta(Type(Int), false, ""), new DataMeta(Type(Int, std::vector<int>{0}), false, "")}, "putarray");
@@ -689,7 +690,7 @@ namespace frontend {
 //         auto t  = new ir::IntegerType(1);
 //     
 //         
-//     }
+//     }某个地址开始的 10 个 64 位值：
 // }
 // 
 // }
