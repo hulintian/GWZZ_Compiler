@@ -7,7 +7,6 @@
 #include <unordered_set>
 #include "IR/IR.hpp"
 #include "common/regarch.hpp"
-#include "IR/loop_analysis.hpp"
 
 namespace backend{
 
