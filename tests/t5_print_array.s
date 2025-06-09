@@ -57,6 +57,57 @@ __join_threads:
     ecall
 
     .align 1
+print_array:
+.entry_print_array:
+    sd s2, -8(sp)
+    sd s1, -16(sp)
+    sd fp, -24(sp)
+    sd ra, -32(sp)
+    addi sp, sp, -40
+    addi fp, sp, 40
+    mv s1, a1
+    j .L0
+.L0:
+    addi t1, sp, 0
+    addi s2, sp, 4
+    li t0, 10
+    sw a0, 0(t1)
+    lw t1, 0(t1)
+    sw t1, 0(s2)
+    mv a0, t0
+    mv a1, s1
+    call putarray
+    j .L1
+.L1:
+    lw t0, 0(s2)
+    blt t0, zero, .L4
+    j .L2
+.L2:
+    lw t0, 0(s2)
+    slli t0, t0, 2
+    add t0, t0, s1
+    lw a0, 0(t0)
+    call putint
+    call putline
+    lw t1, 0(s2)
+    li t0, 1
+    subw t0, t1, t0
+    sw t0, 0(s2)
+    j .L3
+.L3:
+    lw t0, 0(s2)
+    blt t0, zero, .L4
+    j .L2
+.L4:
+    j .exit_print_array
+.exit_print_array:
+    addi sp, sp, 40
+    ld s2, -8(sp)
+    ld s1, -16(sp)
+    ld fp, -24(sp)
+    ld ra, -32(sp)
+    ret
+    .align 1
 main:
 .entry_main:
     sd s1, -8(sp)
@@ -64,8 +115,8 @@ main:
     sd ra, -24(sp)
     addi sp, sp, -72
     addi fp, sp, 72
-    j .L0
-.L0:
+    j .L5
+.L5:
     addi s1, sp, 0
     li a3, 1
     li a2, 2
@@ -96,6 +147,9 @@ main:
     sw t0, 0(t1)
     mv a1, s1
     call putarray
+    li a0, 10
+    mv a1, s1
+    call print_array
     li a0, 0
     j .exit_main
 .exit_main:

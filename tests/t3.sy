@@ -1,6 +1,6 @@
+    int arr[5] = {1, 2, 3, 4, 5};
 int main() {
 
-    int arr[5000];
-    arr[1000] = 0xafffffff;
+    arr[1] = 0xafffffff;
     return 0;
 }
