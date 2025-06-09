@@ -10,57 +10,6 @@
     .align 3
     .globl main
     .text
-__create_threads:
-    li a5, 3
-.Label1:
-    li a0, 273
-    mv a1, sp
-    li a2, 0
-    li a3, 0
-    li a4, 0
-    li a7, 220
-    ecall
-    li a1, -1
-    beq a0, a1, .Label1
-    beqz a0, .Label2
-    addi a5, a5, -1
-    bnez a5, .Label1
-.Label2:
-    mv a0, a5
-    ret
-
-__join_threads:
-    li a1, 3
-    mv a5, a0
-    beq a0, a1, .Label3
-.Label4:
-    li a0, 0
-    li a1, 0
-    li a2, 0
-    li a3, 4
-    li a7, 95
-    ecall
-    li a3, -1
-    beq a3, a0, .Label4
-    bnez a5, .Label3
-.sleep:
-    li a0, 0
-    sd a0, -16(sp)
-    li a0, 1
-    slli a0, a0, 29
-    sd a0, -8(sp)
-    addi sp, sp, -16
-    mv a0, sp
-    li a7, 101
-    addi sp, sp, 16
-    ecall
-    bnez a0, .sleep
-    ret
-.Label3:
-    li a0, 0
-    li a7, 93
-    ecall
-
     .align 1
 add:
 .entry_add:
@@ -98,11 +47,14 @@ b:
     li a0, 1
     li a1, 2
     call add
+    sw a0, 0(s1)
+    lw a0, 0(s1)
+    call putint
+    call putline
+    lw t1, 0(s1)
     li t0, 1066192077
     fmv.s.x ft1, t0
-    sw a0, 0(s1)
-    lw t0, 0(s1)
-    fcvt.s.w ft0, t0
+    fcvt.s.w ft0, t1
     fadd.s fa0, ft1, ft0
     j .exit_b
 .exit_b:
@@ -121,15 +73,12 @@ main:
     j .L2
 .L2:
     call b
-    fcvt.s.w fa0, fa0
-    call printf
+    call putfloat
+    call putline
     la t0, $c
-    lw t0, 0(t0)
-    fcvt.s.w fa0, t0
-    call printf
-    li t1, 10
-    li t0, 20
-    addw a0, t1, t0
+    lw a0, 0(t0)
+    call putintl
+    li a0, 0
     j .exit_main
 .exit_main:
     addi sp, sp, 16

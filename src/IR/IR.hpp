@@ -486,7 +486,7 @@ class Branch : public Instruction {
 public:
     explicit Branch() = default;
     Branch(BasicBlock* bb) : 
-        Instruction(IRInstKind::INST_JUMP, std::vector<Temp*>{}, std::vector<Temp*>{}) {}
+        Instruction(IRInstKind::INST_JUMP, std::vector<Temp*>{}, std::vector<Temp*>{}), bb(bb) {}
     std::string to_str() { return "jump " + bb->get_name(); }
     std::string to_llvm_str(int &llvm_temp_cnt) { return "br label %B" + std::to_string(bb->get_index()); }
 
