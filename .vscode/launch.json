@@ -7,7 +7,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/compiler",
-            "args": ["tests/t1.sy"],
+            "args": ["tests/t7_mlv.sy"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
