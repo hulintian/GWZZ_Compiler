@@ -55,8 +55,8 @@ test:
 	# echo $(DEPS)
 
 
-TARGET_MACHINE = user@192.168.2.136:~/compiler_test
+TARGET_MACHINE = user@10.220.142.94:~/compiler_test
 
 .PHONY: p2board
-p2board:
+push2board:
 	rsync tests/*.s $(TARGET_MACHINE) --progress
