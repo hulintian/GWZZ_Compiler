@@ -5,57 +5,6 @@
     .align 3
     .globl main
     .text
-__create_threads:
-    li a5, 3
-.Label1:
-    li a0, 273
-    mv a1, sp
-    li a2, 0
-    li a3, 0
-    li a4, 0
-    li a7, 220
-    ecall
-    li a1, -1
-    beq a0, a1, .Label1
-    beqz a0, .Label2
-    addi a5, a5, -1
-    bnez a5, .Label1
-.Label2:
-    mv a0, a5
-    ret
-
-__join_threads:
-    li a1, 3
-    mv a5, a0
-    beq a0, a1, .Label3
-.Label4:
-    li a0, 0
-    li a1, 0
-    li a2, 0
-    li a3, 4
-    li a7, 95
-    ecall
-    li a3, -1
-    beq a3, a0, .Label4
-    bnez a5, .Label3
-.sleep:
-    li a0, 0
-    sd a0, -16(sp)
-    li a0, 1
-    slli a0, a0, 29
-    sd a0, -8(sp)
-    addi sp, sp, -16
-    mv a0, sp
-    li a7, 101
-    addi sp, sp, 16
-    ecall
-    bnez a0, .sleep
-    ret
-.Label3:
-    li a0, 0
-    li a7, 93
-    ecall
-
     .align 1
 func:
 .entry_func:
@@ -671,21 +620,21 @@ main:
     addi fp, sp, 24
     j .L1
 .L1:
-    addi t6, sp, 0
-    li t5, 2089018456
+    addi t5, sp, 0
+    li t0, 2089018456
+    sw t0, 0(t5)
     addi t4, sp, 4
     li t3, 628175011
     li t2, 1
     li t1, 2
     li t0, 9
-    sw t5, 0(t6)
     sw t3, 0(t4)
-    sw t2, 0(t6)
-    lw t2, 0(t6)
+    sw t2, 0(t5)
+    lw t2, 0(t5)
     mulw t0, t1, t0
     addw t0, t2, t0
     sw t0, 0(t4)
-    lw a0, 0(t6)
+    lw a0, 0(t5)
     lw a1, 0(t4)
     call func
     call putint
