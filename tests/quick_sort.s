@@ -16,106 +16,99 @@ partition:
     mv t0, a1
     j .L0
 .L0:
-    addi t3, sp, 0
-    addi t6, sp, 4
-    addi t4, sp, 8
-    addi t5, sp, 12
-    li t2, 1
-    addi a0, sp, 16
-    sw t0, 0(t3)
-    sw a2, 0(t6)
-    lw t0, 0(t6)
+    addi t4, sp, 0
+    sw t0, 0(t4)
+    addi t5, sp, 4
+    sw a2, 0(t5)
+    addi t6, sp, 8
+    lw t0, 0(t5)
     slli t0, t0, 2
     add t0, t0, t1
     lw t0, 0(t0)
-    sw t0, 0(t4)
-    lw t0, 0(t3)
-    subw t0, t0, t2
-    sw t0, 0(t5)
-    lw t0, 0(t3)
-    sw t0, 0(a0)
-    j .L1
-.L1:
-    lw t3, 0(a0)
+    sw t0, 0(t6)
+    addi t3, sp, 12
+    lw t2, 0(t4)
     li t0, 1
-    lw t2, 0(t6)
     subw t0, t2, t0
-    bgt t3, t0, .L4
-    j .L2
+    sw t0, 0(t3)
+    addi a0, sp, 16
+    lw t0, 0(t4)
+    sw t0, 0(a0)
+.L1:
+    lw t4, 0(a0)
+    lw t2, 0(t5)
+    li t0, 1
+    subw t0, t2, t0
+    bgt t4, t0, .L4
 .L2:
     lw t0, 0(a0)
     slli t0, t0, 2
     add t0, t0, t1
     lw t2, 0(t0)
-    lw t0, 0(t4)
+    lw t0, 0(t6)
     bge t2, t0, .L6
-    j .L5
 .L3:
-    lw t3, 0(a0)
+    lw t4, 0(a0)
+    lw t2, 0(t5)
     li t0, 1
-    lw t2, 0(t6)
     subw t0, t2, t0
-    bgt t3, t0, .L4
-    j .L2
+    bgt t4, t0, .L4
 .L4:
-    lw t4, 0(t5)
-    addi a0, sp, 20
+    addi t4, sp, 20
+    lw t2, 0(t3)
     li t0, 1
-    li t2, 1
-    li t3, 1
-    addw t0, t4, t0
+    addw t0, t2, t0
     slli t0, t0, 2
     add t0, t0, t1
     lw t0, 0(t0)
-    sw t0, 0(a0)
-    lw t4, 0(t5)
-    lw t0, 0(t6)
-    addw t2, t4, t2
-    slli t2, t2, 2
+    sw t0, 0(t4)
+    lw t2, 0(t3)
+    li t0, 1
+    addw t0, t2, t0
     slli t0, t0, 2
-    add t2, t2, t1
+    add t2, t0, t1
+    lw t0, 0(t5)
+    slli t0, t0, 2
     add t0, t0, t1
     lw t0, 0(t0)
     sw t0, 0(t2)
-    lw t0, 0(t6)
-    lw t2, 0(a0)
-    slli t0, t0, 2
-    add t0, t0, t1
-    sw t2, 0(t0)
     lw t0, 0(t5)
-    addw a0, t0, t3
-    j .exit_partition
-.L5:
-    lw t2, 0(t5)
+    slli t0, t0, 2
+    add t1, t0, t1
+    lw t0, 0(t4)
+    sw t0, 0(t1)
+    lw t1, 0(t3)
     li t0, 1
-    addi a1, sp, 24
+    addw a0, t1, t0
+.L5:
+    lw t2, 0(t3)
+    li t0, 1
     addw t0, t2, t0
-    sw t0, 0(t5)
-    lw t0, 0(t5)
-    slli t0, t0, 2
-    add t0, t0, t1
-    lw t0, 0(t0)
-    sw t0, 0(a1)
-    lw t0, 0(t5)
-    lw t2, 0(a0)
-    slli t0, t0, 2
-    add t3, t0, t1
-    slli t0, t2, 2
-    add t0, t0, t1
-    lw t0, 0(t0)
     sw t0, 0(t3)
-    lw t0, 0(a0)
-    lw t2, 0(a1)
+    addi t4, sp, 24
+    lw t0, 0(t3)
     slli t0, t0, 2
     add t0, t0, t1
-    sw t2, 0(t0)
-    j .L6
+    lw t0, 0(t0)
+    sw t0, 0(t4)
+    lw t0, 0(t3)
+    slli t0, t0, 2
+    add t2, t0, t1
+    lw t0, 0(a0)
+    slli t0, t0, 2
+    add t0, t0, t1
+    lw t0, 0(t0)
+    sw t0, 0(t2)
+    lw t0, 0(a0)
+    slli t0, t0, 2
+    add t2, t0, t1
+    lw t0, 0(t4)
+    sw t0, 0(t2)
 .L6:
     lw t2, 0(a0)
     li t0, 1
     addw t0, t2, t0
     sw t0, 0(a0)
-    j .L3
 .exit_partition:
     addi sp, sp, 48
     ld fp, -8(sp)
@@ -136,36 +129,32 @@ quick_sort:
     j .L7
 .L7:
     addi s4, sp, 0
-    addi s2, sp, 4
     sw a1, 0(s4)
+    addi s2, sp, 4
     sw a2, 0(s2)
     lw t1, 0(s4)
     lw t0, 0(s2)
     bge t1, t0, .L9
-    j .L8
 .L8:
-    lw t0, 0(s4)
     addi s3, sp, 8
+    lw a1, 0(s4)
     lw a2, 0(s2)
     mv a0, s1
-    mv a1, t0
     call partition
-    li t0, 1
     sw a0, 0(s3)
     lw a1, 0(s4)
     lw t1, 0(s3)
+    li t0, 1
     subw a2, t1, t0
     mv a0, s1
     call quick_sort
     lw t1, 0(s3)
     li t0, 1
-    lw a2, 0(s2)
     addw a1, t1, t0
+    lw a2, 0(s2)
     mv a0, s1
     call quick_sort
-    j .L9
 .L9:
-    j .exit_quick_sort
 .exit_quick_sort:
     addi sp, sp, 64
     ld s4, -8(sp)
@@ -199,7 +188,6 @@ main:
     mv a1, s1
     call putarray
     li a0, 0
-    j .exit_main
 .exit_main:
     addi sp, sp, 64
     ld s1, -8(sp)
