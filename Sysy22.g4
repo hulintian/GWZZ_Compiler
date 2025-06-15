@@ -81,11 +81,7 @@ cond : lOrExp;
 
 lVal : Ident ('[' exp ']')*;
 
-primaryExp
-    : '(' exp ')'  # primaryExp_
-    | lVal  # lValExpr
-    | number  # primaryExp_
-    ;
+
 
 intConst
     : DecConst # decConst
@@ -101,6 +97,12 @@ floatConst
 number
     : intConst
     | floatConst
+    ;
+
+primaryExp
+    : '(' exp ')'  # primaryExp_
+    | lVal  # lValExpr
+    | number  # primaryExp_
     ;
 
 unaryExp

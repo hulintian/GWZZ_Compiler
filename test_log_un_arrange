@@ -1,0 +1,44 @@
+.L0:
+    addi _T1, sp, 0
+    sw _T0, 0(_T1)
+    lw _T2, 0(_T1)
+    li _T3, 2
+    slt _T20, _T3, _T2
+    seqz _T4, _T20
+    bgt _T2, _T3, .L2
+    j .L1
+.L1:
+    li _T5, 1
+    mv a0, _T5
+    j .exit_fib
+.L2:
+    lw _T6, 0(_T1)
+    li _T7, 1
+    subw _T8, _T6, _T7
+    mv a0, _T8
+    call fib
+    mv _T9, a0
+    lw _T10, 0(_T1)
+    li _T11, 2
+    subw _T12, _T10, _T11
+    mv a0, _T12
+    call fib
+    mv _T13, a0
+    addw _T14, _T9, _T13
+    mv a0, _T14
+    j .exit_fib
+.L3:
+    addi _T0, sp, 0
+    call getint
+    mv _T1, a0
+    sw _T1, 0(_T0)
+    lw _T2, 0(_T0)
+    mv a0, _T2
+    call fib
+    mv _T3, a0
+    mv a0, _T3
+    call putint
+    call putline
+    li _T4, 0
+    mv a0, _T4
+    j .exit_main
