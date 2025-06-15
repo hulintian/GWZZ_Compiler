@@ -28,7 +28,6 @@ void quick_sort(int arr[], int low, int high) {
 }
 
 int main() {
-    // int arr[6] = {10, 7, 8, 9, 1, 5};
     int arr[10];
     getarray(arr);
     putarray(10, arr);

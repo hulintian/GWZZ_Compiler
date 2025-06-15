@@ -5,10 +5,16 @@
 #include "common/regarch.hpp"
 #include "IR/IR.hpp"
 #include "IR/CFG.hpp"
+#include <fstream>
 #include <iostream>
 #include <iomanip>
 #include <stack>
 #include <chrono>
+
+std::ofstream out_log("test_log_un_arrange");
+std::ofstream out_log2("test_log_arrange");
+std::ofstream out_log3("test_log_un_reg_alloc");
+std::ofstream out_log4("test_log_reg_alloc");
 
 int log2(int x) {
     int res = 0;
@@ -1330,90 +1336,7 @@ bool BasicBlock::construct(ir::BasicBlock *ir_bb, BasicBlock *exit_bb, Function 
         }
     }
 
-    // gen_asm(std::cout);
-
-    // prevStore = instrs_.end();
-    // for(auto iter = instrs_.begin(); iter != instrs_.end(); ++iter) {
-    //     auto isStore = [&](Instr* inst) {
-    //         TypeCase (st, RiscvInstr::Store*, inst) {
-    //             return true;
-    //         }
-    //         return false;
-    //     };
-
-    //     auto& inst = *iter;
-    //     TypeCase (unused, RiscvInstr::Store*, inst) {
-    //         if (prevStore == instrs_.end()) {
-    //             prevStore = iter;
-    //             continue;
-    //         }
-    //         auto prevIter = prevStore;
-    //         auto& prevInst = *prevStore;
-    //         prevStore = iter;
-
-    //         for (auto i = prevIter; i != iter; i++) {
-    //             TypeCase (ld, RiscvInstr::Load*, *i) {
-    //                 prevStore = iter;
-    //                 continue;
-    //             }
-    //         }
-
-    //         if (isStore(prevInst) && isStore(inst)) {
-    //             auto prev_st = dynamic_cast<RiscvInstr::Store*>(prevInst);
-    //             auto st = dynamic_cast<RiscvInstr::Store*>(inst);
-    //             // (prev_st)->gen_asm(std::cout);
-    //             // (st)->gen_asm(std::cout);
-    //             auto prevBase = prev_st->get_base();
-    //             auto base = st->get_base();
-    //             if (!(prevBase == base)) continue;
-    //             auto prevOffset = prev_st->get_offset();
-    //             auto offset = st->get_offset();
-    //             if (prevOffset + 4 != offset) continue;
-    //             auto prevImm = prev_st->get_src();
-    //             auto Imm = st->get_src();
-    //             Reg new_reg = Reg(func->reg_n++);
-    //             Reg new_reg2 = Reg(func->reg_n++);
-    //             instrs_.erase(prevIter);
-    //             if (!(Imm == ZERO)) {
-    //                 auto new_li = new RiscvInstr::BinaryImm(RvBinaryOp::SLLF, new_reg, Imm, 32);
-    //                 instrs_.insert(iter, new_li);
-    //                 if (func->constant_regs.count(prevImm)) {
-    //                     auto val = func->constant_regs[prevImm];
-    //                     auto new_add = new RiscvInstr::BinaryImm(RvBinaryOp::ADDF, new_reg2, new_reg, val);
-    //                     instrs_.insert(iter, new_add);
-    //                 }
-    //                 else {
-    //                     auto new_add = new RiscvInstr::Binary(RvBinaryOp::ADDUW, new_reg2, new_reg, prevImm);
-    //                     instrs_.insert(iter, new_add);
-    //                 }
-    //             }
-    //             else {
-    //                 new_reg2 = prevImm;
-    //             }
-    //             // std::cout << "iter"; (*iter)->gen_asm(std::cout);
-    //             // std::cout << "iter"; (*iter)->gen_asm(std::cout);
-    //             // std::cout << "sw->sd\n";
-    //             auto new_st = new RiscvInstr::StoreDouble(new_reg2, base, prevOffset);
-    //             *iter = new_st;
-    //             prevStore = instrs_.end();
-    //         }
-    //     }
-    // }
-
-    // gen_asm(std::cout);
-
-
-    // std::cout << instrs_.size() << "\n";
-    // std::cout << name_ << " before scheduling \n";
-    // for (auto inst = instrs_.begin(); inst != instrs_.end(); inst++)
-    //     (*inst)->gen_asm(std::cout);
-    // return jump_to_another_block;
-
-    // 0. rename registers to avoid WAR & WAW
-
-    // std::cout << instrs_.size() << "\n";
-
-    // std::cout << "---\n";
+    this->gen_asm(out_log);
 
     if (instrs_.size() >= 5000)
         return jump_to_another_block;
@@ -1655,8 +1578,10 @@ bool BasicBlock::construct(ir::BasicBlock *ir_bb, BasicBlock *exit_bb, Function 
             }
             cycle++;
         }
-        // std::cout << final_insts.size() << "\n";
+        std::cout << final_insts.size() << "\n";
     }
+
+
 
     // std::cout << name_ << " after scheduling \n";
     // for (auto inst = final_insts.begin(); inst != final_insts.end(); inst++)
@@ -1667,6 +1592,7 @@ bool BasicBlock::construct(ir::BasicBlock *ir_bb, BasicBlock *exit_bb, Function 
     TypeCase (br, RiscvInstr::Jump*, last)
         instrs_.push_back(last);
 
+    this->gen_asm(out_log2);
     // if (name_ == ".L7") {
 
     // auto toc = std::chrono::steady_clock::now();
@@ -1802,65 +1728,6 @@ Function::Function(Program *prog, ir::Function *ir_func): name_(ir_func->get_nam
         auto bb = *it;
         if(!prog->bb_map[bb]->construct(bb, exit_bb, this, prog) && std::next(it) != (*ir_func->get_basic_blocks()).end()){
             this->add_edge(prog->bb_map[bb], prog->bb_map[(*std::next(it))]);
-        }
-    }
-
-    // deal with phi instructions (one pass)
-    struct PhiMove{
-        BasicBlock* src_block;
-        BasicBlock* dst_block;
-        Reg dst,src,mid;
-    };
-    std::map<int, Reg> dst_to_mid;
-    std::vector<PhiMove> phi_moves;
-    for(auto bb : *ir_func->get_basic_blocks()) {
-        for(auto ir_instr : *bb->get_insts()) {
-            if(auto ir_phi = dynamic_cast<ir::instruction::Phi*>(ir_instr)) {
-                for(int i = 0; i < ir_phi->get_size(); i++) {
-                    auto ori_bb = (*ir_phi->get_bbs())[i];
-                    bool is_gp_reg = (*ir_phi->getvalues())[i]->get_type().is_gp();
-                    auto src_idx = (*ir_phi->getvalues())[i]->get_index();
-                    if (assigns.count((*ir_phi->getvalues())[i]))
-                        src_idx = assigns[(*ir_phi->getvalues())[i]]->get_index();
-                    auto phi_src = Reg(src_idx, false, is_gp_reg);
-                    auto phi_mid = Reg(this->reg_n++, false, is_gp_reg);
-                    auto phi_dst = Reg(ir_phi->get_dst()->get_index(), false, is_gp_reg);
-                    if(dst_to_mid.find(ir_phi->get_dst()->get_index()) != dst_to_mid.end()){
-                        phi_mid = dst_to_mid.at(ir_phi->get_dst()->get_index());
-                        this->reg_n--;
-                    } else {
-                        dst_to_mid[ir_phi->get_dst()->get_index()] = phi_mid;
-                    }
-                    phi_moves.push_back({std::move(prog->bb_map[ori_bb]), std::move(prog->bb_map[bb]), phi_dst, phi_src, phi_mid});
-                }
-            }
-        }
-    }
-    for(auto phi_move: phi_moves) {
-        auto instrs = phi_move.src_block->get_instr();
-        auto new_instr = new RiscvInstr::Move(phi_move.mid, phi_move.src);
-        for(auto it = instrs->begin(); it != instrs->end();){
-            auto inst = *it;
-            if(auto ir_jmp = dynamic_cast<RiscvInstr::Jump*>(inst)){
-                if(ir_jmp->get_target()->get_name() == phi_move.dst_block->get_name()){
-                    it = instrs->insert(it, new_instr);
-                    it++;
-                }
-            }
-            else if(auto ir_jmp = dynamic_cast<RiscvInstr::Branch*>(inst)){
-                if(ir_jmp->get_target()->get_name() == phi_move.dst_block->get_name()){
-                    it = instrs->insert(it, new_instr);
-                    it++;
-                }
-            } 
-            it++;
-        }
-
-        if (dst_to_mid.find(phi_move.dst.id()) != dst_to_mid.end()){
-            new_instr = new RiscvInstr::Move(phi_move.dst, phi_move.mid);
-            instrs = phi_move.dst_block->get_instr();
-            instrs->push_front(new_instr);
-            dst_to_mid.erase(phi_move.dst.id());
         }
     }
 
