@@ -9,6 +9,7 @@ using std::ostream;
 
 using AstScalarType = frontend::ast::ScalarType;
 
+
 std::string_view op_string(UnaryOp op) {
     unsigned i = static_cast<unsigned>(op);
     if(i > 3) return "<unknow_unary_op>";
@@ -81,6 +82,31 @@ ostream &operator<<(ostream &os, const Param &param) {
   return os;
 }
 
+void dump_var(ostream& out, std::shared_ptr<Var> var, unsigned int indent) {
+    print_indent(out, indent);
+    out << type_string(var->type) << " : ";
+    if(var->val) {
+        switch(var->val->type) {
+            case 0 : out << var->val->iv ; break;
+            case 1 : out << var->val->fv ; break;
+        }
+    } 
+    print_indent(out, indent);
+    if(var->type.is_array()) {
+        out << " [ ";
+        for(auto [k,v] : *(var->arr_val)) {
+            out << " " << k << " : " ;
+            switch (v.type) {
+                case 0 : out << v.iv ;  break;
+                case 1 : out << v.fv ; break;
+            }
+            out << " | ";
+        }
+        out << " ]";
+    }
+    out << '\n';
+}
+
 void AstScalarType::print(std::ostream &out, unsigned int indent) const {
   print_indent(out, indent);
   out << type_string(this) << '\n';
@@ -99,6 +125,10 @@ void Ident::print(std::ostream &out, unsigned int indent) const {
 void Param::print(std::ostream &out, unsigned int indent) const {
   print_indent(out, indent);
   out << *this << '\n';
+
+  if(var) {
+      dump_var(out, var, indent);
+  }
 }
 
 void LValue::print(std::ostream &out, unsigned int indent) const {
@@ -111,6 +141,10 @@ void LValue::print(std::ostream &out, unsigned int indent) const {
     out << ']';
   }
   out << '\n';
+
+  if(var) {
+      dump_var(out, var, indent);
+  }
 }
 
 void UnaryExpr::print(std::ostream &out, unsigned int indent) const {
@@ -213,6 +247,10 @@ void Decl::print(std::ostream &out, unsigned int indent) const {
   out << _type << ' ' << *_ident << '\n';
   if (_init)
     _init->print(out, indent + INDENT_LEN);
+
+  if(var) {
+      dump_var(out, var, indent);
+  }
 }
 
 void Block::print(std::ostream &out, unsigned int indent) const {

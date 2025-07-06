@@ -42,7 +42,7 @@ public:
             : _type(type) , _dimensions(std::move(dimensions)), _omit_first_dimesion(omit_first_dimesion) {}
     void print(std::ostream &out, unsigned level) const override;
 
-    ScalarType::Type base_type() const { return _type.type(); }
+    ScalarType::Type base_type() const { return _type.type();  }
     const std::vector<Dimension>& dimensions() const { return _dimensions; }
     bool omit_first_dimesion() const { return  _omit_first_dimesion;}
 

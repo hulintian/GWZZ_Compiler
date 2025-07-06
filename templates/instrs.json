@@ -1,0 +1,126 @@
+{
+    "headers": ["IR/BasicBlock.hpp", 
+                "common/type.hpp", 
+                "common/defines.hpp",
+                "IR/Function.hpp"],
+
+    "classes" : [
+        {
+            "classname" : "Alloca",
+            "constructor_args" : [
+                {"type" : "Type*", "name" : "ty"},
+                {"type" : "std::string", "name" : "name"}
+            ],
+            "methods": [
+                {"return_type": "Type*", "name" : "get_type", "args":"", "is_const": true},
+                {"return_type": "unsigned", "name" : "get_align_size", "args":"", "is_const": true}
+            ],
+            "members": [
+                {"type": "unsigned", "name": "_align_size"},
+                {"type": "Type*", "name": "_type"},
+                {"type": "std::string", "name": "_name"}
+            ]
+        },
+        {
+            "classname" : "Load",
+            "constructor_args" : [
+                {"type" : "Type*", "name" : "ty"},
+                {"type" : "Value*", "name" : "dst"},
+                {"type" : "Value*", "name" : "src"}
+            ],
+            "methods": [
+                {"return_type": "Type*", "name" : "get_type", "args":"", "is_const": true},
+                {"return_type": "unsigned", "name" : "get_align_size", "args":"", "is_const": true}
+            ],
+            "members": [
+                {"type": "unsigned", "name": "_align_size"},
+                {"type": "Type*", "name": "_type"}
+            ]
+        },
+        {
+            "classname" : "Store",
+            "constructor_args" : [
+                {"type" : "Type*", "name" : "ty"},
+                {"type" : "Value*", "name" : "dst"},
+                {"type" : "Value*", "name" : "src"}
+            ],
+            "methods": [
+                {"return_type": "Type*", "name" : "get_type", "args":"", "is_const": true},
+                {"return_type": "unsigned", "name" : "get_align_size", "args":"", "is_const": true}
+            ],
+            "members": [
+                {"type": "unsigned", "name": "_align_size"},
+                {"type": "Type*", "name": "_type"}
+            ]
+        },
+        {
+            "classname" : "Binary",
+            "constructor_args" : [
+                {"type" : "Type*", "name" : "ty"},
+                {"type" : "BinaryOp", "name" : "bop"},
+                {"type" : "Value*", "name" : "lhs"},
+                {"type" : "Value*", "name" : "rhs"}
+            ],
+            "methods": [
+                {"return_type": "Type*",    "name" : "get_ty" , "args":"", "is_const": true},
+                {"return_type": "BinaryOp", "name" : "get_bop", "args":"", "is_const": true},
+                {"return_type": "Value*",   "name" : "get_lhs", "args":"", "is_const": true},
+                {"return_type": "Value*",   "name" : "get_rhs", "args":"", "is_const": true}
+            ],
+            "members": [
+                {"type" : "Type*",      "name" : "_ty" },
+                {"type" : "BinaryOp",   "name" : "_bop"},
+                {"type" : "Value*",     "name" : "_lhs"},
+                {"type" : "Value*",     "name" : "_rhs"}
+            ]
+        },
+        {
+            "classname" : "Convert",
+            "constructor_args" : [
+                {"type": "Value*", "name": "src"},
+                {"type": "Type*", "name":"src_type"},
+                {"type": "Type*", "name":"dst_type"}
+            ],
+            "methods" : [
+                {"return_type": "Value*",      "name": "get_src", "args" : "", "is_const": true},
+                {"return_type": "Type*",       "name":"get_src_type", "args" : "" ,  "is_const": true},
+                {"return_type": "Type*",       "name":"get_dst_type", "args" : "", "is_const": true}
+            ],
+            "members" : [
+                {"type": "Value*",      "name": "src"},
+                {"type": "Type*",       "name":"src_type"},
+                {"type": "Type*",       "name":"dst_type"}
+            ]
+        },
+        {
+            "classname" : "Call",
+            "constructor_args" : [
+                {"type": "IR::Function*", "name": "func"},
+                {"type": "std::vector<Value*>", "name": "args"}
+            ],
+            "methods" : [
+                {"return_type": "IR::Function*",      "name": "get_func", "args" : "", "is_const": true},
+                {"return_type": "std::vector<Value*>",      "name": "get_args", "args" : "", "is_const": true}
+            ],
+            "members" : [
+                {"type": "IR::Function*", "name": "_func"},
+                {"type": "std::vector<Value*>", "name": "_args"}
+            ]
+        },
+        {
+            "classname" : "GetElementPtr",
+            "constructor_args" : [
+                {"type": "Type*", "name": "arr_type"},
+                {"type": "std::vector<Value*>", "name": "idxs"}
+            ],
+            "methods" : [
+                {"return_type": "IR::Function*",      "name": "get_func", "args" : "", "is_const": true},
+                {"return_type": "std::vector<Value*>",      "name": "get_args", "args" : "", "is_const": true}
+            ],
+            "members" : [
+                {"type": "IR::Function*", "name": "_func"},
+                {"type": "std::vector<Value*>", "name": "_args"}
+            ]
+        }
+    ]
+}

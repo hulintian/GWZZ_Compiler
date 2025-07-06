@@ -8,7 +8,7 @@
 
 /// 标量类型
 enum ScalarType {
-    Int,
+    Int = 0,
     Float,
     String,
     Void
@@ -99,7 +99,7 @@ inline std::string type_string(Type t) {
     bool ptr = false;
     int i = 0;
 
-    // 第一个维度是0
+    // 第一个维度是0，是指针，函数参数
     if(t.dims[0] == 0) {
         ptr = true;
         i = 1;

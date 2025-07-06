@@ -54,6 +54,7 @@ private:
     Type parse_type(const std::unique_ptr<ast::SysyType>&);
 public:
     void visit_compUnits(const ast::CompUnits&);
+
     Sema();
 };
 
