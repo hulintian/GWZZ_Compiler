@@ -1,4 +1,5 @@
-set args tests/t7_mlv.sy
+set args tests/t1.sy
+# set args tests/t7_mlv.sy
 # set args tests/test/24_if_test1.sy 
 
 set print pretty on

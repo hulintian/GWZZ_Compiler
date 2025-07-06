@@ -1,0 +1,18 @@
+#include "Instructions.hpp"
+
+namespace IR {
+/* User Code Start: Global */
+
+/* User Code End: Global */
+{% for cls in classes %}
+// ======================= Start {{ cls.classname }} =======================
+{% for method in cls.methods %}
+{{ method.type }} {{ cls.classname }}Inst::{{ method.name }}({{ method.args }}){% if method.is_const %} const{% endif %} {
+    /* User Code Start: {{ cls.classname }}::{{ method.name }} */
+
+    /* User Code End: {{ cls.classname }}::{{ method.name }} */
+}
+{% endfor %}
+// ======================= End {{ cls.classname }} =======================
+{% endfor %}
+}
