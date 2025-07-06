@@ -26,7 +26,7 @@ struct ConstValue {
     std::string to_string() const { return type == Int ? std::to_string(iv) : std::to_string(fv); }
 };
 
-/// 值 
+/// 变量 
 struct Var {
   Type type;
   std::optional<ConstValue> val;
