@@ -1,0 +1,168 @@
+# include head files
+headers:
+  - IR/BasicBlock.hpp
+  - common/type.hpp
+  - common/defines.hpp
+  - IR/Function.hpp
+
+classes:
+  - classname: Alloca
+    constructor_args:
+      - type: Type*
+        name: ty
+      - type: std::string
+        name: name
+      - type: unsigned
+        name: alignment
+    members:
+      - type: unsigned
+        name: _alignment
+        generate_get: true
+      - type: Type*
+        name: _type
+        generate_get: true
+      - type: std::string
+        name: _name
+        generate_get: true
+    methods:
+      - type: std::string 
+        name: to_str
+      - type: std::string 
+        name: to_llvm
+      - type: void 
+        name: dump
+
+  - classname: Load
+    constructor_args:
+      - type: Type*
+        name: ty
+      - type: Value*
+        name: dst
+      - type: Value*
+        name: src
+    members:
+      - type: unsigned
+        name: _align_size
+        generate_get: true
+      - type: Type*
+        name: _type
+        generate_get: true
+    methods:
+      - type: std::string 
+        name: to_str
+      - type: std::string 
+        name: to_llvm
+
+  - classname: Store
+    constructor_args:
+      - type: Type* 
+        name: ty
+      - type: Value*
+        name: dst
+      - type: Value*
+        name: src
+    members:
+      - type: unsigned
+        name: _align_size
+        generate_get: true
+      - type: Type*
+        name: _type
+        generate_get: true
+    methods:
+      - type: std::string 
+        name: to_str
+      - type: std::string 
+        name: to_llvm
+
+  - classname: Binary
+    constructor_args:
+      - type: Type*
+        name: ty
+      - type: BinaryOp
+        name: bop
+      - type: Value*
+        name: lhs
+      - type: Value*
+        name: rhs
+    members:
+      - type: Type*
+        name: _ty
+        generate_get: true
+      - type: BinaryOp
+        name: _bop
+        generate_get: true
+      - type: Value*
+        name: _lhs
+        generate_get: true
+      - type: Value*
+        name: _rhs
+        generate_get: true
+    methods:
+      - type: std::string 
+        name: to_str
+      - type: std::string 
+        name: to_llvm
+
+
+  - classname: Convert
+    constructor_args:
+      - type: Value*
+        name: src
+      - type: Type*
+        name: src_type
+      - type: Type*
+        name: dst_type
+    members:
+      - type: Value*
+        name: src
+        generate_get: true
+      - type: Type*
+        name: src_type
+        generate_get: true
+      - type: Type*
+        name: dst_type
+        generate_get: true
+    methods:
+      - type: std::string 
+        name: to_str
+      - type: std::string 
+        name: to_llvm
+
+  - classname: Call
+    constructor_args:
+      - type: IR::Function*
+        name: func
+      - type: std::vector<Value*>
+        name: args
+    members:
+      - type: IR::Function*
+        name: _func
+        generate_get: true
+      - type: std::vector<Value*>
+        name: _args
+        generate_get: true
+    methods:
+      - type: std::string 
+        name: to_str
+      - type: std::string 
+        name: to_llvm
+
+  - classname: GetElementPtr
+    constructor_args:
+      - type: Type*
+        name: arr_type
+      - type: std::vector<Value*>
+        name: indices
+    members:
+      - type: Type*
+        name: _arr_type
+        generate_get: true
+      - type: std::vector<Value*>
+        name: _indices
+        generate_get: true
+    methods:
+      - type: std::string 
+        name: to_str
+      - type: std::string 
+        name: to_llvm
+
