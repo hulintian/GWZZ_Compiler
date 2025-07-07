@@ -8,7 +8,7 @@ namespace IR {
 
 class Instruction : public User {
 public :
-    Instruction(Type* t, std::string name) : User(t, name){}
+    Instruction(Type* t, std::string name, BasicBlock* bb) : User(t, name), parent(bb){}
 
     std::string to_str();
     std::string to_llvm();
@@ -34,9 +34,9 @@ public:
         /* User Code End: {{ cls.classname }} construct function */
     }
 
-    /* User Code Start: */
+    /* User Code Start: {{ cls.classname }} place */
 
-    /* User Code End: */
+    /* User Code End: {{ cls.classname }} place */
 
     {%- for method in cls.methods %}
     {{ method.type }} {{ method.name }}({{ method.args }}){{ " const" if method.is_const }};
