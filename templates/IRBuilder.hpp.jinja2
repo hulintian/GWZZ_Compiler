@@ -35,13 +35,13 @@ public:
 
     {% for Instr in Instructions %} 
     Instruction* create_{{ Instr.Instruction }}(
-        /* User Code Start: */
+        /* User Code Start: create_{{ Instr.Instruction }} args */
 
-        /* User Code End: */
+        /* User Code End: create_{{ Instr.Instruction }} args */
     ){
-        /* User Code Start: */
+        /* User Code Start: create_{{ Instr.Instruction }} */
         return nullptr;
-        /* User Code End: */
+        /* User Code End: create_{{ Instr.Instruction }} */
     }
     {% endfor %}
 private:
@@ -50,8 +50,8 @@ private:
     {%- endfor %}
 
 
-    /* User Code Start: */
+    /* User Code Start: 2 */
 
-    /* User Code End: */
+    /* User Code End: 2 */
 };
 }
