@@ -21,7 +21,7 @@ class Module;
 class Function {
 public:
     Function(Module* m, Type* return_type, std::vector<Type*> arg_types, std::vector<std::string> arg_names, bool is_lib)
-        : _parent(m), _return_type(return_type), _arg_types(arg_types), _arg_names(arg_names), _is_lib(is_lib)  {}
+        : _parent(m), _return_type(return_type), _arg_types(arg_types), _arg_names(arg_names), _is_lib(is_lib){}
     
     std::string get_func_name() const {
         return _func_name;
@@ -38,6 +38,21 @@ public:
     Type* get_return_type() const {
         return _return_type;
     }
+    
+    BasicBlock* find_bb(int idx) {
+        if(_cfg->idx2bb.find(idx) != _cfg->idx2bb.end()) {
+            return _cfg->idx2bb[idx];
+        }
+        return nullptr;
+    }
+
+    BasicBlock* get_entry_bb() const {
+        return entry_bb;
+    }
+    
+    void set_entry_bb(BasicBlock* bb) {
+        entry_bb = bb;
+    }
 
 private:
     std::list<BasicBlock*> _bbs;
@@ -49,6 +64,8 @@ private:
     std::vector<Type*> _arg_types;
     std::vector<std::string> _arg_names;
     bool _is_lib;
+
+    BasicBlock* entry_bb;
 };
 
 }
