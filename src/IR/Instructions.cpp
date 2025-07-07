@@ -79,7 +79,7 @@ std::string BinaryInst::to_llvm() {
 
 std::string ConvertInst::to_str() {
     /* User Code Start: Convert::to_str */
-
+    return "cvt";
     /* User Code End: Convert::to_str */
 }
 
