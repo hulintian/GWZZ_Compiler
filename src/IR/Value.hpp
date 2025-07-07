@@ -17,6 +17,7 @@ public:
     Value(Type *t, const std::string &name) : _type(t), _name(name) {}
     ~Value() = default;
     Type *get_type() const;
+    std::string get_name() { return _name; }
     std::list<Use> &get_use_list() { return _use_list; }
     void add_use(Value *val, unsigned arg_no = 0) { 
         Use u = {val, arg_no};
