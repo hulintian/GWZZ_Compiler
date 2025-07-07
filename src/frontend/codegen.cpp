@@ -13,12 +13,10 @@ IR::Module* CodeGen::gen(const ast::CompUnits& cu) {
     for(auto& ci : cu.children()) {
         if(ci.index() == 0)  {
             auto &decl = std::get<std::unique_ptr<ast::Decl>>(ci);
-            IR::GlobalValue* gv = gen_gv(*decl);
-            _module->add_gv(gv);
+            gen_gv(*decl);
         } else {
             auto &func = std::get<std::unique_ptr<ast::Func>>(ci);
             IR::Function* ifunc = gen_func(*func);
-            _module->add_func(ifunc);
         }
     }
     return _module;
@@ -37,6 +35,7 @@ void CodeGen::gen_gv(const ast::Decl& decl) {
 IR::Function* CodeGen::gen_func(const ast::Func& func) {
     assert(!_module->find_function(func.ident().identifier()) && "Function is already defined.\n");
     auto &type = func.type();
+    auto & func_name = func.ident().identifier();
     Type *return_type;
     if(type) {
         return_type = new Type(type->type());
@@ -48,12 +47,20 @@ IR::Function* CodeGen::gen_func(const ast::Func& func) {
     std::vector<std::string> p_names;
     for(auto &parm : func.params()) {
         auto &p_name = parm->ident().identifier();
-//         auto t = 
-//         if(auto arg_type = std::dynamic_cast<const ast::ScalarType*>(parm.))
+        auto p_type = &parm->var->type;
+        p_types.push_back(p_type);
+        p_names.push_back(p_name);
     }
+
+    auto nf = builder->create_func(func_name, return_type, p_types, p_names, false);
+
     
+    // then translate the body 
+
     
-    return nullptr;
+    // set the insert ptr nullptr, exit func
+    ctx->set_current_basic_block(nullptr);
+    return nf;
 }
 
 }

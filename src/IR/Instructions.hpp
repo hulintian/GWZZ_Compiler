@@ -9,7 +9,7 @@ namespace IR {
 
 class Instruction : public User {
 public :
-    Instruction(Type* t, std::string name) : User(t, name){}
+    Instruction(Type* t, std::string name, BasicBlock* bb) : User(t, name), parent(bb){}
 
     std::string to_str();
     std::string to_llvm();
@@ -22,10 +22,10 @@ private :
 
 class AllocaInst : public Instruction {
 public:
-    AllocaInst(Type* ty, std::string name, unsigned alignment)
+    AllocaInst(Type* ty, std::string name, unsigned alignment, BasicBlock* bb)
     /* User Code Start: Alloca */
         // 这里的name指的是用alloca从内存中分配到内存的名字，
-    : Instruction(ty, name)
+    : Instruction(ty, name, bb)
     /* User Code End: Alloca */
     {
         /* User Code Start: Alloca construct function */
@@ -33,9 +33,9 @@ public:
         /* User Code End: Alloca construct function */
     }
 
-    /* User Code Start:  */
+    /* User Code Start: Alloca place */
 
-    /* User Code End:  */
+    /* User Code End: Alloca place */
     std::string to_str();
     std::string to_llvm();
     void dump();
@@ -67,9 +67,9 @@ private:
 
 class LoadInst : public Instruction {
 public:
-    LoadInst(Type* ty, Value* dst, Value* src)
+    LoadInst(Type* ty, Value* dst, Value* src, std::string _name, BasicBlock* bb)
     /* User Code Start: Load */
-    :Instruction(ty, "")
+    :Instruction(ty, _name, bb)
     /* User Code End: Load */
     {
         /* User Code Start: Load construct function */
@@ -77,9 +77,9 @@ public:
         /* User Code End: Load construct function */
     }
 
-    /* User Code Start:  */
+    /* User Code Start: Load place */
 
-    /* User Code End:  */
+    /* User Code End: Load place */
     std::string to_str();
     std::string to_llvm();
 
@@ -103,9 +103,9 @@ private:
 
 class StoreInst : public Instruction {
 public:
-    StoreInst(Type* ty, Value* dst, Value* src)
+    StoreInst(Type* ty, Value* dst, std::string _name, Value* src, BasicBlock* bb)
     /* User Code Start: Store */
-    : Instruction(ty, "")
+    : Instruction(ty, _name, bb)
     /* User Code End: Store */
     {
         /* User Code Start: Store construct function */
@@ -113,9 +113,9 @@ public:
         /* User Code End: Store construct function */
     }
 
-    /* User Code Start:  */
+    /* User Code Start: Store place */
 
-    /* User Code End:  */
+    /* User Code End: Store place */
     std::string to_str();
     std::string to_llvm();
 
@@ -139,9 +139,9 @@ private:
 
 class BinaryInst : public Instruction {
 public:
-    BinaryInst(Type* ty, BinaryOp bop, Value* lhs, Value* rhs)
+    BinaryInst(Type* ty, BinaryOp bop, Value* lhs, Value* rhs, std::string _name, BasicBlock* bb)
     /* User Code Start: Binary */
-    : Instruction(ty, "")
+    : Instruction(ty, _name, bb)
     /* User Code End: Binary */
     {
         /* User Code Start: Binary construct function */
@@ -149,9 +149,9 @@ public:
         /* User Code End: Binary construct function */
     }
 
-    /* User Code Start:  */
+    /* User Code Start: Binary place */
 
-    /* User Code End:  */
+    /* User Code End: Binary place */
     std::string to_str();
     std::string to_llvm();
 
@@ -189,9 +189,9 @@ private:
 
 class ConvertInst : public Instruction {
 public:
-    ConvertInst(Value* src, Type* src_type, Type* dst_type)
+    ConvertInst(Value* src, Type* src_type, Type* dst_type, std::string _name, BasicBlock* bb)
     /* User Code Start: Convert */
-    : Instruction(dst_type, "")
+    : Instruction(dst_type, _name, bb)
         /* User Code End: Convert */
     {
         /* User Code Start: Convert construct function */
@@ -199,9 +199,9 @@ public:
         /* User Code End: Convert construct function */
     }
 
-    /* User Code Start:  */
+    /* User Code Start: Convert place */
 
-    /* User Code End:  */
+    /* User Code End: Convert place */
     std::string to_str();
     std::string to_llvm();
 
@@ -232,9 +232,9 @@ private:
 
 class CallInst : public Instruction {
 public:
-    CallInst(IR::Function* func, std::vector<Value*> args)
+    CallInst(IR::Function* func, std::vector<Value*> args, std::string _name, BasicBlock* bb)
     /* User Code Start: Call */
-    : Instruction(func->get_return_type(), "")
+    : Instruction(func->get_return_type(), _name, bb)
     /* User Code End: Call */
     {
         /* User Code Start: Call construct function */
@@ -242,9 +242,9 @@ public:
         /* User Code End: Call construct function */
     }
 
-    /* User Code Start:  */
+    /* User Code Start: Call place */
 
-    /* User Code End:  */
+    /* User Code End: Call place */
     std::string to_str();
     std::string to_llvm();
 
@@ -268,9 +268,9 @@ private:
 
 class GetElementPtrInst : public Instruction {
 public:
-    GetElementPtrInst(Type* arr_type, std::vector<Value*> indices)
+    GetElementPtrInst(Type* arr_type, std::vector<Value*> indices, std::string _name, BasicBlock* bb)
     /* User Code Start: GetElementPtr */
-    : Instruction(arr_type, "")
+    : Instruction(arr_type, _name, bb)
     /* User Code End: GetElementPtr */
     {
         /* User Code Start: GetElementPtr construct function */
@@ -278,9 +278,9 @@ public:
         /* User Code End: GetElementPtr construct function */
     }
 
-    /* User Code Start:  */
+    /* User Code Start: GetElementPtr place */
 
-    /* User Code End:  */
+    /* User Code End: GetElementPtr place */
     std::string to_str();
     std::string to_llvm();
 
