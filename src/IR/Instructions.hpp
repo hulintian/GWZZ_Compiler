@@ -1,7 +1,8 @@
 #pragma once
 #include "IR/User.hpp" 
 #include "common/type.hpp" 
-#include "common/defines.hpp" 
+#include "common/defines.hpp"
+#include "IR/BasicBlock.hpp"
 
 namespace IR {
 
@@ -13,11 +14,14 @@ public :
 
     std::string to_str();
     std::string to_llvm();
+
+    BasicBlock* get_parent() { return this->parent; }
+    Type* get_type() { return this->inst_type; }
 private :
     // The parent baisc block
     BasicBlock* parent;        
     // three address form, maintain the result
-    Type* ints_type;
+    Type* inst_type;
 };
 
 class AllocaInst : public Instruction {
@@ -29,7 +33,7 @@ public:
     /* User Code End: Alloca */
     {
         /* User Code Start: Alloca construct function */
-        this->bb->add_instr(this);
+        this->get_parent()->add_instr(this);
         /* User Code End: Alloca construct function */
     }
 
