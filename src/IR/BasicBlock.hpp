@@ -1,6 +1,5 @@
 #pragma once
 
-#include "IR/Instructions.hpp"
 #include <cassert>
 #include <ostream>
 #include <string>
@@ -9,6 +8,7 @@
 namespace IR {
 
 class Function;
+class Instruction;
 class BasicBlock{
 public:
     BasicBlock(const std::string &name, Function* func, int idx) : _parent(func), bb_label(name), _idx(idx) {}
