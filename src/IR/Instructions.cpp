@@ -9,13 +9,13 @@ namespace IR {
 
 std::string AllocaInst::to_str() {
     /* User Code Start: Alloca::to_str */
-
+    return "Alloca " + this->_name;
     /* User Code End: Alloca::to_str */
 }
 
 std::string AllocaInst::to_llvm() {
     /* User Code Start: Alloca::to_llvm */
-
+    return "Alloca ";
     /* User Code End: Alloca::to_llvm */
 }
 
@@ -31,13 +31,13 @@ void AllocaInst::dump() {
 
 std::string LoadInst::to_str() {
     /* User Code Start: Load::to_str */
-
+    return "Load ";
     /* User Code End: Load::to_str */
 }
 
 std::string LoadInst::to_llvm() {
     /* User Code Start: Load::to_llvm */
-
+    return "Load ";
     /* User Code End: Load::to_llvm */
 }
 
@@ -47,13 +47,13 @@ std::string LoadInst::to_llvm() {
 
 std::string StoreInst::to_str() {
     /* User Code Start: Store::to_str */
-
+    return "Store";
     /* User Code End: Store::to_str */
 }
 
 std::string StoreInst::to_llvm() {
     /* User Code Start: Store::to_llvm */
-
+    return "Store";
     /* User Code End: Store::to_llvm */
 }
 
@@ -63,13 +63,13 @@ std::string StoreInst::to_llvm() {
 
 std::string BinaryInst::to_str() {
     /* User Code Start: Binary::to_str */
-
+    return "Binary ";
     /* User Code End: Binary::to_str */
 }
 
 std::string BinaryInst::to_llvm() {
     /* User Code Start: Binary::to_llvm */
-
+    return "Binary ";
     /* User Code End: Binary::to_llvm */
 }
 
