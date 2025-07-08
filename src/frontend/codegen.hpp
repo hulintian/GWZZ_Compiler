@@ -13,8 +13,8 @@ class CodeGen {
 public:
     CodeGen(){
         _module = new IR::Module;
-        ctx = new Context();
-        builder = new IR::IRBuilder(_module, ctx);
+        ctx = new Context(_module);
+        builder = new IR::IRBuilder(ctx);
     }
 
     IR::Module* gen(const ast::CompUnits& cu);

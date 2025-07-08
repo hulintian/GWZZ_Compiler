@@ -2,23 +2,21 @@
 #include "IR/Module.hpp"
 #include "IR/BasicBlock.hpp"
 #include "IR/Instructions.hpp"
-#include <cassert>
 #include <memory> 
-#include <vector>
 #include "IR/GlobalValue.hpp" 
 #include "IR/Context.hpp"
-#include "common/type.hpp"
 
 namespace IR {
 class IRBuilder {
 public:
-    IRBuilder(Module* m, Context* ctx) : _cur_module(m), _cur_ctx(ctx)  {}
+    IRBuilder(Context* ctx) : _cur_ctx(ctx)  {}
 
     /* User Code Start: code space 1 */
     // TODO : 在此微操
         // here is safe
     
     GlobalValue* create_gv(std::shared_ptr<Var> var, const std::string &sym) {
+        auto _cur_module = this->get_cur_module();
         bool initialized = var->arr_val || var->val;
         auto gv = new GlobalValue(_cur_module, sym, var, initialized); 
         _cur_module->add_gv(gv);
@@ -35,18 +33,21 @@ public:
     
     // This function initially create an entry basic block , if is not lib func
     Function* create_func(const std::string &name, Type* return_type, std::vector<Type*> args_type, std::vector<std::string> args_name, bool is_lib) {
+        auto _cur_module = this->get_cur_module();
         assert(!_cur_module->find_function(name) && "Already exists Func ");
         auto nfunc = new Function(_cur_module, return_type, args_type, args_name, is_lib);
         _cur_module->add_func(nfunc);
         
         std::string entry_name = "entry";
         auto entry_bb = create_bb(entry_name, nfunc);
+        // set the insert point
         _cur_ctx->set_current_basic_block(entry_bb);
+        _cur_ctx->set_current_function(nfunc);
 
         //then parse the arguments
         for(int i=0; i<args_type.size(); i++) {
             // create alloca Instructions
-            create_alloca();
+            create_alloca(args_name[i], args_type[i]);
         }
 
         return nfunc;
@@ -55,74 +56,43 @@ public:
 
     IR::Module* get_cur_module() const {
         /* User Code Start: ::get_cur_module */
-        return _cur_module;
+        return _cur_ctx->get_current_module();
         /* User Code End: ::get_cur_module */
     }
       
     IR::Function* get_cur_func() const {
         /* User Code Start: ::get_cur_func */
-        return _cur_func;
+        return _cur_ctx->get_current_function();
         /* User Code End: ::get_cur_func */
     }
       
     IR::BasicBlock* get_cur_bb() const {
         /* User Code Start: ::get_cur_bb */
-        return _cur_bb;
+        return _cur_ctx->get_current_basic_block();
         /* User Code End: ::get_cur_bb */
     }
       
-    Context* get_cur_ctx() const {
-        /* User Code Start: ::get_cur_ctx */
-        return _cur_ctx;
-        /* User Code End: ::get_cur_ctx */
-    }
-     
-
-     
     void set_cur_module( IR::Module* module ) {
         /* User Code Start: set_module */
-        this->_cur_module = module;
+        _cur_ctx->set_current_module(module);
         /* User Code End: set_module */
     }
       
     void set_cur_func( IR::Function* func ) {
         /* User Code Start: set_func */
-        this->_cur_func = func;
+        _cur_ctx->set_current_function(func);
         /* User Code End: set_func */
     }
       
     void set_cur_bb( IR::BasicBlock* bb ) {
         /* User Code Start: set_bb */
-        this->_cur_bb = bb;
+        _cur_ctx->set_current_basic_block(bb);
         /* User Code End: set_bb */
     }
       
-    void set_cur_ctx( Context* ctx ) {
-        /* User Code Start: set_ctx */
-        this->_cur_ctx = ctx;
-        /* User Code End: set_ctx */
-    }
     /* User Code End: code space 1 */
 
      
-    IR::Module* get_cur_module() const {
-        /* User Code Start: ::get_cur_module */
-        return _cur_module;
-        /* User Code End: ::get_cur_module */
-    }
-      
-    IR::Function* get_cur_func() const {
-        /* User Code Start: ::get_cur_func */
-        return _cur_func;
-        /* User Code End: ::get_cur_func */
-    }
-      
-    IR::BasicBlock* get_cur_bb() const {
-        /* User Code Start: ::get_cur_bb */
-        return _cur_bb;
-        /* User Code End: ::get_cur_bb */
-    }
-      
     Context* get_cur_ctx() const {
         /* User Code Start: ::get_cur_ctx */
         return _cur_ctx;
@@ -131,24 +101,6 @@ public:
      
 
      
-    void set_cur_module( IR::Module* module ) {
-        /* User Code Start: set_module */
-        this->_cur_module = module;
-        /* User Code End: set_module */
-    }
-      
-    void set_cur_func( IR::Function* func ) {
-        /* User Code Start: set_func */
-        this->_cur_func = func;
-        /* User Code End: set_func */
-    }
-      
-    void set_cur_bb( IR::BasicBlock* bb ) {
-        /* User Code Start: set_bb */
-        this->_cur_bb = bb;
-        /* User Code End: set_bb */
-    }
-      
     void set_cur_ctx( Context* ctx ) {
         /* User Code Start: set_ctx */
         this->_cur_ctx = ctx;
@@ -159,7 +111,7 @@ public:
      
     Instruction* create_alloca(
         /* User Code Start: create_alloca args */
-        std::string name, Type* ty, 
+        std::string name, Type* ty 
         /* User Code End: create_alloca args */
     ){
         /* User Code Start: create_alloca */
@@ -208,9 +160,6 @@ public:
     }
     
 private:
-    IR::Module* _cur_module;
-    IR::Function* _cur_func;
-    IR::BasicBlock* _cur_bb;
     Context* _cur_ctx;
 
 
