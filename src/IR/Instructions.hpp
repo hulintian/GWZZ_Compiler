@@ -1,12 +1,12 @@
 #pragma once
 #include "IR/User.hpp" 
-#include "IR/BasicBlock.hpp" 
 #include "common/type.hpp" 
 #include "common/defines.hpp" 
-#include "IR/Function.hpp"
 
 namespace IR {
 
+class BasicBlock;
+class Function;
 class Instruction : public User {
 public :
     Instruction(Type* t, std::string name, BasicBlock* bb) : User(t, name), parent(bb){}
@@ -29,7 +29,7 @@ public:
     /* User Code End: Alloca */
     {
         /* User Code Start: Alloca construct function */
-
+        this->bb->add_instr(this);
         /* User Code End: Alloca construct function */
     }
 
