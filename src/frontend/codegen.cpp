@@ -60,6 +60,7 @@ IR::Function* CodeGen::gen_func(const ast::Func& func) {
     
     // set the insert ptr nullptr, exit func
     ctx->set_current_basic_block(nullptr);
+    ctx->set_current_function(nf);
     return nf;
 }
 
