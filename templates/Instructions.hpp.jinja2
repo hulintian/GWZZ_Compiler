@@ -6,17 +6,22 @@
 
 namespace IR {
 
+class BasicBlock;
+class Function;
 class Instruction : public User {
 public :
     Instruction(Type* t, std::string name, BasicBlock* bb) : User(t, name), parent(bb){}
 
     std::string to_str();
     std::string to_llvm();
+
+    BasicBlock* get_parent() { return this->parent; }
+    Type* get_type() { return this->inst_type; }
 private :
     // The parent baisc block
     BasicBlock* parent;        
     // three address form, maintain the result
-    Type* ints_type;
+    Type* inst_type;
 };
 
 
