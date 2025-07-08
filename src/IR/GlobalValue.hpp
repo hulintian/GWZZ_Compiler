@@ -2,7 +2,9 @@
 
 #include "IR/Value.hpp"
 #include "common/defines.hpp"
+#include <cassert>
 #include <memory>
+#include <ostream>
 
 namespace IR {
 
@@ -13,6 +15,14 @@ public:
     
 
     const std::string get_symbol() const { return _symbol; }
+    const Type get_type() const { 
+        assert(_var && "Noninitialized var\n");
+        return _var->type; 
+    }
+    
+    const std::shared_ptr<Var> get_var() const { return _var; }
+    
+    void dump(std::ostream &out);
 private:
     Module* moulde;
     std::string _symbol;

@@ -1,7 +1,10 @@
 #pragma once
 
+#include "IR/Instructions.hpp"
 #include <cassert>
+#include <ostream>
 #include <string>
+#include <vector>
 
 namespace IR {
 
@@ -18,9 +21,18 @@ public:
     }
 
     int get_bb_idx() const { return _idx; }
+    
+    std::vector<Instruction*> get_intrs() { return _instrs; }
+
+    void add_instr(Instruction* i) {
+        this->get_intrs().push_back(i);
+    }
+    
+    void dump(std::ostream& out);
 private:
     Function* _parent;
     std::string bb_label;
     int _idx;
+    std::vector<Instruction*> _instrs;
 };
 }

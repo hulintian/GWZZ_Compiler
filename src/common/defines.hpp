@@ -1,9 +1,12 @@
 #pragma once 
 
 #include "type.hpp"
+#include <functional>
 #include <memory>
 #include <map>
 #include <optional>
+#include <string>
+#include <vector>
 
 #define TypeCase(res, type, expr) if (auto res = dynamic_cast<type>(expr))
 
@@ -37,7 +40,35 @@ struct Var {
   Var(Type type_) : type{std::move(type_)} {}
   Var(Type type_, std::optional<ConstValue> value)
       : type{std::move(type_)}, val{std::move(value)} {}
+
+  std::string to_string() {
+        std::string ans = "";
+        if(!type.is_array()) {
+            if(val) {
+                switch (type.base_type) {
+                    case Int : ans = std::to_string(val->iv);  break;
+                    case Float : ans = std::to_string(val->fv);  break;
+                }
+            }
+        } else {
+            ans += " [ ";
+            int n = type.nr_elems();
+            for(int i=0; i<n; i++) {
+                if(arr_val->find(i) != arr_val->end()) {
+                    ans += (*arr_val)[i].to_string();
+                } else {
+                    ans += "0";
+                }
+                if(i != n-1) {
+                    ans += ",";
+                }
+            }
+            ans += " ] ";
+        }
+        return ans;
+    }
 };
+
 
 /// 正、负、非
 enum class UnaryOp { Add, Sub, Not };
