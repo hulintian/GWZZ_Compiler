@@ -3,6 +3,7 @@
 #include "IR/BasicBlock.hpp"
 #include "IR/Instructions.hpp"
 #include <memory>
+#include <vector>
 {%- for header in headers %} 
 #include "{{ header }}"
 {%- endfor %}
@@ -10,7 +11,7 @@
 namespace IR {
 class IRBuilder {
 public:
-    IRBuilder(Module* m, Context* ctx) : _cur_module(m), _cur_ctx(ctx)  {}
+    IRBuilder(Context* ctx) : _cur_ctx(ctx)  {}
 
     /* User Code Start: code space 1 */
     // TODO : 在此微操

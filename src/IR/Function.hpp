@@ -4,6 +4,7 @@
 #include "common/type.hpp"
 #include <list>
 #include <map>
+#include <ostream>
 #include <vector>
 namespace IR {
 
@@ -15,6 +16,8 @@ public:
     std::map<int, BasicBlock*> idx2bb;
     std::map<int, int> prev_bb;
     std::map<int, int> succ_bb;
+    
+    void dump(std::ostream &out) ;
 };
 
 class Module;
@@ -50,10 +53,19 @@ public:
         return entry_bb;
     }
     
+    const std::vector<Type*> get_params_type() const {
+        return _arg_types;
+    }
+    
+    CFG* get_cfg() const {
+        return _cfg;
+    }
+    
     void set_entry_bb(BasicBlock* bb) {
         entry_bb = bb;
     }
 
+    void dump(std::ostream& out);
 private:
     std::list<BasicBlock*> _bbs;
     CFG* _cfg;
