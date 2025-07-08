@@ -2,7 +2,8 @@
 #include "IR/Module.hpp"
 #include "IR/BasicBlock.hpp"
 #include "IR/Instructions.hpp"
-#include <memory> 
+#include <memory>
+#include <vector> 
 #include "IR/GlobalValue.hpp" 
 #include "IR/Context.hpp"
 
