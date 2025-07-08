@@ -3,22 +3,23 @@ headers:
   - IR/Context.hpp
 
 members:
-  - type : IR::Module* 
-    name : _cur_module 
-    generate_get: true
-    generate_set: true
-  - type : IR::Function*
-    name : _cur_func 
-    generate_get: true
-    generate_set: true
-  - type : IR::BasicBlock*
-    name : _cur_bb
-    generate_get: true
-    generate_set: true
-  - type : Context*
-    name : _cur_ctx
-    generate_get: true
-    generate_set: true
+  #  - type : IR::Module* 
+  #    name : _cur_module 
+  #    generate_get: true
+  #    generate_set: true
+  #  - type : IR::Function*
+  #    name : _cur_func 
+  #    generate_get: true
+  #    generate_set: true
+  #  - type : IR::BasicBlock*
+  #    name : _cur_bb
+  #    generate_get: true
+  #    generate_set: true
+  #直接用封装到context中，维护这些信息
+    - type : Context*
+      name : _cur_ctx
+      generate_get: true
+      generate_set: true
 
 Instructions:
   - Instruction: alloca
