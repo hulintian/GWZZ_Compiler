@@ -86,6 +86,7 @@ std::string ConvertInst::to_str() {
 std::string ConvertInst::to_llvm() {
     /* User Code Start: Convert::to_llvm */
 
+    return "cvt";
     /* User Code End: Convert::to_llvm */
 }
 
@@ -95,13 +96,14 @@ std::string ConvertInst::to_llvm() {
 
 std::string CallInst::to_str() {
     /* User Code Start: Call::to_str */
+    return "Call ";
 
     /* User Code End: Call::to_str */
 }
 
 std::string CallInst::to_llvm() {
     /* User Code Start: Call::to_llvm */
-
+    return "Call ";
     /* User Code End: Call::to_llvm */
 }
 
@@ -117,7 +119,7 @@ std::string GetElementPtrInst::to_str() {
 
 std::string GetElementPtrInst::to_llvm() {
     /* User Code Start: GetElementPtr::to_llvm */
-
+    return "gep";
     /* User Code End: GetElementPtr::to_llvm */
 }
 
