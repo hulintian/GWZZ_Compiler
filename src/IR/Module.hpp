@@ -13,7 +13,7 @@ class Module {
 public:
     Module(){}
 
-    void dump(std::ostream out);
+    void dump(std::ostream &out);
 
     void add_func(Function* func) {
         if(func->is_lib()) {
