@@ -4,9 +4,12 @@
 #include "IR/BasicBlock.hpp"
 #include "IR/Instructions.hpp"
 #include <memory>
+#include <string>
 #include <vector> 
 #include "IR/GlobalValue.hpp" 
 #include "IR/Context.hpp"
+#include "IR/Value.hpp"
+#include "common/type.hpp"
 
 namespace IR {
 class IRBuilder {
@@ -127,11 +130,13 @@ public:
      
     Instruction* create_load(
         /* User Code Start: create_load args */
-
+        Type* type, std::string name, Value* dst, Value* src
         /* User Code End: create_load args */
     ){
         /* User Code Start: create_load */
-        return nullptr;
+        auto inst = new LoadInst(type, dst, src, name, this->get_cur_bb());
+        this->get_cur_bb()->add_instr(inst);
+        return inst;
         /* User Code End: create_load */
     }
      
@@ -163,6 +168,196 @@ public:
         /* User Code Start: create_add */
         return nullptr;
         /* User Code End: create_add */
+    }
+     
+    Instruction* create_sub(
+        /* User Code Start: create_sub args */
+
+        /* User Code End: create_sub args */
+    ){
+        /* User Code Start: create_sub */
+        return nullptr;
+        /* User Code End: create_sub */
+    }
+     
+    Instruction* create_mul(
+        /* User Code Start: create_mul args */
+
+        /* User Code End: create_mul args */
+    ){
+        /* User Code Start: create_mul */
+        return nullptr;
+        /* User Code End: create_mul */
+    }
+     
+    Instruction* create_udiv(
+        /* User Code Start: create_udiv args */
+
+        /* User Code End: create_udiv args */
+    ){
+        /* User Code Start: create_udiv */
+        return nullptr;
+        /* User Code End: create_udiv */
+    }
+     
+    Instruction* create_sdiv(
+        /* User Code Start: create_sdiv args */
+
+        /* User Code End: create_sdiv args */
+    ){
+        /* User Code Start: create_sdiv */
+        return nullptr;
+        /* User Code End: create_sdiv */
+    }
+     
+    Instruction* create_urem(
+        /* User Code Start: create_urem args */
+
+        /* User Code End: create_urem args */
+    ){
+        /* User Code Start: create_urem */
+        return nullptr;
+        /* User Code End: create_urem */
+    }
+     
+    Instruction* create_srem(
+        /* User Code Start: create_srem args */
+
+        /* User Code End: create_srem args */
+    ){
+        /* User Code Start: create_srem */
+        return nullptr;
+        /* User Code End: create_srem */
+    }
+     
+    Instruction* create_fadd(
+        /* User Code Start: create_fadd args */
+
+        /* User Code End: create_fadd args */
+    ){
+        /* User Code Start: create_fadd */
+        return nullptr;
+        /* User Code End: create_fadd */
+    }
+     
+    Instruction* create_fsub(
+        /* User Code Start: create_fsub args */
+
+        /* User Code End: create_fsub args */
+    ){
+        /* User Code Start: create_fsub */
+        return nullptr;
+        /* User Code End: create_fsub */
+    }
+     
+    Instruction* create_fmul(
+        /* User Code Start: create_fmul args */
+
+        /* User Code End: create_fmul args */
+    ){
+        /* User Code Start: create_fmul */
+        return nullptr;
+        /* User Code End: create_fmul */
+    }
+     
+    Instruction* create_fdiv(
+        /* User Code Start: create_fdiv args */
+
+        /* User Code End: create_fdiv args */
+    ){
+        /* User Code Start: create_fdiv */
+        return nullptr;
+        /* User Code End: create_fdiv */
+    }
+     
+    Instruction* create_frem(
+        /* User Code Start: create_frem args */
+
+        /* User Code End: create_frem args */
+    ){
+        /* User Code Start: create_frem */
+        return nullptr;
+        /* User Code End: create_frem */
+    }
+     
+    Instruction* create_and(
+        /* User Code Start: create_and args */
+
+        /* User Code End: create_and args */
+    ){
+        /* User Code Start: create_and */
+        return nullptr;
+        /* User Code End: create_and */
+    }
+     
+    Instruction* create_or(
+        /* User Code Start: create_or args */
+
+        /* User Code End: create_or args */
+    ){
+        /* User Code Start: create_or */
+        return nullptr;
+        /* User Code End: create_or */
+    }
+     
+    Instruction* create_xor(
+        /* User Code Start: create_xor args */
+
+        /* User Code End: create_xor args */
+    ){
+        /* User Code Start: create_xor */
+        return nullptr;
+        /* User Code End: create_xor */
+    }
+     
+    Instruction* create_icmp(
+        /* User Code Start: create_icmp args */
+
+        /* User Code End: create_icmp args */
+    ){
+        /* User Code Start: create_icmp */
+        return nullptr;
+        /* User Code End: create_icmp */
+    }
+     
+    Instruction* create_fcmp(
+        /* User Code Start: create_fcmp args */
+
+        /* User Code End: create_fcmp args */
+    ){
+        /* User Code Start: create_fcmp */
+        return nullptr;
+        /* User Code End: create_fcmp */
+    }
+     
+    Instruction* create_br(
+        /* User Code Start: create_br args */
+
+        /* User Code End: create_br args */
+    ){
+        /* User Code Start: create_br */
+        return nullptr;
+        /* User Code End: create_br */
+    }
+     
+    Instruction* create_cond_br(
+        /* User Code Start: create_cond_br args */
+
+        /* User Code End: create_cond_br args */
+    ){
+        /* User Code Start: create_cond_br */
+        return nullptr;
+        /* User Code End: create_cond_br */
+    }
+     
+    Instruction* create_phi(
+        /* User Code Start: create_phi args */
+
+        /* User Code End: create_phi args */
+    ){
+        /* User Code Start: create_phi */
+        return nullptr;
+        /* User Code End: create_phi */
     }
     
 private:

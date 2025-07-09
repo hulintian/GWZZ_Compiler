@@ -299,4 +299,40 @@ private:
     std::vector<Value*> _indices;
 };
 
+class PhiInst : public Instruction {
+public:
+    PhiInst(Type* ty, std::string& name, std::vector<BasicBlock*> candidate_bbs, std::vector<Value*> candidate_vars, BasicBlock* bb)
+    /* User Code Start: Phi */
+    :Instruction(ty, name, bb), _candidate_bbs(std::move(candidate_bbs)), _candidate_vars(std::move(candidate_vars))
+    /* User Code End: Phi */
+    {
+        /* User Code Start: Phi construct function */
+
+        /* User Code End: Phi construct function */
+    }
+
+    /* User Code Start: Phi place */
+
+    /* User Code End: Phi place */
+    std::string to_str();
+    std::string to_llvm();
+
+     
+    std::vector<BasicBlock*> get_candidate_bbs() const {
+        /* User Code Start: Phi::get_candidate_bbs */
+        return _candidate_bbs;
+        /* User Code End: Phi::get_candidate_bbs */
+    }
+      
+    std::vector<Value*> get_candidate_vars() const {
+        /* User Code Start: Phi::get_candidate_vars */
+        return _candidate_vars;
+        /* User Code End: Phi::get_candidate_vars */
+    }
+     
+private:
+    std::vector<BasicBlock*> _candidate_bbs;
+    std::vector<Value*> _candidate_vars;
+};
+
 }

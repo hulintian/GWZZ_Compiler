@@ -193,3 +193,27 @@ classes:
       - type: std::string 
         name: to_llvm
 
+  - classname: Phi
+    constructor_args:
+      - type : Type*
+        name : ty
+      - type : std::string&
+        name : name
+      - type : std::vector<BasicBlock*>
+        name : candidate_bbs
+      - type : std::vector<Value*>
+        name : candidate_vars
+      - type : BasicBlock*
+        name : bb
+    members:
+      - type : std::vector<BasicBlock*>
+        name : _candidate_bbs
+        generate_get: true
+      - type : std::vector<Value*>
+        name : _candidate_vars
+        generate_get: true
+    methods:
+      - type: std::string 
+        name: to_str
+      - type: std::string 
+        name: to_llvm
