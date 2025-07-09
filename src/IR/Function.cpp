@@ -5,25 +5,24 @@
 namespace IR {
 
 void  Function::dump(std::ostream &out) {
-    out << "define " << type_string(*this->get_return_type())  
+    out << "define " << type_string(*this->get_return_type())  << " "
         << this->get_func_name() ;
 
     out << " ( " ;
     // the params
-    for(auto  para = this->get_params_type().begin(); 
-            para != this->get_params_type().end(); 
-            para++) {
-        out << type_string(**para);
-        if((this->get_params_type().end() - para - 1) != 0) {
+    auto ps = this->get_params_type();
+    for(int i=0; i < ps.size(); i++) {
+        out << type_string(*ps[i]);
+        if(i != ps.size()-1) {
             out << ", ";
         }
     }
     out << " ) ";
 
-    out << "{";
+    out << "{\n";
     // the body 
     this->get_cfg()->dump(out);
-    out << "}";
+    out << "}\n";
 }
 
 void CFG::dump(std::ostream &out) {

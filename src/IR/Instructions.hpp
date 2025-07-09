@@ -3,6 +3,7 @@
 #include "common/type.hpp" 
 #include "common/defines.hpp" 
 #include "IR/Function.hpp" 
+#include "IR/BasicBlock.hpp"
 
 namespace IR {
 
@@ -12,8 +13,8 @@ class Instruction : public User {
 public :
     Instruction(Type* t, std::string name, BasicBlock* bb) : User(t, name), parent(bb){}
 
-    std::string to_str();
-    std::string to_llvm();
+    virtual std::string to_str() = 0;
+    virtual std::string to_llvm() = 0;
 
     BasicBlock* get_parent() { return this->parent; }
     Type* get_type() { return this->inst_type; }
@@ -33,7 +34,6 @@ public:
     /* User Code End: Alloca */
     {
         /* User Code Start: Alloca construct function */
-        this->get_parent()->add_instr(this);
         /* User Code End: Alloca construct function */
     }
 
