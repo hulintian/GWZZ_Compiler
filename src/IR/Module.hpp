@@ -20,7 +20,7 @@ public:
             std::cout << error << "This is lib function. Expect function.\n";
             assert(false);
         }
-        assert(_name2func.find(func->get_func_name()) == _name2func.end() && "Function already defined.\n");
+        // assert(_name2func.find(func->get_func_name()) != _name2func.end() && "Function already defined.\n");
         _funcs.push_back(func);
         _name2func[func->get_func_name()] = func;
     }

@@ -4,11 +4,11 @@
 #include <ostream>
 #include <string>
 #include <vector>
-#include "IR/Instructions.hpp"
 
 namespace IR {
 
 class Function;
+class Instruction;
 class BasicBlock{
 public:
     BasicBlock(const std::string &name, Function* func, int idx) : _parent(func), bb_label(name), _idx(idx) {}
@@ -22,7 +22,7 @@ public:
 
     int get_bb_idx() const { return _idx; }
     
-    std::vector<Instruction*> get_intrs() { return _instrs; }
+    std::vector<Instruction*>& get_intrs() { return _instrs; }
 
     void add_instr(Instruction* i) {
         this->get_intrs().push_back(i);
