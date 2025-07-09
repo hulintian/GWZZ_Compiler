@@ -40,6 +40,17 @@ public:
         _name2gv[gv->get_symbol()] = gv;
     }
 
+    GlobalValue* get_gv(const std::string &symbol) {
+        if(_name2gv.find(symbol) != _name2gv.end()) {
+            return _name2gv[symbol];
+        }
+        return nullptr;
+    }
+
+    bool has_gv(const std::string& symbol) {
+        return this->get_gv(symbol) == nullptr;
+    }
+
     bool find_function(const std::string name)const  {
         return _name2func.find(name) != _name2func.end() || _name2lib_func.find(name) != _name2lib_func.end();
     }

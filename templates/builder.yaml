@@ -26,4 +26,28 @@ Instructions:
   - Instruction: load 
   - Instruction: store
   - Instruction: getelementptr
+  # arithmetic ops 
   - Instruction: add 
+  - Instruction: sub
+  - Instruction: mul
+  - Instruction: udiv
+  - Instruction: sdiv 
+  - Instruction: urem 
+  - Instruction: srem 
+  - Instruction: fadd
+  - Instruction: fsub 
+  - Instruction: fmul
+  - Instruction: fdiv
+  - Instruction: frem 
+  - Instruction: and 
+  - Instruction: or 
+  - Instruction: xor 
+  # icmp 
+  - Instruction: icmp 
+  # fcmp 
+  - Instruction: fcmp
+  # branch
+  - Instruction: br 
+  - Instruction: cond_br
+  # phi
+  - Instruction : phi

@@ -2,14 +2,16 @@
 
 #include "IR/Value.hpp"
 #include "common/defines.hpp"
+#include "common/type.hpp"
 #include <cassert>
 #include <memory>
 #include <ostream>
+#include <variant>
 
 namespace IR {
 
 class Module;
-class GlobalValue : Value {
+class GlobalValue : public Value {
 public:
     GlobalValue(Module* m, const std::string &sym, std::shared_ptr<Var> var, bool is_inited) : Value(&var->type, sym) ,moulde(m), _symbol(sym), _var(var), _is_inited(is_inited){}
     
@@ -29,6 +31,16 @@ private:
     std::shared_ptr<Var> _var;
     bool _is_inited;
     bool _is_bss;
+};
+
+class ConstantValue : public Value {
+public:
+    using value = ConstValue;
+    ConstantValue(Type* ty, const std::string &name, value v) : Value(ty, name), val(v)  {}
+    
+    const value get_value() { return val; }
+private:
+    value val;
 };
 
 }
