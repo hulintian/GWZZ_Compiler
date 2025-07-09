@@ -28,8 +28,10 @@ void  Function::dump(std::ostream &out) {
 
 void CFG::dump(std::ostream &out) {
     for(auto bb : _bbs) {
-        bb->dump();
+        bb->dump(out);
+        out << "\n";
     }
+#include "IR/BasicBlock.hpp" 
 } 
 
 }
