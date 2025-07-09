@@ -11,11 +11,19 @@ namespace IR {
 class CFG {
 public:
     CFG(std::list<BasicBlock*> bbs) {}
+    CFG() {}
 
     std::list<BasicBlock*> _bbs;
     std::map<int, BasicBlock*> idx2bb;
     std::map<int, int> prev_bb;
     std::map<int, int> succ_bb;
+    BasicBlock* entry_bb;
+
+    void regen_cfg();
+
+    void insert_bb(BasicBlock* bb) {
+        this->_bbs.push_back(bb);
+    }
     
     void dump(std::ostream &out) ;
 };
@@ -23,8 +31,10 @@ public:
 class Module;
 class Function {
 public:
-    Function(Module* m, Type* return_type, std::vector<Type*> arg_types, std::vector<std::string> arg_names, bool is_lib)
-        : _parent(m), _return_type(return_type), _arg_types(arg_types), _arg_names(arg_names), _is_lib(is_lib){}
+    Function(Module* m, const std::string& func_name, Type* return_type, std::vector<Type*> arg_types, std::vector<std::string> arg_names, bool is_lib)
+        : _parent(m), _func_name(func_name),_return_type(return_type), _arg_types(arg_types), _arg_names(arg_names), _is_lib(is_lib){
+            this->_cfg = new CFG();
+        }
     
     std::string get_func_name() const {
         return _func_name;
@@ -61,13 +71,24 @@ public:
         return _cfg;
     }
     
+    void insert_bb(BasicBlock* bb) {
+        this->_cfg->insert_bb(bb);
+    }
+    // add the entry 
     void set_entry_bb(BasicBlock* bb) {
+        this->insert_bb(bb);
+        _cfg->entry_bb = bb;
+        entry_bb = bb;
+    }
+
+    // change the entry 
+    void change_entry_bb(BasicBlock* bb) {
+        _cfg->entry_bb = bb;
         entry_bb = bb;
     }
 
     void dump(std::ostream& out);
 private:
-    std::list<BasicBlock*> _bbs;
     CFG* _cfg;
     Module* _parent;
 
