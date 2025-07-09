@@ -4,11 +4,11 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include "IR/Instructions.hpp"
 
 namespace IR {
 
 class Function;
-class Instruction;
 class BasicBlock{
 public:
     BasicBlock(const std::string &name, Function* func, int idx) : _parent(func), bb_label(name), _idx(idx) {}
