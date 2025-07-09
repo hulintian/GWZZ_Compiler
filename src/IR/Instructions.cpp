@@ -9,7 +9,7 @@ namespace IR {
 
 std::string AllocaInst::to_str() {
     /* User Code Start: Alloca::to_str */
-    return "Alloca " + this->_name;
+    return "Alloca " + this->get_name();
     /* User Code End: Alloca::to_str */
 }
 
