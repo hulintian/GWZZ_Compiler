@@ -1,3 +1,4 @@
+#include "frontend/codegen.hpp"
 #include "grammar/Sysy22Lexer.h"
 #include "grammar/Sysy22Parser.h"
 #include "grammar/Sysy22Visitor.h"
@@ -37,6 +38,10 @@ int main(int argc, char** argv) {
     frontend::Sema sema;
     sema.visit_compUnits(cu);
     cu.print(cout, 0);
+
+    frontend::CodeGen* cg = new frontend::CodeGen();
+    auto m = cg->gen(cu);
+    m->dump(cout);
 
     return 0;
 }
