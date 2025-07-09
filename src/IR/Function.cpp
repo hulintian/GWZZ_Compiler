@@ -30,7 +30,6 @@ void CFG::dump(std::ostream &out) {
         bb->dump(out);
         out << "\n";
     }
-#include "IR/BasicBlock.hpp" 
 } 
 
 }
