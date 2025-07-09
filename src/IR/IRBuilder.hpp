@@ -1,3 +1,4 @@
+#pragma once
 #include "IR/Function.hpp"
 #include "IR/Module.hpp"
 #include "IR/BasicBlock.hpp"
@@ -28,7 +29,7 @@ public:
     // create bb with name
     BasicBlock* create_bb(std::string &name, Function *func) {
         auto nbb = new BasicBlock(name, func, _cur_ctx->get_tmp_baisc_block_index());
-        assert(func->find_bb(nbb->get_bb_idx()) && "Already has this BasicBlock");
+        assert(!func->find_bb(nbb->get_bb_idx()) && "Already has this BasicBlock");
         return nbb;
     }
     
@@ -36,7 +37,7 @@ public:
     Function* create_func(const std::string &name, Type* return_type, std::vector<Type*> args_type, std::vector<std::string> args_name, bool is_lib) {
         auto _cur_module = this->get_cur_module();
         assert(!_cur_module->find_function(name) && "Already exists Func ");
-        auto nfunc = new Function(_cur_module, return_type, args_type, args_name, is_lib);
+        auto nfunc = new Function(_cur_module, name, return_type, args_type, args_name, is_lib);
         _cur_module->add_func(nfunc);
         
         std::string entry_name = "entry";
@@ -44,6 +45,8 @@ public:
         // set the insert point
         _cur_ctx->set_current_basic_block(entry_bb);
         _cur_ctx->set_current_function(nfunc);
+
+        nfunc->set_entry_bb(entry_bb);
 
         //then parse the arguments
         for(int i=0; i<args_type.size(); i++) {
@@ -116,7 +119,9 @@ public:
         /* User Code End: create_alloca args */
     ){
         /* User Code Start: create_alloca */
-        return new AllocaInst(ty, name, 4, _cur_ctx->get_current_basic_block());
+        auto inst = new AllocaInst(ty, name, 4, _cur_ctx->get_current_basic_block());
+        this->get_cur_bb()->add_instr(inst);
+        return inst;
         /* User Code End: create_alloca */
     }
      
