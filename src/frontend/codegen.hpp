@@ -1,5 +1,7 @@
 #pragma once
 #include <IR/IRBuilder.hpp>
+#include <memory>
+#include <vector>
 
 #include "IR/BasicBlock.hpp"
 #include "IR/Context.hpp"
@@ -24,6 +26,7 @@ public:
 
     void gen_func_body(const ast::Block& block);
 
+    void gen_initial_list(const std::vector<std::unique_ptr<ast::Initializer>> &initl);
     void gen_block(const ast::Block& block);
     void gen_stmt(const ast::Stmt& stmt);
     void gen_decl(const ast::Decl& decl);

@@ -1,7 +1,10 @@
 #pragma once 
 
 #include "IR/BasicBlock.hpp"
+#include "IR/Value.hpp"
 #include "common/type.hpp"
+#include <cassert>
+#include <cstdarg>
 #include <list>
 #include <map>
 #include <ostream>
@@ -88,6 +91,33 @@ public:
     }
 
     void dump(std::ostream& out);
+
+    Value* find_alias(const std::string &symbol) {
+        if(alias.find(symbol) != alias.end()) {
+            return alias[symbol];
+        }
+        return nullptr;
+    }
+
+    bool has_symbol(const std::string& symbol) {
+        return this->find_alias(symbol) == nullptr;
+    }
+
+    void change_alias(const std::string& symbol, Value* nv) {
+        assert(this->find_alias(symbol) && "Not exists alias");
+        this->alias[symbol] = nv;
+    }
+
+    std::map<std::string, Value*>& get_alias_map() {
+        return alias;
+    }
+
+    std::map<std::string, int>& get_alias_cnt_map() {
+        return alias_cnt;
+    }
+
+
+
 private:
     CFG* _cfg;
     Module* _parent;
@@ -97,6 +127,9 @@ private:
     std::vector<Type*> _arg_types;
     std::vector<std::string> _arg_names;
     bool _is_lib;
+
+    std::map<std::string, Value*> alias;
+    std::map<std::string, int> alias_cnt;
 
     BasicBlock* entry_bb;
 };

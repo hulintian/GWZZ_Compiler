@@ -125,4 +125,20 @@ std::string GetElementPtrInst::to_llvm() {
 
 // ======================= End GetElementPtr =======================
 
+// ======================= Start Phi =======================
+
+std::string PhiInst::to_str() {
+    /* User Code Start: Phi::to_str */
+    return "Phi";
+    /* User Code End: Phi::to_str */
+}
+
+std::string PhiInst::to_llvm() {
+    /* User Code Start: Phi::to_llvm */
+    return "Phi";
+    /* User Code End: Phi::to_llvm */
+}
+
+// ======================= End Phi =======================
+
 }
