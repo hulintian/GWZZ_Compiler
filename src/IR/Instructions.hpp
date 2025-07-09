@@ -30,7 +30,7 @@ public:
     AllocaInst(Type* ty, std::string name, unsigned alignment, BasicBlock* bb)
     /* User Code Start: Alloca */
         // 这里的name指的是用alloca从内存中分配到内存的名字，
-    : Instruction(ty, name, bb)
+    : Instruction(ty, name, bb) 
     /* User Code End: Alloca */
     {
         /* User Code Start: Alloca construct function */
@@ -56,17 +56,10 @@ public:
         return _type;
         /* User Code End: Alloca::get_type */
     }
-      
-    std::string get_name() const {
-        /* User Code Start: Alloca::get_name */
-        return _name;
-        /* User Code End: Alloca::get_name */
-    }
      
 private:
     unsigned _alignment;
     Type* _type;
-    std::string _name;
 };
 
 class LoadInst : public Instruction {

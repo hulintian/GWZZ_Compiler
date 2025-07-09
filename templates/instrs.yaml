@@ -23,9 +23,9 @@ classes:
       - type: Type*
         name: _type
         generate_get: true
-      - type: std::string
-        name: _name
-        generate_get: true
+        # - type: std::string
+        #   name: _name
+        #   generate_get: true
     methods:
       - type: std::string 
         name: to_str
