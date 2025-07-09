@@ -2,6 +2,8 @@
 headers:
   - common/type.hpp
   - common/defines.hpp
+  - IR/Function.hpp
+  - IR/BasicBlock.hpp
 
 classes:
   - classname: Alloca

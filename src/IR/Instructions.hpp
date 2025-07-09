@@ -1,8 +1,8 @@
 #pragma once
 #include "IR/User.hpp" 
 #include "common/type.hpp" 
-#include "common/defines.hpp"
-#include "IR/BasicBlock.hpp"
+#include "common/defines.hpp" 
+#include "IR/Function.hpp" 
 
 namespace IR {
 
