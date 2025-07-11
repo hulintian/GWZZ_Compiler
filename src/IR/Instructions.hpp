@@ -90,12 +90,6 @@ public:
         /* User Code End: Load::get_alignment */
     }
       
-    Type* get_type() const {
-        /* User Code Start: Load::get_type */
-        return _type;
-        /* User Code End: Load::get_type */
-    }
-      
     Value* get_src() const {
         /* User Code Start: Load::get_src */
         return _src;
@@ -104,7 +98,6 @@ public:
      
 private:
     unsigned _alignment;
-    Type* _type;
     Value* _src;
 };
 
@@ -112,7 +105,7 @@ class StoreInst : public Instruction {
 public:
     StoreInst(Type* ty, Value* dst, Value* src, std::string _name, unsigned alignment, BasicBlock* bb)
     /* User Code Start: Store */
-    : Instruction(ty, _name, bb), _type(ty), _dst(dst), _src(src), _alignment(alignment)
+    : Instruction(ty, _name, bb), _dst(dst), _src(src), _alignment(alignment)
     /* User Code End: Store */
     {
         /* User Code Start: Store construct function */
@@ -127,12 +120,6 @@ public:
     std::string to_llvm();
 
      
-    Type* get_type() const {
-        /* User Code Start: Store::get_type */
-        return _type;
-        /* User Code End: Store::get_type */
-    }
-      
     Value* get_dst() const {
         /* User Code Start: Store::get_dst */
         return _dst;
@@ -152,7 +139,6 @@ public:
     }
      
 private:
-    Type* _type;
     Value* _dst;
     Value* _src;
     unsigned _alignment;
