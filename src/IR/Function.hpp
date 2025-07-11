@@ -100,7 +100,7 @@ public:
     }
 
     bool has_symbol(const std::string& symbol) {
-        return this->find_alias(symbol) == nullptr;
+        return this->find_alias(symbol) != nullptr;
     }
 
     void change_alias(const std::string& symbol, Value* nv) {

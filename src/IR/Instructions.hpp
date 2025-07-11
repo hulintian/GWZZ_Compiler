@@ -1,5 +1,8 @@
 #pragma once
-#include "IR/User.hpp" 
+#include "IR/User.hpp"
+#include "IR/Value.hpp"
+#include "common/type.hpp"
+#include <string> 
 #include "common/type.hpp" 
 #include "common/defines.hpp" 
 #include "IR/Function.hpp" 
@@ -64,9 +67,9 @@ private:
 
 class LoadInst : public Instruction {
 public:
-    LoadInst(Type* ty, Value* dst, Value* src, std::string _name, BasicBlock* bb)
+    LoadInst(Type* ty, Value* src, std::string _name, unsigned alignment, BasicBlock* bb)
     /* User Code Start: Load */
-    :Instruction(ty, _name, bb)
+    :Instruction(ty, _name, bb), _alignment(alignment), _src(src)
     /* User Code End: Load */
     {
         /* User Code Start: Load construct function */
@@ -81,10 +84,10 @@ public:
     std::string to_llvm();
 
      
-    unsigned get_align_size() const {
-        /* User Code Start: Load::get_align_size */
-        return _align_size;
-        /* User Code End: Load::get_align_size */
+    unsigned get_alignment() const {
+        /* User Code Start: Load::get_alignment */
+        return _alignment;
+        /* User Code End: Load::get_alignment */
     }
       
     Type* get_type() const {
@@ -92,17 +95,24 @@ public:
         return _type;
         /* User Code End: Load::get_type */
     }
+      
+    Value* get_src() const {
+        /* User Code Start: Load::get_src */
+        return _src;
+        /* User Code End: Load::get_src */
+    }
      
 private:
-    unsigned _align_size;
+    unsigned _alignment;
     Type* _type;
+    Value* _src;
 };
 
 class StoreInst : public Instruction {
 public:
-    StoreInst(Type* ty, Value* dst, std::string _name, Value* src, BasicBlock* bb)
+    StoreInst(Type* ty, Value* dst, Value* src, std::string _name, unsigned alignment, BasicBlock* bb)
     /* User Code Start: Store */
-    : Instruction(ty, _name, bb)
+    : Instruction(ty, _name, bb), _type(ty), _dst(dst), _src(src), _alignment(alignment)
     /* User Code End: Store */
     {
         /* User Code Start: Store construct function */
@@ -117,21 +127,35 @@ public:
     std::string to_llvm();
 
      
-    unsigned get_align_size() const {
-        /* User Code Start: Store::get_align_size */
-        return _align_size;
-        /* User Code End: Store::get_align_size */
-    }
-      
     Type* get_type() const {
         /* User Code Start: Store::get_type */
         return _type;
         /* User Code End: Store::get_type */
     }
+      
+    Value* get_dst() const {
+        /* User Code Start: Store::get_dst */
+        return _dst;
+        /* User Code End: Store::get_dst */
+    }
+      
+    Value* get_src() const {
+        /* User Code Start: Store::get_src */
+        return _src;
+        /* User Code End: Store::get_src */
+    }
+      
+    unsigned get_alignment() const {
+        /* User Code Start: Store::get_alignment */
+        return _alignment;
+        /* User Code End: Store::get_alignment */
+    }
      
 private:
-    unsigned _align_size;
     Type* _type;
+    Value* _dst;
+    Value* _src;
+    unsigned _alignment;
 };
 
 class BinaryInst : public Instruction {
