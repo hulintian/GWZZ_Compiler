@@ -22,7 +22,7 @@ struct Type {
 
     int nr_dims() const { return dims.size(); }
     bool is_array() const { return dims.size() > 0; }
-
+    
     /// compute the total number of elements in array.
     int nr_elems() const {
         int count = 1;

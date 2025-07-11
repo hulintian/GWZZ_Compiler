@@ -49,5 +49,7 @@ Instructions:
   # branch
   - Instruction: br 
   - Instruction: cond_br
+  # functuon call
+  - Instruction: call
   # phi
   - Instruction : phi
