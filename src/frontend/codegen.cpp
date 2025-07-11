@@ -10,6 +10,7 @@
 #include <cassert>
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace  frontend {
 
@@ -30,6 +31,9 @@ void CodeGen::gen_gv(const ast::Decl& decl) {
     const std::string _symbol = decl.ident()->identifier();
     assert(decl.var && "Not find the variable");
     if(decl.var)  {
+        if(decl.is_const()) {
+            assert(decl.var->val || decl.var->arr_val);
+        }
         builder->create_gv(decl.var, _symbol); 
     } 
 }
@@ -107,8 +111,8 @@ void CodeGen::gen_decl(const ast::Decl& decl) {
     auto &name = decl.ident()->identifier();
     auto type = &decl.var->type;
 
-    auto alias_map = this->get_cur_func()->get_alias_map();
-    auto amc = this->get_cur_func()->get_alias_cnt_map();
+    auto &alias_map = this->get_cur_func()->get_alias_map();
+    auto &amc = this->get_cur_func()->get_alias_cnt_map();
 
     std::string new_name = name;
     if(this->get_cur_func()->has_symbol(name)) {
@@ -126,28 +130,82 @@ void CodeGen::gen_decl(const ast::Decl& decl) {
     if(!var->type.is_array()) {
         if(var->val) {
             auto cosnt_value = new IR::ConstantValue(type, var->val->to_string(), *var->val);
-            builder->create_load(type, new_name, val, cosnt_value);
+            builder->create_store(type, new_name, val, cosnt_value);
         } else {
             auto &expr = std::get<std::unique_ptr<ast::Expr>>(decl.init()->value());
             auto res = gen_expr(*expr);
-            builder->create_load(type, new_name, val, res);
+            builder->create_store(type, new_name, val, res);
         }
     } else {
-
+        if(decl.init()->value().index() == 1) {
+            auto &il = std::get<std::vector<std::unique_ptr<ast::Initializer>>>(decl.init()->value());
+            int idx = 0;
+            this->gen_initial_list(il, var->type, 0, *var->arr_val, idx);
+        }
     }
 
 }
 
-void CodeGen::gen_initial_list(const std::vector<std::unique_ptr<ast::Initializer>> &initl) {
-
+// llvm 的 gep 要一级一级下去，没初始化的默认为0  
+// 直接拉成线，计算相对位值
+void CodeGen::gen_initial_list(const std::vector<std::unique_ptr<ast::Initializer>> &init_list, 
+                               const Type& type,
+                               int depth,
+                               std::map<int, ConstValue> &arr_val,
+                               int& idx) {
+    // current dimesion size
+    int dm_size = 1;
+    if(depth > 0) {
+        for(int i=depth; i < type.nr_dims(); ++i) {
+            dm_size *= type.dims[i];
+        }
+    }
+    int fill = idx + dm_size;
+    for(auto &p_init : init_list) {
+        auto &value = p_init->value();
+        if(value.index() == 0) {
+            // 
+            if(arr_val.find(idx) != arr_val.end()) {
+                // get the memory and then store
+                auto addr = builder->create_getelementptr();
+                auto const_v = builder->create_const_value(builder->get_base_type(type.base_type), arr_val[idx].to_string(), arr_val[idx]);
+                // store就是个过程，名字无所谓 
+                builder->create_store(builder->get_base_type(type.base_type), "", addr, const_v);
+            }  else {
+                auto &expr = std::get<std::unique_ptr<ast::Expr>>(value);
+                auto rhs = gen_expr(*expr);
+                auto addr = builder->create_getelementptr();
+                builder->create_store(builder->get_base_type(type.base_type), "", addr, rhs );
+            }
+        } else if(value.index() == 1){
+                auto &next_dim = std::get<std::vector<std::unique_ptr<ast::Initializer>>>(value);
+                gen_initial_list(next_dim, type, depth+1, arr_val, idx);
+        }
+        idx++;
+    }
+    if(idx < fill) {
+        idx = fill;
+    }
 }
 
 void CodeGen::gen_stmt(const ast::Stmt& stmt) {
 
 }
 
-IR::Instruction* gen_expr(const ast::Expr& expr) {
+IR::Instruction* CodeGen::gen_expr(const ast::Expr* expr) {
+    if(auto lval = dynamic_cast<const ast::LValue*>(expr)) {
+        auto lsym = lval->ident().identifier();
+        bool flag = this->get_cur_func()->has_symbol(lsym);
+        assert(this->get_cur_func()->has_symbol(lsym));
+        auto val_ptr = this->get_cur_func()->find_alias(lsym);
+        return builder->create_load(&lval->var->type, val_ptr);
+    } else if( auto bexpr = dynamic_cast<const ast::BinaryExpr*>(expr)) {
 
+    } else if( auto uexpr = dynamic_cast<const ast::UnaryExpr*>(expr)) {
+
+    } else if( auto call = dynamic_cast<const ast::Call*>(expr)) {
+
+    }
     return nullptr;
 }
 
