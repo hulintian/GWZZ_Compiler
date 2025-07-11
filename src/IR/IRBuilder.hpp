@@ -5,7 +5,6 @@
 #include "IR/Instructions.hpp"
 #include "common/defines.hpp"
 #include <memory>
-#include <string>
 #include <vector> 
 #include "IR/GlobalValue.hpp" 
 #include "IR/Context.hpp"
@@ -373,6 +372,16 @@ public:
         /* User Code Start: create_cond_br */
         return nullptr;
         /* User Code End: create_cond_br */
+    }
+     
+    Instruction* create_call(
+        /* User Code Start: create_call args */
+
+        /* User Code End: create_call args */
+    ){
+        /* User Code Start: create_call */
+        return nullptr;
+        /* User Code End: create_call */
     }
      
     Instruction* create_phi(
