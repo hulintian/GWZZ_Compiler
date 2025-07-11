@@ -2,13 +2,15 @@ int add(int a, int b) { return a+b; }
 
 float b( ) {
     int sum = add(1, 2);
-    int ttttt[2][5] = {{1,2},{6,7,8,9,10}};
+    const int c = 100;
+    int ttttt[2][5] = {{1,2,c},{6,7,8,9,10}};
     putint(sum);
     putline();
     return 1.1 + sum;
 }
 
 int c = 1;
+int arr[2][5] = {1,2,3,4,5,6,7,8,9,10};
 int main( ) {
     putfloat(b());
     putline();

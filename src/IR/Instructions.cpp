@@ -31,7 +31,11 @@ void AllocaInst::dump() {
 
 std::string LoadInst::to_str() {
     /* User Code Start: Load::to_str */
-    return "Load ";
+    std::string dst = "Unknow";
+    if(this->get_src()) {
+        dst = this->get_src()->get_name();
+    }
+    return this->get_name() + " = Load " + dst;
     /* User Code End: Load::to_str */
 }
 
@@ -47,7 +51,14 @@ std::string LoadInst::to_llvm() {
 
 std::string StoreInst::to_str() {
     /* User Code Start: Store::to_str */
-    return "Store";
+    std::string dst = "none", src = "none";
+    if(this->get_dst()) {
+        dst = this->get_dst()->get_name();
+    }
+    if(this->get_src()) {
+        src = this->get_src()->get_name();
+    }
+    return "Store " + src + " " + dst;
     /* User Code End: Store::to_str */
 }
 
