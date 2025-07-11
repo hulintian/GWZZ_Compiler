@@ -38,20 +38,28 @@ classes:
     constructor_args:
       - type: Type*
         name: ty
-      - type: Value*
-        name: dst
+        #      - type: Value*
+        #        name: dst
       - type: Value*
         name: src
       - type: std::string
         name: _name
+      - type: unsigned
+        name: alignment
       - type: BasicBlock*
         name: bb
     members:
       - type: unsigned
-        name: _align_size
+        name: _alignment
         generate_get: true
-      - type: Type*
-        name: _type
+        #     - type: Type*
+        #       name: _type
+        #       generate_get: true
+        #     - type: Value*
+        #        name: _dst
+        #        generate_get: true
+      - type: Value*
+        name: _src
         generate_get: true
     methods:
       - type: std::string 
@@ -65,19 +73,26 @@ classes:
         name: ty
       - type: Value*
         name: dst
-      - type: std::string
-        name: _name
       - type: Value*
         name: src
+      - type: std::string
+        name: _name
+      - type: unsigned
+        name: alignment
       - type: BasicBlock*
         name: bb
-
     members:
-      - type: unsigned
-        name: _align_size
+      # - type: Type*
+      #   name: _type
+      #   generate_get: true
+      - type: Value*
+        name: _dst
         generate_get: true
-      - type: Type*
-        name: _type
+      - type: Value*
+        name: _src
+        generate_get: true
+      - type: unsigned
+        name: _alignment
         generate_get: true
     methods:
       - type: std::string 

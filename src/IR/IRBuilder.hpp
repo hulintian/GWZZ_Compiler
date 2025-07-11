@@ -3,13 +3,12 @@
 #include "IR/Module.hpp"
 #include "IR/BasicBlock.hpp"
 #include "IR/Instructions.hpp"
+#include "common/defines.hpp"
 #include <memory>
 #include <string>
 #include <vector> 
 #include "IR/GlobalValue.hpp" 
 #include "IR/Context.hpp"
-#include "IR/Value.hpp"
-#include "common/type.hpp"
 
 namespace IR {
 class IRBuilder {
@@ -19,6 +18,18 @@ public:
     /* User Code Start: code space 1 */
     // TODO : 在此微操
         // here is safe
+        //
+    std::map<int, Type*> tbt;
+
+    Type* get_base_type(int base_type) {
+        if(tbt.find(base_type) != tbt.end()) {
+            return tbt[base_type];
+        } else {
+            auto ty = new Type(base_type);
+            tbt[base_type] = ty;
+            return ty;
+        }
+    }
     
     GlobalValue* create_gv(std::shared_ptr<Var> var, const std::string &sym) {
         auto _cur_module = this->get_cur_module();
@@ -58,6 +69,14 @@ public:
         }
 
         return nfunc;
+    }
+
+    ConstantValue* create_const_value(Type* ty, const std::string &name, ConstValue &v) {
+        return new ConstantValue(ty, name, v);
+    }
+    ConstantValue* create_const_value(Type* ty, ConstValue &v) {
+        std::string temp = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
+        return new ConstantValue(ty, temp, v);
     }
     
 
@@ -122,7 +141,8 @@ public:
         /* User Code End: create_alloca args */
     ){
         /* User Code Start: create_alloca */
-        auto inst = new AllocaInst(ty, name, 4, _cur_ctx->get_current_basic_block());
+        unsigned alignment = ty->is_ptr() ? 8 : 4;
+        auto inst = new AllocaInst(ty, name, alignment, _cur_ctx->get_current_basic_block());
         this->get_cur_bb()->add_instr(inst);
         return inst;
         /* User Code End: create_alloca */
@@ -130,11 +150,13 @@ public:
      
     Instruction* create_load(
         /* User Code Start: create_load args */
-        Type* type, std::string name, Value* dst, Value* src
+        Type* type, Value* src
         /* User Code End: create_load args */
     ){
         /* User Code Start: create_load */
-        auto inst = new LoadInst(type, dst, src, name, this->get_cur_bb());
+        unsigned alignment = type->is_ptr() ? 8 : 4;
+        auto name = "%T" + std::to_string(this->_cur_ctx->get_tmp_var());
+        auto inst = new LoadInst(type, src, name, alignment, this->get_cur_bb());
         this->get_cur_bb()->add_instr(inst);
         return inst;
         /* User Code End: create_load */
@@ -142,11 +164,14 @@ public:
      
     Instruction* create_store(
         /* User Code Start: create_store args */
-
+        Type* type, std::string name, Value* dst, Value* src
         /* User Code End: create_store args */
     ){
         /* User Code Start: create_store */
-        return nullptr;
+        unsigned alignment = type->is_ptr() ? 8 : 4;
+        auto inst = new StoreInst(type, dst, src, name, alignment, this->get_cur_bb());
+        this->get_cur_bb()->add_instr(inst);
+        return inst;
         /* User Code End: create_store */
     }
      

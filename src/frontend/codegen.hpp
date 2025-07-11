@@ -26,12 +26,15 @@ public:
 
     void gen_func_body(const ast::Block& block);
 
-    void gen_initial_list(const std::vector<std::unique_ptr<ast::Initializer>> &initl);
+    void gen_initial_list(const std::vector<std::unique_ptr<ast::Initializer>> &init_list, const Type& type, int depth, std::map<int, ConstValue> &arr_val, int& idx);
     void gen_block(const ast::Block& block);
     void gen_stmt(const ast::Stmt& stmt);
     void gen_decl(const ast::Decl& decl);
 
-    IR::Instruction* gen_expr(const ast::Expr& expr);
+    IR::Instruction* gen_expr(const ast::Expr* expr);
+    IR::Instruction* gen_expr(const ast::Expr& expr) {
+        return gen_expr(&expr);
+    }
 
     // this is for 
     // void gen_decl(const ast::Decl& decl);
