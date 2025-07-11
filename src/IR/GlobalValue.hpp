@@ -36,7 +36,7 @@ private:
 class ConstantValue : public Value {
 public:
     using value = ConstValue;
-    ConstantValue(Type* ty, const std::string &name, value v) : Value(ty, name), val(v)  {}
+    ConstantValue(Type* ty, const std::string &name, value &v) : Value(ty, name), val(v)  {}
     
     const value get_value() { return val; }
 private:
