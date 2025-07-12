@@ -6,6 +6,7 @@ float b( ) {
     int ttttt[2][5] = {{1,2,c},{6,7,8,9,10}};
     putint(sum);
     putline();
+    int cc =  c + c;
     return 1.1 + sum;
 }
 
