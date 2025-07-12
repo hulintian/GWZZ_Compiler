@@ -107,6 +107,10 @@ public:
         assert(this->find_alias(symbol) && "Not exists alias");
         this->alias[symbol] = nv;
     }
+    void add_alias(const std::string& symbol, Value* nv) {
+        assert(!this->find_alias(symbol) && "Already exists alias");
+        this->alias[symbol] = nv;
+    }
 
     std::map<std::string, Value*>& get_alias_map() {
         return alias;
