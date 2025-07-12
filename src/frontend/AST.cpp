@@ -92,7 +92,7 @@ void dump_var(ostream& out, std::shared_ptr<Var> var, unsigned int indent) {
         }
     } 
     print_indent(out, indent);
-    if(var->type.is_array()) {
+    if(var->type.is_array() && var->arr_val) {
         out << " [ ";
         for(auto [k,v] : *(var->arr_val)) {
             out << " " << k << " : " ;
