@@ -26,7 +26,8 @@ Instructions:
   - Instruction: load 
   - Instruction: store
   - Instruction: getelementptr
-  # arithmetic ops 
+  # arithmetic ops, this seams usless, i jius use bop to label the op type
+  - Instruction: binary_op 
   - Instruction: add 
   - Instruction: sub
   - Instruction: mul
@@ -44,8 +45,16 @@ Instructions:
   - Instruction: xor 
   # icmp 
   - Instruction: icmp 
+  - Instruction: eq 
+  - Instruction: ne 
+  - Instruction: gt 
+  - Instruction: lt 
   # fcmp 
   - Instruction: fcmp
+  - Instruction: oeq 
+  - Instruction: one 
+  - Instruction: ogt 
+  - Instruction: olt 
   # branch
   - Instruction: br 
   - Instruction: cond_br
@@ -53,3 +62,5 @@ Instructions:
   - Instruction: call
   # phi
   - Instruction : phi
+  # convert types
+  - Instruction : cvt

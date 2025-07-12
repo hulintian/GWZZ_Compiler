@@ -4,6 +4,7 @@
 #include "IR/BasicBlock.hpp"
 #include "IR/Instructions.hpp"
 #include "common/defines.hpp"
+#include "common/type.hpp"
 #include <memory>
 #include <vector> 
 #include "IR/GlobalValue.hpp" 
@@ -18,6 +19,7 @@ public:
     // TODO : 在此微操
         // here is safe
         //
+    // a cache for base type
     std::map<int, Type*> tbt;
 
     Type* get_base_type(int base_type) {
@@ -64,7 +66,8 @@ public:
         //then parse the arguments
         for(int i=0; i<args_type.size(); i++) {
             // create alloca Instructions
-            create_alloca(args_name[i], args_type[i]);
+            auto var = create_alloca(args_name[i], args_type[i]);
+            this->get_cur_func()->add_alias(args_name[i], var);
         }
 
         return nfunc;
@@ -74,8 +77,9 @@ public:
         return new ConstantValue(ty, name, v);
     }
     ConstantValue* create_const_value(Type* ty, ConstValue &v) {
-        std::string temp = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
-        return new ConstantValue(ty, temp, v);
+        // std::string temp = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
+        // 常量不用临时变量，直接常量的值to string
+        return new ConstantValue(ty, v.to_string(), v);
     }
     
 
@@ -114,7 +118,30 @@ public:
         _cur_ctx->set_current_basic_block(bb);
         /* User Code End: set_bb */
     }
-      
+
+    Instruction* cvt_to_float(Value* v) {
+        return this->create_cvt(v, this->get_base_type(0), this->get_base_type(1));
+    }
+
+    Instruction* cvt_to_int(Value* v) {
+        return this->create_cvt(v, this->get_base_type(1), this->get_base_type(0));
+    }
+
+    // lhs & rhs 类型一致化
+    std::vector<Value*> check_lhs_rhs_all_float(Value* lhs, Value* rhs) {
+        Value* n_rhs = rhs;
+        Value* n_lhs = lhs;
+        if(rhs->get_type()->base_type == 1 || lhs ->get_type()->base_type == 1) {
+            if(rhs->get_type()->base_type == 0) {
+                n_rhs = this->cvt_to_float(rhs);
+            } else if(lhs->get_type()->base_type == 0) {
+                n_lhs = this->cvt_to_float(lhs);
+            }
+        }
+        // 
+        return std::vector<Value*>{n_lhs, n_rhs};
+    }
+
     /* User Code End: code space 1 */
 
      
@@ -176,41 +203,68 @@ public:
      
     Instruction* create_getelementptr(
         /* User Code Start: create_getelementptr args */
-
+        Type* arr_type,  std::vector<Value*> indices , Value* src
         /* User Code End: create_getelementptr args */
     ){
         /* User Code Start: create_getelementptr */
-        return nullptr;
+        // llvm是一个维度，一个维度下降下去的，处理，我接口是这么写的，内部偷个懒，因为是静态数组，直接拉成一条（将成一维数组）
+        auto name = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
+        auto instr = new GetElementPtrInst(arr_type, this->get_base_type(arr_type->base_type), indices, src, name, this->get_cur_bb());
+        this->get_cur_bb()->add_instr(instr);
+        return instr;
         /* User Code End: create_getelementptr */
+    }
+     
+    Instruction* create_binary_op(
+        /* User Code Start: create_binary_op args */
+        Value* lhs, Value* rhs, BinaryOp bop
+        /* User Code End: create_binary_op args */
+    ){
+        /* User Code Start: create_binary_op */
+        Value* n_lhs, *n_rhs;
+
+        auto norm = this->check_lhs_rhs_all_float(lhs, rhs);
+        n_lhs = norm[0];
+        n_rhs = norm[1];
+
+        auto name = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
+        auto instr = new BinaryInst(this->get_base_type(false? 0 : 1), bop, n_lhs, n_rhs, name, this->get_cur_bb());
+
+        this->get_cur_bb()->add_instr(instr);
+
+        return instr;
+        /* User Code End: create_binary_op */
     }
      
     Instruction* create_add(
         /* User Code Start: create_add args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_add args */
     ){
         /* User Code Start: create_add */
-        return nullptr;
+        return this->create_binary_op(lhs, rhs, BinaryOp::Add);
         /* User Code End: create_add */
     }
      
     Instruction* create_sub(
         /* User Code Start: create_sub args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_sub args */
     ){
         /* User Code Start: create_sub */
-        return nullptr;
+        return this->create_binary_op(lhs, rhs, BinaryOp::Sub);
         /* User Code End: create_sub */
     }
      
     Instruction* create_mul(
         /* User Code Start: create_mul args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_mul args */
     ){
         /* User Code Start: create_mul */
-        return nullptr;
+        // only two type , if on is float, cvt another
+        // has a float
+        return  this->create_binary_op(lhs, rhs, BinaryOp::Mul);
         /* User Code End: create_mul */
     }
      
@@ -344,6 +398,46 @@ public:
         /* User Code End: create_icmp */
     }
      
+    Instruction* create_eq(
+        /* User Code Start: create_eq args */
+
+        /* User Code End: create_eq args */
+    ){
+        /* User Code Start: create_eq */
+        return nullptr;
+        /* User Code End: create_eq */
+    }
+     
+    Instruction* create_ne(
+        /* User Code Start: create_ne args */
+        Value* lhs, Value* rhs
+        /* User Code End: create_ne args */
+    ){
+        /* User Code Start: create_ne */
+        return nullptr;
+        /* User Code End: create_ne */
+    }
+     
+    Instruction* create_gt(
+        /* User Code Start: create_gt args */
+
+        /* User Code End: create_gt args */
+    ){
+        /* User Code Start: create_gt */
+        return nullptr;
+        /* User Code End: create_gt */
+    }
+     
+    Instruction* create_lt(
+        /* User Code Start: create_lt args */
+
+        /* User Code End: create_lt args */
+    ){
+        /* User Code Start: create_lt */
+        return nullptr;
+        /* User Code End: create_lt */
+    }
+     
     Instruction* create_fcmp(
         /* User Code Start: create_fcmp args */
 
@@ -352,6 +446,46 @@ public:
         /* User Code Start: create_fcmp */
         return nullptr;
         /* User Code End: create_fcmp */
+    }
+     
+    Instruction* create_oeq(
+        /* User Code Start: create_oeq args */
+
+        /* User Code End: create_oeq args */
+    ){
+        /* User Code Start: create_oeq */
+        return nullptr;
+        /* User Code End: create_oeq */
+    }
+     
+    Instruction* create_one(
+        /* User Code Start: create_one args */
+
+        /* User Code End: create_one args */
+    ){
+        /* User Code Start: create_one */
+        return nullptr;
+        /* User Code End: create_one */
+    }
+     
+    Instruction* create_ogt(
+        /* User Code Start: create_ogt args */
+
+        /* User Code End: create_ogt args */
+    ){
+        /* User Code Start: create_ogt */
+        return nullptr;
+        /* User Code End: create_ogt */
+    }
+     
+    Instruction* create_olt(
+        /* User Code Start: create_olt args */
+
+        /* User Code End: create_olt args */
+    ){
+        /* User Code Start: create_olt */
+        return nullptr;
+        /* User Code End: create_olt */
     }
      
     Instruction* create_br(
@@ -376,11 +510,14 @@ public:
      
     Instruction* create_call(
         /* User Code Start: create_call args */
-
+        const IR::Function* func, std::vector<Value*> args
         /* User Code End: create_call args */
     ){
         /* User Code Start: create_call */
-        return nullptr;
+        auto name = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
+        auto inst = new CallInst(func, args, name, this->get_cur_bb());
+        this->get_cur_bb()->add_instr(inst);
+        return inst;
         /* User Code End: create_call */
     }
      
@@ -392,6 +529,25 @@ public:
         /* User Code Start: create_phi */
         return nullptr;
         /* User Code End: create_phi */
+    }
+     
+    Instruction* create_cvt(
+        /* User Code Start: create_cvt args */
+        Value* v, Type* from, Type* to
+        /* User Code End: create_cvt args */
+    ){
+        /* User Code Start: create_cvt */
+        assert(!from->is_array() && !to->is_array() && "Can't cvt the array type\n");
+        if(from->base_type == to->base_type) {
+            return static_cast<Instruction*>(v);
+        }
+
+        auto name = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
+        auto instr = new ConvertInst(v, from, to, name, this->get_cur_bb());
+        this->get_cur_bb()->add_instr(instr);
+
+        return instr;
+        /* User Code End: create_cvt */
     }
     
 private:

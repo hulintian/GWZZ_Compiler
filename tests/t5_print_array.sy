@@ -1,12 +1,14 @@
 
 void print_array(int n, int arr[]) {
-    int i = n;
+    int i = arr[0];
     putarray(10, arr);
     while(i >= 0) {
         putint(arr[i]);
         putline();
         i = i - 1;
     }
+    
+    arr[0] = 1111;
 }
 
 int main( ) {
