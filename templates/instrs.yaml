@@ -164,7 +164,7 @@ classes:
 
   - classname: Call
     constructor_args:
-      - type: IR::Function*
+      - type: const IR::Function*
         name: func
       - type: std::vector<Value*>
         name: args
@@ -173,7 +173,7 @@ classes:
       - type: BasicBlock*
         name: bb
     members:
-      - type: IR::Function*
+      - type: const IR::Function*
         name: _func
         generate_get: true
       - type: std::vector<Value*>
@@ -189,8 +189,12 @@ classes:
     constructor_args:
       - type: Type*
         name: arr_type
+      - type: Type*
+        name: base_type
       - type: std::vector<Value*>
         name: indices
+      - type: Value*
+        name: src
       - type: std::string
         name: _name
       - type: BasicBlock*
@@ -201,6 +205,9 @@ classes:
         generate_get: true
       - type: std::vector<Value*>
         name: _indices
+        generate_get: true
+      - type: Value*
+        name: _src
         generate_get: true
     methods:
       - type: std::string 
