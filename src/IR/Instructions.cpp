@@ -1,4 +1,5 @@
-#include "Instructions.hpp"
+#include "IR/Instructions.hpp"
+#include "common/type.hpp"
 
 namespace IR {
 /* User Code Start: Global */
@@ -107,7 +108,7 @@ std::string ConvertInst::to_llvm() {
 
 std::string CallInst::to_str() {
     /* User Code Start: Call::to_str */
-    return "Call ";
+    return "Call " + this->get_func()->get_func_name();
 
     /* User Code End: Call::to_str */
 }
@@ -124,7 +125,19 @@ std::string CallInst::to_llvm() {
 
 std::string GetElementPtrInst::to_str() {
     /* User Code Start: GetElementPtr::to_str */
-    return "gep";
+    std::string ty = " unknow ", idx = "", src = " unknow source ";
+    if(this->get_arr_type()) {
+        ty = type_string(*this->get_arr_type());
+    }
+    
+    for(auto i : this->get_indices()) {
+        idx += " [ " + i->get_name() + " ] ";
+        
+    }
+    if(this->get_src()) {
+        src = this->get_src()->get_name();
+    }
+    return this->get_name() + " = gep " + ty + " " + src + ", " + idx; 
     /* User Code End: GetElementPtr::to_str */
 }
 

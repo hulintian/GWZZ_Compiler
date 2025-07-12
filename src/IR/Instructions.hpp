@@ -148,7 +148,7 @@ class BinaryInst : public Instruction {
 public:
     BinaryInst(Type* ty, BinaryOp bop, Value* lhs, Value* rhs, std::string _name, BasicBlock* bb)
     /* User Code Start: Binary */
-    : Instruction(ty, _name, bb)
+    : Instruction(ty, _name, bb), _ty(ty), _bop(bop), _lhs(lhs), _rhs(rhs)
     /* User Code End: Binary */
     {
         /* User Code Start: Binary construct function */
@@ -157,7 +157,33 @@ public:
     }
 
     /* User Code Start: Binary place */
-
+    enum BinaryInstType{
+        add = 0,
+        sub,
+        mul,
+        udiv,
+        sdiv ,
+        urem ,
+        srem ,
+        fadd,
+        fsub ,
+        fmul,
+        fdiv,
+        frem ,
+        iand ,
+        ior ,
+        ixor ,
+        icmp ,
+        eq ,
+        ne ,
+        gt ,
+        lt ,
+        fcmp,
+        oeq ,
+        one ,
+        ogt ,
+        olt ,
+    };
     /* User Code End: Binary place */
     std::string to_str();
     std::string to_llvm();
@@ -198,7 +224,7 @@ class ConvertInst : public Instruction {
 public:
     ConvertInst(Value* src, Type* src_type, Type* dst_type, std::string _name, BasicBlock* bb)
     /* User Code Start: Convert */
-    : Instruction(dst_type, _name, bb)
+    : Instruction(dst_type, _name, bb), src(src), src_type(src_type), dst_type(dst_type)
         /* User Code End: Convert */
     {
         /* User Code Start: Convert construct function */
@@ -239,9 +265,9 @@ private:
 
 class CallInst : public Instruction {
 public:
-    CallInst(IR::Function* func, std::vector<Value*> args, std::string _name, BasicBlock* bb)
+    CallInst(const IR::Function* func, std::vector<Value*> args, std::string _name, BasicBlock* bb)
     /* User Code Start: Call */
-    : Instruction(func->get_return_type(), _name, bb)
+    : Instruction(func->get_return_type(), _name, bb), _func(func),  _args(std::move(args))
     /* User Code End: Call */
     {
         /* User Code Start: Call construct function */
@@ -256,7 +282,7 @@ public:
     std::string to_llvm();
 
      
-    IR::Function* get_func() const {
+    const IR::Function* get_func() const {
         /* User Code Start: Call::get_func */
         return _func;
         /* User Code End: Call::get_func */
@@ -269,15 +295,15 @@ public:
     }
      
 private:
-    IR::Function* _func;
+    const IR::Function* _func;
     std::vector<Value*> _args;
 };
 
 class GetElementPtrInst : public Instruction {
 public:
-    GetElementPtrInst(Type* arr_type, std::vector<Value*> indices, std::string _name, BasicBlock* bb)
+    GetElementPtrInst(Type* arr_type, Type* base_type, std::vector<Value*> indices, Value* src, std::string _name, BasicBlock* bb)
     /* User Code Start: GetElementPtr */
-    : Instruction(arr_type, _name, bb)
+    : Instruction(base_type, _name, bb), _arr_type(arr_type), _indices(std::move(indices)), _src(src)
     /* User Code End: GetElementPtr */
     {
         /* User Code Start: GetElementPtr construct function */
@@ -303,10 +329,17 @@ public:
         return _indices;
         /* User Code End: GetElementPtr::get_indices */
     }
+      
+    Value* get_src() const {
+        /* User Code Start: GetElementPtr::get_src */
+        return _src;
+        /* User Code End: GetElementPtr::get_src */
+    }
      
 private:
     Type* _arr_type;
     std::vector<Value*> _indices;
+    Value* _src;
 };
 
 class PhiInst : public Instruction {
