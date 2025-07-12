@@ -80,13 +80,14 @@ enum class BinaryOp {
   Mul,
   Div,
   Mod,
-// Logical
+// Logical, compares
   Eq,
   Neq,
   Lt,
   Gt,
   Leq,
   Geq,
+// this tow only exists in cond, in if and while stmt
   And,
   Or,
 // shift

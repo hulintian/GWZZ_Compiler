@@ -8,6 +8,7 @@
 #include "IR/Function.hpp"
 #include "IR/GlobalValue.hpp"
 #include "IR/Module.hpp"
+#include "IR/Value.hpp"
 #include "frontend/AST.hpp"
 
 namespace frontend {
@@ -26,15 +27,17 @@ public:
 
     void gen_func_body(const ast::Block& block);
 
-    void gen_initial_list(const std::vector<std::unique_ptr<ast::Initializer>> &init_list, const Type& type, int depth, std::map<int, ConstValue> &arr_val, int& idx);
+    void gen_initial_list(const std::vector<std::unique_ptr<ast::Initializer>> &init_list, const Type& type, int depth, std::map<int, ConstValue> &arr_val, int& idx, Value* arr_sym);
     void gen_block(const ast::Block& block);
     void gen_stmt(const ast::Stmt& stmt);
     void gen_decl(const ast::Decl& decl);
 
-    IR::Instruction* gen_expr(const ast::Expr* expr);
-    IR::Instruction* gen_expr(const ast::Expr& expr) {
+    Value* gen_expr(const ast::Expr* expr);
+    Value* gen_expr(const ast::Expr& expr) {
         return gen_expr(&expr);
     }
+
+    IR::Instruction* gen_binary(const ast::BinaryExpr& bexpr);
 
     // this is for 
     // void gen_decl(const ast::Decl& decl);
@@ -42,6 +45,7 @@ public:
     // void gen_while(const ast::WhileStmt& while_stmt);
     // void gen_if(const ast::IfStmt& if_stmt);
 
+    // maintain the contexts
     IR::Module* _module;
     IR::IRBuilder* builder;
     Context *ctx;

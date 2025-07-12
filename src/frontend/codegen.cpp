@@ -6,6 +6,7 @@
 #include "IR/Value.hpp"
 #include "common/defines.hpp"
 #include "common/type.hpp"
+#include "common/utils.hpp"
 #include "frontend/AST.hpp"
 #include <cassert>
 #include <memory>
@@ -61,13 +62,11 @@ IR::Function* CodeGen::gen_func(const ast::Func& func) {
     }
 
     auto nf = builder->create_func(func_name, return_type, p_types, p_names, false);
-
     
     // then translate the body 
     ctx->set_current_function(nf);
     auto &func_body = func.body();
     gen_func_body(*func_body);
-
     
     // set the insert ptr nullptr, exit func
     ctx->set_current_basic_block(nullptr);
@@ -140,7 +139,7 @@ void CodeGen::gen_decl(const ast::Decl& decl) {
         if(decl.init()->value().index() == 1) {
             auto &il = std::get<std::vector<std::unique_ptr<ast::Initializer>>>(decl.init()->value());
             int idx = 0;
-            this->gen_initial_list(il, var->type, 0, *var->arr_val, idx);
+            this->gen_initial_list(il, var->type, 0, *var->arr_val, idx, val);
         }
     }
 
@@ -152,7 +151,8 @@ void CodeGen::gen_initial_list(const std::vector<std::unique_ptr<ast::Initialize
                                const Type& type,
                                int depth,
                                std::map<int, ConstValue> &arr_val,
-                               int& idx) {
+                               int& idx,
+                               Value* arr_sym) {
     // current dimesion size
     int dm_size = 1;
     if(depth > 0) {
@@ -167,21 +167,28 @@ void CodeGen::gen_initial_list(const std::vector<std::unique_ptr<ast::Initialize
             // 
             if(arr_val.find(idx) != arr_val.end()) {
                 // get the memory and then store
-                auto addr = builder->create_getelementptr();
-                auto const_v = builder->create_const_value(builder->get_base_type(type.base_type), arr_val[idx].to_string(), arr_val[idx]);
+                Type* nt = new Type(type);
+                auto const_v = ConstValue(idx);
+                // 这里是赋初值，都是知道的，所以直接给个常量行
+                auto cv = builder->create_const_value(builder->get_base_type(Int), const_v.to_string(), const_v);
+                auto addr = builder->create_getelementptr(nt, std::vector<Value*>{cv}, arr_sym);
+                auto rhs = builder->create_const_value(builder->get_base_type(type.base_type), arr_val[idx].to_string(), arr_val[idx]);
                 // store就是个过程，名字无所谓 
-                builder->create_store(builder->get_base_type(type.base_type), "", addr, const_v);
+                builder->create_store(builder->get_base_type(type.base_type), "", addr, rhs);
             }  else {
                 auto &expr = std::get<std::unique_ptr<ast::Expr>>(value);
                 auto rhs = gen_expr(*expr);
-                auto addr = builder->create_getelementptr();
+                Type* nt = new Type(type);
+                auto const_v = ConstValue(idx);
+                auto cv = builder->create_const_value(builder->get_base_type(Int), const_v.to_string(), const_v);
+                auto addr = builder->create_getelementptr(nt, std::vector<Value*>{cv}, arr_sym);
                 builder->create_store(builder->get_base_type(type.base_type), "", addr, rhs );
             }
+            idx++;
         } else if(value.index() == 1){
                 auto &next_dim = std::get<std::vector<std::unique_ptr<ast::Initializer>>>(value);
-                gen_initial_list(next_dim, type, depth+1, arr_val, idx);
+                gen_initial_list(next_dim, type, depth+1, arr_val, idx, arr_sym);
         }
-        idx++;
     }
     if(idx < fill) {
         idx = fill;
@@ -192,21 +199,99 @@ void CodeGen::gen_stmt(const ast::Stmt& stmt) {
 
 }
 
-IR::Instruction* CodeGen::gen_expr(const ast::Expr* expr) {
+Value* CodeGen::gen_expr(const ast::Expr* expr) {
+    if(auto fl = dynamic_cast<const ast::FloatLiteral*>(expr)) {
+        auto cv = new ConstValue(fl->value());
+        return builder->create_const_value(builder->get_base_type(Float), *cv);
+    }else if(auto il = dynamic_cast<const ast::IntLiteral*>(expr)) {
+        auto cv = new ConstValue(il->value());
+        return builder->create_const_value(builder->get_base_type(Float), *cv);
+    }
     if(auto lval = dynamic_cast<const ast::LValue*>(expr)) {
+        // only check the scalar type, 
+        // TODO need to deal with array type
         auto lsym = lval->ident().identifier();
-        bool flag = this->get_cur_func()->has_symbol(lsym);
+        // bool flag = this->get_cur_func()->has_symbol(lsym);
         assert(this->get_cur_func()->has_symbol(lsym));
+        auto var = lval->var;
+        // the symbol 
         auto val_ptr = this->get_cur_func()->find_alias(lsym);
+        if(lval->var->type.is_array()) {
+            assert(var->type.nr_dims() == lval->indices().size() &&  "The dim size is not matched.\n");
+            // calcualte the bias 
+            int n = var->type.nr_dims();
+            std::vector<ConstValue> coefficient(n);
+            coefficient[n-1] = ConstValue(1);
+            
+            for(int i=n-1; i>=1; i++) {
+                coefficient[i-1] = ConstValue(coefficient[i].iv * var->type.dims[i]) ;
+            }
+            // times indices to cal the final bias 
+            // if dim == 1
+            Value* bias;
+            auto lhs = gen_expr(*lval->indices()[0]);
+            if(var->type.nr_dims() == 1) {
+                bias = gen_expr(*lval->indices()[0]);
+            } else {
+                bias = gen_expr(*lval->indices()[0]);
+                bias = builder->create_mul(bias, builder->create_const_value(builder->get_base_type(Int), coefficient[0]));
+                for(int i=1; i < n-1; i++) {
+                     // 最后一个idx不用乘，直接加就行
+                     auto lhs = gen_expr(*lval->indices()[0]);
+                     auto n_bias = builder->create_mul(lhs, builder->create_const_value(builder->get_base_type(Int), coefficient[0]));
+                     bias = builder->create_add(bias, n_bias);
+                } 
+                auto tail = gen_expr(*lval->indices()[n-1]);
+                bias = builder->create_add(bias, tail);
+            }
+            auto addr = builder->create_getelementptr(&var->type, {bias}, val_ptr);
+            return builder->create_load(builder->get_base_type(var->type.base_type), addr);
+        }
         return builder->create_load(&lval->var->type, val_ptr);
     } else if( auto bexpr = dynamic_cast<const ast::BinaryExpr*>(expr)) {
-
+        return this->gen_binary(*bexpr);
     } else if( auto uexpr = dynamic_cast<const ast::UnaryExpr*>(expr)) {
-
+        auto uop = uexpr->op();
+        auto &od = uexpr->operand();
+        auto zero = new ConstValue(0);
+        switch (uop) {
+            case UnaryOp::Add: return gen_expr(*od) ; break;
+            case UnaryOp::Sub:  builder->create_sub(builder->create_const_value(builder->get_base_type(Int), *zero), this->gen_expr(*od)) ; break;
+            // wait to impl when deal with cond expr
+            case UnaryOp::Not:  builder->create_ne(builder->create_const_value(builder->get_base_type(Int), *zero), this->gen_expr(*od)) ; break;
+        }
+        return nullptr; // should never go here
     } else if( auto call = dynamic_cast<const ast::Call*>(expr)) {
-
+        // 一列参数类型，一列参数
+        auto func_name = call->func().identifier();
+        auto func = this->get_cur_module()->get_func(func_name);
+        auto func_params = func->get_params_type();
+        int pn = func_params.size();
+        std::vector<Value*> args;
+        auto &func_args = call->args();
+        for(int i=0; i < pn; i++) {
+            if(func_args[i].index() == 0) {
+                auto &expr = std::get<std::unique_ptr<ast::Expr>>(func_args[i]);
+                auto ag = this->gen_expr(*expr);
+                // assert(*ag->get_type() == *func_params[i] ); TODO should assert here
+                args.push_back(ag);
+            }else if(func_args[i].index() == 1){
+                auto sa = std::get<ast::StringLiteral>(func_args[i]);
+                // do nothing, this should give a string for output
+            }
+        }
+        auto instr = builder->create_call(func, args);
+        return instr;
     }
     return nullptr;
+}
+
+IR::Instruction* CodeGen::gen_binary(const ast::BinaryExpr& bexpr) {
+    auto bop = bexpr.op();
+    auto lhs = this->gen_expr(*bexpr.lhs());
+    auto rhs = this->gen_expr(*bexpr.rhs());
+    // TODO check the lhs and rhs 
+    return builder->create_binary_op(lhs, rhs, bop);
 }
 
 }
