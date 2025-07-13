@@ -77,7 +77,44 @@ std::string StoreInst::to_llvm() {
 
 std::string BinaryInst::to_str() {
     /* User Code Start: Binary::to_str */
-    return "Binary ";
+    std::string op_str;
+    switch(this->get_instr_type()) {
+        case add: op_str = "add"; break;
+        case sub: op_str = "sub"; break;
+        case mul: op_str = "mul"; break;
+        case udiv: op_str = "udiv"; break;
+        case sdiv: op_str = "sdiv"; break;
+        case urem: op_str = "urem"; break;
+        case srem: op_str = "srem"; break;
+        case fadd: op_str = "fadd"; break;
+        case fsub: op_str = "fsub"; break;
+        case fmul: op_str = "fmul"; break;
+        case fdiv: op_str = "fdiv"; break;
+        case frem: op_str = "frem"; break;
+        case iand: op_str = "and"; break;
+        case ior: op_str = "or"; break;
+        case ixor: op_str = "xor"; break;
+        case icmp: op_str = "icmp"; break;
+        case eq: op_str = "icmp eq"; break;
+        case ne: op_str = "icmp ne"; break;
+        case gt: op_str = "icmp gt"; break;
+        case lt: op_str = "icmp lt"; break;
+        case ge: op_str = "icmp ge"; break;
+        case le: op_str = "icmp le"; break;
+        case fcmp: op_str = "fcmp"; break;
+        case oeq: op_str = "fcmp oeq"; break;
+        case one: op_str = "fcmp one"; break;
+        case ogt: op_str = "fcmp ogt"; break;
+        case olt: op_str = "fcmp olt"; break;
+        case oge: op_str = "fcmp oge"; break;
+        case ole: op_str = "fcmp ole"; break;
+        case lshr: op_str = "lshr"; break;
+        case ashr: op_str = "ashr"; break;
+        case shl: op_str = "shl"; break;
+        case fshr: op_str = "fshr"; break;
+        default: op_str = "unknown_binary_op"; break;
+    }
+    return this->get_name() + " = " + op_str + " " + this->get_lhs()->get_name() + " " + this->get_rhs()->get_name();
     /* User Code End: Binary::to_str */
 }
 
@@ -93,7 +130,7 @@ std::string BinaryInst::to_llvm() {
 
 std::string ConvertInst::to_str() {
     /* User Code Start: Convert::to_str */
-    return "cvt";
+    return this->get_name() + " = cvt " + type_string(*this->getsrc_type()) + " " + this->getsrc()->get_name() + " " + type_string(*this->getdst_type());
     /* User Code End: Convert::to_str */
 }
 
