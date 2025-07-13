@@ -3,12 +3,12 @@ ANTLR=antlr4
 CXX = clang++
 CC = clang
 
-INCLUDE_FLAGS = -Isrc -I/usr/include/antlr4-runtime
+INCLUDE_FLAGS = -I./antlr4 -I./antlr4/antlr4-runtime -I./src 
 CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE 
 
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 
-LDFLAGS = -Llib -lantlr4-runtime
+LDFLAGS = -L./antlr4/lib -lantlr4-runtime
 
 ANTLR_OUT_PATH = src/grammar
 BUILD_DIR = build
