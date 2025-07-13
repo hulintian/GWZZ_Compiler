@@ -48,7 +48,7 @@ public:
     }
 
     bool has_gv(const std::string& symbol) {
-        return this->get_gv(symbol) == nullptr;
+        return this->get_gv(symbol) != nullptr;
     }
 
     bool find_function(const std::string name)const  {
