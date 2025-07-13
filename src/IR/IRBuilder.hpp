@@ -13,7 +13,14 @@
 namespace IR {
 class IRBuilder {
 public:
-    IRBuilder(Context* ctx) : _cur_ctx(ctx)  {}
+    IRBuilder(Context* ctx) : _cur_ctx(ctx)  {
+        /* User Code Start: IRBuilder construct function */
+        auto zo = ConstValue(0);
+        auto fo = ConstValue((float)0.0);
+        zero = new ConstantValue(this->get_base_type(0), "0", zo);
+        fzero = new ConstantValue(this->get_base_type(0), std::to_string((float)0.0), fo);
+        /* User Code End: IRBuilder construct function */
+    }
 
     /* User Code Start: code space 1 */
     // TODO : 在此微操
@@ -21,6 +28,7 @@ public:
         //
     // a cache for base type
     std::map<int, Type*> tbt;
+    ConstantValue *zero, *fzero;
 
     Type* get_base_type(int base_type) {
         if(tbt.find(base_type) != tbt.end()) {
@@ -32,6 +40,7 @@ public:
         }
     }
     
+    
     GlobalValue* create_gv(std::shared_ptr<Var> var, const std::string &sym) {
         auto _cur_module = this->get_cur_module();
         bool initialized = var->arr_val || var->val;
@@ -41,10 +50,19 @@ public:
         return gv;
     }
     
-    // create bb with name
+    // create bb with name, before function define
     BasicBlock* create_bb(std::string &name, Function *func) {
         auto nbb = new BasicBlock(name, func, _cur_ctx->get_tmp_baisc_block_index());
         assert(!func->find_bb(nbb->get_bb_idx()) && "Already has this BasicBlock");
+        return nbb;
+    }
+
+    BasicBlock* create_bb() {
+        assert(this->get_cur_func() != nullptr && "Not in function\n");
+        int  idx = this->get_cur_ctx()->get_tmp_baisc_block_index();
+        auto bb_name = "BB" + std::to_string(idx);
+        auto nbb = new BasicBlock(bb_name, this->get_cur_func(), idx);
+        this->get_cur_func()->insert_bb(nbb);
         return nbb;
     }
     
@@ -142,6 +160,22 @@ public:
         return std::vector<Value*>{n_lhs, n_rhs};
     }
 
+    Instruction* create_ne_zero(Value* val) {
+        if(val->get_type()->base_type == Float) {
+            return create_ne(val, this->fzero);
+        } else {
+            return create_ne(val, this->zero);
+        }
+    }
+
+    void enter_loop(BasicBlock* cond, BasicBlock* end) {
+        this->get_cur_func()->push_break_continue_point(end, cond);
+    }
+
+    void exit_loop() {
+        this->get_cur_func()->pop_break_continue_point();
+    }
+
     /* User Code End: code space 1 */
 
      
@@ -223,12 +257,33 @@ public:
         /* User Code Start: create_binary_op */
         Value* n_lhs, *n_rhs;
 
+        // let lhs & rhs type same
         auto norm = this->check_lhs_rhs_all_float(lhs, rhs);
         n_lhs = norm[0];
         n_rhs = norm[1];
 
         auto name = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
-        auto instr = new BinaryInst(this->get_base_type(false? 0 : 1), bop, n_lhs, n_rhs, name, this->get_cur_bb());
+        BinaryInstType bit;
+
+        auto ty = n_lhs->get_type();
+        switch (bop) {
+            case BinaryOp::Add :    if(ty->base_type == 1) { bit = BinaryInstType::fadd; } else { bit = BinaryInstType::add; }; break;
+            case BinaryOp::Sub:     if(ty->base_type == 1) { bit = BinaryInstType::fsub; } else { bit = BinaryInstType::sub; }; break;
+            case BinaryOp::Mul:     if(ty->base_type == 1) { bit = BinaryInstType::fmul; } else { bit = BinaryInstType::mul; }; break; 
+            case BinaryOp::Div:     if(ty->base_type == 1) { bit = BinaryInstType::fdiv; } else { bit = BinaryInstType::sdiv; }; break; 
+            case BinaryOp::Mod:     if(ty->base_type == 1) { bit = BinaryInstType::frem; } else { bit = BinaryInstType::srem; }; break;
+            case BinaryOp::Eq:      if(ty->base_type == 1) { bit = BinaryInstType::oeq; } else { bit = BinaryInstType::eq; }; break;
+            case BinaryOp::Neq:     if(ty->base_type == 1) { bit = BinaryInstType::one; } else { bit = BinaryInstType::ne; }; break;
+            case BinaryOp::Lt:      if(ty->base_type == 1) { bit = BinaryInstType::olt; } else { bit = BinaryInstType::lt; }; break;
+            case BinaryOp::Gt:      if(ty->base_type == 1) { bit = BinaryInstType::ogt; } else { bit = BinaryInstType::gt; }; break;
+            case BinaryOp::Leq:     if(ty->base_type == 1) { bit = BinaryInstType::ole; } else { bit = BinaryInstType::le; }; break;
+            case BinaryOp::Geq:     if(ty->base_type == 1) { bit = BinaryInstType::oge; } else { bit = BinaryInstType::ge; }; break;
+            case BinaryOp::LShr:     if(ty->base_type == 1) { bit = BinaryInstType::fshr; } else { bit = BinaryInstType::lshr; }; break;
+            case BinaryOp::Shr:     if(ty->base_type == 1) { bit = BinaryInstType::fshr; } else { bit = BinaryInstType::ashr; }; break;
+            case BinaryOp::Shl:    if(ty->base_type == 1) { bit = BinaryInstType::shl; } else { bit = BinaryInstType::shl; }; break;
+        }
+
+        auto instr = new BinaryInst(this->get_base_type(false? 0 : 1), bop, n_lhs, n_rhs, name, bit,this->get_cur_bb() );
 
         this->get_cur_bb()->add_instr(instr);
 
@@ -270,7 +325,7 @@ public:
      
     Instruction* create_udiv(
         /* User Code Start: create_udiv args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_udiv args */
     ){
         /* User Code Start: create_udiv */
@@ -280,7 +335,7 @@ public:
      
     Instruction* create_sdiv(
         /* User Code Start: create_sdiv args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_sdiv args */
     ){
         /* User Code Start: create_sdiv */
@@ -290,7 +345,7 @@ public:
      
     Instruction* create_urem(
         /* User Code Start: create_urem args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_urem args */
     ){
         /* User Code Start: create_urem */
@@ -300,7 +355,7 @@ public:
      
     Instruction* create_srem(
         /* User Code Start: create_srem args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_srem args */
     ){
         /* User Code Start: create_srem */
@@ -310,7 +365,7 @@ public:
      
     Instruction* create_fadd(
         /* User Code Start: create_fadd args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_fadd args */
     ){
         /* User Code Start: create_fadd */
@@ -320,7 +375,7 @@ public:
      
     Instruction* create_fsub(
         /* User Code Start: create_fsub args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_fsub args */
     ){
         /* User Code Start: create_fsub */
@@ -330,7 +385,7 @@ public:
      
     Instruction* create_fmul(
         /* User Code Start: create_fmul args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_fmul args */
     ){
         /* User Code Start: create_fmul */
@@ -340,7 +395,7 @@ public:
      
     Instruction* create_fdiv(
         /* User Code Start: create_fdiv args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_fdiv args */
     ){
         /* User Code Start: create_fdiv */
@@ -350,7 +405,7 @@ public:
      
     Instruction* create_frem(
         /* User Code Start: create_frem args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_frem args */
     ){
         /* User Code Start: create_frem */
@@ -360,7 +415,7 @@ public:
      
     Instruction* create_and(
         /* User Code Start: create_and args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_and args */
     ){
         /* User Code Start: create_and */
@@ -370,7 +425,7 @@ public:
      
     Instruction* create_or(
         /* User Code Start: create_or args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_or args */
     ){
         /* User Code Start: create_or */
@@ -380,7 +435,7 @@ public:
      
     Instruction* create_xor(
         /* User Code Start: create_xor args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_xor args */
     ){
         /* User Code Start: create_xor */
@@ -390,7 +445,7 @@ public:
      
     Instruction* create_icmp(
         /* User Code Start: create_icmp args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_icmp args */
     ){
         /* User Code Start: create_icmp */
@@ -400,11 +455,11 @@ public:
      
     Instruction* create_eq(
         /* User Code Start: create_eq args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_eq args */
     ){
         /* User Code Start: create_eq */
-        return nullptr;
+        return this->create_binary_op(lhs, rhs, BinaryOp::Eq);
         /* User Code End: create_eq */
     }
      
@@ -414,13 +469,13 @@ public:
         /* User Code End: create_ne args */
     ){
         /* User Code Start: create_ne */
-        return nullptr;
+        return this->create_binary_op(lhs, rhs, BinaryOp::Neq);
         /* User Code End: create_ne */
     }
      
     Instruction* create_gt(
         /* User Code Start: create_gt args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_gt args */
     ){
         /* User Code Start: create_gt */
@@ -430,7 +485,7 @@ public:
      
     Instruction* create_lt(
         /* User Code Start: create_lt args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_lt args */
     ){
         /* User Code Start: create_lt */
@@ -440,7 +495,7 @@ public:
      
     Instruction* create_fcmp(
         /* User Code Start: create_fcmp args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_fcmp args */
     ){
         /* User Code Start: create_fcmp */
@@ -450,7 +505,7 @@ public:
      
     Instruction* create_oeq(
         /* User Code Start: create_oeq args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_oeq args */
     ){
         /* User Code Start: create_oeq */
@@ -460,7 +515,7 @@ public:
      
     Instruction* create_one(
         /* User Code Start: create_one args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_one args */
     ){
         /* User Code Start: create_one */
@@ -470,7 +525,7 @@ public:
      
     Instruction* create_ogt(
         /* User Code Start: create_ogt args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_ogt args */
     ){
         /* User Code Start: create_ogt */
@@ -480,7 +535,7 @@ public:
      
     Instruction* create_olt(
         /* User Code Start: create_olt args */
-
+        Value* lhs, Value* rhs
         /* User Code End: create_olt args */
     ){
         /* User Code Start: create_olt */
@@ -490,21 +545,25 @@ public:
      
     Instruction* create_br(
         /* User Code Start: create_br args */
-
+        BasicBlock* dst
         /* User Code End: create_br args */
     ){
         /* User Code Start: create_br */
-        return nullptr;
+        auto instr = new BranchInst(this->get_base_type(0),  this->get_cur_bb(), dst);
+        this->get_cur_bb()->add_instr(instr);
+        return instr;
         /* User Code End: create_br */
     }
      
     Instruction* create_cond_br(
         /* User Code Start: create_cond_br args */
-
+        Value *cond, BasicBlock* true_bb, BasicBlock* false_bb
         /* User Code End: create_cond_br args */
     ){
         /* User Code Start: create_cond_br */
-        return nullptr;
+        auto instr = new CondBranchInst(this->get_base_type(0), cond, this->get_cur_bb(), true_bb, false_bb);
+        this->get_cur_bb()->add_instr(instr);
+        return instr;
         /* User Code End: create_cond_br */
     }
      
@@ -519,6 +578,18 @@ public:
         this->get_cur_bb()->add_instr(inst);
         return inst;
         /* User Code End: create_call */
+    }
+     
+    Instruction* create_ret(
+        /* User Code Start: create_ret args */
+        Value* ret_val
+        /* User Code End: create_ret args */
+    ){
+        /* User Code Start: create_ret */
+        auto instr = new ReturnInst(ret_val, "", this->get_cur_bb());
+        this->get_cur_bb()->add_instr(instr);
+        return instr;
+        /* User Code End: create_ret */
     }
      
     Instruction* create_phi(

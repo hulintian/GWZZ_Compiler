@@ -1,5 +1,6 @@
 #include "IR/Instructions.hpp"
 #include "common/type.hpp"
+#include <string>
 
 namespace IR {
 /* User Code Start: Global */
@@ -10,7 +11,8 @@ namespace IR {
 
 std::string AllocaInst::to_str() {
     /* User Code Start: Alloca::to_str */
-    return "Alloca " + this->get_name();
+    auto ty = this->get_type();
+    return "Alloca " + this->get_name() + " " + type_string(*this->get_type());
     /* User Code End: Alloca::to_str */
 }
 
@@ -121,6 +123,26 @@ std::string CallInst::to_llvm() {
 
 // ======================= End Call =======================
 
+// ======================= Start Return =======================
+
+std::string ReturnInst::to_str() {
+    /* User Code Start: Return::to_str */
+    std::string rv = "";
+    if(this->get_ret_val()) {
+        rv = this->get_ret_val()->get_name();
+    }
+    return "ret " + rv;
+    /* User Code End: Return::to_str */
+}
+
+std::string ReturnInst::to_llvm() {
+    /* User Code Start: Return::to_llvm */
+
+    /* User Code End: Return::to_llvm */
+}
+
+// ======================= End Return =======================
+
 // ======================= Start GetElementPtr =======================
 
 std::string GetElementPtrInst::to_str() {
@@ -164,5 +186,37 @@ std::string PhiInst::to_llvm() {
 }
 
 // ======================= End Phi =======================
+
+// ======================= Start CondBranch =======================
+
+std::string CondBranchInst::to_str() {
+    /* User Code Start: CondBranch::to_str */
+    return "cond br " + this->get_cond()->get_name() + " " + this->get_true_bb()->get_name() + " " + this->get_false_bb()->get_name() ;
+    /* User Code End: CondBranch::to_str */
+}
+
+std::string CondBranchInst::to_llvm() {
+    /* User Code Start: CondBranch::to_llvm */
+
+    /* User Code End: CondBranch::to_llvm */
+}
+
+// ======================= End CondBranch =======================
+
+// ======================= Start Branch =======================
+
+std::string BranchInst::to_str() {
+    /* User Code Start: Branch::to_str */
+    return "br " + this->get_dst_bb()->get_name();
+    /* User Code End: Branch::to_str */
+}
+
+std::string BranchInst::to_llvm() {
+    /* User Code Start: Branch::to_llvm */
+
+    /* User Code End: Branch::to_llvm */
+}
+
+// ======================= End Branch =======================
 
 }
