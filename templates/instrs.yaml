@@ -20,9 +20,9 @@ classes:
       - type: unsigned
         name: _alignment
         generate_get: true
-      - type: Type*
-        name: _type
-        generate_get: true
+        #      - type: Type*
+        #        name: _type
+        #        generate_get: true
         # - type: std::string
         #   name: _name
         #   generate_get: true
@@ -112,6 +112,8 @@ classes:
         name: rhs
       - type: std::string
         name: _name
+      - type: BinaryInstType
+        name: instr_type
       - type: BasicBlock*
         name: bb
     members:
@@ -126,6 +128,9 @@ classes:
         generate_get: true
       - type: Value*
         name: _rhs
+        generate_get: true
+      - type: BinaryInstType
+        name: _instr_type
         generate_get: true
     methods:
       - type: std::string 
@@ -185,6 +190,24 @@ classes:
       - type: std::string 
         name: to_llvm
 
+  - classname: Return
+    constructor_args: 
+      - type: Value* 
+        name: ret_val
+      - type: std::string
+        name: name
+      - type: BasicBlock*
+        name: bb
+    members:
+      - type: Value* 
+        name: _ret_val
+        generate_get: true
+    methods:
+      - type: std::string 
+        name: to_str
+      - type: std::string 
+        name: to_llvm
+
   - classname: GetElementPtr
     constructor_args:
       - type: Type*
@@ -233,6 +256,53 @@ classes:
         generate_get: true
       - type : std::vector<Value*>
         name : _candidate_vars
+        generate_get: true
+    methods:
+      - type: std::string 
+        name: to_str
+      - type: std::string 
+        name: to_llvm
+
+# the type for branch is usless, just for the base class Instruction
+  - classname: CondBranch
+    constructor_args:
+      - type : Type*
+        name : ty
+      - type : Value*
+        name : cond
+      - type : BasicBlock*
+        name : cur_bb
+      - type : BasicBlock*
+        name : true_bb
+      - type : BasicBlock*
+        name : false_bb
+    members:
+      - type : Value*
+        name : _cond
+        generate_get: true
+      - type : BasicBlock*
+        name : _true_bb
+        generate_get: true
+      - type : BasicBlock*
+        name : _false_bb
+        generate_get: true
+    methods:
+      - type: std::string 
+        name: to_str
+      - type: std::string 
+        name: to_llvm
+
+  - classname: Branch
+    constructor_args:
+      - type : Type*
+        name : ty
+      - type : BasicBlock*
+        name : cur_bb
+      - type : BasicBlock*
+        name : dst_bb
+    members:
+      - type : BasicBlock*
+        name : _dst_bb
         generate_get: true
     methods:
       - type: std::string 

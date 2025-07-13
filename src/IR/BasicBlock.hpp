@@ -29,6 +29,8 @@ public:
     }
     
     void dump(std::ostream& out);
+
+    std::string get_name() { return bb_label; }
 private:
     Function* _parent;
     std::string bb_label;
