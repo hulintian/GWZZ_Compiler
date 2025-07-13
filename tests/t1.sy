@@ -1,21 +1,32 @@
-int add(int a, int b) { return a+b; }
-
-float b( ) {
-    int sum = add(1, 2);
-    const int c = 100;
-    int ttttt[2][5] = {{1,2,c},{6,7,8,9,10}};
-    putint(sum);
-    putline();
-    int cc =  c + c;
-    return 1.1 + sum;
-}
-
+// int add(int a, int b) { return a+b; }
+// 
+// float b( ) {
+//     int sum = add(1, 2);
+//     const int c = 100;
+//     int ttttt[2][5] = {{1,2,c},{6,7,8,9,10}};
+//     // putint(sum);
+//     // putline();
+//     float fc = 2.2;
+//     int cc =  2 + fc;
+//     if(cc) {
+//         return fc;
+//     }
+//     return 1.1 + sum;
+// }
+// 
 int c = 1;
 int arr[2][5] = {1,2,3,4,5,6,7,8,9,10};
 int main( ) {
-    putfloat(b());
-    putline();
-    putintl(c);
+    // putfloat(b());
+    // putline();
+    // putintl(c);
+    // b();
+    // add(c, arr[0][0]);
+    arr[0][0] = 11111;
+    //while(c==1 && arr[0][0] == 1) {
+    //    b();
+    //    break;
+    //}
     return 0;
 }
 

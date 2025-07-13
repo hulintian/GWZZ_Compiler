@@ -580,9 +580,9 @@ ConstValue eval(BinaryOp bop, const ConstValue &lhs, const ConstValue &rhs) {
                                 return ConstValue{(int)res};
                            }
         // wait to impl
-        case BinaryOp::Shr:       // shift right
-        case BinaryOp::Shl:       // shift left
-        case BinaryOp::Ashl:      // arithmetic shift left
+        case BinaryOp::LShr:       // shift right
+        case BinaryOp::Shr:       // arithmetic shift right
+        case BinaryOp::Shl:      // shift left
         default:
             __builtin_unreachable();
     }

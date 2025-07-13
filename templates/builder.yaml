@@ -60,6 +60,7 @@ Instructions:
   - Instruction: cond_br
   # functuon call
   - Instruction: call
+  - Instruction: ret
   # phi
   - Instruction : phi
   # convert types
