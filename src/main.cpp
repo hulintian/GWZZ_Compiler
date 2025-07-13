@@ -3,13 +3,13 @@
 #include "grammar/Sysy22Parser.h"
 #include "grammar/Sysy22Visitor.h"
 #include "support/Any.h"
-#include <antlr4-runtime/ANTLRInputStream.h>
-#include <antlr4-runtime/CommonTokenStream.h>
+#include "antlr4-runtime/ANTLRInputStream.h"
+#include "antlr4-runtime/CommonTokenStream.h"
 #include <chrono>
 #include <iostream>
 #include <fstream>
-#include <antlr4-runtime/antlr4-runtime.h>
-#include <antlr4-runtime/tree/ParseTree.h>
+#include "antlr4-runtime/antlr4-runtime.h"
+#include "antlr4-runtime/tree/ParseTree.h"
 #include <frontend/ASTVisitor.h>
 #include <ostream>
 #include "frontend/Sema.hpp"
@@ -41,6 +41,7 @@ int main(int argc, char** argv) {
 
     frontend::CodeGen* cg = new frontend::CodeGen();
     auto m = cg->gen(cu);
+    cout << "====================The ir of " << input_path << " =======================\n";
     m->dump(cout);
 
     return 0;
