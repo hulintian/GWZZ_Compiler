@@ -20,20 +20,56 @@ public :
     virtual std::string to_llvm() = 0;
 
     BasicBlock* get_parent() { return this->parent; }
-    Type* get_type() { return this->inst_type; }
 private :
     // The parent baisc block
     BasicBlock* parent;        
     // three address form, maintain the result
-    Type* inst_type;
 };
+
+/* User Code Start: code space 1 */
+enum BinaryInstType{
+    add = 0,
+    sub,
+    mul,
+    udiv,
+    sdiv ,
+    urem ,
+    srem ,
+    fadd,
+    fsub ,
+    fmul,
+    fdiv,
+    frem ,
+    iand ,
+    ior ,
+    ixor ,
+    icmp ,
+    eq ,
+    ne ,
+    gt ,
+    lt ,
+    ge,
+    le,
+    fcmp,
+    oeq ,
+    one ,
+    ogt ,
+    olt ,
+    oge,
+    ole,
+    lshr,
+    ashr,
+    shl,
+    fshr,
+};
+/* User Code End: code space 1 */
 
 class AllocaInst : public Instruction {
 public:
     AllocaInst(Type* ty, std::string name, unsigned alignment, BasicBlock* bb)
     /* User Code Start: Alloca */
         // 这里的name指的是用alloca从内存中分配到内存的名字，
-    : Instruction(ty, name, bb) 
+    : Instruction(ty, name, bb), _alignment(alignment)
     /* User Code End: Alloca */
     {
         /* User Code Start: Alloca construct function */
@@ -53,16 +89,9 @@ public:
         return _alignment;
         /* User Code End: Alloca::get_alignment */
     }
-      
-    Type* get_type() const {
-        /* User Code Start: Alloca::get_type */
-        return _type;
-        /* User Code End: Alloca::get_type */
-    }
      
 private:
     unsigned _alignment;
-    Type* _type;
 };
 
 class LoadInst : public Instruction {
@@ -146,9 +175,9 @@ private:
 
 class BinaryInst : public Instruction {
 public:
-    BinaryInst(Type* ty, BinaryOp bop, Value* lhs, Value* rhs, std::string _name, BasicBlock* bb)
+    BinaryInst(Type* ty, BinaryOp bop, Value* lhs, Value* rhs, std::string _name, BinaryInstType instr_type, BasicBlock* bb)
     /* User Code Start: Binary */
-    : Instruction(ty, _name, bb), _ty(ty), _bop(bop), _lhs(lhs), _rhs(rhs)
+    : Instruction(ty, _name, bb), _ty(ty), _bop(bop), _lhs(lhs), _rhs(rhs), _instr_type(instr_type)
     /* User Code End: Binary */
     {
         /* User Code Start: Binary construct function */
@@ -157,33 +186,7 @@ public:
     }
 
     /* User Code Start: Binary place */
-    enum BinaryInstType{
-        add = 0,
-        sub,
-        mul,
-        udiv,
-        sdiv ,
-        urem ,
-        srem ,
-        fadd,
-        fsub ,
-        fmul,
-        fdiv,
-        frem ,
-        iand ,
-        ior ,
-        ixor ,
-        icmp ,
-        eq ,
-        ne ,
-        gt ,
-        lt ,
-        fcmp,
-        oeq ,
-        one ,
-        ogt ,
-        olt ,
-    };
+
     /* User Code End: Binary place */
     std::string to_str();
     std::string to_llvm();
@@ -212,12 +215,19 @@ public:
         return _rhs;
         /* User Code End: Binary::get_rhs */
     }
+      
+    BinaryInstType get_instr_type() const {
+        /* User Code Start: Binary::get_instr_type */
+        return _instr_type;
+        /* User Code End: Binary::get_instr_type */
+    }
      
 private:
     Type* _ty;
     BinaryOp _bop;
     Value* _lhs;
     Value* _rhs;
+    BinaryInstType _instr_type;
 };
 
 class ConvertInst : public Instruction {
@@ -299,6 +309,35 @@ private:
     std::vector<Value*> _args;
 };
 
+class ReturnInst : public Instruction {
+public:
+    ReturnInst(Value* ret_val, std::string name, BasicBlock* bb)
+    /* User Code Start: Return */
+    : Instruction(ret_val ? ret_val->get_type() : new Type(Void), name, bb), _ret_val(ret_val)
+    /* User Code End: Return */
+    {
+        /* User Code Start: Return construct function */
+
+        /* User Code End: Return construct function */
+    }
+
+    /* User Code Start: Return place */
+
+    /* User Code End: Return place */
+    std::string to_str();
+    std::string to_llvm();
+
+     
+    Value* get_ret_val() const {
+        /* User Code Start: Return::get_ret_val */
+        return _ret_val;
+        /* User Code End: Return::get_ret_val */
+    }
+     
+private:
+    Value* _ret_val;
+};
+
 class GetElementPtrInst : public Instruction {
 public:
     GetElementPtrInst(Type* arr_type, Type* base_type, std::vector<Value*> indices, Value* src, std::string _name, BasicBlock* bb)
@@ -376,6 +415,78 @@ public:
 private:
     std::vector<BasicBlock*> _candidate_bbs;
     std::vector<Value*> _candidate_vars;
+};
+
+class CondBranchInst : public Instruction {
+public:
+    CondBranchInst(Type* ty, Value* cond, BasicBlock* cur_bb, BasicBlock* true_bb, BasicBlock* false_bb)
+    /* User Code Start: CondBranch */
+    : Instruction(ty, "cond branch", cur_bb), _cond(cond),  _true_bb(true_bb), _false_bb(false_bb)
+    /* User Code End: CondBranch */
+    {
+        /* User Code Start: CondBranch construct function */
+
+        /* User Code End: CondBranch construct function */
+    }
+
+    /* User Code Start: CondBranch place */
+
+    /* User Code End: CondBranch place */
+    std::string to_str();
+    std::string to_llvm();
+
+     
+    Value* get_cond() const {
+        /* User Code Start: CondBranch::get_cond */
+        return _cond;
+        /* User Code End: CondBranch::get_cond */
+    }
+      
+    BasicBlock* get_true_bb() const {
+        /* User Code Start: CondBranch::get_true_bb */
+        return _true_bb;
+        /* User Code End: CondBranch::get_true_bb */
+    }
+      
+    BasicBlock* get_false_bb() const {
+        /* User Code Start: CondBranch::get_false_bb */
+        return _false_bb;
+        /* User Code End: CondBranch::get_false_bb */
+    }
+     
+private:
+    Value* _cond;
+    BasicBlock* _true_bb;
+    BasicBlock* _false_bb;
+};
+
+class BranchInst : public Instruction {
+public:
+    BranchInst(Type* ty, BasicBlock* cur_bb, BasicBlock* dst_bb)
+    /* User Code Start: Branch */
+    : Instruction(ty, "branch", cur_bb),  _dst_bb(dst_bb)
+    /* User Code End: Branch */
+    {
+        /* User Code Start: Branch construct function */
+
+        /* User Code End: Branch construct function */
+    }
+
+    /* User Code Start: Branch place */
+
+    /* User Code End: Branch place */
+    std::string to_str();
+    std::string to_llvm();
+
+     
+    BasicBlock* get_dst_bb() const {
+        /* User Code Start: Branch::get_dst_bb */
+        return _dst_bb;
+        /* User Code End: Branch::get_dst_bb */
+    }
+     
+private:
+    BasicBlock* _dst_bb;
 };
 
 }
