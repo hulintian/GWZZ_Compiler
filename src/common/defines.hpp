@@ -91,8 +91,8 @@ enum class BinaryOp {
   And,
   Or,
 // shift
-  Shr,      // shift right
-  Shl,      // shift left
-  Ashl,     // arithmetic shift left
+  LShr,      // shift right
+  Shr,      // shift left
+  Shl,     // arithmetic shift left
   NR_OPS // number of operators
 };

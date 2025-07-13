@@ -30,20 +30,21 @@ public:
     void gen_initial_list(const std::vector<std::unique_ptr<ast::Initializer>> &init_list, const Type& type, int depth, std::map<int, ConstValue> &arr_val, int& idx, Value* arr_sym);
     void gen_block(const ast::Block& block);
     void gen_stmt(const ast::Stmt& stmt);
+
+    void gen_while(const ast::WhileStmt& ws);
+    void gen_if(const ast::IfStmt& is);
     void gen_decl(const ast::Decl& decl);
+
+    Value* gen_cond_expr(ast::Expr* expr, IR::BasicBlock* true_bb, IR::BasicBlock* false_bb);
 
     Value* gen_expr(const ast::Expr* expr);
     Value* gen_expr(const ast::Expr& expr) {
         return gen_expr(&expr);
     }
 
-    IR::Instruction* gen_binary(const ast::BinaryExpr& bexpr);
+    Value* gen_lval(const ast::LValue* lval);
 
-    // this is for 
-    // void gen_decl(const ast::Decl& decl);
-    // void gen_stmt(const ast::Stmt& stmt);
-    // void gen_while(const ast::WhileStmt& while_stmt);
-    // void gen_if(const ast::IfStmt& if_stmt);
+    IR::Instruction* gen_binary(const ast::BinaryExpr& bexpr);
 
     // maintain the contexts
     IR::Module* _module;

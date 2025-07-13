@@ -8,6 +8,7 @@
 #include <list>
 #include <map>
 #include <ostream>
+#include <stack>
 #include <vector>
 namespace IR {
 
@@ -120,7 +121,24 @@ public:
         return alias_cnt;
     }
 
+    void push_break_continue_point(BasicBlock* bp, BasicBlock* cp){
+        break_dst.push(bp);
+        break_dst.push(cp);
+    }
 
+    void pop_break_continue_point(){
+        assert(!break_dst.empty() && !continue_dst.empty() && "Bp or Cp empty\n");
+        break_dst.pop();
+        break_dst.pop();
+    }
+
+    BasicBlock* get_break_point() {
+        return this->break_dst.top();
+    }
+
+    BasicBlock* get_continue_point() {
+        return this->continue_dst.top();
+    }
 
 private:
     CFG* _cfg;
@@ -134,6 +152,10 @@ private:
 
     std::map<std::string, Value*> alias;
     std::map<std::string, int> alias_cnt;
+
+    // only for while stmt
+    std::stack<BasicBlock*> break_dst;
+    std::stack<BasicBlock*> continue_dst;
 
     BasicBlock* entry_bb;
 };
