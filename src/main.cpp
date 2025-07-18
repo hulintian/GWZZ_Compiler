@@ -2,14 +2,11 @@
 #include "grammar/Sysy22Parser.h"
 #include "grammar/Sysy22Visitor.h"
 #include "support/Any.h"
-
-
 #include <antlr4-runtime/ANTLRInputStream.h>
 #include <antlr4-runtime/CommonTokenStream.h>
 #include <chrono>
 #include <iostream>
 #include <fstream>
-
 #include <antlr4-runtime/antlr4-runtime.h>
 
 using namespace std;
@@ -19,17 +16,23 @@ class ParsePrintVisitor : public Sysy22Visitor {
 public :
     std::any visitProg(Sysy22Parser::ProgContext *context) override {
         cout << "In the Prog Visitor" << endl;
+        auto cu = context->funcDef();
+        visitFuncDef(cu);
         return nullptr;
     } 
 
     std::any visitCompUnit(Sysy22Parser::CompUnitContext *context)override{
         cout << "In the CU Visitor" << endl;
+        auto fd = context->funcDef();
+        visitFuncDef(fd);
         return nullptr;
     }
 
     std::any visitFuncDef(Sysy22Parser::FuncDefContext *context) override{
         cout << "In the FD Visitor" << endl;
-
+        auto ft = context->funcType();
+        auto block = context->block();
+        auto ident = context->Ident();
         return nullptr;
     }
 
