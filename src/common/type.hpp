@@ -105,13 +105,13 @@ inline std::string type_string(Type t) {
         i = 1;
     }
 
+    if(ptr) 
+        s+="*";
     if(t.dims.size() != 1 || !ptr) {
         for(; i<t.nr_dims(); i++) 
             s += "[" + std::to_string(t.dims[i]) + "]";
     }
 
-    if(ptr) 
-        s+="*";
     return s;
 }
 

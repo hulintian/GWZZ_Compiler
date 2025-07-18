@@ -67,14 +67,14 @@ int main()
    a28=a27+1;
    a29=a28+1;
    int t;
-   putintl(a0);
-   putintl(a4);
-   putintl(a8);
-   putintl(a12);
-   putintl(a16);
-   putintl(a20);
-   putintl(a24);
-   putintl(a28);
+   putint(a0);
+   putint(a4);
+   putint(a8);
+   putint(a12);
+   putint(a16);
+   putint(a20);
+   putint(a24);
+   putint(a28);
    putint(b);
    return 0;
 }

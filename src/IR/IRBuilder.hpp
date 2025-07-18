@@ -6,9 +6,11 @@
 #include "common/defines.hpp"
 #include "common/type.hpp"
 #include <memory>
+#include <string>
 #include <vector> 
 #include "IR/GlobalValue.hpp" 
 #include "IR/Context.hpp"
+#include "frontend/AST.hpp"
 
 namespace IR {
 class IRBuilder {
@@ -176,6 +178,19 @@ public:
         this->get_cur_func()->pop_break_continue_point();
     }
 
+    void reg_lib_func(const std::string& name,
+                      Type* return_type,
+                      std::vector<Type*> arg_types,
+                      std::vector<std::string> arg_names
+                      ) {
+        this->get_cur_module()->add_lib_func(new Function(this->get_cur_module(),
+                                                                name,
+                                                                return_type,
+                                                                arg_types,
+                                                                arg_names,
+                                                                true));
+    }
+
     /* User Code End: code space 1 */
 
      
@@ -229,6 +244,13 @@ public:
     ){
         /* User Code Start: create_store */
         unsigned alignment = type->is_ptr() ? 8 : 4;
+        if(src->get_type()->base_type != dst->get_type()->base_type) {
+            if(dst->get_type()->base_type == 0) {
+                this->cvt_to_int(src);
+            } else {
+                this->cvt_to_float(src);
+            }
+        }
         auto inst = new StoreInst(type, dst, src, name, alignment, this->get_cur_bb());
         this->get_cur_bb()->add_instr(inst);
         return inst;
@@ -283,7 +305,7 @@ public:
             case BinaryOp::Shl:    if(ty->base_type == 1) { bit = BinaryInstType::shl; } else { bit = BinaryInstType::shl; }; break;
         }
 
-        auto instr = new BinaryInst(this->get_base_type(false? 0 : 1), bop, n_lhs, n_rhs, name, bit,this->get_cur_bb() );
+        auto instr = new BinaryInst(ty, bop, n_lhs, n_rhs, name, bit,this->get_cur_bb() );
 
         this->get_cur_bb()->add_instr(instr);
 

@@ -11,8 +11,8 @@ namespace IR {
 
 std::string AllocaInst::to_str() {
     /* User Code Start: Alloca::to_str */
-    auto ty = this->get_type();
-    return "Alloca " + this->get_name() + " " + type_string(*this->get_type());
+    // auto ty = this->get_type();
+    return "Alloca " + this->get_name() + " " + type_string(*this->get_type()) + ", align " + std::to_string(this->_alignment) ;
     /* User Code End: Alloca::to_str */
 }
 
@@ -147,7 +147,14 @@ std::string ConvertInst::to_llvm() {
 
 std::string CallInst::to_str() {
     /* User Code Start: Call::to_str */
-    return "Call " + this->get_func()->get_func_name();
+    std::string args_str = "";
+    for(int i=0; i<this->_args.size(); i++) {
+        args_str += this->_args[i]->get_name();
+        if(i != this->_args.size()-1) {
+            args_str += ", ";
+        }
+    }
+    return "Call " + this->get_func()->get_func_name() + "( " + args_str + " )" ;
 
     /* User Code End: Call::to_str */
 }
