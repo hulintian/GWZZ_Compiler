@@ -35,7 +35,12 @@ public:
 class Module;
 class Function {
 public:
-    Function(Module* m, const std::string& func_name, Type* return_type, std::vector<Type*> arg_types, std::vector<std::string> arg_names, bool is_lib)
+    Function(Module* m, 
+            const std::string& func_name, 
+            Type* return_type, 
+            std::vector<Type*> arg_types, 
+            std::vector<std::string> arg_names, 
+            bool is_lib)
         : _parent(m), _func_name(func_name),_return_type(return_type), _arg_types(arg_types), _arg_names(arg_names), _is_lib(is_lib){
             this->_cfg = new CFG();
         }
@@ -123,13 +128,13 @@ public:
 
     void push_break_continue_point(BasicBlock* bp, BasicBlock* cp){
         break_dst.push(bp);
-        break_dst.push(cp);
+        continue_dst.push(cp);
     }
 
     void pop_break_continue_point(){
         assert(!break_dst.empty() && !continue_dst.empty() && "Bp or Cp empty\n");
         break_dst.pop();
-        break_dst.pop();
+        continue_dst.pop();
     }
 
     BasicBlock* get_break_point() {
