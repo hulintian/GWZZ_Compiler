@@ -92,7 +92,7 @@ std::any ASTVisitor::visitVarDecl(Sysy22Parser::VarDeclContext *context) {
             auto init_new = std::any_cast<Initializer*>(init_ptr->accept(this));
             init.reset(init_new);
         }
-        rets.push_back(new Decl(std::move(type), true, std::move(ident), std::move(init)));
+        rets.push_back(new Decl(std::move(type), false, std::move(ident), std::move(init)));
     }
     return std::make_shared<std::vector<Decl*>>(rets);
 }
