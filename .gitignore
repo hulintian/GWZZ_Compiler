@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 .idea
 .cache
 gitignore
 bin/
 build/
 tmp/
+=======
+.idea/**
+.cache/**
+build
+bin/
+
+/.cache/
+>>>>>>> 2cea2f5 (finish gramma)

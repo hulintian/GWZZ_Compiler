@@ -12,11 +12,14 @@
 class  Sysy22Lexer : public antlr4::Lexer {
 public:
   enum {
-    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, INT = 6, FLOAT = 7, 
-    VOID = 8, IF = 9, ELSE = 10, WHILE = 11, BREAK = 12, CONTINUE = 13, 
-    RETURN = 14, Ident = 15, IntConst = 16, DecConst = 17, OctConst = 18, 
-    HexConst = 19, FloatConst = 20, DecimalFloatingConst = 21, HexFloatingConst = 22, 
-    WhiteSpace = 23, LineComment = 24, BlockComment = 25
+    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
+    T__7 = 8, INT = 9, FLOAT = 10, VOID = 11, IF = 12, ELSE = 13, WHILE = 14, 
+    BREAK = 15, CONTINUE = 16, RETURN = 17, CONST = 18, Assign = 19, Add = 20, 
+    Sub = 21, Mul = 22, Div = 23, Mod = 24, Eq = 25, Neq = 26, Lt = 27, 
+    Gt = 28, Leq = 29, Geq = 30, Not = 31, And = 32, Or = 33, Ident = 34, 
+    IntConst = 35, DecConst = 36, OctConst = 37, HexConst = 38, FloatConst = 39, 
+    DecimalFloatingConst = 40, HexFloatingConst = 41, StringConst = 42, 
+    WhiteSpace = 43, LineComment = 44, BlockComment = 45
   };
 
   explicit Sysy22Lexer(antlr4::CharStream *input);

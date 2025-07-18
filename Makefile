@@ -24,7 +24,6 @@ TARGET=bin/compiler
 
 DEPS = $(OBJECTS:.o=.d)
 
-# -include $(DEPS)
 
 .DEFAULT_GOAL := all
 
