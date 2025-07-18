@@ -17,6 +17,30 @@
 
 namespace  frontend {
 
+void CodeGen::add_libs() {
+    builder->reg_lib_func("getint", new Type(Int), {}, {});
+    builder->reg_lib_func("getch", new Type(Int), {}, {});
+    builder->reg_lib_func("getarray", new Type(Int), {new Type(Int, std::vector<int>{0})}, {"a"});
+    builder->reg_lib_func("getfloat", new Type(Float), {}, {});
+    builder->reg_lib_func("getfarray", new Type(Int), {new Type(Float, std::vector<int>{0})}, {"a"});
+
+    builder->reg_lib_func("putint", new Type(Void), {new Type(Int)}, {"a"});
+    builder->reg_lib_func("putch", new Type(Void), {new Type(Int)}, {"a"});
+    builder->reg_lib_func("putarray", new Type(Void), {new Type(Int), new Type(Int, std::vector<int>{0})}, {"n", "a"});
+    builder->reg_lib_func("putfloat", new Type(Void), {new Type(Float)}, {"a"});
+    builder->reg_lib_func("putfarray", new Type(Void), {new Type(Int), new Type(Float, std::vector<int>{0})}, {"n", "a"});
+
+    // 可变参数列表？
+    builder->reg_lib_func("putf", new Type(Void), {new Type(Int, std::vector<int>{0})}, { "a"});
+    
+    builder->reg_lib_func("starttime", new Type(Void), {}, {});
+    builder->reg_lib_func("stoptime", new Type(Void), {}, {});
+
+    // 我加的
+    builder->reg_lib_func("putline", new Type(Void), {}, {});
+    builder->reg_lib_func("putintl", new Type(Void), {new Type(Int)}, {"a"});
+}
+
 IR::Module* CodeGen::gen(const ast::CompUnits& cu) {
     for(auto& ci : cu.children()) {
         if(ci.index() == 0)  {
@@ -163,12 +187,14 @@ void CodeGen::gen_decl(const ast::Decl& decl) {
             auto cosnt_value = new IR::ConstantValue(type, var->val->to_string(), *var->val);
             builder->create_store(type, new_name, val, cosnt_value);
         } else {
-            auto &expr = std::get<std::unique_ptr<ast::Expr>>(decl.init()->value());
-            auto res = gen_expr(*expr);
-            builder->create_store(type, new_name, val, res);
+            if(decl.init()) {
+                auto &expr = std::get<std::unique_ptr<ast::Expr>>(decl.init()->value());
+                auto res = gen_expr(*expr);
+                builder->create_store(type, new_name, val, res);
+            }
         }
     } else {
-        if(decl.init()->value().index() == 1) {
+        if(decl.init() && decl.init()->value().index() == 1) {
             auto &il = std::get<std::vector<std::unique_ptr<ast::Initializer>>>(decl.init()->value());
             int idx = 0;
             this->gen_initial_list(il, var->type, 0, *var->arr_val, idx, val);
@@ -275,6 +301,9 @@ void CodeGen::gen_while(const ast::WhileStmt& ws){
     builder->create_br(cond_bb);
     builder->set_cur_bb(cond_bb);
     auto cond = this->gen_cond_expr(ws.cond().get(), loop_body_bb, loop_end_bb);
+    if(cond) {
+        builder->create_cond_br(cond, loop_body_bb, loop_end_bb);
+    }
 
     builder->enter_loop(cond_bb, loop_end_bb);
 
@@ -363,6 +392,12 @@ Value* CodeGen::gen_cond_expr(ast::Expr* expr, IR::BasicBlock* true_bb, IR::Basi
     if(auto ue = dynamic_cast<ast::UnaryExpr*>(expr)) {
         if(ue->op() == UnaryOp::Not) return gen_expr(ue);
     }
+    // 如果是 cmp bop 
+    if(auto be = dynamic_cast<ast::BinaryExpr*>(expr)) {
+        if(is_cmp_op(be->op())) {
+            return gen_expr(be);
+        }
+    }
     auto res = gen_expr(expr);
     return builder->create_ne_zero(res);
     // builder->create_cond_br(cond, true_bb, false_bb);
@@ -373,17 +408,22 @@ Value* CodeGen::gen_expr(const ast::Expr* expr) {
     if(auto fl = dynamic_cast<const ast::FloatLiteral*>(expr)) {
         auto cv = new ConstValue(fl->value());
         return builder->create_const_value(builder->get_base_type(Float), *cv);
-    }else if(auto il = dynamic_cast<const ast::IntLiteral*>(expr)) {
+    }
+    if(auto il = dynamic_cast<const ast::IntLiteral*>(expr)) {
         auto cv = new ConstValue(il->value());
-        return builder->create_const_value(builder->get_base_type(Float), *cv);
+        return builder->create_const_value(builder->get_base_type(Int), *cv);
     }
     if(auto lval = dynamic_cast<const ast::LValue*>(expr)) {
         // only check the scalar type, 
         // TODO need to deal with array type
-        // FIXME : 没有考虑到函数传参传入的数组，其本质是指针
+        // DONE : 没有考虑到函数传参传入的数组，其本质是指针
         // Lval as an expression is means that get the value
+        // 考虑一下是要值还是要指针， 是数组且indices不完全
         auto var = lval->var;
         auto addr = gen_lval(lval);
+        if(var->type.is_array() && var->type.size() > lval->indices().size()) {
+            return addr;
+        }
         return builder->create_load(builder->get_base_type(var->type.base_type), addr);
     } else if( auto bexpr = dynamic_cast<const ast::BinaryExpr*>(expr)) {
         return this->gen_binary(*bexpr);
@@ -446,10 +486,19 @@ Value* CodeGen::gen_lval(const ast::LValue* lval) {
         if(val_ptr == nullptr) {
             val_ptr = this->get_cur_module()->get_gv(lsym);
         }
+        assert(val_ptr);
+        // 如果是数组，要计算其偏移量，传递的是指针
         if(lval->var->type.is_array()) {
-            assert(var->type.nr_dims() == lval->indices().size() &&  "The dim size is not matched.\n");
+            assert(var->type.nr_dims() >= lval->indices().size() &&  "The dim size is not matched.\n");
+            // 维度相等，取值， lval的下标维度不等，取地址
             // calcualte the bias 
             int n = var->type.nr_dims();
+            int get_dim = lval->indices().size();
+
+            if(get_dim == 0) {
+                return static_cast<Value*>(val_ptr);
+            }
+
             std::vector<ConstValue> coefficient(n);
             coefficient[n-1] = ConstValue(1);
             
@@ -458,24 +507,34 @@ Value* CodeGen::gen_lval(const ast::LValue* lval) {
             }
             // times indices to cal the final bias 
             // if dim == 1
-            Value* bias;
-            auto lhs = gen_expr(*lval->indices()[0]);
-            if(var->type.nr_dims() == 1) {
-                bias = gen_expr(*lval->indices()[0]);
-            } else {
-                bias = gen_expr(*lval->indices()[0]);
+            // TODO need to calculate the bias 
+            // n is the symbol's dim, get_dim is the lval' dim
+            auto bias = gen_expr(*lval->indices()[0]);
+            if(n > 1) 
                 bias = builder->create_mul(bias, builder->create_const_value(builder->get_base_type(Int), coefficient[0]));
-                for(int i=1; i < n-1; i++) {
-                     // 最后一个idx不用乘，直接加就行
-                     auto lhs = gen_expr(*lval->indices()[0]);
-                     auto n_bias = builder->create_mul(lhs, builder->create_const_value(builder->get_base_type(Int), coefficient[0]));
-                     bias = builder->create_add(bias, n_bias);
-                } 
+
+            // Type ptr_type = var->type;
+            // ptr_type = ptr_type.get_lower_dim();
+            for(int i=1; i<get_dim-1; i++) {
+                auto lhs = gen_expr(*lval->indices()[i]);
+                auto n_bias = builder->create_mul(lhs, builder->create_const_value(builder->get_base_type(Int), coefficient[i]));
+                bias = builder->create_add(bias, n_bias);
+                // ptr_type = ptr_type.get_lower_dim();
+            }
+            if(n == get_dim && n > 1) {
                 auto tail = gen_expr(*lval->indices()[n-1]);
                 bias = builder->create_add(bias, tail);
+                // ptr_type = builder->get_base_type(var->type.base_type);
+            } else if(get_dim > 1){
+                auto lhs = gen_expr(*lval->indices()[get_dim-1]);
+                auto n_bias = builder->create_mul(lhs, builder->create_const_value(builder->get_base_type(Int), coefficient[get_dim-1]));
+                bias = builder->create_add(bias, n_bias);
+                // ptr_type = ptr_type.get_lower_dim();
             }
+
             auto addr = builder->create_getelementptr(&var->type, {bias}, val_ptr);
-            return static_cast<Value*>(addr);
+        return static_cast<Value*>(addr);
+            // TODO need to return the address of the lval
         }
         return static_cast<Value*>(val_ptr);
 }

@@ -19,7 +19,10 @@ public:
         _module = new IR::Module;
         ctx = new Context(_module);
         builder = new IR::IRBuilder(ctx);
+
+        add_libs();
     }
+    void add_libs();
 
     IR::Module* gen(const ast::CompUnits& cu);
     void gen_gv(const ast::Decl& decl);
