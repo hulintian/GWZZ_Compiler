@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 
     frontend::Sema sema;
     sema.visit_compUnits(cu);
-    cu.print(cout, 0);
+    // cu.print(cout, 0);
 
     frontend::CodeGen* cg = new frontend::CodeGen();
     auto m = cg->gen(cu);
