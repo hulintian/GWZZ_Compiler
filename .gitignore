@@ -16,6 +16,8 @@ build
 bin/
 gen
 tmp/
+refs
+docs
 # tests/
 
 # *.gdb
