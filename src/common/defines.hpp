@@ -96,3 +96,14 @@ enum class BinaryOp {
   Shl,     // arithmetic shift left
   NR_OPS // number of operators
 };
+
+
+inline bool is_cmp_op(BinaryOp bop) {
+    return bop == BinaryOp::Eq ||
+           bop == BinaryOp::Neq ||
+           bop == BinaryOp::Lt ||
+           bop == BinaryOp::Gt ||
+           bop == BinaryOp::Leq ||
+           bop == BinaryOp::Geq 
+           ;
+}
