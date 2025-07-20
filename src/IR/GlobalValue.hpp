@@ -13,8 +13,9 @@ namespace IR {
 class Module;
 class GlobalValue : public Value {
 public:
-    GlobalValue(Module* m, const std::string &sym, std::shared_ptr<Var> var, bool is_inited) : Value(&var->type, sym) ,moulde(m), _symbol(sym), _var(var), _is_inited(is_inited){}
-    
+    GlobalValue(Module* m, const std::string &sym, std::shared_ptr<Var> var, bool is_inited, bool is_const) 
+        : Value(&var->type, sym) ,moulde(m), _symbol(sym), _var(var), _is_inited(is_inited), _is_const(is_const)
+    {}
 
     const std::string get_symbol() const { return _symbol; }
     const Type get_type() const { 
@@ -30,6 +31,7 @@ private:
     std::string _symbol;
     std::shared_ptr<Var> _var;
     bool _is_inited;
+    bool _is_const;
     bool _is_bss;
 };
 
