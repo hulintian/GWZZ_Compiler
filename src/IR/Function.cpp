@@ -32,4 +32,8 @@ void CFG::dump(std::ostream &out) {
     }
 } 
 
+void CFG::regen_cfg() {
+}
+
+
 }
