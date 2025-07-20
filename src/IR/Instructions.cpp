@@ -154,7 +154,7 @@ std::string CallInst::to_str() {
             args_str += ", ";
         }
     }
-    return "Call " + this->get_func()->get_func_name() + "( " + args_str + " )" ;
+    return this->get_name() + " = Call " + this->get_func()->get_func_name() + "( " + args_str + " )" ;
 
     /* User Code End: Call::to_str */
 }

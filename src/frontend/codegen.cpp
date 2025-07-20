@@ -57,12 +57,12 @@ IR::Module* CodeGen::gen(const ast::CompUnits& cu) {
 void CodeGen::gen_gv(const ast::Decl& decl) {
     const std::string _symbol = decl.ident()->identifier();
     assert(decl.var && "Not find the variable");
-    if(decl.var)  {
-        if(decl.is_const()) {
-            assert(decl.var->val || decl.var->arr_val);
-        }
-        builder->create_gv(decl.var, _symbol); 
-    } 
+    if(decl.is_const() || decl.is_const()) {
+        assert(decl.var->val || decl.var->arr_val);
+        builder->create_gv(decl.var, _symbol, true); 
+    } else {
+        builder->create_gv(decl.var, _symbol, false); 
+    }
 }
 
 // TODO 把语义分析收集来的SymbolTable 翻译
