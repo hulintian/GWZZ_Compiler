@@ -1,11 +1,11 @@
 #pragma once
+#include "IR/Function.hpp" 
 #include "IR/User.hpp"
 #include "IR/Value.hpp"
 #include "common/type.hpp"
 #include <string> 
 #include "common/type.hpp" 
 #include "common/defines.hpp" 
-#include "IR/Function.hpp" 
 #include "IR/BasicBlock.hpp"
 
 namespace IR {
