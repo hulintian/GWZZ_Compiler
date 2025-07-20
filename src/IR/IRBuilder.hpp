@@ -43,10 +43,10 @@ public:
     }
     
     
-    GlobalValue* create_gv(std::shared_ptr<Var> var, const std::string &sym) {
+    GlobalValue* create_gv(std::shared_ptr<Var> var, const std::string &sym, bool is_const) {
         auto _cur_module = this->get_cur_module();
         bool initialized = var->arr_val || var->val;
-        auto gv = new GlobalValue(_cur_module, sym, var, initialized); 
+        auto gv = new GlobalValue(_cur_module, sym, var, initialized, is_const); 
         _cur_module->add_gv(gv);
         
         return gv;
@@ -219,6 +219,7 @@ public:
         unsigned alignment = ty->is_ptr() ? 8 : 4;
         auto inst = new AllocaInst(ty, name, alignment, _cur_ctx->get_current_basic_block());
         this->get_cur_bb()->add_instr(inst);
+        this->get_cur_func()->add_allocas(inst);
         return inst;
         /* User Code End: create_alloca */
     }
