@@ -93,6 +93,10 @@ IR::Function* CodeGen::gen_func(const ast::Func& func) {
     ctx->set_current_function(nf);
     auto &func_body = func.body();
     gen_func_body(*func_body);
+
+    if(this->get_cur_bb()->get_intrs().empty() || !builder->is_jump_instr(this->get_cur_bb()->get_intrs().back())) {
+        builder->create_ret(nullptr);
+    }
     
     // set the insert ptr nullptr, exit func
     ctx->set_current_basic_block(nullptr);
