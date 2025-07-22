@@ -10,6 +10,12 @@
 #include <ostream>
 #include <stack>
 #include <vector>
+
+//User Code Start. Sasara
+#include <set>
+#include <functional>
+#include <algorithm>
+//User Code End. Sasara
 namespace IR {
 
 class CFG {
@@ -30,6 +36,14 @@ public:
     }
     
     void dump(std::ostream &out) ;
+
+    // User Code Start. Sasara
+    void build_predecessors();
+    const std::vector<BasicBlock*>& get_predecessors(const BasicBlock* bb) const;
+private:
+    std::map<BasicBlock*, std::vector<BasicBlock*>> _predecessor_map;
+    bool _predecessors_built = false;
+    // User Code End. Sasara
 };
 
 class Module;
@@ -75,7 +89,18 @@ public:
     const std::vector<Type*> get_params_type() const {
         return _arg_types;
     }
-    
+    //User Code Start. Sasara
+    const std::list<BasicBlock*>& get_basic_blocks() const {
+        return _cfg->_bbs;
+    }
+    void build_predecessors() {
+        _cfg->build_predecessors();
+    }
+    //回调函数，后续遍历
+    void post_order_traversal(std::function<void(BasicBlock*)> callback);
+    //逆后序
+    std::vector<BasicBlock*> get_reverse_post_order();
+    //User Code End. Sasara
     CFG* get_cfg() const {
         return _cfg;
     }

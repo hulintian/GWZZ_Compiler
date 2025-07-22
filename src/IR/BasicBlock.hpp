@@ -23,7 +23,11 @@ public:
     int get_bb_idx() const { return _idx; }
     
     std::vector<Instruction*>& get_intrs() { return _instrs; }
-
+    //User Code Start. Sasara
+    Instruction* get_terminator() const;
+    const std::vector<BasicBlock*>& get_successors() const;
+    const std::vector<BasicBlock*>& get_predecessors() const;
+    //User Code End. Sasara
     void add_instr(Instruction* i) {
         this->get_intrs().push_back(i);
     }
