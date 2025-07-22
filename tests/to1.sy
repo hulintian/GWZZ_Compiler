@@ -1,0 +1,28 @@
+int process_values(int x, int y, int z) {
+    while (x < 10) { 
+        if (y < 5) { 
+            z = z + 1;
+            x = x * 2; 
+        } else {
+            while (z < 100) { 
+                int remainder = x % 2;
+                if (remainder == 0) { 
+                    y = y + 1;
+                } else { 
+                    y = y - 1;
+                }
+                z = z * 3;
+            }
+        }
+        x = x + 1; 
+    }
+
+    return z; 
+}
+int main() {
+    int start_x = 1;
+    int start_y = 2;
+    int start_z = 3;
+    int final_z = process_values(start_x, start_y, start_z);
+    return 0; 
+}
