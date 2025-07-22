@@ -432,7 +432,8 @@ Value* CodeGen::gen_expr(const ast::Expr* expr) {
         // 考虑一下是要值还是要指针， 是数组且indices不完全
         auto var = lval->var;
         auto addr = gen_lval(lval);
-        if(var->type.is_array() && var->type.size() > lval->indices().size()) {
+        if(var->type.is_array() && var->type.nr_dims() > lval->indices().size()) {
+            // std::cout << var->type.size() << " " << lval->indices().size();
             return addr;
         }
         return builder->create_load(builder->get_base_type(var->type.base_type), addr);
