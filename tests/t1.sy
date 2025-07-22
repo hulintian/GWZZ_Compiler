@@ -1,6 +1,6 @@
 int add(int a, int b) { return a+b; }
 
-float b( ) {
+void b( ) {
     int sum = add(1, 2);
     const int c = 100;
     int ttttt[2][5] = {{1,2,c},{6,7,8,9,10}};
@@ -11,7 +11,7 @@ float b( ) {
     if(cc && fc) {
         return fc;
     }
-    return 1.1 + sum;
+    //return 1.1 + sum;
 }
 
 
