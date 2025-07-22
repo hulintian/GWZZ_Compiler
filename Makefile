@@ -8,7 +8,7 @@ CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE
 
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 
-LDFLAGS = -L./antlr4/lib -lantlr4-runtime
+LDFLAGS = -L./antlr4/lib -Wl,-rpath,'$$ORIGIN/../antlr4/lib'
 
 ANTLR_OUT_PATH = src/grammar
 BUILD_DIR = build
@@ -29,7 +29,7 @@ all: $(TARGET)
 
 $(TARGET) : $(OBJECTS)
 	mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(TARGET) $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS) -lantlr4-runtime
 
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.cpp 
 	mkdir -p $(dir $@)
