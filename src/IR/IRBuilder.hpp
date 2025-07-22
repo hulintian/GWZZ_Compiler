@@ -191,6 +191,17 @@ public:
                                                                 true));
     }
 
+    bool is_jump_instr(IR::Instruction* instr) {
+        if(auto res = dynamic_cast<ReturnInst*>(instr)) {
+            return true;
+        }else if(auto res = dynamic_cast<CondBranchInst*>(instr)) {
+            return true;
+        }else if(auto res = dynamic_cast<BranchInst*>(instr)) {
+            return true;
+        }
+        return false;
+    }
+
     /* User Code End: code space 1 */
 
      
