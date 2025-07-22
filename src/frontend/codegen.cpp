@@ -341,7 +341,7 @@ void CodeGen::gen_if(const ast::IfStmt& is){
     builder->set_cur_bb(then_bb);
     gen_stmt(*is.then().get());
     // 在当前分支结束的时候需要跳到分支结束后的那个基本块，如果是ret或br指令了就不用管
-    if(!builder->is_jump_instr(this->get_cur_bb()->get_intrs().back())) {
+    if( this->get_cur_bb()->get_intrs().empty() || !builder->is_jump_instr(this->get_cur_bb()->get_intrs().back())) {
         builder->create_br(end_bb);
     }
 
@@ -349,7 +349,7 @@ void CodeGen::gen_if(const ast::IfStmt& is){
     if(is.else_stmt() != nullptr) {
         builder->set_cur_bb(ow_bb);
         gen_stmt(*is.else_stmt().get());
-        if(!builder->is_jump_instr(this->get_cur_bb()->get_intrs().back())) {
+        if( this->get_cur_bb()->get_intrs().empty() || !builder->is_jump_instr(this->get_cur_bb()->get_intrs().back())) {
             builder->create_br(end_bb);
         }
     }
