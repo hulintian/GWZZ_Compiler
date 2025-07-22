@@ -13,7 +13,13 @@
 #include <frontend/ASTVisitor.h>
 #include <ostream>
 #include "frontend/Sema.hpp"
-
+/* User Code Start: Sasara */
+#include "pass/PassManager.hpp"
+#include "pass/analysis/FunctionCounter.hpp"
+#include "pass/transform/DummyTransform.hpp"
+#include "pass/transform/HelloWorld.hpp"
+#include "pass/transform/DomTreePrinter.hpp"
+/* User Code End: Sasara */
 #include <fstream>
 
 using namespace std;
@@ -41,8 +47,19 @@ int main(int argc, char** argv) {
 
     frontend::CodeGen* cg = new frontend::CodeGen();
     auto m = cg->gen(cu);
+    /* User Code Start: Sasara */
+    pass::PassManager pm;
+    pm.add_module_transform_pass(std::make_unique<HelloWorldPass>());
+    pm.add_module_transform_pass(std::make_unique<DummyTransformPass>());
+    pm.add_function_transform_pass(std::make_unique<DomTreePrinterPass>());
+    cout << "====================Running optimization passes...====================\n";
+    pm.run(*m);
+    /* User Code End: Sasara */
     cout << "====================The ir of " << input_path << " =======================\n";
     m->dump(cout);
+
+    delete m;
+    delete cg;
 
     return 0;
 }
