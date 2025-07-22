@@ -7,10 +7,15 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/compiler",
-            "args": ["tests/t1.sy"],
+            "args": ["tests/test_sasara/ret.sy"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
+            "environment": [
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "${workspaceFolder}/antlr4/lib" 
+                },
+            ],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
