@@ -10,12 +10,19 @@
 
 # Generated files
 /gen/
-/refs/
 
 # Executables or object files
 *.o
 *.out
 *.exe
 
+# Documentation
+/docs/
+
+# Third-party libraries or large directories
+/antlr4/
+
 # Other
 *.gdb
+/RISCV-性能
+/refs/
