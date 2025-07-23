@@ -1,14 +1,16 @@
 #include "pass/analysis/DominatorTree.hpp"
 #include <memory>
 
-std::unique_ptr<pass::AnalysisResult> 
-DominatorTreePass::run(IR::Function &func, pass::PassManager& pm){
+namespace pass{
+
+std::unique_ptr<AnalysisResult> 
+DominatorTreePass::run(const IR::Function &func, PassManager& pm){
     auto result = std::make_unique<DominatorTreeResult>();
     if(func.get_basic_blocks().empty())return result;
     compute_idoms(func,*result);
     return result;
 }
-void DominatorTreePass::compute_idoms(IR::Function& F, DominatorTreeResult& result){
+void DominatorTreePass::compute_idoms(const IR::Function& F, DominatorTreeResult& result){
     const auto &blocks = F.get_basic_blocks();
     IR::BasicBlock *entry = F.get_entry_bb();
     std::map<IR::BasicBlock*, int> post_order_map;
@@ -73,4 +75,6 @@ IR::BasicBlock* DominatorTreePass::intersect(IR::BasicBlock* BB_A,IR::BasicBlock
         }
     }
     return p1;
+}
+
 }

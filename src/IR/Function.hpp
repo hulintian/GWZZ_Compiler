@@ -90,6 +90,10 @@ public:
         return _arg_types;
     }
     //User Code Start. Sasara
+    const Module* get_parent()const{
+        return _parent;
+    }
+
     const std::list<BasicBlock*>& get_basic_blocks() const {
         return _cfg->_bbs;
     }
@@ -97,9 +101,9 @@ public:
         _cfg->build_predecessors();
     }
     //回调函数，后续遍历
-    void post_order_traversal(std::function<void(BasicBlock*)> callback);
+    void post_order_traversal(std::function<void(BasicBlock*)> callback) const;
     //逆后序
-    std::vector<BasicBlock*> get_reverse_post_order();
+    std::vector<BasicBlock*> get_reverse_post_order() const;
     //User Code End. Sasara
     CFG* get_cfg() const {
         return _cfg;
