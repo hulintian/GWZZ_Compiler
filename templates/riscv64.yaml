@@ -1,0 +1,50 @@
+headers:
+  - common/regarch.hpp
+  - backend/MBasicBlock.hpp
+
+InstrGroups:
+  # rv32im
+    # 整数计算(寄存器-寄存器类似， R类指令)
+  - Category: Icompute
+    Description: Integer computation operations
+    Operands: [rd, rs1, rs2]
+    # 加，减，按位与，按位或，逻辑左移，算术右移，逻辑右移，生成高20位立即数
+    Instructions: [add, sub, and, or, xor, sll, sra, srl]
+
+    # 整数立即数计算
+  - Category: IArithIMM
+    Description: Integer arithmetic operations
+    Operands: [rd, rs1]
+    otherargs: 
+      - {type: int32_t, name: imm}
+    Instructions: [addi, subi, andi, ori, xori]
+
+    # 长立即数指令
+  - Category: IArithU
+    Description: Integer arithmetic operations
+    Operands: [rd]
+    otherargs: 
+      - {type: int32_t, name: imm}
+    Instructions: [lui, auipc]
+
+    # 访存
+  - Category: Load 
+    Description: Load Instruction
+    Operands: [rd, rs1]
+    Instructions: [lb, lh, lw, ld]
+
+  - Category: Branch
+    Description: Branch Instruction
+    Operands: [rd, rs1, rs2]
+
+  - Category: Jump
+    Description: jump directly
+    otherargs:     # offset
+      - { type:  MachineBasicBlock*, name : dst_bb}
+    Instructions: [j]
+
+  - Category: Jump and Link
+    Description: jump directly
+    Operands: [rd]
+    otherargs: [MachineBasicBlock* dst_bb]    # offset
+    Instructions: [jal, jalr]
