@@ -7,9 +7,11 @@
 #include <map>
 #include <vector>
 
+namespace pass{
+
 class DominatorTreePass;
 
-class DominatorTreeResult : public pass::AnalysisResult {
+class DominatorTreeResult : public AnalysisResult {
 public:
     friend class DominatorTreePass;
     IR::BasicBlock* get_idom(IR::BasicBlock* bb) const {
@@ -43,15 +45,20 @@ private:
     std::map<IR::BasicBlock*,int> _depth_map;
 };
 
-class DominatorTreePass :public pass::FunctionAnalysisPass {
+class DominatorTreePass :public FunctionAnalysisPass {
 public:
     using Result = DominatorTreeResult;
     const char* get_name()const override {return "DominatorTree";}
-    std::unique_ptr<pass::AnalysisResult> run(IR::Function &func, pass::PassManager& pm) override;
+    std::unique_ptr<AnalysisResult> run(const IR::Function &func, PassManager& pm) override;
 
 private:
     IR::BasicBlock* intersect(IR::BasicBlock* BB_A,IR::BasicBlock* BB_B,
                               const std::map<IR::BasicBlock*,IR::BasicBlock*> idoms,
                               const std::map<IR::BasicBlock*, int>& post_order);
-    void compute_idoms(IR::Function& F, DominatorTreeResult& result);
+    void compute_idoms(const IR::Function& F, DominatorTreeResult& result);
 };
+
+
+}
+
+

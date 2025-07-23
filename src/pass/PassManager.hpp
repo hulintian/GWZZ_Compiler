@@ -2,12 +2,9 @@
 
 #include "pass/Pass.hpp"
 #include "pass/AnalysisManager.hpp"
+#include "IR/Module.hpp"
 #include <vector>
 #include <memory>
-
-namespace IR{
-class Module;
-}
 
 namespace pass{
 

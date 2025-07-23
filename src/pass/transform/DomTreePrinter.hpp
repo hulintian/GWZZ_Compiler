@@ -3,8 +3,14 @@
 #include "pass/Pass.hpp"
 #include <iostream>
 
-class DomTreePrinterPass : public pass::FunctionTransformPass{
+namespace pass{
+
+class DomTreePrinterPass : public FunctionTransformPass{
 public:
     const char* get_name() const override{return "DomTreePrinter";}  
-    bool run(IR::Function& function, pass::PassManager& pm) override;
+    bool run(IR::Function& function, PassManager& pm) override;
 };
+    
+} // namespace pass
+
+

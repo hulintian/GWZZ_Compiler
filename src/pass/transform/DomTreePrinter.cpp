@@ -1,7 +1,10 @@
 #include "pass/transform/DomTreePrinter.hpp"
 #include "pass/analysis/DominatorTree.hpp"
 #include "pass/PassManager.hpp"
-bool DomTreePrinterPass::run(IR::Function& function, pass::PassManager& pm){
+
+namespace pass{
+
+bool DomTreePrinterPass::run(IR::Function& function, PassManager& pm){
     std::cout << "--- Dominator Tree for function @" << function.get_name() << " ---\n";
     auto& dom_tree_result = pm.get_analysis_manager().get_function_result<DominatorTreePass>(function);
     for (auto& bb: function.get_basic_blocks()) {
@@ -16,3 +19,7 @@ bool DomTreePrinterPass::run(IR::Function& function, pass::PassManager& pm){
     std::cout << "---------------------------------------------------\n";
     return false;
 }
+
+}
+
+
