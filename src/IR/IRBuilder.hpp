@@ -6,10 +6,10 @@
 #include "common/defines.hpp"
 #include "common/type.hpp"
 #include <memory>
-#include <string>
-#include <vector> 
+#include <vector>
+#include <string> 
 #include "IR/GlobalValue.hpp" 
-#include "IR/Context.hpp"
+#include "IR/Context.hpp" 
 #include "frontend/AST.hpp"
 
 namespace IR {

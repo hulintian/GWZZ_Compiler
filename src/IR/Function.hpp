@@ -7,6 +7,7 @@
 #include <cstdarg>
 #include <list>
 #include <map>
+#include <set>
 #include <ostream>
 #include <stack>
 #include <vector>
@@ -19,8 +20,8 @@ public:
 
     std::list<BasicBlock*> _bbs;
     std::map<int, BasicBlock*> idx2bb;
-    std::map<int, int> prev_bb;
-    std::map<int, int> succ_bb;
+    std::map<int, std::set<int>> prev_bb;
+    std::map<int, std::set<int>> succ_bb;
     BasicBlock* entry_bb;
 
     void regen_cfg();
