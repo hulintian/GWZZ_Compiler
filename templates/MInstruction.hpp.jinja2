@@ -1,0 +1,58 @@
+#pragma once 
+{%- for header in headers %}
+#include "{{ header }}"
+{%- endfor %}
+
+namespace backend {
+enum MachineInstrType {
+{%- for group in InstrGroups %} 
+// {{ group.Category }}
+    {%- for instr in group.Instructions %}
+    {{ instr.upper() }},
+    {%- endfor %}
+{%- endfor %}
+};
+
+class MachineInstr {
+
+};
+
+{%- for group in InstrGroups %}
+// {{ group.Category }}
+
+{%- for instr in group.Instructions %}
+
+class {{ instr.upper() }}Inst : public MachineInstr {
+public:
+    {{ instr.upper() }}Inst( MachineInstrType mty {% for op in group.Operands %},RiscvReg::Reg {{ op }} {% endfor %} {% for oa in group.otherargs %},{{ oa.type }} {{ oa.name }}{% endfor %}
+        /* User Code Start: other {{ instr }} args */
+
+        /* User Code End: other {{ instr }} args */
+    ) 
+        /* User Code Start: other {{ instr }} init construct */
+
+        /* User Code End: other {{ instr }} init construct */
+
+    {
+        /* User Code Start: {{ instr.upper() }}_Inst construct function */
+
+        /* User Code End: {{ instr.upper() }}_Inst construct function */
+    }
+
+    /* User Code Start: {{ instr.upper() }}_Inst methods */
+
+    /* User Code End: {{ instr.upper() }}_Inst methods */
+    
+    {%- for op in group.Operands %}
+    RiscvReg::Reg _{{op}};
+    {%- endfor %}
+    {%- for oa in group.otherargs %}
+    {{ oa.type }} _{{ oa.name }};
+    {%- endfor %}
+};
+{%- endfor %}
+
+{%- endfor %}
+
+
+}
