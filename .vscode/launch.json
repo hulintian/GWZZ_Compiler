@@ -7,7 +7,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/compiler",
-            "args": ["tests/test_sasara/ret.sy"],
+            "args": ["tests/test_sasara/alias.sy"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [

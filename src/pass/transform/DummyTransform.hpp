@@ -6,13 +6,19 @@
 #include "pass/PassManager.hpp"         
 #include <iostream>
 
-class DummyTransformPass : public pass::ModuleTransformPass {
+namespace pass{
+
+class DummyTransformPass : public ModuleTransformPass {
 public:
     const char* get_name() const override { return "DummyTransform"; }
 
-    bool run(IR::Module& module, pass::PassManager& pm) override {
+    bool run(IR::Module& module, PassManager& pm) override {
         auto& counter_result = pm.get_analysis_manager().get_module_result<FunctionCounterPass>(module);
         std::cout << "DummyTransform: Found " << counter_result.count << " functions!\n";
         return false; 
     }
 };
+
+
+}
+
