@@ -174,6 +174,10 @@ public:
         return this->continue_dst.top();
     }
 
+    void add_allocas(Instruction* inst) {
+        allocas.push_back(inst);
+    }
+
 private:
     CFG* _cfg;
     Module* _parent;
@@ -190,6 +194,8 @@ private:
     // only for while stmt
     std::stack<BasicBlock*> break_dst;
     std::stack<BasicBlock*> continue_dst;
+
+    std::vector<Instruction*> allocas;
 
     BasicBlock* entry_bb;
 };
