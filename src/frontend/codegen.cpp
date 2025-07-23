@@ -57,12 +57,12 @@ IR::Module* CodeGen::gen(const ast::CompUnits& cu) {
 void CodeGen::gen_gv(const ast::Decl& decl) {
     const std::string _symbol = decl.ident()->identifier();
     assert(decl.var && "Not find the variable");
-    if(decl.var)  {
-        if(decl.is_const()) {
-            assert(decl.var->val || decl.var->arr_val);
-        }
-        builder->create_gv(decl.var, _symbol); 
-    } 
+    if(decl.is_const() || decl.is_const()) {
+        assert(decl.var->val || decl.var->arr_val);
+        builder->create_gv(decl.var, _symbol, true); 
+    } else {
+        builder->create_gv(decl.var, _symbol, false); 
+    }
 }
 
 // TODO 把语义分析收集来的SymbolTable 翻译
@@ -93,6 +93,10 @@ IR::Function* CodeGen::gen_func(const ast::Func& func) {
     ctx->set_current_function(nf);
     auto &func_body = func.body();
     gen_func_body(*func_body);
+
+    if(this->get_cur_bb()->get_intrs().empty() || !builder->is_jump_instr(this->get_cur_bb()->get_intrs().back())) {
+        builder->create_ret(nullptr);
+    }
     
     // set the insert ptr nullptr, exit func
     ctx->set_current_basic_block(nullptr);
@@ -340,11 +344,18 @@ void CodeGen::gen_if(const ast::IfStmt& is){
     // then bb
     builder->set_cur_bb(then_bb);
     gen_stmt(*is.then().get());
+    // 在当前分支结束的时候需要跳到分支结束后的那个基本块，如果是ret或br指令了就不用管
+    if( this->get_cur_bb()->get_intrs().empty() || !builder->is_jump_instr(this->get_cur_bb()->get_intrs().back())) {
+        builder->create_br(end_bb);
+    }
 
     // else bb
     if(is.else_stmt() != nullptr) {
         builder->set_cur_bb(ow_bb);
         gen_stmt(*is.else_stmt().get());
+        if( this->get_cur_bb()->get_intrs().empty() || !builder->is_jump_instr(this->get_cur_bb()->get_intrs().back())) {
+            builder->create_br(end_bb);
+        }
     }
 
     // if end 
@@ -421,7 +432,8 @@ Value* CodeGen::gen_expr(const ast::Expr* expr) {
         // 考虑一下是要值还是要指针， 是数组且indices不完全
         auto var = lval->var;
         auto addr = gen_lval(lval);
-        if(var->type.is_array() && var->type.size() > lval->indices().size()) {
+        if(var->type.is_array() && var->type.nr_dims() > lval->indices().size()) {
+            // std::cout << var->type.size() << " " << lval->indices().size();
             return addr;
         }
         return builder->create_load(builder->get_base_type(var->type.base_type), addr);
