@@ -19,6 +19,7 @@
 #include "pass/transform/DummyTransform.hpp"
 #include "pass/transform/HelloWorld.hpp"
 #include "pass/transform/DomTreePrinter.hpp"
+#include "pass/transform/AliasTest.hpp"
 /* User Code End: Sasara */
 #include <fstream>
 
@@ -49,9 +50,10 @@ int main(int argc, char** argv) {
     auto m = cg->gen(cu);
     /* User Code Start: Sasara */
     pass::PassManager pm;
-    pm.add_module_transform_pass(std::make_unique<HelloWorldPass>());
-    pm.add_module_transform_pass(std::make_unique<DummyTransformPass>());
-    pm.add_function_transform_pass(std::make_unique<DomTreePrinterPass>());
+    pm.add_module_transform_pass(std::make_unique<pass::HelloWorldPass>());
+    pm.add_module_transform_pass(std::make_unique<pass::DummyTransformPass>());
+    pm.add_function_transform_pass(std::make_unique<pass::DomTreePrinterPass>());
+    pm.add_function_transform_pass(std::make_unique<pass::AliasTestPass>());
     cout << "====================Running optimization passes...====================\n";
     pm.run(*m);
     /* User Code End: Sasara */

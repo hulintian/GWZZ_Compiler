@@ -23,12 +23,12 @@ public:
 class ModuleTransformPass : public TransformPass{
 public:
     ~ModuleTransformPass() override = default;
-    virtual bool run(IR::Module& module, pass::PassManager& pm) = 0;
+    virtual bool run(IR::Module& module, PassManager& pm) = 0;
 };
 class FunctionTransformPass : public TransformPass{
 public:
     ~FunctionTransformPass() override = default;
-    virtual bool run(IR::Function& function,pass::PassManager& pm) = 0;
+    virtual bool run(IR::Function& function,PassManager& pm) = 0;
 };
 
 
@@ -41,12 +41,12 @@ public:
 class ModuleAnalysisPass : public AnalysisPass{
 public:
     ~ModuleAnalysisPass() override = default;
-    virtual std::unique_ptr<AnalysisResult> run(IR::Module& module, pass::PassManager& pm) = 0;
+    virtual std::unique_ptr<AnalysisResult> run(const IR::Module& module, PassManager& pm) = 0;
 };
 class FunctionAnalysisPass : public AnalysisPass {
 public:
     ~FunctionAnalysisPass() override = default;
-    virtual std::unique_ptr<AnalysisResult> run(IR::Function& function, pass::PassManager& pm) = 0;
+    virtual std::unique_ptr<AnalysisResult> run(const IR::Function& function, PassManager& pm) = 0;
 };
 
 }

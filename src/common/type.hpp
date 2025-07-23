@@ -23,6 +23,15 @@ struct Type {
     int nr_dims() const { return dims.size(); }
     bool is_array() const { return dims.size() > 0; }
     
+    //User Code Start. Sasara
+    Type get_pointer_element_type() const {
+        assert(is_ptr() && "Cannot get element type of a non-pointer type!");
+        Type element_type = *this;
+        //解引用
+        element_type.dims.erase(element_type.dims.begin());
+        return element_type;
+    }
+    //User Code End. Sasara
     /// compute the total number of elements in array.
     int nr_elems() const {
         int count = 1;

@@ -45,7 +45,7 @@ void CFG::build_predecessors(){
     }
     _predecessors_built = true;
 }
-void Function::post_order_traversal(std::function<void(BasicBlock*)> callback){
+void Function::post_order_traversal(std::function<void(BasicBlock*)> callback) const{
     std::set<BasicBlock*> visited;
     std::stack<BasicBlock*> stack;
     std::stack<BasicBlock*> post_order_stack;
@@ -68,7 +68,7 @@ void Function::post_order_traversal(std::function<void(BasicBlock*)> callback){
         post_order_stack.pop();
     }
 }
-std::vector<BasicBlock*> Function::get_reverse_post_order(){
+std::vector<BasicBlock*> Function::get_reverse_post_order()const{
     std::vector<BasicBlock*> post_order_list;
     this->post_order_traversal([&post_order_list](BasicBlock* bb) {
         post_order_list.push_back(bb);
