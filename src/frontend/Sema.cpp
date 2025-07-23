@@ -49,9 +49,9 @@ Sema::Sema() {
             .params_type = {Type{String}},
             .variadic = true};
     funcs["starttime"] = {
-            .return_type = std::nullopt, .params_type = {Type{Int}}, .variadic = false};
+            .return_type = std::nullopt, .params_type = {}, .variadic = false};
     funcs["stoptime"] = {
-            .return_type = std::nullopt, .params_type = {Type{Int}}, .variadic = false};
+            .return_type = std::nullopt, .params_type = {}, .variadic = false};
 
     // this is just for test, not impl in lib
     funcs["print"] = {.return_type = std::nullopt,
@@ -101,6 +101,7 @@ bool Sema::already_exits_var_in_current_scope(const SymbolTable& table, const st
 void Sema::visit_decls(const ast::Decl& decl ) {
     auto &name = decl.ident()->identifier();
     Type t = parse_type(decl.type());
+    t.is_const = decl.is_const();
 
     std::optional<ConstValue> initial_val;
     std::map<int, ConstValue> *arr_val = nullptr;
@@ -333,6 +334,7 @@ bool type_compatible(const Type &t1, const Type &t2){
     if(t1.is_ptr2scalar() && t2.nr_dims() > 1) return true;
     if(t1.nr_dims() != t2.nr_dims()) return false;
 
+    
     for(int i=1; i < t1.nr_dims(); ++i) {
         if(t1.dims[i] != t2.dims[i]) return false;
     }
@@ -472,6 +474,7 @@ Type Sema::parse_type(const std::unique_ptr<ast::SysyType> & st) {
     if(auto scalar_type = dynamic_cast<ast::ScalarType*>(ptr)) {
         t.base_type = scalar_type->type();
     } else if(auto array_type = dynamic_cast<ast::ArrayType*>(ptr)){ // Array Type
+                                                                                    
         t.base_type = array_type->base_type();
         if(array_type->omit_first_dimesion()) t.dims.push_back(0);       // hidden the first dimension
         

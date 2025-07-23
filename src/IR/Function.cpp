@@ -45,6 +45,10 @@ void CFG::build_predecessors(){
     }
     _predecessors_built = true;
 }
+
+
+void CFG::regen_cfg() {
+}
 void Function::post_order_traversal(std::function<void(BasicBlock*)> callback) const{
     std::set<BasicBlock*> visited;
     std::stack<BasicBlock*> stack;
