@@ -18,7 +18,15 @@ public :
 
     virtual std::string to_str() = 0;
     virtual std::string to_llvm() = 0;
-
+    //User Code Start. Sasara
+    //偷个懒。这个写法简单，但依赖IR正确性。有更健壮的写法。
+    bool is_terminator(){
+        return this->get_parent()->get_terminator()==this;
+    }
+    void set_parent(BasicBlock* new_parent){
+        this->parent = new_parent;
+    }
+    //User Code End. Sasara
     BasicBlock* get_parent() { return this->parent; }
 private :
     // The parent baisc block

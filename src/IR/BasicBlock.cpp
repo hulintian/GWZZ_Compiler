@@ -43,6 +43,29 @@ const std::vector<BasicBlock*>& BasicBlock::get_successors() const{
 const std::vector<BasicBlock*>& BasicBlock::get_predecessors() const{
         return _parent->get_cfg()->get_predecessors(this);
 }
+void BasicBlock::remove_instr(Instruction* inst) {
+    //迭代器find
+    auto it = std::find(_instrs.begin(), _instrs.end(), inst);
+    if (it != _instrs.end()) {
+        _instrs.erase(it);//指令可能还会重新insert,所以不delete
+    } else {
+        assert(false && "Instruction to be removed not found in BasicBlock!");
+    }
+}
+
+void BasicBlock::add_instr_before_terminator(Instruction* inst) {
+    auto insert_pos = _instrs.end();
+    if (!_instrs.empty()) {
+        Instruction* terminator = _instrs.back();
+        if (terminator->is_terminator()) {
+            insert_pos = std::prev(_instrs.end());
+        }
+    }
+    //更新信息
+    inst->set_parent(this);
+    _instrs.insert(insert_pos, inst);
+}
+
 //User Code End. Sasara
 
 }

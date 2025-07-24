@@ -24,9 +24,13 @@ public:
     
     std::vector<Instruction*>& get_intrs() { return _instrs; }
     //User Code Start. Sasara
+    Function* get_parent()const {return this->_parent;}
     Instruction* get_terminator() const;
     const std::vector<BasicBlock*>& get_successors() const;
     const std::vector<BasicBlock*>& get_predecessors() const;
+    void remove_instr(Instruction* inst);
+    // 在基本块的终结指令之前，插入指令。
+    void add_instr_before_terminator(Instruction* inst);
     //User Code End. Sasara
     void add_instr(Instruction* i) {
         this->get_intrs().push_back(i);
