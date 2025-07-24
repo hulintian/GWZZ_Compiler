@@ -167,10 +167,12 @@ public:
     }
 
     BasicBlock* get_break_point() {
+        assert(!this->break_dst.empty() && "Attempted to get break point outside of a loop!");
         return this->break_dst.top();
     }
 
     BasicBlock* get_continue_point() {
+        assert(!this->continue_dst.empty() && "Attempted to get continue point outside of a loop!");
         return this->continue_dst.top();
     }
 

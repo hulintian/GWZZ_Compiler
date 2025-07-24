@@ -1,10 +1,10 @@
 Parser=Sysy22.g4
 ANTLR=antlr4
-CXX = clang++
-CC = clang
+CXX = g++
+CC = gcc
 
 INCLUDE_FLAGS = -I./antlr4 -I./antlr4/antlr4-runtime -I./src 
-CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE 
+CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE # -fsanitize=address -fno-omit-frame-pointer
 
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 

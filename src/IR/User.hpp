@@ -17,6 +17,12 @@ public:
         assert(i < num_ops_ && "Index out of range.");
         return operands_[i];
     }
+    //User Code Start. Sasara
+    std::vector<Value *> get_operands()const{
+        return operands_;
+    }
+    //User Code End. Sasara
+
     // 将该使用者的第i个操作数设为值v
     void set_operand(unsigned i, Value *v) {
         assert(i < num_ops_ && "Index out of range.");
