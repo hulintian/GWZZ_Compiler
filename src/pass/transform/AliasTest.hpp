@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pass/analysis/AliasAnalysis.hpp"
+#include "pass/Pass.hpp"
 
 namespace pass{
 

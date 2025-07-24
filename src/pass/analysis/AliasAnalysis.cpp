@@ -7,7 +7,7 @@ namespace pass{
 class BasicAliasAnalysisResult : public AliasAnalysisResult{
 public:
     AliasResult query(Value* P1,Value* P2) override{
-        //检查1 身份
+        //检查身份
         if(P1 == P2){
             return AliasResult::MustAlias;
         }
@@ -37,8 +37,7 @@ public:
         if (BaseP1 == BaseP2 && P1 != P2) {
             return AliasResult::MayAlias;
         }
-        
-        //获取指针所指的元素Type
+        //ptr解引用
         Type Type1 = P1->get_type()->get_pointer_element_type();
         Type Type2 = P2->get_type()->get_pointer_element_type();
         //sy好像没有类型转换，直接进行比较

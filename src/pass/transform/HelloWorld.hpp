@@ -6,7 +6,7 @@
 namespace pass{
     
 class HelloWorldPass : public ModuleTransformPass{
-    const char* get_name() const override{return "HelloWorldPass";}
+    const char* get_name() const override{return "HelloWorld";}
     bool run(IR::Module &module, pass::PassManager &pm) override {
         std::cout<<"Hello World!\n";
         return false;
