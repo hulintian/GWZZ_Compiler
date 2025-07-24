@@ -2,6 +2,8 @@
 {%- for header in headers %}
 #include "{{ header }}"
 {%- endfor %}
+#include <sstream>
+#include <string>
 
 namespace backend {
 enum MachineInstrType {
@@ -14,34 +16,68 @@ enum MachineInstrType {
 };
 
 class MachineInstr {
+public:
+        virtual std::vector<RiscvReg::Reg> get_srcs() = 0;
+        virtual std::vector<RiscvReg::Reg> get_dsts() = 0;
+        virtual std::vector<RiscvReg::Reg*> get_regs() = 0;
 
+        virtual std::string to_asm() = 0;
+
+        MachineInstrType mity;
+        MachineBasicBlock* parent;
+
+        MachineInstr(MachineInstrType ty, MachineBasicBlock* p): mity(ty), parent(p) {}
 };
 
 {%- for group in InstrGroups %}
 // {{ group.Category }}
 
-{%- for instr in group.Instructions %}
-
-class {{ instr.upper() }}Inst : public MachineInstr {
+class {{ group.Category }}Inst : public MachineInstr {
 public:
-    {{ instr.upper() }}Inst( MachineInstrType mty {% for op in group.Operands %},RiscvReg::Reg {{ op }} {% endfor %} {% for oa in group.otherargs %},{{ oa.type }} {{ oa.name }}{% endfor %}
-        /* User Code Start: other {{ instr }} args */
+    {{ group.Category }}Inst( MachineInstrType mty, MachineBasicBlock* p{% for op in group.Operands %}, RiscvReg::Reg {{ op }} {% endfor %}{% for oa in group.otherargs %},{{ oa.type }} {{ oa.name }}{% endfor %}
+        /* User Code Start: other {{ group.Category }} args */
 
-        /* User Code End: other {{ instr }} args */
-    ) 
-        /* User Code Start: other {{ instr }} init construct */
+        /* User Code End: other {{ group.Category }} args */
+    ) : MachineInstr(mty, p){% for op in group.Operands %}, _{{ op }}({{ op }}) {% endfor %}{% for oa in group.otherargs %}, _{{ oa.name }}({{ oa.name }}){% endfor %}
+        /* User Code Start: other {{ group.Category }} init construct */
 
-        /* User Code End: other {{ instr }} init construct */
+        /* User Code End: other {{ group.Category }} init construct */
 
     {
-        /* User Code Start: {{ instr.upper() }}_Inst construct function */
+        /* User Code Start: {{ group.Category }}Inst construct function */
 
-        /* User Code End: {{ instr.upper() }}_Inst construct function */
+        /* User Code End: {{ group.Category }}_Inst construct function */
     }
 
-    /* User Code Start: {{ instr.upper() }}_Inst methods */
+    std::vector<RiscvReg::Reg*> get_regs() override { return { {% for op in group.Operands %}&_{{ op }}{% if not loop.last %}, {% endif %}{% endfor %} }; }
 
-    /* User Code End: {{ instr.upper() }}_Inst methods */
+    std::string to_asm() override { 
+        std::ostringstream oss; 
+        switch(this->mity) {
+            {%- for instr in group.Instructions %}
+            case MachineInstrType::{{ instr.upper() }} : 
+                oss << "{{ instr|replace('_', '.') }}" 
+                {%- for opd in group.Operands %}
+                    {%- if loop.first -%}
+                    << " "  << _{{ opd }}
+                    {%- else -%} 
+                    << ", " << _{{ opd }}
+                    {%- endif -%}
+                {%- endfor %}
+                {%- for oa in group.otherargs %}
+                    << ", "<<  _{{ oa.name }}
+                {%- endfor %}
+                ; 
+                break;
+            {%- endfor %}
+            default : break;
+        }
+        return oss.str();
+    }
+
+    /* User Code Start: {{ group.Category }}_Inst methods */
+
+    /* User Code End: {{ group.Category }}_Inst methods */
     
     {%- for op in group.Operands %}
     RiscvReg::Reg _{{op}};
@@ -50,9 +86,6 @@ public:
     {{ oa.type }} _{{ oa.name }};
     {%- endfor %}
 };
-{%- endfor %}
 
 {%- endfor %}
-
-
 }
