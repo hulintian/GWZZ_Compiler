@@ -527,6 +527,26 @@ public:
         /* User Code End: create_lt */
     }
      
+    Instruction* create_ge(
+        /* User Code Start: create_ge args */
+        Value* lhs, Value* rhs
+        /* User Code End: create_ge args */
+    ){
+        /* User Code Start: create_ge */
+        return nullptr;
+        /* User Code End: create_ge */
+    }
+     
+    Instruction* create_le(
+        /* User Code Start: create_le args */
+        Value* lhs, Value* rhs
+        /* User Code End: create_le args */
+    ){
+        /* User Code Start: create_le */
+        return nullptr;
+        /* User Code End: create_le */
+    }
+     
     Instruction* create_fcmp(
         /* User Code Start: create_fcmp args */
         Value* lhs, Value* rhs
@@ -575,6 +595,26 @@ public:
         /* User Code Start: create_olt */
         return nullptr;
         /* User Code End: create_olt */
+    }
+     
+    Instruction* create_oge(
+        /* User Code Start: create_oge args */
+        Value* lhs, Value* rhs
+        /* User Code End: create_oge args */
+    ){
+        /* User Code Start: create_oge */
+        return nullptr;
+        /* User Code End: create_oge */
+    }
+     
+    Instruction* create_ole(
+        /* User Code Start: create_ole args */
+        Value* lhs, Value* rhs
+        /* User Code End: create_ole args */
+    ){
+        /* User Code Start: create_ole */
+        return nullptr;
+        /* User Code End: create_ole */
     }
      
     Instruction* create_br(

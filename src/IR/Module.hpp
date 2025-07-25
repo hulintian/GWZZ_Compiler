@@ -63,6 +63,10 @@ public:
             return _name2lib_func[name];
         }
     }
+
+    std::vector<Function*>& get_funcs() { return _funcs; }
+
+
 private:
     // TODO Need maintain the function and global variable
     std::vector<Function*> _funcs;

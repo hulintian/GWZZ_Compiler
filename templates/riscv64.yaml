@@ -18,7 +18,7 @@ InstrGroups:
     Operands: [rd, rs1]
     otherargs: 
       - {type: int32_t, name: imm}
-    Instructions: [addi, subi, andi, ori, xori]
+    Instructions: [addi, subi, andi, ori, xori, slli, srai, srli]
 
     # 长立即数指令
   - Category: IArithU
@@ -35,6 +35,13 @@ InstrGroups:
     otherargs: 
       - {type: int32_t, name: offset}
     Instructions: [lb, lh, lw, ld]
+
+  - Category: LLA
+    Description: LoadLocalAddress
+    Operands: [rd]
+    otherargs: 
+      - {type: std::string, name: symbol}
+    Instructions: [lla]
 
   - Category: Store 
     Description: Store Instruction
@@ -111,7 +118,7 @@ InstrGroups:
   - Category: FArith
     Description: 浮点运算
     Operands: [rd, rs1, rs2]
-    Instructions: [fadd_s, fsub_s, fmul_s, fdiv_s, fsgnj_s, fsgnjn_s, fsgnjx_s, fmin_s, fmax_s, feq_s, fle_s, flt_s]
+    Instructions: [fadd_s, fsub_s, fmul_s, fdiv_s, fsgnj_s, fsgnjn_s, fsgnjx_s, fmin_s, fmax_s]
 
   - Category: FArithU
     Description: 浮点运算
@@ -138,8 +145,6 @@ InstrGroups:
   - Category: FCVT
     Description: 浮点向字转换
     Operands: [rd, rs1]
-    otherargs: 
-      - {type: int32_t, name: offset}
     Instructions: [fcvt_s_w, fcvt_w_s]
 
   - Category: FMV

@@ -21,7 +21,10 @@ enum MachineInstrType {
     SUBI,
     ANDI,
     ORI,
-    XORI, 
+    XORI,
+    SLLI,
+    SRAI,
+    SRLI, 
 // IArithU
     LUI,
     AUIPC, 
@@ -30,6 +33,8 @@ enum MachineInstrType {
     LH,
     LW,
     LD, 
+// LLA
+    LLA, 
 // Store
     SB,
     SH,
@@ -91,10 +96,7 @@ enum MachineInstrType {
     FSGNJN_S,
     FSGNJX_S,
     FMIN_S,
-    FMAX_S,
-    FEQ_S,
-    FLE_S,
-    FLT_S, 
+    FMAX_S, 
 // FArithU
     FABS_S,
     FNEG_S,
@@ -157,38 +159,45 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::ADD : 
-                oss << "add"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "add"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::SUB : 
-                oss << "sub"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "sub"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::AND : 
-                oss << "and"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "and"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::OR : 
-                oss << "or"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "or"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::XOR : 
-                oss << "xor"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "xor"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::SLL : 
-                oss << "sll"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "sll"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::SRA : 
-                oss << "sra"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "sra"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::SRL : 
-                oss << "srl"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "srl"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -225,31 +234,53 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::ADDI : 
-                oss << "addi"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _imm
+                oss << "addi"
+                    << " " << _rd<< ", " << _rs1
+                        << ", "<<  _imm
                 ; 
                 break;
             case MachineInstrType::SUBI : 
-                oss << "subi"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _imm
+                oss << "subi"
+                    << " " << _rd<< ", " << _rs1
+                        << ", "<<  _imm
                 ; 
                 break;
             case MachineInstrType::ANDI : 
-                oss << "andi"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _imm
+                oss << "andi"
+                    << " " << _rd<< ", " << _rs1
+                        << ", "<<  _imm
                 ; 
                 break;
             case MachineInstrType::ORI : 
-                oss << "ori"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _imm
+                oss << "ori"
+                    << " " << _rd<< ", " << _rs1
+                        << ", "<<  _imm
                 ; 
                 break;
             case MachineInstrType::XORI : 
-                oss << "xori"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _imm
+                oss << "xori"
+                    << " " << _rd<< ", " << _rs1
+                        << ", "<<  _imm
                 ; 
                 break;
-            default : break;
+            case MachineInstrType::SLLI : 
+                oss << "slli"
+                    << " " << _rd<< ", " << _rs1
+                        << ", "<<  _imm
+                ; 
+                break;
+            case MachineInstrType::SRAI : 
+                oss << "srai"
+                    << " " << _rd<< ", " << _rs1
+                        << ", "<<  _imm
+                ; 
+                break;
+            case MachineInstrType::SRLI : 
+                oss << "srli"
+                    << " " << _rd<< ", " << _rs1
+                        << ", "<<  _imm
+                ; 
+                break;default : break;
         }
         return oss.str();
     }
@@ -286,16 +317,17 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::LUI : 
-                oss << "lui"<< " "  << _rd
-                    << ", "<<  _imm
+                oss << "lui"
+                    << " " << _rd
+                        << ", "<<  _imm
                 ; 
                 break;
             case MachineInstrType::AUIPC : 
-                oss << "auipc"<< " "  << _rd
-                    << ", "<<  _imm
+                oss << "auipc"
+                    << " " << _rd
+                        << ", "<<  _imm
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -331,26 +363,45 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::LB : 
-                oss << "lb"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _offset
+                oss << "lb"
+                    << " " << _rd<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs1  <<  ")";
+                    } else {
+                        oss << _rs1;
+                    }
                 ; 
                 break;
             case MachineInstrType::LH : 
-                oss << "lh"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _offset
+                oss << "lh"
+                    << " " << _rd<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs1  <<  ")";
+                    } else {
+                        oss << _rs1;
+                    }
                 ; 
                 break;
             case MachineInstrType::LW : 
-                oss << "lw"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _offset
+                oss << "lw"
+                    << " " << _rd<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs1  <<  ")";
+                    } else {
+                        oss << _rs1;
+                    }
                 ; 
                 break;
             case MachineInstrType::LD : 
-                oss << "ld"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _offset
+                oss << "ld"
+                    << " " << _rd<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs1  <<  ")";
+                    } else {
+                        oss << _rs1;
+                    }
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -361,6 +412,46 @@ public:
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
     int32_t _offset;
+};
+// LLA
+
+class LLAInst : public MachineInstr {
+public:
+    LLAInst( MachineInstrType mty, MachineBasicBlock* p, RiscvReg::Reg rd ,std::string symbol
+        /* User Code Start: other LLA args */
+
+        /* User Code End: other LLA args */
+    ) : MachineInstr(mty, p), _rd(rd) , _symbol(symbol)
+        /* User Code Start: other LLA init construct */
+
+        /* User Code End: other LLA init construct */
+
+    {
+        /* User Code Start: LLAInst construct function */
+
+        /* User Code End: LLA_Inst construct function */
+    }
+
+    std::vector<RiscvReg::Reg*> get_regs() override { return { &_rd }; }
+
+    std::string to_asm() override { 
+        std::ostringstream oss; 
+        switch(this->mity) {
+            case MachineInstrType::LLA : 
+                oss << "lla"
+                    << " " << _rd
+                        << ", "<<  _symbol
+                ; 
+                break;default : break;
+        }
+        return oss.str();
+    }
+
+    /* User Code Start: LLA_Inst methods */
+
+    /* User Code End: LLA_Inst methods */
+    RiscvReg::Reg _rd;
+    std::string _symbol;
 };
 // Store
 
@@ -387,26 +478,45 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::SB : 
-                oss << "sb"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _offset
+                oss << "sb"
+                    << " " << _rs1<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs2  <<  ")";
+                    } else {
+                        oss << _rs2;
+                    }
                 ; 
                 break;
             case MachineInstrType::SH : 
-                oss << "sh"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _offset
+                oss << "sh"
+                    << " " << _rs1<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs2  <<  ")";
+                    } else {
+                        oss << _rs2;
+                    }
                 ; 
                 break;
             case MachineInstrType::SW : 
-                oss << "sw"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _offset
+                oss << "sw"
+                    << " " << _rs1<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs2  <<  ")";
+                    } else {
+                        oss << _rs2;
+                    }
                 ; 
                 break;
             case MachineInstrType::SD : 
-                oss << "sd"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _offset
+                oss << "sd"
+                    << " " << _rs1<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs2  <<  ")";
+                    } else {
+                        oss << _rs2;
+                    }
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -443,14 +553,15 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::SLT : 
-                oss << "slt"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "slt"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::SLTU : 
-                oss << "sltu"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "sltu"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -487,22 +598,25 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::SEQZ : 
-                oss << "seqz"<< " "  << _rd<< ", " << _rs1
+                oss << "seqz"
+                    << " " << _rd<< ", " << _rs1
                 ; 
                 break;
             case MachineInstrType::SNEZ : 
-                oss << "snez"<< " "  << _rd<< ", " << _rs1
+                oss << "snez"
+                    << " " << _rd<< ", " << _rs1
                 ; 
                 break;
             case MachineInstrType::SLTZ : 
-                oss << "sltz"<< " "  << _rd<< ", " << _rs1
+                oss << "sltz"
+                    << " " << _rd<< ", " << _rs1
                 ; 
                 break;
             case MachineInstrType::SGTZ : 
-                oss << "sgtz"<< " "  << _rd<< ", " << _rs1
+                oss << "sgtz"
+                    << " " << _rd<< ", " << _rs1
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -538,16 +652,17 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::SLTI : 
-                oss << "slti"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _imm
+                oss << "slti"
+                    << " " << _rd<< ", " << _rs1
+                        << ", "<<  _imm
                 ; 
                 break;
             case MachineInstrType::SGTI : 
-                oss << "sgti"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _imm
+                oss << "sgti"
+                    << " " << _rd<< ", " << _rs1
+                        << ", "<<  _imm
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -584,56 +699,65 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::BEQ : 
-                oss << "beq"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "beq"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BNE : 
-                oss << "bne"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bne"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BLT : 
-                oss << "blt"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "blt"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BGE : 
-                oss << "bge"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bge"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BLTU : 
-                oss << "bltu"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bltu"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BGEU : 
-                oss << "bgeu"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bgeu"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BGT : 
-                oss << "bgt"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bgt"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BGTU : 
-                oss << "bgtu"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bgtu"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BLE : 
-                oss << "ble"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "ble"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BLEU : 
-                oss << "bleu"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bleu"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -670,36 +794,41 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::BEZ : 
-                oss << "bez"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bez"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BNEZ : 
-                oss << "bnez"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bnez"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BGTZ : 
-                oss << "bgtz"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bgtz"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BLTZ : 
-                oss << "bltz"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bltz"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BGEZ : 
-                oss << "bgez"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "bgez"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BLZE : 
-                oss << "blze"<< " "  << _rs1<< ", " << _rs2
-                    << ", "<<  _dst_bb
+                oss << "blze"
+                    << " " << _rs1<< ", " << _rs2
+                        << ", "<<  _dst_bb
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -737,10 +866,9 @@ public:
         switch(this->mity) {
             case MachineInstrType::J : 
                 oss << "j"
-                    << ", "<<  _dst_bb
+                        << ", "<<  _dst_bb
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -775,16 +903,17 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::JAL : 
-                oss << "jal"<< " "  << _rd
-                    << ", "<<  _dst_bb
+                oss << "jal"
+                    << " " << _rd
+                        << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::JALR : 
-                oss << "jalr"<< " "  << _rd
-                    << ", "<<  _dst_bb
+                oss << "jalr"
+                    << " " << _rd
+                        << ", "<<  _dst_bb
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -821,10 +950,9 @@ public:
         switch(this->mity) {
             case MachineInstrType::CALL : 
                 oss << "call"
-                    << ", "<<  _func
+                        << ", "<<  _func
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -861,8 +989,7 @@ public:
             case MachineInstrType::RET : 
                 oss << "ret"
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -896,38 +1023,45 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::MUL : 
-                oss << "mul"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "mul"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::MULH : 
-                oss << "mulh"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "mulh"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::MULHSU : 
-                oss << "mulhsu"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "mulhsu"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::MULHU : 
-                oss << "mulhu"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "mulhu"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::DIV : 
-                oss << "div"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "div"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::DIVU : 
-                oss << "divu"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "divu"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::REM : 
-                oss << "rem"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "rem"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::REMU : 
-                oss << "remu"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "remu"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -964,54 +1098,50 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::FADD_S : 
-                oss << "fadd.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "fadd.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::FSUB_S : 
-                oss << "fsub.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "fsub.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::FMUL_S : 
-                oss << "fmul.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "fmul.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::FDIV_S : 
-                oss << "fdiv.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "fdiv.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::FSGNJ_S : 
-                oss << "fsgnj.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "fsgnj.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::FSGNJN_S : 
-                oss << "fsgnjn.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "fsgnjn.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::FSGNJX_S : 
-                oss << "fsgnjx.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "fsgnjx.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::FMIN_S : 
-                oss << "fmin.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "fmin.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::FMAX_S : 
-                oss << "fmax.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "fmax.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
-                break;
-            case MachineInstrType::FEQ_S : 
-                oss << "feq.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
-                ; 
-                break;
-            case MachineInstrType::FLE_S : 
-                oss << "fle.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
-                ; 
-                break;
-            case MachineInstrType::FLT_S : 
-                oss << "flt.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
-                ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -1048,18 +1178,20 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::FABS_S : 
-                oss << "fabs.s"<< " "  << _rd<< ", " << _rs1
+                oss << "fabs.s"
+                    << " " << _rd<< ", " << _rs1
                 ; 
                 break;
             case MachineInstrType::FNEG_S : 
-                oss << "fneg.s"<< " "  << _rd<< ", " << _rs1
+                oss << "fneg.s"
+                    << " " << _rd<< ", " << _rs1
                 ; 
                 break;
             case MachineInstrType::FSQRT_S : 
-                oss << "fsqrt.s"<< " "  << _rd<< ", " << _rs1
+                oss << "fsqrt.s"
+                    << " " << _rd<< ", " << _rs1
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -1095,18 +1227,20 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::FEQ_S : 
-                oss << "feq.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "feq.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::FLT_S : 
-                oss << "flt.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "flt.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
             case MachineInstrType::FLE_S : 
-                oss << "fle.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2
+                oss << "fle.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -1143,22 +1277,25 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::FMADD_S : 
-                oss << "fmadd.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2<< ", " << _rs3
+                oss << "fmadd.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2<< ", " << _rs3
                 ; 
                 break;
             case MachineInstrType::FNMADD_S : 
-                oss << "fnmadd.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2<< ", " << _rs3
+                oss << "fnmadd.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2<< ", " << _rs3
                 ; 
                 break;
             case MachineInstrType::FMSUB_S : 
-                oss << "fmsub.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2<< ", " << _rs3
+                oss << "fmsub.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2<< ", " << _rs3
                 ; 
                 break;
             case MachineInstrType::FNMSUB_S : 
-                oss << "fnmsub.s"<< " "  << _rd<< ", " << _rs1<< ", " << _rs2<< ", " << _rs3
+                oss << "fnmsub.s"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2<< ", " << _rs3
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -1196,11 +1333,15 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::FLW : 
-                oss << "flw"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _offset
+                oss << "flw"
+                    << " " << _rd<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs1  <<  ")";
+                    } else {
+                        oss << _rs1;
+                    }
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -1216,11 +1357,11 @@ public:
 
 class FCVTInst : public MachineInstr {
 public:
-    FCVTInst( MachineInstrType mty, MachineBasicBlock* p, RiscvReg::Reg rd , RiscvReg::Reg rs1 ,int32_t offset
+    FCVTInst( MachineInstrType mty, MachineBasicBlock* p, RiscvReg::Reg rd , RiscvReg::Reg rs1 
         /* User Code Start: other FCVT args */
 
         /* User Code End: other FCVT args */
-    ) : MachineInstr(mty, p), _rd(rd) , _rs1(rs1) , _offset(offset)
+    ) : MachineInstr(mty, p), _rd(rd) , _rs1(rs1) 
         /* User Code Start: other FCVT init construct */
 
         /* User Code End: other FCVT init construct */
@@ -1237,16 +1378,15 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::FCVT_S_W : 
-                oss << "fcvt.s.w"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _offset
+                oss << "fcvt.s.w"
+                    << " " << _rd<< ", " << _rs1
                 ; 
                 break;
             case MachineInstrType::FCVT_W_S : 
-                oss << "fcvt.w.s"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _offset
+                oss << "fcvt.w.s"
+                    << " " << _rd<< ", " << _rs1
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
@@ -1256,7 +1396,6 @@ public:
     /* User Code End: FCVT_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
-    int32_t _offset;
 };
 // FMV
 
@@ -1283,21 +1422,35 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::FMV_S : 
-                oss << "fmv.s"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _offset
+                oss << "fmv.s"
+                    << " " << _rd<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs1  <<  ")";
+                    } else {
+                        oss << _rs1;
+                    }
                 ; 
                 break;
             case MachineInstrType::FMV_W_X : 
-                oss << "fmv.w.x"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _offset
+                oss << "fmv.w.x"
+                    << " " << _rd<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs1  <<  ")";
+                    } else {
+                        oss << _rs1;
+                    }
                 ; 
                 break;
             case MachineInstrType::FMV_X_W : 
-                oss << "fmv.x.w"<< " "  << _rd<< ", " << _rs1
-                    << ", "<<  _offset
+                oss << "fmv.x.w"
+                    << " " << _rd<< ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _rs1  <<  ")";
+                    } else {
+                        oss << _rs1;
+                    }
                 ; 
-                break;
-            default : break;
+                break;default : break;
         }
         return oss.str();
     }
