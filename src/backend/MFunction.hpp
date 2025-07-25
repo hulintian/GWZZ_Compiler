@@ -8,6 +8,7 @@ namespace backend {
 
 class MachineBasicBlock;
 class MachineFunction {
+public:
     std::string _name;
 
     std::set<MachineBasicBlock*> bbs;
@@ -18,6 +19,12 @@ class MachineFunction {
     friend std::ostream& operator<<(std::ostream& os, const MachineFunction& mf) {
         os << mf._name;
         return os;
+    }
+
+    void dump_asm(std::ostream& out) {
+        out << this->_name << ":\n";
+        for(auto bb : bbs) {
+        }
     }
 };
 

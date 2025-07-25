@@ -3,6 +3,7 @@
 #include <ostream>
 #include <vector>
 #include <string>
+#include "backend/MInstruction.hpp"
 namespace backend {
 
 class MachineInstr;
@@ -21,6 +22,14 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const MachineBasicBlock& mbb) {
         os << mbb.bb_label;
         return os;
+    }
+
+    void dump_asm(std::ostream& out) {
+        out << bb_label;
+        for(auto i : m_instrs) {
+            out << i->to_asm() << "\n";
+        }
+        out << "\n";
     }
 };
 

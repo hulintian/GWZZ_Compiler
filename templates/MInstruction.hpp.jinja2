@@ -57,19 +57,35 @@ public:
             {%- for instr in group.Instructions %}
             case MachineInstrType::{{ instr.upper() }} : 
                 oss << "{{ instr|replace('_', '.') }}" 
-                {%- for opd in group.Operands %}
-                    {%- if loop.first -%}
-                    << " "  << _{{ opd }}
-                    {%- else -%} 
-                    << ", " << _{{ opd }}
-                    {%- endif -%}
-                {%- endfor %}
-                {%- for oa in group.otherargs %}
-                    << ", "<<  _{{ oa.name }}
-                {%- endfor %}
+
+                {%- if group.Operands|length > 0 %}
+                    << " " << _{{ group.Operands[0] }}
+                {%- endif -%}
+
+                {%- set has_offset = (group.otherargs|selectattr("name", "equalto", "offset")|list|length) > 0 %}
+                {%- if has_offset -%}
+                    << ", ";
+                    if(_offset != 0) {
+                        oss << _offset << "(" << _{{ group.Operands[1] }}  <<  ")";
+                    } else {
+                        oss << _{{ group.Operands[1] }};
+                    }
+                    {%- for oa in group.otherargs if oa.name != "offset" %}
+                        << ", "<<  _{{ oa.name }}
+                    {%- endfor -%}
+                {%- else %}
+                    {%- for opd in group.Operands -%}
+                        {%- if not loop.first -%}
+                        << ", " << _{{ opd }}
+                        {%- endif -%}
+                    {%- endfor -%}
+                    {%- for oa in group.otherargs %}
+                        << ", "<<  _{{ oa.name }}
+                    {%- endfor -%}
+                {%- endif %}
                 ; 
                 break;
-            {%- endfor %}
+            {%- endfor -%}
             default : break;
         }
         return oss.str();
