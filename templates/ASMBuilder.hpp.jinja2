@@ -1,0 +1,33 @@
+#pragma once 
+#include "backend/MInstruction.hpp"
+#include "backend/miscs.hpp"
+
+namespace backend {
+class ASMBuilder {
+public:
+    ASMBuilder(MCtx* ctx) : mctx(ctx) {}
+
+    /* User Code Start: code space 1 */
+
+    /* User Code End: code space 1 */
+
+
+    {%- for group in InstrGroups %} 
+    // {{ group.Category }}
+        {%- for instr in group.Instructions %}
+        MachineInstr* create_{{ instr.upper() }}(
+        /* User Code Start: {{ instr }} args */
+
+        /* User Code End: {{ instr }} args */
+        ) {
+        /* User Code Start: {{ instr }} func */
+            return nullptr;
+        /* User Code End: {{ instr }} func */
+        }
+        {%- endfor %}
+    {%- endfor %}
+
+private:
+    MCtx* mctx;
+};
+}
