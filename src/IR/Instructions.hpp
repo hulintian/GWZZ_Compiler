@@ -186,7 +186,13 @@ public:
     }
 
     /* User Code Start: Binary place */
-
+    inline bool is_float_op() { return this->_instr_type == oeq ||
+                                       this->_instr_type == one ||
+                                       this->_instr_type == oge ||
+                                       this->_instr_type == ogt ||
+                                       this->_instr_type == olt ||
+                                       this->_instr_type == ole ;
+    }
     /* User Code End: Binary place */
     std::string to_str();
     std::string to_llvm();
@@ -243,7 +249,8 @@ public:
     }
 
     /* User Code Start: Convert place */
-
+    inline bool is_x2f() { return dst_type->base_type == 1 && src_type->base_type == 0; }
+    inline bool is_f2x() { return dst_type->base_type == 0 && src_type->base_type == 1; }
     /* User Code End: Convert place */
     std::string to_str();
     std::string to_llvm();
