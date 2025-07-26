@@ -287,6 +287,10 @@ void CodeGen::gen_stmt(const ast::Stmt& stmt) {
     } else if(auto ret = dynamic_cast<const ast::Return*>(statement)) {
         if(auto &ret_exp  = ret->rets()) {
             auto ret_val = gen_expr(*ret_exp);
+            auto func_rty = this->get_cur_func()->get_return_type();
+            if( func_rty->base_type != ret_val->get_type()->base_type) {
+                ret_val = builder->create_cvt(ret_val, ret_val->get_type(), func_rty);
+            }
             builder->create_ret(ret_val);
         } else {
             // bool for_test = this->get_cur_func()->get_return_type()->base_type == Void;

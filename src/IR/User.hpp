@@ -25,6 +25,7 @@ public:
     // 将值v添加到该使用者的操作数链表上
     void add_operand(Value *v) {
         operands_.push_back(v);
+        v->add_use(this, operands_.size());
     }
     // 得到操作数链表的大小
     unsigned get_num_operand() const {
