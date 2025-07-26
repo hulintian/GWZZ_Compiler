@@ -23,6 +23,9 @@
 #include "pass/transform/LoopInfoPrinter.hpp"
 #include "pass/transform/PredPrinter.hpp"
 #include "pass/transform/LICM.hpp"
+#include "pass/transform/DomFrontierPrinter.hpp"
+#include "pass/transform/PhiPlacementPass.hpp"
+
 /* User Code End: Sasara */
 #include <fstream>
 
@@ -43,31 +46,32 @@ int main(int argc, char** argv) {
     frontend::ASTVisitor av;
     av.visit(tree);
     auto &cu = av.compUnit();
+    std::cout << "[DEBUG] After ASTVisitor, CompUnits has " << cu.children().size() << " children.\n";
     // cu.print(cout, 0);
 
     frontend::Sema sema;
     sema.visit_compUnits(cu);
-    // cu.print(cout, 0);
-
+     cu.print(cout, 0);
+    std::cout << "[DEBUG] After Sema, CompUnits has " << cu.children().size() << " children.\n";
     frontend::CodeGen* cg = new frontend::CodeGen();
     auto m = cg->gen(cu);
     /* User Code Start: Sasara */
     pass::PassManager pm;
     pm.add_module_transform_pass(std::make_unique<pass::HelloWorldPass>());
     //pm.add_module_transform_pass(std::make_unique<pass::DummyTransformPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::DomTreePrinterPass>());
+    //pm.add_function_transform_pass(std::make_unique<pass::DomTreePrinterPass>());
+    //pm.add_function_transform_pass(std::make_unique<pass::DomFrontierPrinterPass>());
+    //m->dump(cout);
+    //pm.add_function_transform_pass(std::make_unique<pass::PhiPlacementPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::AliasTestPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::LoopInfoPrinterPass>());
+    //pm.add_function_transform_pass(std::make_unique<pass::LoopInfoPrinterPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::PredPrinterPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::LICMPass>());
+    //pm.add_function_transform_pass(std::make_unique<pass::LICMPass>());
     cout << "====================Running optimization passes...====================\n";
     pm.run(*m);
     /* User Code End: Sasara */
     cout << "====================The ir of " << input_path << " =======================\n";
     m->dump(cout);
-
-    delete m;
-    delete cg;
 
     return 0;
 }

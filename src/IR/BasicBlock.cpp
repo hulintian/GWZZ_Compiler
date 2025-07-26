@@ -65,7 +65,17 @@ void BasicBlock::add_instr_before_terminator(Instruction* inst) {
     inst->set_parent(this);
     _instrs.insert(insert_pos, inst);
 }
-
+void BasicBlock::add_instr_begin(Instruction* inst) {
+    auto insert_pos = _instrs.begin();
+    while (insert_pos != _instrs.end()) {
+        if (dynamic_cast<PhiInst*>(*insert_pos) == nullptr) {
+            break;
+        }
+        ++insert_pos;
+    }
+    inst->set_parent(this);
+    _instrs.insert(insert_pos, inst);
+}
 //User Code End. Sasara
 
 }

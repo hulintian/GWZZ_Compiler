@@ -11,7 +11,8 @@ enum ScalarType {
     Int = 0,
     Float,
     String,
-    Void
+    Void,
+    Bool
 };
 
 /// define of type 
@@ -101,6 +102,7 @@ inline std::string type_string(Type t) {
         case Int : s = "int" ; break;
         case Float : s = "float" ; break;
         case String : s = "string" ; break;
+        case Bool : s = "bool" ; break;
     }
 
     if(!t.is_array()) return s;
@@ -132,7 +134,9 @@ inline std::string type_llvm_string(Type type, bool no_ptr = false) {
         s = "i32";
     else if(type.base_type == Float)
         s = "float";
-    else
+    else if(type.base_type == Bool) 
+        s = "i1";
+    else 
         s = "i32"; // string
     if (!type.is_array())
         return s;

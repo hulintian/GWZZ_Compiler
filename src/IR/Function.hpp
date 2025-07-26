@@ -179,6 +179,11 @@ public:
     void add_allocas(Instruction* inst) {
         allocas.push_back(inst);
     }
+    // User Code Start .Sasara
+    std::vector<Instruction*> get_allocas()const{
+        return allocas;
+    }
+    // User Code End .Sasara
 
 private:
     CFG* _cfg;

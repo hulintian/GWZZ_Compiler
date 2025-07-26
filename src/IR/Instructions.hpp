@@ -71,13 +71,13 @@ enum BinaryInstType{
     fshr,
 };
 /* User Code End: code space 1 */
-
+// Code Changed .by Sasara
 class AllocaInst : public Instruction {
 public:
-    AllocaInst(Type* ty, std::string name, unsigned alignment, BasicBlock* bb)
+    AllocaInst(Type* pointer_ty, std::string name, unsigned alignment, BasicBlock* bb)
     /* User Code Start: Alloca */
         // 这里的name指的是用alloca从内存中分配到内存的名字，
-    : Instruction(ty, name, bb), _alignment(alignment)
+    : Instruction(pointer_ty, name, bb), _alignment(alignment),_allocated_type(nullptr)
     /* User Code End: Alloca */
     {
         /* User Code Start: Alloca construct function */
@@ -85,7 +85,17 @@ public:
     }
 
     /* User Code Start: Alloca place */
-
+    void set_allocated_type(Type* ty) {
+        this->_allocated_type = ty;
+    }
+    Type* get_allocated_type() const {
+        assert(_allocated_type != nullptr && "Allocated type was not set for AllocaInst!");
+        return _allocated_type;
+    }
+    // 新增的、仅用于调试的 getter，不带断言
+    Type* get_allocated_type_for_debug() const {
+        return _allocated_type;
+    }
     /* User Code End: Alloca place */
     std::string to_str();
     std::string to_llvm();
@@ -100,6 +110,7 @@ public:
      
 private:
     unsigned _alignment;
+    Type* _allocated_type;
 };
 
 class LoadInst : public Instruction {
@@ -348,15 +359,21 @@ private:
 
 class GetElementPtrInst : public Instruction {
 public:
-    GetElementPtrInst(Type* arr_type, Type* base_type, std::vector<Value*> indices, Value* src, std::string _name, BasicBlock* bb)
-    /* User Code Start: GetElementPtr */
-    : Instruction(base_type, _name, bb), _arr_type(arr_type), _indices(std::move(indices)), _src(src)
-    /* User Code End: GetElementPtr */
-    {
-        /* User Code Start: GetElementPtr construct function */
-
-        /* User Code End: GetElementPtr construct function */
-    }
+    GetElementPtrInst(
+        Type* result_type,    // GEP指令的结果类型 (e.g., i32*)
+        Type* arr_type,       // 原始数组类型 (e.g., i32[10]*)
+        Type* base_type,      // 元素标量类型 (e.g., i32)
+        std::vector<Value*> indices, 
+        Value* src, 
+        std::string _name, 
+        BasicBlock* bb
+    )
+        : Instruction(result_type, _name, bb), 
+          _arr_type(arr_type),
+          _base_type(base_type), // 新增一个成员来存储它
+          _indices(std::move(indices)),
+          _src(src)
+    {}
 
     /* User Code Start: GetElementPtr place */
 
@@ -385,6 +402,7 @@ public:
      
 private:
     Type* _arr_type;
+    Type* _base_type;
     std::vector<Value*> _indices;
     Value* _src;
 };
@@ -397,13 +415,20 @@ public:
     /* User Code End: Phi */
     {
         /* User Code Start: Phi construct function */
-
+        assert(_candidate_bbs.size() == _candidate_vars.size() && "PHI node incoming blocks and values count mismatch!");
         /* User Code End: Phi construct function */
     }
+    /* User Code Start. Sasara */
+    PhiInst(Type* ty, std::string& name, BasicBlock* bb)
+        : Instruction(ty, name, bb) {}
 
-    /* User Code Start: Phi place */
-
-    /* User Code End: Phi place */
+    void add_incoming(Value* val, BasicBlock* from_bb) {
+        assert(val != nullptr && "Cannot add null value to PHI node");
+        assert(from_bb != nullptr && "Cannot add null block to PHI node");
+        _candidate_vars.push_back(val);
+        _candidate_bbs.push_back(from_bb);
+    }
+    /* User Code End. Sasara */
     std::string to_str();
     std::string to_llvm();
 

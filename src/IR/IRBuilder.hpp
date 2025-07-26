@@ -17,10 +17,6 @@ class IRBuilder {
 public:
     IRBuilder(Context* ctx) : _cur_ctx(ctx)  {
         /* User Code Start: IRBuilder construct function */
-        auto zo = ConstValue(0);
-        auto fo = ConstValue((float)0.0);
-        zero = new ConstantValue(this->get_base_type(0), "0", zo);
-        fzero = new ConstantValue(this->get_base_type(0), std::to_string((float)0.0), fo);
         /* User Code End: IRBuilder construct function */
     }
 
@@ -29,78 +25,103 @@ public:
         // here is safe
         //
     // a cache for base type
-    std::map<int, Type*> tbt;
-    ConstantValue *zero, *fzero;
+    // std::map<int, Type*> tbt;
+    // ConstantValue *zero, *fzero;
 
-    Type* get_base_type(int base_type) {
-        if(tbt.find(base_type) != tbt.end()) {
-            return tbt[base_type];
-        } else {
-            auto ty = new Type(base_type);
-            tbt[base_type] = ty;
-            return ty;
-        }
-    }
+    // Type* get_base_type(int base_type) {
+    //     if(tbt.find(base_type) != tbt.end()) {
+    //         return tbt[base_type];
+    //     } else {
+    //         auto ty = new Type(base_type);
+    //         tbt[base_type] = ty;
+    //         return ty;
+    //     }
+    // }
     
     
     GlobalValue* create_gv(std::shared_ptr<Var> var, const std::string &sym, bool is_const) {
         auto _cur_module = this->get_cur_module();
+        assert(_cur_module && "Current module is not set in context!");
         bool initialized = var->arr_val || var->val;
-        auto gv = new GlobalValue(_cur_module, sym, var, initialized, is_const); 
+        auto* gv = _cur_ctx->create_global_value(_cur_module, sym, var, initialized, is_const);  
         _cur_module->add_gv(gv);
-        
         return gv;
     }
     
     // create bb with name, before function define
     BasicBlock* create_bb(std::string &name, Function *func) {
-        auto nbb = new BasicBlock(name, func, _cur_ctx->get_tmp_baisc_block_index());
-        assert(!func->find_bb(nbb->get_bb_idx()) && "Already has this BasicBlock");
+        auto nbb = _cur_ctx->create_basic_block(func, name);
+        func->insert_bb(nbb);
         return nbb;
     }
 
     BasicBlock* create_bb() {
-        assert(this->get_cur_func() != nullptr && "Not in function\n");
-        int  idx = this->get_cur_ctx()->get_tmp_baisc_block_index();
+        auto* current_func = _cur_ctx->get_current_function();
+        assert(current_func != nullptr && "Cannot create BasicBlock without a current function set in context!");
+        int idx = _cur_ctx->get_tmp_baisc_block_index(); // 假设有一个只用于命名而不增加内部计数的getter，或者就用主计数器
         auto bb_name = "BB" + std::to_string(idx);
-        auto nbb = new BasicBlock(bb_name, this->get_cur_func(), idx);
-        this->get_cur_func()->insert_bb(nbb);
+        auto* nbb = _cur_ctx->create_basic_block(current_func, bb_name);
+
+        current_func->insert_bb(nbb);
+        
         return nbb;
     }
     
     // This function initially create an entry basic block , if is not lib func
-    Function* create_func(const std::string &name, Type* return_type, std::vector<Type*> args_type, std::vector<std::string> args_name, bool is_lib) {
-        auto _cur_module = this->get_cur_module();
-        assert(!_cur_module->find_function(name) && "Already exists Func ");
-        auto nfunc = new Function(_cur_module, name, return_type, args_type, args_name, is_lib);
-        _cur_module->add_func(nfunc);
+    // Function* create_func(const std::string &name, Type* return_type, std::vector<Type*> args_type, std::vector<std::string> args_name, bool is_lib) {
+    //     auto _cur_module = this->get_cur_module();
+    //     assert(!_cur_module->find_function(name) && "Already exists Func ");
+    //     auto nfunc = new Function(_cur_module, name, return_type, args_type, args_name, is_lib);
+    //     _cur_module->add_func(nfunc);
         
+    //     std::string entry_name = "entry";
+    //     auto entry_bb = create_bb(entry_name, nfunc);
+    //     // set the insert point
+    //     _cur_ctx->set_current_basic_block(entry_bb);
+    //     _cur_ctx->set_current_function(nfunc);
+
+    //     nfunc->set_entry_bb(entry_bb);
+
+    //     //then parse the arguments
+    //     for(int i=0; i<args_type.size(); i++) {
+    //         // create alloca Instructions
+    //         auto var = create_alloca(args_name[i], args_type[i]);
+    //         this->get_cur_func()->add_alias(args_name[i], var);
+    //     }
+
+    //     return nfunc;
+    // }
+    Function* create_func(const std::string &name, Type* return_type, std::vector<Type*> args_type, std::vector<std::string> args_name, bool is_lib) {
+        auto* current_module = _cur_ctx->get_current_module();
+        assert(current_module && "Current module is not set in context!");
+        assert(!current_module->find_function(name) && "Function already exists!");
+        // 将创建任务委托给Context
+        auto* nfunc = _cur_ctx->create_function(current_module, name, return_type, args_type, args_name, is_lib);
+        
+        // 将创建好的Function注册到Module中
+        current_module->add_func(nfunc);
+
         std::string entry_name = "entry";
-        auto entry_bb = create_bb(entry_name, nfunc);
+        // create_bb 也需要被重构，假设它现在调用 context->create_basic_block
+        auto* entry_bb = this->create_bb(entry_name, nfunc);
+        
         // set the insert point
         _cur_ctx->set_current_basic_block(entry_bb);
         _cur_ctx->set_current_function(nfunc);
 
         nfunc->set_entry_bb(entry_bb);
 
-        //then parse the arguments
-        for(int i=0; i<args_type.size(); i++) {
+        // then parse the arguments
+        for(size_t i = 0; i < args_type.size(); i++) {
             // create alloca Instructions
-            auto var = create_alloca(args_name[i], args_type[i]);
-            this->get_cur_func()->add_alias(args_name[i], var);
+            // create_alloca 也已经被重构为使用 context
+            auto* var = this->create_alloca(args_name[i], args_type[i]);
+            nfunc->add_alias(args_name[i], var);
         }
 
         return nfunc;
     }
-
-    ConstantValue* create_const_value(Type* ty, const std::string &name, ConstValue &v) {
-        return new ConstantValue(ty, name, v);
-    }
-    ConstantValue* create_const_value(Type* ty, ConstValue &v) {
-        // std::string temp = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
-        // 常量不用临时变量，直接常量的值to string
-        return new ConstantValue(ty, v.to_string(), v);
-    }
+    //flag
     
 
     IR::Module* get_cur_module() const {
@@ -140,11 +161,17 @@ public:
     }
 
     Instruction* cvt_to_float(Value* v) {
-        return this->create_cvt(v, this->get_base_type(0), this->get_base_type(1));
+    // 调用Context获取唯一的int32和float类型指针
+        Type* int_type = _cur_ctx->get_int32_type();
+        Type* float_type = _cur_ctx->get_float_type();
+        // 假设 create_cvt 也已经被重构为使用 context->create_instruction
+        return this->create_cvt(v, int_type, float_type);
     }
 
     Instruction* cvt_to_int(Value* v) {
-        return this->create_cvt(v, this->get_base_type(1), this->get_base_type(0));
+        Type* int_type = _cur_ctx->get_int32_type();
+        Type* float_type = _cur_ctx->get_float_type();
+        return this->create_cvt(v, float_type, int_type);
     }
 
     // lhs & rhs 类型一致化
@@ -163,10 +190,15 @@ public:
     }
 
     Instruction* create_ne_zero(Value* val) {
-        if(val->get_type()->base_type == Float) {
-            return create_ne(val, this->fzero);
+        if (val->get_type()->base_type == Float) {
+            // 从Context按需获取值为0.0f的浮点常量
+            ConstantValue* fzero = _cur_ctx->get_const_float(0.0f);
+            // 假设 create_ne 也已经被重构
+            return this->create_ne(val, fzero);
         } else {
-            return create_ne(val, this->zero);
+            // 从Context按需获取值为0的整数常量
+            ConstantValue* zero = _cur_ctx->get_const_int(0);
+            return this->create_ne(val, zero);
         }
     }
 
@@ -178,17 +210,28 @@ public:
         this->get_cur_func()->pop_break_continue_point();
     }
 
-    void reg_lib_func(const std::string& name,
-                      Type* return_type,
-                      std::vector<Type*> arg_types,
-                      std::vector<std::string> arg_names
-                      ) {
-        this->get_cur_module()->add_lib_func(new Function(this->get_cur_module(),
-                                                                name,
-                                                                return_type,
-                                                                arg_types,
-                                                                arg_names,
-                                                                true));
+    void reg_lib_func(
+        const std::string& name,
+        Type* return_type,
+        std::vector<Type*> arg_types,
+        std::vector<std::string> arg_names
+    ) {
+        auto* current_module = _cur_ctx->get_current_module();
+        assert(current_module && "Current module is not set in context!");
+
+        // 调用Context的工厂方法来创建Function对象
+        // Context现在拥有了这个对象的内存
+        auto* lib_func = _cur_ctx->create_function(
+            current_module,
+            name,
+            return_type,
+            arg_types,
+            arg_names,
+            true // is_lib = true
+        );
+
+        // 将新创建的库函数注册到Module中
+        current_module->add_lib_func(lib_func);
     }
 
     bool is_jump_instr(IR::Instruction* instr) {
@@ -221,66 +264,93 @@ public:
      
 
      
-    Instruction* create_alloca(
-        /* User Code Start: create_alloca args */
-        std::string name, Type* ty 
-        /* User Code End: create_alloca args */
-    ){
-        /* User Code Start: create_alloca */
-        unsigned alignment = ty->is_ptr() ? 8 : 4;
-        auto inst = new AllocaInst(ty, name, alignment, _cur_ctx->get_current_basic_block());
-        this->get_cur_bb()->add_instr(inst);
-        this->get_cur_func()->add_allocas(inst);
+    Instruction* create_alloca(std::string name, Type* ty) {
+        // ty 是要分配的元素类型, e.g., i32
+        Type* elem_ty = ty;
+        // alloca指令自身的类型是指针类型, e.g., i32*
+        Type* ptr_ty = _cur_ctx->get_pointer_type(elem_ty);
+        
+        BasicBlock* parent_bb = _cur_ctx->get_current_basic_block();
+        assert(parent_bb && "Current BasicBlock is not set in context!");
+        unsigned alignment = _cur_ctx->var_align; // 从context获取对齐值
+
+        auto* inst = _cur_ctx->create_instruction<AllocaInst>(ptr_ty, name, alignment, parent_bb);
+        inst->set_allocated_type(elem_ty); // 设置分配的元素类型
+ 
+        _cur_ctx->get_current_function()->get_entry_bb()->add_instr(inst);
+        _cur_ctx->get_current_function()->add_allocas(inst);
+        
         return inst;
-        /* User Code End: create_alloca */
     }
      
-    Instruction* create_load(
-        /* User Code Start: create_load args */
-        Type* type, Value* src
-        /* User Code End: create_load args */
-    ){
-        /* User Code Start: create_load */
-        unsigned alignment = type->is_ptr() ? 8 : 4;
-        auto name = "%T" + std::to_string(this->_cur_ctx->get_tmp_var());
-        auto inst = new LoadInst(type, src, name, alignment, this->get_cur_bb());
-        this->get_cur_bb()->add_instr(inst);
+    Instruction* create_load(Type* type, Value* src) {
+        BasicBlock* parent_bb = _cur_ctx->get_current_basic_block();
+        assert(parent_bb && "Current BasicBlock is not set in context!");
+        
+        unsigned alignment = type->is_ptr() ? _cur_ctx->ptr_align : _cur_ctx->var_align;
+        auto name = "%T" + std::to_string(_cur_ctx->get_tmp_var());
+        
+        auto* inst = _cur_ctx->create_instruction<LoadInst>(type, src, name, alignment, parent_bb);
+        
+        parent_bb->add_instr(inst);
         return inst;
-        /* User Code End: create_load */
     }
      
-    Instruction* create_store(
-        /* User Code Start: create_store args */
-        Type* type, std::string name, Value* dst, Value* src
-        /* User Code End: create_store args */
-    ){
-        /* User Code Start: create_store */
-        unsigned alignment = type->is_ptr() ? 8 : 4;
-        if(src->get_type()->base_type != dst->get_type()->base_type) {
-            if(dst->get_type()->base_type == 0) {
-                this->cvt_to_int(src);
+    Instruction* create_store(Value* dst, Value* src) {
+        BasicBlock* parent_bb = _cur_ctx->get_current_basic_block();
+        assert(parent_bb && "Current BasicBlock is not set in context!");
+        assert(dst->get_type()->is_ptr() && "Destination of a store must be a pointer!");
+
+        Value* final_src = src;
+        
+        Type* dst_ptr_type = dst->get_type();
+        Type dst_element_type_obj = dst_ptr_type->get_pointer_element_type();
+        Type* src_type = src->get_type();
+        if (src_type->base_type != dst_element_type_obj.base_type) {
+            if (dst_element_type_obj.base_type == Int) {
+                std::cout << "[INFO] Implicitly converting value to Int for Store.\n";
+                final_src = this->cvt_to_int(src);
             } else {
-                this->cvt_to_float(src);
+                std::cout << "[INFO] Implicitly converting value to Float for Store.\n";
+                final_src = this->cvt_to_float(src);
             }
         }
-        auto inst = new StoreInst(type, dst, src, name, alignment, this->get_cur_bb());
-        this->get_cur_bb()->add_instr(inst);
+        Type* void_type = _cur_ctx->get_void_type();
+        unsigned alignment = dst_ptr_type->is_ptr2scalar() ? _cur_ctx->var_align : _cur_ctx->ptr_align;
+
+        auto* inst = _cur_ctx->create_instruction<StoreInst>(
+            void_type,     // Store指令的类型是void
+            dst,           // 目标指针
+            final_src,     // 可能是经过类型转换后的源值
+            "",            // Store指令没有名字
+            alignment,
+            parent_bb
+        );
+        parent_bb->add_instr(inst);
         return inst;
-        /* User Code End: create_store */
+
     }
      
-    Instruction* create_getelementptr(
-        /* User Code Start: create_getelementptr args */
-        Type* arr_type,  std::vector<Value*> indices , Value* src
-        /* User Code End: create_getelementptr args */
-    ){
-        /* User Code Start: create_getelementptr */
-        // llvm是一个维度，一个维度下降下去的，处理，我接口是这么写的，内部偷个懒，因为是静态数组，直接拉成一条（将成一维数组）
-        auto name = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
-        auto instr = new GetElementPtrInst(arr_type, this->get_base_type(arr_type->base_type), indices, src, name, this->get_cur_bb());
-        this->get_cur_bb()->add_instr(instr);
+    Instruction* create_getelementptr(Type* arr_type, std::vector<Value*> indices, Value* src) {
+        BasicBlock* parent_bb = _cur_ctx->get_current_basic_block();
+        assert(parent_bb && "Current BasicBlock is not set in context!");
+
+        Type* base_scalar_type = _cur_ctx->get_type(arr_type->base_type);
+        Type* result_type = _cur_ctx->get_pointer_type(base_scalar_type);
+        auto name = "%T" + std::to_string(_cur_ctx->get_tmp_var());
+
+        auto* instr = _cur_ctx->create_instruction<GetElementPtrInst>(
+            result_type,      
+            arr_type,         
+            base_scalar_type, 
+            indices,
+            src,
+            name,
+            parent_bb
+        );
+        
+        parent_bb->add_instr(instr);
         return instr;
-        /* User Code End: create_getelementptr */
     }
      
     Instruction* create_binary_op(
@@ -289,16 +359,17 @@ public:
         /* User Code End: create_binary_op args */
     ){
         /* User Code Start: create_binary_op */
-        Value* n_lhs, *n_rhs;
+        BasicBlock* parent_bb = _cur_ctx->get_current_basic_block();
+        assert(parent_bb && "Current BasicBlock is not set in context!");
 
-        // let lhs & rhs type same
+        // 类型一致化逻辑保留
+        Value* n_lhs, * n_rhs;
         auto norm = this->check_lhs_rhs_all_float(lhs, rhs);
         n_lhs = norm[0];
         n_rhs = norm[1];
 
-        auto name = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
+        auto name = "%T" + std::to_string(_cur_ctx->get_tmp_var());
         BinaryInstType bit;
-
         auto ty = n_lhs->get_type();
         switch (bop) {
             case BinaryOp::Add :    if(ty->base_type == 1) { bit = BinaryInstType::fadd; } else { bit = BinaryInstType::add; }; break;
@@ -317,10 +388,8 @@ public:
             case BinaryOp::Shl:    if(ty->base_type == 1) { bit = BinaryInstType::shl; } else { bit = BinaryInstType::shl; }; break;
         }
 
-        auto instr = new BinaryInst(ty, bop, n_lhs, n_rhs, name, bit,this->get_cur_bb() );
-
-        this->get_cur_bb()->add_instr(instr);
-
+        auto* instr = _cur_ctx->create_instruction<BinaryInst>(ty, bop, n_lhs, n_rhs, name, bit, parent_bb);
+        parent_bb->add_instr(instr);
         return instr;
         /* User Code End: create_binary_op */
     }
@@ -583,9 +652,13 @@ public:
         /* User Code End: create_br args */
     ){
         /* User Code Start: create_br */
-        auto instr = new BranchInst(this->get_base_type(0),  this->get_cur_bb(), dst);
-        this->get_cur_bb()->add_instr(instr);
-        return instr;
+        BasicBlock* parent_bb = _cur_ctx->get_current_basic_block();
+        assert(parent_bb && "Current BasicBlock is not set in context!");
+        Type* void_type = _cur_ctx->get_void_type();
+    
+        auto* inst = _cur_ctx->create_instruction<BranchInst>(void_type, parent_bb, dst);
+        parent_bb->add_instr(inst);
+        return inst;
         /* User Code End: create_br */
     }
      
@@ -595,9 +668,14 @@ public:
         /* User Code End: create_cond_br args */
     ){
         /* User Code Start: create_cond_br */
-        auto instr = new CondBranchInst(this->get_base_type(0), cond, this->get_cur_bb(), true_bb, false_bb);
-        this->get_cur_bb()->add_instr(instr);
-        return instr;
+        BasicBlock* parent_bb = _cur_ctx->get_current_basic_block();
+        assert(parent_bb && "Current BasicBlock is not set in context!");
+        Type* void_type = _cur_ctx->get_void_type();
+
+        auto* inst = _cur_ctx->create_instruction<CondBranchInst>(void_type, cond, parent_bb, true_bb, false_bb);
+        
+        parent_bb->add_instr(inst);
+        return inst;
         /* User Code End: create_cond_br */
     }
      
@@ -607,9 +685,13 @@ public:
         /* User Code End: create_call args */
     ){
         /* User Code Start: create_call */
-        auto name = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
-        auto inst = new CallInst(func, args, name, this->get_cur_bb());
-        this->get_cur_bb()->add_instr(inst);
+        BasicBlock* parent_bb = _cur_ctx->get_current_basic_block();
+        assert(parent_bb && "Current BasicBlock is not set in context!");
+        auto name = "%T" + std::to_string(_cur_ctx->get_tmp_var());
+    
+        auto* inst = _cur_ctx->create_instruction<CallInst>(func, args, name, parent_bb);
+        
+        parent_bb->add_instr(inst);
         return inst;
         /* User Code End: create_call */
     }
@@ -620,19 +702,31 @@ public:
         /* User Code End: create_ret args */
     ){
         /* User Code Start: create_ret */
-        auto instr = new ReturnInst(ret_val, "", this->get_cur_bb());
-        this->get_cur_bb()->add_instr(instr);
+        BasicBlock* parent_bb = _cur_ctx->get_current_basic_block();
+        assert(parent_bb && "Current BasicBlock is not set in context!");
+        // ReturnInst 的类型取决于它是否有返回值
+        Type* ret_type = ret_val ? ret_val->get_type() : _cur_ctx->get_void_type();
+        
+        auto* instr = _cur_ctx->create_instruction<ReturnInst>(ret_val, "", parent_bb);
+        
+        parent_bb->add_instr(instr);
         return instr;
         /* User Code End: create_ret */
     }
      
     Instruction* create_phi(
         /* User Code Start: create_phi args */
-
+        Type* type
         /* User Code End: create_phi args */
     ){
         /* User Code Start: create_phi */
-        return nullptr;
+        BasicBlock* parent_bb = _cur_ctx->get_current_basic_block();
+        assert(parent_bb && "Cannot create PHI node without a current basic block.");
+        auto name = "%T" + std::to_string(_cur_ctx->get_tmp_var());
+        auto* instr = _cur_ctx->create_instruction<PhiInst>(type, name, parent_bb);
+        // PHI指令必须放在块的开头
+        parent_bb->add_instr_begin(instr);
+        return instr;
         /* User Code End: create_phi */
     }
      
@@ -642,15 +736,18 @@ public:
         /* User Code End: create_cvt args */
     ){
         /* User Code Start: create_cvt */
-        assert(!from->is_array() && !to->is_array() && "Can't cvt the array type\n");
-        if(from->base_type == to->base_type) {
-            return static_cast<Instruction*>(v);
+        assert(!from->is_array() && !to->is_array() && "Cannot convert array types.");
+        if (*from == *to) {
+            if (auto* inst = dynamic_cast<Instruction*>(v)) {
+                return inst;
+            }
+            // 如果v不是指令，不能直接返回。这是一个逻辑漏洞，但我们暂时保留。
         }
-
-        auto name = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
-        auto instr = new ConvertInst(v, from, to, name, this->get_cur_bb());
-        this->get_cur_bb()->add_instr(instr);
-
+        BasicBlock* parent_bb = _cur_ctx->get_current_basic_block();
+        assert(parent_bb && "Current BasicBlock is not set in context!");
+        auto name = "%T" + std::to_string(_cur_ctx->get_tmp_var());
+        auto* instr = _cur_ctx->create_instruction<ConvertInst>(v, from, to, name, parent_bb);
+        parent_bb->add_instr(instr);
         return instr;
         /* User Code End: create_cvt */
     }

@@ -1,0 +1,39 @@
+int work_func() {
+  int a;
+  int x;
+  int y;
+
+  // Block 1 (B1): entry
+  a = 0;
+  x = 1;
+  y = 0;
+  // 控制流转向 B2
+
+  // Block 2 (B2): loop.header
+  while (a < 100) { 
+    // 控制流可能转向 B3 (循环体) 或 B6 (循环外)
+
+    // Block 3 (B3): loop.body (if.cond)
+    y = y + 1; 
+    if (a > 50) {
+      // 控制流可能转向 B4 (if.then) 或 B5 (if.end)
+
+      // Block 4 (B4): if.then
+      x = 2;
+      // 控制流转向 B5
+    }
+
+    // Block 5 (B5): if.end (循环体剩余部分)
+    a = a + 1;
+    // 控制流通过回边，无条件跳回 B2
+  }
+
+  // Block 6 (B6): loop.exit
+  return x + y;
+}
+
+int main() {
+  int result;
+  result = work_func();
+  return 0; 
+}

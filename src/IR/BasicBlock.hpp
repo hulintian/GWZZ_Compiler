@@ -31,6 +31,8 @@ public:
     void remove_instr(Instruction* inst);
     // 在基本块的终结指令之前，插入指令。
     void add_instr_before_terminator(Instruction* inst);
+    // 在基本块头插入指令
+    void add_instr_begin(Instruction* inst);
     //User Code End. Sasara
     void add_instr(Instruction* i) {
         this->get_intrs().push_back(i);

@@ -215,11 +215,16 @@ std::string GetElementPtrInst::to_llvm() {
 
 // ======================= End GetElementPtr =======================
 
-// ======================= Start Phi =======================
+// ======================= Start Phi .By Sasara=======================
 
 std::string PhiInst::to_str() {
     /* User Code Start: Phi::to_str */
-    return "Phi";
+    std::string str = this->get_name() + " = Phi " + type_string(*this->get_type());
+    for (size_t i = 0; i < _candidate_bbs.size(); ++i) {
+        str += (i == 0 ? " " : ", ");
+        str += "[ " + _candidate_vars[i]->get_name() + ", %" + _candidate_bbs[i]->get_name() + " ]";
+    }
+    return str;
     /* User Code End: Phi::to_str */
 }
 
@@ -229,7 +234,7 @@ std::string PhiInst::to_llvm() {
     /* User Code End: Phi::to_llvm */
 }
 
-// ======================= End Phi =======================
+// ======================= End Phi .By Sasara=======================
 
 // ======================= Start CondBranch =======================
 
