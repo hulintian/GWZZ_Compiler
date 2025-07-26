@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "IR/BasicBlock.hpp"
+// #include "IR/Instructions.hpp"
 #include "IR/Value.hpp"
 #include "common/type.hpp"
 #include <cassert>
@@ -10,6 +11,7 @@
 #include <set>
 #include <ostream>
 #include <stack>
+#include <string>
 #include <vector>
 namespace IR {
 
@@ -28,6 +30,7 @@ public:
 
     void insert_bb(BasicBlock* bb) {
         this->_bbs.push_back(bb);
+        idx2bb[bb->get_bb_idx()] = bb;
     }
     
     void dump(std::ostream &out) ;
@@ -49,6 +52,8 @@ public:
     std::string get_func_name() const {
         return _func_name;
     }
+
+    std::vector<std::string> get_func_p_names() { return _arg_names; }
 
     bool is_lib() const {
         return _is_lib;
@@ -149,6 +154,10 @@ public:
     void add_allocas(Instruction* inst) {
         allocas.push_back(inst);
     }
+
+    std::list<BasicBlock*>& get_bbs() { return this->_cfg->_bbs; }
+
+    std::vector<Instruction*> get_allocas() { return allocas; }
 
 private:
     CFG* _cfg;
