@@ -1,3 +1,5 @@
+#include "backend/MModule.hpp"
+#include "backend/gen_asm.hpp"
 #include "frontend/codegen.hpp"
 #include "grammar/Sysy22Lexer.h"
 #include "grammar/Sysy22Parser.h"
@@ -43,6 +45,12 @@ int main(int argc, char** argv) {
     auto m = cg->gen(cu);
     cout << "====================The ir of " << input_path << " =======================\n";
     m->dump(cout);
+
+    cout << "====================The asm of " << input_path << " =======================\n";
+    backend::ASMGen* asmg = new backend::ASMGen();
+    backend::MachineModule *mm = asmg->translate(m);
+
+    mm->dump_asm(cout);
 
     return 0;
 }

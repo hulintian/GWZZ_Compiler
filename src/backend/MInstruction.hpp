@@ -204,6 +204,8 @@ public:
 
     /* User Code Start: IArith_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: IArith_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -286,6 +288,8 @@ public:
     }
 
     /* User Code Start: IArithIMM_Inst methods */
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
 
     /* User Code End: IArithIMM_Inst methods */
     RiscvReg::Reg _rd;
@@ -333,6 +337,8 @@ public:
     }
 
     /* User Code Start: IArithU_Inst methods */
+    std::vector<RiscvReg::Reg> get_srcs() override { return { }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
 
     /* User Code End: IArithU_Inst methods */
     RiscvReg::Reg _rd;
@@ -365,41 +371,25 @@ public:
             case MachineInstrType::LB : 
                 oss << "lb"
                     << " " << _rd<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs1  <<  ")";
-                    } else {
-                        oss << _rs1;
-                    }
                 ; 
                 break;
             case MachineInstrType::LH : 
                 oss << "lh"
                     << " " << _rd<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs1  <<  ")";
-                    } else {
-                        oss << _rs1;
-                    }
                 ; 
                 break;
             case MachineInstrType::LW : 
                 oss << "lw"
                     << " " << _rd<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs1  <<  ")";
-                    } else {
-                        oss << _rs1;
-                    }
                 ; 
                 break;
             case MachineInstrType::LD : 
                 oss << "ld"
                     << " " << _rd<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs1  <<  ")";
-                    } else {
-                        oss << _rs1;
-                    }
                 ; 
                 break;default : break;
         }
@@ -408,6 +398,8 @@ public:
 
     /* User Code Start: Load_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: Load_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -449,6 +441,8 @@ public:
 
     /* User Code Start: LLA_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: LLA_Inst methods */
     RiscvReg::Reg _rd;
     std::string _symbol;
@@ -474,47 +468,32 @@ public:
 
     std::vector<RiscvReg::Reg*> get_regs() override { return { &_rs1, &_rs2 }; }
 
+
     std::string to_asm() override { 
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::SB : 
                 oss << "sb"
                     << " " << _rs1<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs2  <<  ")";
-                    } else {
-                        oss << _rs2;
-                    }
                 ; 
                 break;
             case MachineInstrType::SH : 
                 oss << "sh"
                     << " " << _rs1<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs2  <<  ")";
-                    } else {
-                        oss << _rs2;
-                    }
                 ; 
                 break;
             case MachineInstrType::SW : 
                 oss << "sw"
                     << " " << _rs1<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs2  <<  ")";
-                    } else {
-                        oss << _rs2;
-                    }
                 ; 
                 break;
             case MachineInstrType::SD : 
                 oss << "sd"
                     << " " << _rs1<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs2  <<  ")";
-                    } else {
-                        oss << _rs2;
-                    }
                 ; 
                 break;default : break;
         }
@@ -523,6 +502,8 @@ public:
 
     /* User Code Start: Store_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { }; }
     /* User Code End: Store_Inst methods */
     RiscvReg::Reg _rs1;
     RiscvReg::Reg _rs2;
@@ -568,6 +549,8 @@ public:
 
     /* User Code Start: CondSet_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: CondSet_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -623,6 +606,8 @@ public:
 
     /* User Code Start: CondSetU_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: CondSetU_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -669,6 +654,8 @@ public:
 
     /* User Code Start: CondSetIMM_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: CondSetIMM_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -764,6 +751,8 @@ public:
 
     /* User Code Start: Branch_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { }; }
     /* User Code End: Branch_Inst methods */
     RiscvReg::Reg _rs1;
     RiscvReg::Reg _rs2;
@@ -835,6 +824,8 @@ public:
 
     /* User Code Start: BranchU_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return {  }; }
     /* User Code End: BranchU_Inst methods */
     RiscvReg::Reg _rs1;
     RiscvReg::Reg _rs2;
@@ -875,6 +866,8 @@ public:
 
     /* User Code Start: Jump_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return {  }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return {  }; }
     /* User Code End: Jump_Inst methods */
     MachineBasicBlock* _dst_bb;
 };
@@ -919,6 +912,8 @@ public:
     }
 
     /* User Code Start: JAL_Inst methods */
+    std::vector<RiscvReg::Reg> get_srcs() override { return {  }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
 
     /* User Code End: JAL_Inst methods */
     RiscvReg::Reg _rd;
@@ -958,6 +953,8 @@ public:
     }
 
     /* User Code Start: Call_Inst methods */
+    std::vector<RiscvReg::Reg> get_srcs() override { return {  }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return {  }; }
 
     /* User Code End: Call_Inst methods */
     MachineFunction* _func;
@@ -996,6 +993,8 @@ public:
 
     /* User Code Start: Return_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return {  }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return {  }; }
     /* User Code End: Return_Inst methods */
 };
 // Multiply
@@ -1067,6 +1066,8 @@ public:
     }
 
     /* User Code Start: Multiply_Inst methods */
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
 
     /* User Code End: Multiply_Inst methods */
     RiscvReg::Reg _rd;
@@ -1148,6 +1149,8 @@ public:
 
     /* User Code Start: FArith_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: FArith_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1198,6 +1201,8 @@ public:
 
     /* User Code Start: FArithU_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: FArithU_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1247,6 +1252,8 @@ public:
 
     /* User Code Start: FCMP_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: FCMP_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1302,6 +1309,8 @@ public:
 
     /* User Code Start: FArithT_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2, _rs3 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: FArithT_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1335,11 +1344,7 @@ public:
             case MachineInstrType::FLW : 
                 oss << "flw"
                     << " " << _rd<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs1  <<  ")";
-                    } else {
-                        oss << _rs1;
-                    }
                 ; 
                 break;default : break;
         }
@@ -1348,6 +1353,8 @@ public:
 
     /* User Code Start: FLoad_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: FLoad_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1393,6 +1400,8 @@ public:
 
     /* User Code Start: FCVT_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: FCVT_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1424,31 +1433,19 @@ public:
             case MachineInstrType::FMV_S : 
                 oss << "fmv.s"
                     << " " << _rd<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs1  <<  ")";
-                    } else {
-                        oss << _rs1;
-                    }
                 ; 
                 break;
             case MachineInstrType::FMV_W_X : 
                 oss << "fmv.w.x"
                     << " " << _rd<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs1  <<  ")";
-                    } else {
-                        oss << _rs1;
-                    }
                 ; 
                 break;
             case MachineInstrType::FMV_X_W : 
                 oss << "fmv.x.w"
                     << " " << _rd<< ", ";
-                    if(_offset != 0) {
                         oss << _offset << "(" << _rs1  <<  ")";
-                    } else {
-                        oss << _rs1;
-                    }
                 ; 
                 break;default : break;
         }
@@ -1457,6 +1454,8 @@ public:
 
     /* User Code Start: FMV_Inst methods */
 
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
     /* User Code End: FMV_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;

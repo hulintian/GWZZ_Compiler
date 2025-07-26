@@ -11,7 +11,6 @@
 namespace IR {
 
 class BasicBlock;
-class Function;
 class Instruction : public User {
 public :
     Instruction(Type* t, std::string name, BasicBlock* bb) : User(t, name), parent(bb){}
@@ -73,6 +72,7 @@ public:
     /* User Code End: Alloca */
     {
         /* User Code Start: Alloca construct function */
+        
         /* User Code End: Alloca construct function */
     }
 
@@ -102,7 +102,7 @@ public:
     /* User Code End: Load */
     {
         /* User Code Start: Load construct function */
-
+        this->add_operand(src);
         /* User Code End: Load construct function */
     }
 
@@ -138,7 +138,8 @@ public:
     /* User Code End: Store */
     {
         /* User Code Start: Store construct function */
-
+        this->add_operand(dst);
+        this->add_operand(src);
         /* User Code End: Store construct function */
     }
 
@@ -181,7 +182,8 @@ public:
     /* User Code End: Binary */
     {
         /* User Code Start: Binary construct function */
-
+        this->add_operand(lhs);
+        this->add_operand(rhs);
         /* User Code End: Binary construct function */
     }
 
@@ -244,7 +246,7 @@ public:
         /* User Code End: Convert */
     {
         /* User Code Start: Convert construct function */
-
+        this->add_operand(src);
         /* User Code End: Convert construct function */
     }
 
@@ -288,7 +290,9 @@ public:
     /* User Code End: Call */
     {
         /* User Code Start: Call construct function */
-
+        for(auto a : args) {
+            this->add_operand(a);
+        } 
         /* User Code End: Call construct function */
     }
 
@@ -324,7 +328,7 @@ public:
     /* User Code End: Return */
     {
         /* User Code Start: Return construct function */
-
+        if(ret_val) this->add_operand(ret_val);
         /* User Code End: Return construct function */
     }
 
@@ -353,7 +357,10 @@ public:
     /* User Code End: GetElementPtr */
     {
         /* User Code Start: GetElementPtr construct function */
-
+        this->add_operand(src);
+        for(auto i : indices) {
+            this->add_operand(i);
+        }
         /* User Code End: GetElementPtr construct function */
     }
 
@@ -432,7 +439,7 @@ public:
     /* User Code End: CondBranch */
     {
         /* User Code Start: CondBranch construct function */
-
+        this->add_operand(cond);
         /* User Code End: CondBranch construct function */
     }
 

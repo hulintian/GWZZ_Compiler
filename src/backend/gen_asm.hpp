@@ -7,6 +7,7 @@
 #include "backend/MFunction.hpp"
 #include "backend/MModule.hpp"
 #include "backend/miscs.hpp"
+#include "backend/ASMBuilder.hpp"
 
 namespace backend {
 
@@ -16,6 +17,7 @@ public:
     ASMGen() {
         MachineModule* mm = new MachineModule();
         mctx = new MCtx(mm);
+        abuilder = new ASMBuilder(mctx);
     }
 
     // TODO translate func bb instr
@@ -33,11 +35,12 @@ public:
 
     void translate_gv(IR::GlobalValue);
     void translate_func(IR::Function* func);
+    void gen_prolo_epil();
     void translate_bb(IR::BasicBlock* bb);
 
-    void gen_func_prologue_and_epilgue();
 private:
     MCtx* mctx;
+    ASMBuilder* abuilder;
 };
 
 }

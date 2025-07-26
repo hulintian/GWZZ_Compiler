@@ -49,6 +49,8 @@ std::optional<BrInst> get_br_instr(Instruction* instr) {
 }
 
 void CFG::regen_cfg() {
+    // update bb2idx 
+
     // start from entry bb 
     BasicBlock* bb = this->entry_bb;
     std::stack<BasicBlock*> stk;

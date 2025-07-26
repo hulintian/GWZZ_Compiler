@@ -1,6 +1,10 @@
 #pragma once 
+#include "backend/MFunction.hpp"
 #include "backend/MInstruction.hpp"
 #include "backend/miscs.hpp"
+#include "common/type.hpp"
+#include <string>
+#include <vector>
 
 namespace backend {
 class ASMBuilder {
@@ -8,7 +12,23 @@ public:
     ASMBuilder(MCtx* ctx) : mctx(ctx) {}
 
     /* User Code Start: code space 1 */
+        MachineFunction* get_cur_func() { return this->mctx->get_function(); }    
 
+        MachineFunction* create_m_func() { 
+        }
+
+        MachineBasicBlock* create_m_basicblock(int _idx) {
+            auto nmbb = new MachineBasicBlock(_idx);
+            assert(this->get_cur_func() != nullptr && "Not in Func scope");
+            this->get_cur_func()->add_mbb(nmbb);
+            return nmbb;
+        }
+
+        MachineFunction* create_m_func( std::string func_name, Type* ret_ty, std::vector<Type*> tys, std::vector<std::string> agsn ) {
+            auto nmfunc = new MachineFunction(this->mctx->get_module(), func_name, ret_ty, tys, agsn);
+            this->mctx->get_module()->addfuncs(nmfunc);
+            return nmfunc;
+        }
     /* User Code End: code space 1 */ 
     // IArith
         MachineInstr* create_ADD(
@@ -483,11 +503,13 @@ public:
     // Jump
         MachineInstr* create_J(
         /* User Code Start: j args */
-
+        MachineBasicBlock* dst_bb
         /* User Code End: j args */
         ) {
         /* User Code Start: j func */
-            return nullptr;
+            auto jump_instr = new JumpInst(MachineInstrType::J, mctx->get_basic_block(), dst_bb);
+            this->mctx->get_basic_block()->insert_instr(jump_instr);
+            return jump_instr;
         /* User Code End: j func */
         } 
     // JAL
