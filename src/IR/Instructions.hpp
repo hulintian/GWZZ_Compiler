@@ -11,6 +11,7 @@
 namespace IR {
 
 class BasicBlock;
+class Function;
 class Instruction : public User {
 public :
     Instruction(Type* t, std::string name, BasicBlock* bb) : User(t, name), parent(bb){}
