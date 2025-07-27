@@ -41,7 +41,13 @@ const std::vector<BasicBlock*>& BasicBlock::get_successors() const{
     return successors_cache;
 }
 const std::vector<BasicBlock*>& BasicBlock::get_predecessors() const{
-        return _parent->get_cfg()->get_predecessors(this);
+    return _parent->get_cfg()->get_predecessors(this);
+}
+void BasicBlock::remove_predecessor(BasicBlock* bb){
+    _parent->get_cfg()->rm_predecessor(this,bb);
+}
+void BasicBlock::add_predecessor(BasicBlock* bb){
+    _parent->get_cfg()->add_predecessor(this,bb);
 }
 void BasicBlock::remove_instr(Instruction* inst) {
     //迭代器find
