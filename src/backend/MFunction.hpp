@@ -40,6 +40,16 @@ public:
 
     std::map<Value*, RiscvReg::Reg> v2r;
 
+    bool has_reg(Value* v) { return v2r.find(v) != v2r.end(); }
+    void add_reg_mp(Value* v, RiscvReg::Reg reg) {
+        assert(!has_reg(v) && "Value already has register mapping");
+        v2r[v] = reg;
+    }
+    RiscvReg::Reg get_reg(Value* v) {
+        assert(has_reg(v) && "Value has no register mapping");
+        return v2r[v];
+    }
+
     MachineFunction(MachineModule* mm, std::string name, Type* ret_ty, std::vector<Type*> args_types, std::vector<std::string> arg_names) 
     : _parent(mm), _name(name), _ret_ty(ret_ty),arg_types(std::move(args_types)), args_name(std::move(arg_names))
     {}
@@ -56,8 +66,8 @@ public:
     MachineBasicBlock* get_mbb(int idx) ;
     void add_mbb(MachineBasicBlock* mbb);
 
-    void set_prologue_bb(MachineBasicBlock* pbb) { this->prologue_bb = pbb; }
-    void set_epilogue_bb(MachineBasicBlock* ebb) { this->epilogue_bb = ebb; }
+    void set_prologue_bb(MachineBasicBlock* pbb);
+    void set_epilogue_bb(MachineBasicBlock* ebb);
 
     int32_t get_stack_size() {return stack_size;}
     void set_stack_size(int32_t stks) { this->stack_size = stks; }

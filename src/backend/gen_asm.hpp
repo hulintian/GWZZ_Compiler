@@ -8,6 +8,7 @@
 #include "backend/MModule.hpp"
 #include "backend/miscs.hpp"
 #include "backend/ASMBuilder.hpp"
+#include "common/regarch.hpp"
 
 namespace backend {
 
@@ -18,11 +19,21 @@ public:
         MachineModule* mm = new MachineModule();
         mctx = new MCtx(mm);
         abuilder = new ASMBuilder(mctx);
+
     }
 
     // TODO translate func bb instr
     
     MachineModule* translate(IR::Module* m) {
+        // calculate the bbs 
+        int cnt = 0;
+        for(auto f : m->get_funcs()) {
+            cnt += f->get_bbs().size();
+        }
+        n_bb_idxs = cnt+1;
+
+        // gv 直接搬运过来
+        this->mctx->get_module()->global_items = std::move(m->get_gvs());
 
         for(auto func : m->get_funcs()) {
             translate_func(func);
@@ -38,9 +49,15 @@ public:
     void gen_prolo_epil();
     void translate_bb(IR::BasicBlock* bb);
 
+    int get_new_bb_idx() { return n_bb_idxs++; }
+    int get_new_vreg_idx() { return vreg_idx++; }
+
+
 private:
     MCtx* mctx;
     ASMBuilder* abuilder;
+    int n_bb_idxs;
+    int vreg_idx = 0;
 };
 
 }

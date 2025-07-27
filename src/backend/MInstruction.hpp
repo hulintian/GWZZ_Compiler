@@ -34,7 +34,10 @@ enum MachineInstrType {
     LW,
     LD, 
 // LLA
-    LLA, 
+    LLA,
+    LA, 
+// LI
+    LI, 
 // Store
     SB,
     SH,
@@ -434,6 +437,12 @@ public:
                     << " " << _rd
                         << ", "<<  _symbol
                 ; 
+                break;
+            case MachineInstrType::LA : 
+                oss << "la"
+                    << " " << _rd
+                        << ", "<<  _symbol
+                ; 
                 break;default : break;
         }
         return oss.str();
@@ -446,6 +455,47 @@ public:
     /* User Code End: LLA_Inst methods */
     RiscvReg::Reg _rd;
     std::string _symbol;
+};
+// LI
+
+class LIInst : public MachineInstr {
+public:
+    LIInst( MachineInstrType mty, MachineBasicBlock* p, RiscvReg::Reg rd ,int imm
+        /* User Code Start: other LI args */
+
+        /* User Code End: other LI args */
+    ) : MachineInstr(mty, p), _rd(rd) , _imm(imm)
+        /* User Code Start: other LI init construct */
+
+        /* User Code End: other LI init construct */
+
+    {
+        /* User Code Start: LIInst construct function */
+
+        /* User Code End: LI_Inst construct function */
+    }
+
+    std::vector<RiscvReg::Reg*> get_regs() override { return { &_rd }; }
+
+    std::string to_asm() override { 
+        std::ostringstream oss; 
+        switch(this->mity) {
+            case MachineInstrType::LI : 
+                oss << "li"
+                    << " " << _rd
+                        << ", "<<  _imm
+                ; 
+                break;default : break;
+        }
+        return oss.str();
+    }
+
+    /* User Code Start: LI_Inst methods */
+    std::vector<RiscvReg::Reg> get_srcs() override { return { }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    /* User Code End: LI_Inst methods */
+    RiscvReg::Reg _rd;
+    int _imm;
 };
 // Store
 
@@ -467,7 +517,6 @@ public:
     }
 
     std::vector<RiscvReg::Reg*> get_regs() override { return { &_rs1, &_rs2 }; }
-
 
     std::string to_asm() override { 
         std::ostringstream oss; 

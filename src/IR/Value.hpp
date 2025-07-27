@@ -15,7 +15,7 @@ struct Use {
 class Value {
 public:
     Value(Type *t, const std::string &name) : _type(t), _name(name) {}
-    ~Value() = default;
+    virtual ~Value() = default;
     Type *get_type() const { return _type; };
     std::string get_name() { return _name; }
     std::list<Use> &get_use_list() { return _use_list; }
@@ -33,7 +33,7 @@ public:
 private:
     Type *_type;
     std::string _name;
-    int idx;
+    // int idx;
     std::list<Use> _use_list;
 };
 
