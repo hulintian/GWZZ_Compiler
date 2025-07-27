@@ -8,7 +8,7 @@ namespace backend {
 void MachineBasicBlock::dump_asm(std::ostream& out) {
     out << bb_label << ": \n";
     for(auto i : m_instrs) {
-        out << i->to_asm() << "\n";
+        out << "    " << i->to_asm() << "\n";
     }
     out << "\n";
 }

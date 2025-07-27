@@ -16,6 +16,17 @@ MachineBasicBlock* MachineFunction::get_mbb(int idx) {
     return this->idx_bb_mp[idx];
 }
 
+void MachineFunction::set_prologue_bb(MachineBasicBlock* mbb) {
+    assert(!this->has_mbb(mbb->get_m_bb_idx()));
+    this->prologue_bb = mbb;
+    idx_bb_mp[mbb->get_m_bb_idx()] = mbb;
+}
+void MachineFunction::set_epilogue_bb(MachineBasicBlock* mbb) {
+    assert(!this->has_mbb(mbb->get_m_bb_idx()));
+    this->epilogue_bb = mbb;
+    idx_bb_mp[mbb->get_m_bb_idx()] = mbb;
+}
+
 void MachineFunction::dump_asm(std::ostream& out) {
     out << this->_name << ": \n";
     this->prologue_bb->dump_asm(out);

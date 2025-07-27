@@ -451,7 +451,7 @@ Value* CodeGen::gen_expr(const ast::Expr* expr) {
             case UnaryOp::Add: return gen_expr(*od) ; break;
             case UnaryOp::Sub:  builder->create_sub(builder->create_const_value(builder->get_base_type(Int), *zero), this->gen_expr(*od)) ; break;
             // wait to impl when deal with cond expr, cmp with 0, this should return i1 type
-            case UnaryOp::Not:  builder->create_eq(builder->create_const_value(builder->get_base_type(Int), *zero), this->gen_expr(*od)) ; break;
+            case UnaryOp::Not:  builder->create_ne(builder->create_const_value(builder->get_base_type(Int), *zero), this->gen_expr(*od)) ; break;
         }
         return nullptr; // should never go here
     } else if( auto call = dynamic_cast<const ast::Call*>(expr)) {
