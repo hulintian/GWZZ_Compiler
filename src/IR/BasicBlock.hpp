@@ -28,6 +28,8 @@ public:
     Instruction* get_terminator() const;
     const std::vector<BasicBlock*>& get_successors() const;
     const std::vector<BasicBlock*>& get_predecessors() const;
+    void remove_predecessor(BasicBlock* bb);
+    void add_predecessor(BasicBlock* bb);
     void remove_instr(Instruction* inst);
     // 在基本块的终结指令之前，插入指令。
     void add_instr_before_terminator(Instruction* inst);

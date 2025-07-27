@@ -23,6 +23,8 @@
 #include "pass/transform/LoopInfoPrinter.hpp"
 #include "pass/transform/PredPrinter.hpp"
 #include "pass/transform/LICM.hpp"
+#include "pass/transform/DomFrontierPrinter.hpp"
+#include "pass/transform/CFGSimplify.hpp"
 /* User Code End: Sasara */
 #include <fstream>
 
@@ -55,11 +57,13 @@ int main(int argc, char** argv) {
     pass::PassManager pm;
     pm.add_module_transform_pass(std::make_unique<pass::HelloWorldPass>());
     //pm.add_module_transform_pass(std::make_unique<pass::DummyTransformPass>());
+    pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
     pm.add_function_transform_pass(std::make_unique<pass::DomTreePrinterPass>());
+    pm.add_function_transform_pass(std::make_unique<pass::DomFrontierPrinterPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::AliasTestPass>());
     pm.add_function_transform_pass(std::make_unique<pass::LoopInfoPrinterPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::PredPrinterPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::LICMPass>());
+    //pm.add_function_transform_pass(std::make_unique<pass::LICMPass>());
     cout << "====================Running optimization passes...====================\n";
     pm.run(*m);
     /* User Code End: Sasara */

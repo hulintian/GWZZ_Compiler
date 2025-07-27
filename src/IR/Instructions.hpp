@@ -20,6 +20,12 @@ public :
     virtual std::string to_llvm() = 0;
     //User Code Start. Sasara
     //偷个懒。这个写法简单，但依赖IR正确性。有更健壮的写法。
+    virtual bool is_unconditional_br() const {
+        return false; // 基类默认返回 false
+    }
+    virtual void replace_successor(BasicBlock* old_succ, BasicBlock* new_succ) {
+        assert(false && "replace_successor called on a terminator with no successors!");
+    }
     bool is_terminator(){
         return this->get_parent()->get_terminator()==this;
     }
@@ -438,7 +444,21 @@ public:
     }
 
     /* User Code Start: CondBranch place */
-
+    // by .Sasara
+    void replace_successor(BasicBlock* old_succ, BasicBlock* new_succ){
+        bool replaced = false;
+        if (_true_bb == old_succ) {
+            _true_bb = new_succ;
+            replaced = true;
+        }
+        if (_false_bb == old_succ) {
+            _false_bb = new_succ;
+            replaced = true;
+        }
+        if(!replaced){
+            assert(false && "Cannot replace a successor that doesn't exist!");
+        }
+    }
     /* User Code End: CondBranch place */
     std::string to_str();
     std::string to_llvm();
@@ -481,7 +501,18 @@ public:
     }
 
     /* User Code Start: Branch place */
-
+    // by .Sasara
+    bool is_unconditional_br() const override{
+        return true; // 基类默认返回 false
+    }
+    void set_target(BasicBlock* new_target) { _dst_bb = new_target; }
+    void replace_successor(BasicBlock* old_succ, BasicBlock* new_succ) {
+        if (_dst_bb == old_succ) {
+            set_target(new_succ);
+        }else{
+            assert(false && "Cannot replace a successor that doesn't exist!");
+        }
+    }
     /* User Code End: Branch place */
     std::string to_str();
     std::string to_llvm();
