@@ -41,7 +41,14 @@ InstrGroups:
     Operands: [rd]
     otherargs: 
       - {type: std::string, name: symbol}
-    Instructions: [lla]
+    Instructions: [lla, la]
+
+  - Category: LI
+    Description: LoadLocalAddress
+    Operands: [rd]
+    otherargs: 
+      - {type: int, name: imm}
+    Instructions: [li]
 
   - Category: Store 
     Description: Store Instruction
@@ -143,7 +150,7 @@ InstrGroups:
     Instructions: [flw]
 
   - Category: FCVT
-    Description: 浮点向字转换
+    Description: 浮点向字转换, single to word, word to single
     Operands: [rd, rs1]
     Instructions: [fcvt_s_w, fcvt_w_s]
 

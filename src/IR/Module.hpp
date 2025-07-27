@@ -47,6 +47,10 @@ public:
         return nullptr;
     }
 
+    std::vector<GlobalValue*>& get_gvs()  {
+        return _gvs;
+     }
+
     bool has_gv(const std::string& symbol) {
         return this->get_gv(symbol) != nullptr;
     }

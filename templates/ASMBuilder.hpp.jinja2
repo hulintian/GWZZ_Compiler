@@ -1,6 +1,8 @@
 #pragma once 
+#include "backend/MBasicBlock.hpp"
 #include "backend/MInstruction.hpp"
 #include "backend/miscs.hpp"
+#include <cassert>
 
 namespace backend {
 class ASMBuilder {
@@ -16,6 +18,14 @@ public:
     // {{ group.Category }}
         {%- for instr in group.Instructions %}
         MachineInstr* create_{{ instr.upper() }}(
+        {%- set param_list = [] -%}
+        {%- for opd in group.Operands -%}
+            {%- set _ = param_list.append( 'RiscvReg::Reg ' ~ opd ) -%}
+        {%- endfor -%}
+        {%- for oa in group.otherargs -%}
+            {%- set _ = param_list.append( oa.type ~ ' ' ~ oa.name ) -%}
+        {%- endfor -%}
+        {{ param_list | join(', ') }}
         /* User Code Start: {{ instr }} args */
 
         /* User Code End: {{ instr }} args */
