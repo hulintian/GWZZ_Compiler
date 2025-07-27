@@ -38,11 +38,18 @@ public:
     void dump(std::ostream &out) ;
 
     // User Code Start. Sasara
-    void build_predecessors();
+    void rm_bb(BasicBlock* bb){
+        this->_bbs.remove(bb);
+        delete bb;
+    }
+    void build_predecessors() const;
     const std::vector<BasicBlock*>& get_predecessors(const BasicBlock* bb) const;
+    void rm_predecessor(BasicBlock* bb, BasicBlock* pred_to_remove);
+    void add_predecessor(BasicBlock* bb, BasicBlock* pred_to_add);
 private:
-    std::map<BasicBlock*, std::vector<BasicBlock*>> _predecessor_map;
-    bool _predecessors_built = false;
+    mutable std::map<BasicBlock*, std::vector<BasicBlock*>> _predecessor_map;
+    mutable bool _predecessors_built = false;
+    void _build_predecessors()const;
     // User Code End. Sasara
 };
 
@@ -96,6 +103,9 @@ public:
 
     const std::list<BasicBlock*>& get_basic_blocks() const {
         return _cfg->_bbs;
+    }
+    void rm_basic_block(BasicBlock* bb){
+        _cfg->rm_bb(bb);
     }
     void build_predecessors() {
         _cfg->build_predecessors();

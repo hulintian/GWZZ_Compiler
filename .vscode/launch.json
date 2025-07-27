@@ -7,7 +7,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/compiler",
-            "args": ["tests/test_sasara/licm.sy"],
+            "args": ["tests/test_sasara/loop2.sy"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [
