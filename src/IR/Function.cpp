@@ -32,7 +32,7 @@ void CFG::dump(std::ostream &out) {
     }
 } 
 // User Code Start. Sasara
-void CFG::build_predecessors(){
+void CFG::_build_predecessors()const{
     if (_predecessors_built) return;
     _predecessor_map.clear();
     for(BasicBlock *bb : _bbs){
@@ -44,6 +44,9 @@ void CFG::build_predecessors(){
         }
     }
     _predecessors_built = true;
+}
+void CFG::build_predecessors()const{
+    _build_predecessors();
 }
 
 
@@ -82,8 +85,38 @@ std::vector<BasicBlock*> Function::get_reverse_post_order()const{
 }
 
 const std::vector<BasicBlock*>& CFG::get_predecessors(const BasicBlock* bb) const {
-        assert(_predecessors_built && "Predecessors not built! Call build_predecessors() first.");
-        return _predecessor_map.at(const_cast<IR::BasicBlock*>(bb));
-    }
+    if(!_predecessors_built){
+        _build_predecessors();
+    } 
+    assert(_predecessors_built && "Predecessors not built! Call build_predecessors() first.");
+    return _predecessor_map.at(const_cast<IR::BasicBlock*>(bb));
 }
+
+void CFG::rm_predecessor(BasicBlock* bb, BasicBlock* pred_to_remove){
+    if(!_predecessors_built){
+        _build_predecessors();
+    } 
+    assert(_predecessors_built && "Predecessors not built! Call build_predecessors() first.");
+    auto it = _predecessor_map.find(bb);
+    if (it == _predecessor_map.end()) {
+        assert(false && "BasicBlock not found in predecessor map!");
+        return;
+    }
+    std::vector<BasicBlock*>& preds = it->second;
+    auto new_end = std::remove(preds.begin(), preds.end(), pred_to_remove);
+    preds.erase(new_end, preds.end());
+    //写时作废
+    _predecessors_built = false;
+}
+void CFG::add_predecessor(BasicBlock* bb, BasicBlock* pred_to_add) {
+    if(!_predecessors_built){
+        _build_predecessors();
+    } 
+    _predecessor_map[bb].push_back(pred_to_add);
+    //写时作废
+    _predecessors_built = false;
+}
+
+}
+
 // User Code End. Sasara
