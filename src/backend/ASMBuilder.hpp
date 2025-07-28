@@ -1009,6 +1009,29 @@ public:
             return flwinstr;
         /* User Code End: flw func */
         } 
+    // FStore
+        MachineInstr* create_FSW(RiscvReg::Reg rs1, RiscvReg::Reg rs2, int32_t offset
+        /* User Code Start: fsw args */
+
+        /* User Code End: fsw args */
+        ) {
+        /* User Code Start: fsw func */
+            auto fsw_instr = new FStoreInst(MachineInstrType::FSW, this->get_cur_bb(), rs1, rs2, offset);
+            this->mctx->get_basic_block()->insert_instr(fsw_instr);
+            return fsw_instr;
+        /* User Code End: fsw func */
+        }
+        MachineInstr* create_FSD(RiscvReg::Reg rs1, RiscvReg::Reg rs2, int32_t offset
+        /* User Code Start: fsd args */
+
+        /* User Code End: fsd args */
+        ) {
+        /* User Code Start: fsd func */
+            auto fsd_instr = new FStoreInst(MachineInstrType::FSD, this->get_cur_bb(), rs1, rs2, offset);
+            this->mctx->get_basic_block()->insert_instr(fsd_instr);
+            return fsd_instr;
+        /* User Code End: fsd func */
+        } 
     // FCVT
         MachineInstr* create_FCVT_S_W(RiscvReg::Reg rd, RiscvReg::Reg rs1
         /* User Code Start: fcvt_s_w args */

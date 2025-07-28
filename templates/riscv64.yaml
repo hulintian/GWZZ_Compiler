@@ -154,9 +154,9 @@ InstrGroups:
       - {type: int32_t, name: offset}
     Instructions: [flw]
 
-  - Category: FLoad
+  - Category: FStore
     Description: 浮点存
-    Operands: [rd, rs1]
+    Operands: [rs1, rs2]
     otherargs: 
       - {type: int32_t, name: offset}
     Instructions: [fsw, fsd]

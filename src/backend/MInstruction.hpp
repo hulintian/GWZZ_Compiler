@@ -117,6 +117,9 @@ enum MachineInstrType {
     FNMSUB_S, 
 // FLoad
     FLW, 
+// FStore
+    FSW,
+    FSD, 
 // FCVT
     FCVT_S_W,
     FCVT_W_S, 
@@ -1449,6 +1452,55 @@ public:
     /* User Code End: FLoad_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
+    int32_t _offset;
+};
+// FStore
+
+class FStoreInst : public MachineInstr {
+public:
+    FStoreInst( MachineInstrType mty, MachineBasicBlock* p, RiscvReg::Reg rs1 , RiscvReg::Reg rs2 ,int32_t offset
+        /* User Code Start: other FStore args */
+
+        /* User Code End: other FStore args */
+    ) : MachineInstr(mty, p), _rs1(rs1) , _rs2(rs2) , _offset(offset)
+        /* User Code Start: other FStore init construct */
+
+        /* User Code End: other FStore init construct */
+
+    {
+        /* User Code Start: FStoreInst construct function */
+
+        /* User Code End: FStore_Inst construct function */
+    }
+
+    std::vector<RiscvReg::Reg*> get_regs() override { return { &_rs1, &_rs2 }; }
+
+    std::string to_asm() override { 
+        std::ostringstream oss; 
+        switch(this->mity) {
+            case MachineInstrType::FSW : 
+                oss << "fsw"
+                    << " " << _rs1<< ", ";
+                        oss << _offset << "(" << _rs2  <<  ")";
+                ; 
+                break;
+            case MachineInstrType::FSD : 
+                oss << "fsd"
+                    << " " << _rs1<< ", ";
+                        oss << _offset << "(" << _rs2  <<  ")";
+                ; 
+                break;default : break;
+        }
+        return oss.str();
+    }
+
+    /* User Code Start: FStore_Inst methods */
+
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { }; }
+    /* User Code End: FStore_Inst methods */
+    RiscvReg::Reg _rs1;
+    RiscvReg::Reg _rs2;
     int32_t _offset;
 };
 // FCVT
