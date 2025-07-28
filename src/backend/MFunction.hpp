@@ -26,6 +26,7 @@ public:
     std::unordered_map<std::string, int> symbol2bias;
 
     int32_t  stack_size;
+    int overflow_arguments = 0;
     std::vector<RiscvReg::Reg> spills;
 
     MachineBasicBlock* entry_bb;
