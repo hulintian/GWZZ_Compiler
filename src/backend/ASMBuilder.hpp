@@ -2,7 +2,6 @@
 #include "backend/MBasicBlock.hpp"
 #include "backend/MInstruction.hpp"
 #include "backend/miscs.hpp"
-#include "grammar/Sysy22Lexer.h"
 #include <cassert>
 
 namespace backend {
@@ -557,68 +556,68 @@ public:
         /* User Code End: bleu func */
         } 
     // BranchU
-        MachineInstr* create_BEZ(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
+        MachineInstr* create_BEZ(RiscvReg::Reg rs1, MachineBasicBlock* dst_bb
         /* User Code Start: bez args */
 
         /* User Code End: bez args */
         ) {
         /* User Code Start: bez func */
-            auto instr = new BranchUInst(MachineInstrType::BEZ, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            auto instr = new BranchUInst(MachineInstrType::BEZ, this->mctx->get_basic_block(), rs1, dst_bb);
             this->get_cur_bb()->insert_instr(instr);
             return instr;
         /* User Code End: bez func */
         }
-        MachineInstr* create_BNEZ(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
+        MachineInstr* create_BNEZ(RiscvReg::Reg rs1, MachineBasicBlock* dst_bb
         /* User Code Start: bnez args */
 
         /* User Code End: bnez args */
         ) {
         /* User Code Start: bnez func */
-            auto instr = new BranchUInst(MachineInstrType::BNEZ, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            auto instr = new BranchUInst(MachineInstrType::BNEZ, this->mctx->get_basic_block(), rs1, dst_bb);
             this->get_cur_bb()->insert_instr(instr);
             return instr;
         /* User Code End: bnez func */
         }
-        MachineInstr* create_BGTZ(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
+        MachineInstr* create_BGTZ(RiscvReg::Reg rs1, MachineBasicBlock* dst_bb
         /* User Code Start: bgtz args */
 
         /* User Code End: bgtz args */
         ) {
         /* User Code Start: bgtz func */
-            auto instr = new BranchUInst(MachineInstrType::BGTZ, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            auto instr = new BranchUInst(MachineInstrType::BGTZ, this->mctx->get_basic_block(), rs1, dst_bb);
             this->get_cur_bb()->insert_instr(instr);
             return instr;
         /* User Code End: bgtz func */
         }
-        MachineInstr* create_BLTZ(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
+        MachineInstr* create_BLTZ(RiscvReg::Reg rs1, MachineBasicBlock* dst_bb
         /* User Code Start: bltz args */
 
         /* User Code End: bltz args */
         ) {
         /* User Code Start: bltz func */
-            auto instr = new BranchUInst(MachineInstrType::BLTZ, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            auto instr = new BranchUInst(MachineInstrType::BLTZ, this->mctx->get_basic_block(), rs1, dst_bb);
             this->get_cur_bb()->insert_instr(instr);
             return instr;
         /* User Code End: bltz func */
         }
-        MachineInstr* create_BGEZ(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
+        MachineInstr* create_BGEZ(RiscvReg::Reg rs1, MachineBasicBlock* dst_bb
         /* User Code Start: bgez args */
 
         /* User Code End: bgez args */
         ) {
         /* User Code Start: bgez func */
-            auto instr = new BranchUInst(MachineInstrType::BGEZ, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            auto instr = new BranchUInst(MachineInstrType::BGEZ, this->mctx->get_basic_block(), rs1, dst_bb);
             this->get_cur_bb()->insert_instr(instr);
             return instr;
         /* User Code End: bgez func */
         }
-        MachineInstr* create_BLZE(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
+        MachineInstr* create_BLZE(RiscvReg::Reg rs1, MachineBasicBlock* dst_bb
         /* User Code Start: blze args */
 
         /* User Code End: blze args */
         ) {
         /* User Code Start: blze func */
-            auto instr = new BranchUInst(MachineInstrType::BLZE, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            auto instr = new BranchUInst(MachineInstrType::BLZE, this->mctx->get_basic_block(), rs1, dst_bb);
             this->get_cur_bb()->insert_instr(instr);
             return instr;
         /* User Code End: blze func */
