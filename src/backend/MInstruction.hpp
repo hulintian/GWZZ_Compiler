@@ -811,11 +811,11 @@ public:
 
 class BranchUInst : public MachineInstr {
 public:
-    BranchUInst( MachineInstrType mty, MachineBasicBlock* p, RiscvReg::Reg rs1 , RiscvReg::Reg rs2 ,MachineBasicBlock* dst_bb
+    BranchUInst( MachineInstrType mty, MachineBasicBlock* p, RiscvReg::Reg rs1 ,MachineBasicBlock* dst_bb
         /* User Code Start: other BranchU args */
 
         /* User Code End: other BranchU args */
-    ) : MachineInstr(mty, p), _rs1(rs1) , _rs2(rs2) , _dst_bb(dst_bb)
+    ) : MachineInstr(mty, p), _rs1(rs1) , _dst_bb(dst_bb)
         /* User Code Start: other BranchU init construct */
 
         /* User Code End: other BranchU init construct */
@@ -826,44 +826,44 @@ public:
         /* User Code End: BranchU_Inst construct function */
     }
 
-    std::vector<RiscvReg::Reg*> get_regs() override { return { &_rs1, &_rs2 }; }
+    std::vector<RiscvReg::Reg*> get_regs() override { return { &_rs1 }; }
 
     std::string to_asm() override { 
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::BEZ : 
                 oss << "bez"
-                    << " " << _rs1<< ", " << _rs2
+                    << " " << _rs1
                         << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BNEZ : 
                 oss << "bnez"
-                    << " " << _rs1<< ", " << _rs2
+                    << " " << _rs1
                         << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BGTZ : 
                 oss << "bgtz"
-                    << " " << _rs1<< ", " << _rs2
+                    << " " << _rs1
                         << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BLTZ : 
                 oss << "bltz"
-                    << " " << _rs1<< ", " << _rs2
+                    << " " << _rs1
                         << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BGEZ : 
                 oss << "bgez"
-                    << " " << _rs1<< ", " << _rs2
+                    << " " << _rs1
                         << ", "<<  _dst_bb
                 ; 
                 break;
             case MachineInstrType::BLZE : 
                 oss << "blze"
-                    << " " << _rs1<< ", " << _rs2
+                    << " " << _rs1
                         << ", "<<  _dst_bb
                 ; 
                 break;default : break;
@@ -873,11 +873,10 @@ public:
 
     /* User Code Start: BranchU_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
     std::vector<RiscvReg::Reg> get_dsts() override { return {  }; }
     /* User Code End: BranchU_Inst methods */
     RiscvReg::Reg _rs1;
-    RiscvReg::Reg _rs2;
     MachineBasicBlock* _dst_bb;
 };
 // Jump
