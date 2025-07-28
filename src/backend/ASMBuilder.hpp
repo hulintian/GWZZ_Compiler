@@ -2,6 +2,7 @@
 #include "backend/MBasicBlock.hpp"
 #include "backend/MInstruction.hpp"
 #include "backend/miscs.hpp"
+#include "grammar/Sysy22Lexer.h"
 #include <cassert>
 
 namespace backend {
@@ -36,7 +37,7 @@ public:
         /* User Code Start: add func */
             auto add_instr = new IArithInst(MachineInstrType::ADD, this->mctx->get_basic_block(), rd, rs1, rs2);
             this->get_cur_bb()->insert_instr(add_instr);
-            return nullptr;
+            return add_instr;
         /* User Code End: add func */
         }
         MachineInstr* create_SUB(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -45,7 +46,9 @@ public:
         /* User Code End: sub args */
         ) {
         /* User Code Start: sub func */
-            return nullptr;
+            auto instr = new IArithInst(MachineInstrType::SUB, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: sub func */
         }
         MachineInstr* create_AND(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -54,7 +57,9 @@ public:
         /* User Code End: and args */
         ) {
         /* User Code Start: and func */
-            return nullptr;
+            auto instr = new IArithInst(MachineInstrType::AND, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: and func */
         }
         MachineInstr* create_OR(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -63,7 +68,9 @@ public:
         /* User Code End: or args */
         ) {
         /* User Code Start: or func */
-            return nullptr;
+            auto instr = new IArithInst(MachineInstrType::OR, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: or func */
         }
         MachineInstr* create_XOR(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -72,7 +79,9 @@ public:
         /* User Code End: xor args */
         ) {
         /* User Code Start: xor func */
-            return nullptr;
+            auto instr = new IArithInst(MachineInstrType::XOR, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: xor func */
         }
         MachineInstr* create_SLL(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -81,7 +90,9 @@ public:
         /* User Code End: sll args */
         ) {
         /* User Code Start: sll func */
-            return nullptr;
+            auto instr = new IArithInst(MachineInstrType::SLL, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: sll func */
         }
         MachineInstr* create_SRA(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -90,7 +101,9 @@ public:
         /* User Code End: sra args */
         ) {
         /* User Code Start: sra func */
-            return nullptr;
+            auto instr = new IArithInst(MachineInstrType::SRA, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: sra func */
         }
         MachineInstr* create_SRL(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -99,7 +112,9 @@ public:
         /* User Code End: srl args */
         ) {
         /* User Code Start: srl func */
-            return nullptr;
+            auto instr = new IArithInst(MachineInstrType::SRL, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: srl func */
         } 
     // IArithIMM
@@ -109,7 +124,9 @@ public:
         /* User Code End: addi args */
         ) {
         /* User Code Start: addi func */
-            return nullptr;
+            auto  addiinstr = new IArithIMMInst(MachineInstrType::ADDI, this->get_cur_bb(), rd, rs1, imm);
+            this->get_cur_bb()->insert_instr(addiinstr);
+            return addiinstr;
         /* User Code End: addi func */
         }
         MachineInstr* create_SUBI(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t imm
@@ -118,7 +135,9 @@ public:
         /* User Code End: subi args */
         ) {
         /* User Code Start: subi func */
-            return nullptr;
+            auto instr = new IArithIMMInst(MachineInstrType::SUBI, this->get_cur_bb(), rd, rs1, imm);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: subi func */
         }
         MachineInstr* create_ANDI(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t imm
@@ -127,7 +146,9 @@ public:
         /* User Code End: andi args */
         ) {
         /* User Code Start: andi func */
-            return nullptr;
+            auto instr = new IArithIMMInst(MachineInstrType::ANDI, this->mctx->get_basic_block(), rd, rs1, imm);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: andi func */
         }
         MachineInstr* create_ORI(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t imm
@@ -136,7 +157,9 @@ public:
         /* User Code End: ori args */
         ) {
         /* User Code Start: ori func */
-            return nullptr;
+            auto instr = new IArithIMMInst(MachineInstrType::ORI, this->mctx->get_basic_block(), rd, rs1, imm);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: ori func */
         }
         MachineInstr* create_XORI(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t imm
@@ -145,7 +168,9 @@ public:
         /* User Code End: xori args */
         ) {
         /* User Code Start: xori func */
-            return nullptr;
+            auto instr = new IArithIMMInst(MachineInstrType::XORI, this->mctx->get_basic_block(), rd, rs1, imm);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: xori func */
         }
         MachineInstr* create_SLLI(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t imm
@@ -154,7 +179,9 @@ public:
         /* User Code End: slli args */
         ) {
         /* User Code Start: slli func */
-            return nullptr;
+            auto instr = new IArithIMMInst(MachineInstrType::SLLI, this->mctx->get_basic_block(), rd, rs1, imm);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: slli func */
         }
         MachineInstr* create_SRAI(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t imm
@@ -163,7 +190,9 @@ public:
         /* User Code End: srai args */
         ) {
         /* User Code Start: srai func */
-            return nullptr;
+            auto instr = new IArithIMMInst(MachineInstrType::SRAI, this->mctx->get_basic_block(), rd, rs1, imm);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: srai func */
         }
         MachineInstr* create_SRLI(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t imm
@@ -172,7 +201,9 @@ public:
         /* User Code End: srli args */
         ) {
         /* User Code Start: srli func */
-            return nullptr;
+            auto instr = new IArithIMMInst(MachineInstrType::SRLI, this->mctx->get_basic_block(), rd, rs1, imm);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: srli func */
         } 
     // IArithU
@@ -182,7 +213,9 @@ public:
         /* User Code End: lui args */
         ) {
         /* User Code Start: lui func */
-            return nullptr;
+            auto instr = new IArithUInst(MachineInstrType::LUI, this->mctx->get_basic_block(), rd, imm);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: lui func */
         }
         MachineInstr* create_AUIPC(RiscvReg::Reg rd, int32_t imm
@@ -191,7 +224,9 @@ public:
         /* User Code End: auipc args */
         ) {
         /* User Code Start: auipc func */
-            return nullptr;
+            auto instr = new IArithUInst(MachineInstrType::AUIPC, this->mctx->get_basic_block(), rd, imm);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: auipc func */
         } 
     // Load
@@ -201,7 +236,9 @@ public:
         /* User Code End: lb args */
         ) {
         /* User Code Start: lb func */
-            return nullptr;
+            auto lb_instr = new LoadInst(MachineInstrType::LB, this->mctx->get_basic_block(), rd, rs1, offset);
+            this->mctx->get_basic_block()->insert_instr(lb_instr);
+            return lb_instr;
         /* User Code End: lb func */
         }
         MachineInstr* create_LH(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t offset
@@ -210,7 +247,9 @@ public:
         /* User Code End: lh args */
         ) {
         /* User Code Start: lh func */
-            return nullptr;
+            auto lh_instr = new LoadInst(MachineInstrType::LH, this->mctx->get_basic_block(), rd, rs1, offset);
+            this->mctx->get_basic_block()->insert_instr(lh_instr);
+            return lh_instr;
         /* User Code End: lh func */
         }
         MachineInstr* create_LW(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t offset
@@ -242,7 +281,9 @@ public:
         /* User Code End: lla args */
         ) {
         /* User Code Start: lla func */
-            return nullptr;
+            auto minst = new LLAInst(MachineInstrType::LLA, this->mctx->get_basic_block(), rd, symbol);
+            this->mctx->get_basic_block()->insert_instr(minst);
+            return minst;
         /* User Code End: lla func */
         }
         MachineInstr* create_LA(RiscvReg::Reg rd, std::string symbol
@@ -275,7 +316,9 @@ public:
         /* User Code End: sb args */
         ) {
         /* User Code Start: sb func */
-            return nullptr;
+            auto instr = new StoreInst(MachineInstrType::SB, this->mctx->get_basic_block(), rs1, rs2, offset);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: sb func */
         }
         MachineInstr* create_SH(RiscvReg::Reg rs1, RiscvReg::Reg rs2, int32_t offset
@@ -284,7 +327,9 @@ public:
         /* User Code End: sh args */
         ) {
         /* User Code Start: sh func */
-            return nullptr;
+            auto instr = new StoreInst(MachineInstrType::SH, this->mctx->get_basic_block(), rs1, rs2, offset);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: sh func */
         }
         MachineInstr* create_SW(RiscvReg::Reg rs1, RiscvReg::Reg rs2, int32_t offset
@@ -293,7 +338,9 @@ public:
         /* User Code End: sw args */
         ) {
         /* User Code Start: sw func */
-            return nullptr;
+            auto instr = new StoreInst(MachineInstrType::SW, this->mctx->get_basic_block(), rs1, rs2, offset);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: sw func */
         }
         MachineInstr* create_SD(RiscvReg::Reg rs1, RiscvReg::Reg rs2, int32_t offset
@@ -302,7 +349,9 @@ public:
         /* User Code End: sd args */
         ) {
         /* User Code Start: sd func */
-            return nullptr;
+            auto instr = new StoreInst(MachineInstrType::SD, this->mctx->get_basic_block(), rs1, rs2, offset);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: sd func */
         } 
     // CondSet
@@ -312,7 +361,9 @@ public:
         /* User Code End: slt args */
         ) {
         /* User Code Start: slt func */
-            return nullptr;
+            auto instr = new CondSetInst(MachineInstrType::SLT, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: slt func */
         }
         MachineInstr* create_SLTU(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -321,7 +372,9 @@ public:
         /* User Code End: sltu args */
         ) {
         /* User Code Start: sltu func */
-            return nullptr;
+            auto instr = new CondSetInst(MachineInstrType::SLTU, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: sltu func */
         } 
     // CondSetU
@@ -331,7 +384,9 @@ public:
         /* User Code End: seqz args */
         ) {
         /* User Code Start: seqz func */
-            return nullptr;
+            auto instr = new CondSetUInst(MachineInstrType::SEQZ, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: seqz func */
         }
         MachineInstr* create_SNEZ(RiscvReg::Reg rd, RiscvReg::Reg rs1
@@ -340,7 +395,9 @@ public:
         /* User Code End: snez args */
         ) {
         /* User Code Start: snez func */
-            return nullptr;
+            auto instr = new CondSetUInst(MachineInstrType::SNEZ, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: snez func */
         }
         MachineInstr* create_SLTZ(RiscvReg::Reg rd, RiscvReg::Reg rs1
@@ -349,7 +406,9 @@ public:
         /* User Code End: sltz args */
         ) {
         /* User Code Start: sltz func */
-            return nullptr;
+            auto instr = new CondSetUInst(MachineInstrType::SLTZ, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: sltz func */
         }
         MachineInstr* create_SGTZ(RiscvReg::Reg rd, RiscvReg::Reg rs1
@@ -358,7 +417,9 @@ public:
         /* User Code End: sgtz args */
         ) {
         /* User Code Start: sgtz func */
-            return nullptr;
+            auto instr = new CondSetUInst(MachineInstrType::SGTZ, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: sgtz func */
         } 
     // CondSetIMM
@@ -368,7 +429,9 @@ public:
         /* User Code End: slti args */
         ) {
         /* User Code Start: slti func */
-            return nullptr;
+            auto instr = new CondSetIMMInst(MachineInstrType::SLTI, this->mctx->get_basic_block(), rd, rs1, imm);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: slti func */
         }
         MachineInstr* create_SGTI(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t imm
@@ -377,7 +440,9 @@ public:
         /* User Code End: sgti args */
         ) {
         /* User Code Start: sgti func */
-            return nullptr;
+            auto instr = new CondSetIMMInst(MachineInstrType::SGTI, this->mctx->get_basic_block(), rd, rs1, imm);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: sgti func */
         } 
     // Branch
@@ -387,7 +452,9 @@ public:
         /* User Code End: beq args */
         ) {
         /* User Code Start: beq func */
-            return nullptr;
+            auto instr = new BranchInst(MachineInstrType::BEQ, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: beq func */
         }
         MachineInstr* create_BNE(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -396,7 +463,9 @@ public:
         /* User Code End: bne args */
         ) {
         /* User Code Start: bne func */
-            return nullptr;
+            auto instr = new BranchInst(MachineInstrType::BNE, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bne func */
         }
         MachineInstr* create_BLT(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -405,7 +474,9 @@ public:
         /* User Code End: blt args */
         ) {
         /* User Code Start: blt func */
-            return nullptr;
+            auto instr = new BranchInst(MachineInstrType::BLT, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: blt func */
         }
         MachineInstr* create_BGE(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -414,7 +485,9 @@ public:
         /* User Code End: bge args */
         ) {
         /* User Code Start: bge func */
-            return nullptr;
+            auto instr = new BranchInst(MachineInstrType::BGE, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bge func */
         }
         MachineInstr* create_BLTU(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -423,7 +496,9 @@ public:
         /* User Code End: bltu args */
         ) {
         /* User Code Start: bltu func */
-            return nullptr;
+            auto instr = new BranchInst(MachineInstrType::BLTU, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bltu func */
         }
         MachineInstr* create_BGEU(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -432,7 +507,9 @@ public:
         /* User Code End: bgeu args */
         ) {
         /* User Code Start: bgeu func */
-            return nullptr;
+            auto instr = new BranchInst(MachineInstrType::BGEU, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bgeu func */
         }
         MachineInstr* create_BGT(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -441,7 +518,9 @@ public:
         /* User Code End: bgt args */
         ) {
         /* User Code Start: bgt func */
-            return nullptr;
+            auto instr = new BranchInst(MachineInstrType::BGT, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bgt func */
         }
         MachineInstr* create_BGTU(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -450,7 +529,9 @@ public:
         /* User Code End: bgtu args */
         ) {
         /* User Code Start: bgtu func */
-            return nullptr;
+            auto instr = new BranchInst(MachineInstrType::BGTU, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bgtu func */
         }
         MachineInstr* create_BLE(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -459,7 +540,9 @@ public:
         /* User Code End: ble args */
         ) {
         /* User Code Start: ble func */
-            return nullptr;
+            auto instr = new BranchInst(MachineInstrType::BLE, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: ble func */
         }
         MachineInstr* create_BLEU(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -468,7 +551,9 @@ public:
         /* User Code End: bleu args */
         ) {
         /* User Code Start: bleu func */
-            return nullptr;
+            auto instr = new BranchInst(MachineInstrType::BLEU, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bleu func */
         } 
     // BranchU
@@ -478,7 +563,9 @@ public:
         /* User Code End: bez args */
         ) {
         /* User Code Start: bez func */
-            return nullptr;
+            auto instr = new BranchUInst(MachineInstrType::BEZ, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bez func */
         }
         MachineInstr* create_BNEZ(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -487,7 +574,9 @@ public:
         /* User Code End: bnez args */
         ) {
         /* User Code Start: bnez func */
-            return nullptr;
+            auto instr = new BranchUInst(MachineInstrType::BNEZ, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bnez func */
         }
         MachineInstr* create_BGTZ(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -496,7 +585,9 @@ public:
         /* User Code End: bgtz args */
         ) {
         /* User Code Start: bgtz func */
-            return nullptr;
+            auto instr = new BranchUInst(MachineInstrType::BGTZ, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bgtz func */
         }
         MachineInstr* create_BLTZ(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -505,7 +596,9 @@ public:
         /* User Code End: bltz args */
         ) {
         /* User Code Start: bltz func */
-            return nullptr;
+            auto instr = new BranchUInst(MachineInstrType::BLTZ, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bltz func */
         }
         MachineInstr* create_BGEZ(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -514,7 +607,9 @@ public:
         /* User Code End: bgez args */
         ) {
         /* User Code Start: bgez func */
-            return nullptr;
+            auto instr = new BranchUInst(MachineInstrType::BGEZ, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: bgez func */
         }
         MachineInstr* create_BLZE(RiscvReg::Reg rs1, RiscvReg::Reg rs2, MachineBasicBlock* dst_bb
@@ -523,7 +618,9 @@ public:
         /* User Code End: blze args */
         ) {
         /* User Code Start: blze func */
-            return nullptr;
+            auto instr = new BranchUInst(MachineInstrType::BLZE, this->mctx->get_basic_block(), rs1, rs2, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: blze func */
         } 
     // Jump
@@ -545,7 +642,9 @@ public:
         /* User Code End: jal args */
         ) {
         /* User Code Start: jal func */
-            return nullptr;
+            auto instr = new JALInst(MachineInstrType::JAL, this->mctx->get_basic_block(), rd, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: jal func */
         }
         MachineInstr* create_JALR(RiscvReg::Reg rd, MachineBasicBlock* dst_bb
@@ -554,7 +653,9 @@ public:
         /* User Code End: jalr args */
         ) {
         /* User Code Start: jalr func */
-            return nullptr;
+            auto instr = new JALInst(MachineInstrType::JALR, this->mctx->get_basic_block(), rd, dst_bb);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: jalr func */
         } 
     // Call
@@ -564,7 +665,9 @@ public:
         /* User Code End: call args */
         ) {
         /* User Code Start: call func */
-            return nullptr;
+            auto instr = new CallInst(MachineInstrType::CALL, this->mctx->get_basic_block(), func);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: call func */
         } 
     // Return
@@ -574,7 +677,9 @@ public:
         /* User Code End: ret args */
         ) {
         /* User Code Start: ret func */
-            return nullptr;
+            auto instr = new ReturnInst(MachineInstrType::RET, this->mctx->get_basic_block());
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: ret func */
         } 
     // Multiply
@@ -584,7 +689,9 @@ public:
         /* User Code End: mul args */
         ) {
         /* User Code Start: mul func */
-            return nullptr;
+            auto instr = new MultiplyInst(MachineInstrType::MUL, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: mul func */
         }
         MachineInstr* create_MULH(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -593,7 +700,9 @@ public:
         /* User Code End: mulh args */
         ) {
         /* User Code Start: mulh func */
-            return nullptr;
+            auto instr = new MultiplyInst(MachineInstrType::MULH, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: mulh func */
         }
         MachineInstr* create_MULHSU(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -602,7 +711,9 @@ public:
         /* User Code End: mulhsu args */
         ) {
         /* User Code Start: mulhsu func */
-            return nullptr;
+            auto instr = new MultiplyInst(MachineInstrType::MULHSU, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: mulhsu func */
         }
         MachineInstr* create_MULHU(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -611,7 +722,9 @@ public:
         /* User Code End: mulhu args */
         ) {
         /* User Code Start: mulhu func */
-            return nullptr;
+            auto instr = new MultiplyInst(MachineInstrType::MULHU, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: mulhu func */
         }
         MachineInstr* create_DIV(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -620,7 +733,9 @@ public:
         /* User Code End: div args */
         ) {
         /* User Code Start: div func */
-            return nullptr;
+            auto instr = new MultiplyInst(MachineInstrType::DIV, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: div func */
         }
         MachineInstr* create_DIVU(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -629,7 +744,9 @@ public:
         /* User Code End: divu args */
         ) {
         /* User Code Start: divu func */
-            return nullptr;
+            auto instr = new MultiplyInst(MachineInstrType::DIVU, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: divu func */
         }
         MachineInstr* create_REM(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -638,7 +755,9 @@ public:
         /* User Code End: rem args */
         ) {
         /* User Code Start: rem func */
-            return nullptr;
+            auto instr = new MultiplyInst(MachineInstrType::REM, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: rem func */
         }
         MachineInstr* create_REMU(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -647,7 +766,9 @@ public:
         /* User Code End: remu args */
         ) {
         /* User Code Start: remu func */
-            return nullptr;
+            auto instr = new MultiplyInst(MachineInstrType::REMU, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: remu func */
         } 
     // FArith
@@ -657,7 +778,9 @@ public:
         /* User Code End: fadd_s args */
         ) {
         /* User Code Start: fadd_s func */
-            return nullptr;
+            auto instr = new FArithInst(MachineInstrType::FADD_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fadd_s func */
         }
         MachineInstr* create_FSUB_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -666,7 +789,9 @@ public:
         /* User Code End: fsub_s args */
         ) {
         /* User Code Start: fsub_s func */
-            return nullptr;
+            auto instr = new FArithInst(MachineInstrType::FSUB_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fsub_s func */
         }
         MachineInstr* create_FMUL_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -675,7 +800,9 @@ public:
         /* User Code End: fmul_s args */
         ) {
         /* User Code Start: fmul_s func */
-            return nullptr;
+            auto instr = new FArithInst(MachineInstrType::FMUL_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fmul_s func */
         }
         MachineInstr* create_FDIV_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -684,7 +811,9 @@ public:
         /* User Code End: fdiv_s args */
         ) {
         /* User Code Start: fdiv_s func */
-            return nullptr;
+            auto instr = new FArithInst(MachineInstrType::FDIV_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fdiv_s func */
         }
         MachineInstr* create_FSGNJ_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -693,7 +822,9 @@ public:
         /* User Code End: fsgnj_s args */
         ) {
         /* User Code Start: fsgnj_s func */
-            return nullptr;
+            auto instr = new FArithInst(MachineInstrType::FSGNJ_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fsgnj_s func */
         }
         MachineInstr* create_FSGNJN_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -702,7 +833,9 @@ public:
         /* User Code End: fsgnjn_s args */
         ) {
         /* User Code Start: fsgnjn_s func */
-            return nullptr;
+            auto instr = new FArithInst(MachineInstrType::FSGNJN_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fsgnjn_s func */
         }
         MachineInstr* create_FSGNJX_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -711,7 +844,9 @@ public:
         /* User Code End: fsgnjx_s args */
         ) {
         /* User Code Start: fsgnjx_s func */
-            return nullptr;
+            auto instr = new FArithInst(MachineInstrType::FSGNJX_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fsgnjx_s func */
         }
         MachineInstr* create_FMIN_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -720,7 +855,9 @@ public:
         /* User Code End: fmin_s args */
         ) {
         /* User Code Start: fmin_s func */
-            return nullptr;
+            auto instr = new FArithInst(MachineInstrType::FMIN_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fmin_s func */
         }
         MachineInstr* create_FMAX_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -729,7 +866,9 @@ public:
         /* User Code End: fmax_s args */
         ) {
         /* User Code Start: fmax_s func */
-            return nullptr;
+            auto instr = new FArithInst(MachineInstrType::FMAX_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fmax_s func */
         } 
     // FArithU
@@ -739,7 +878,9 @@ public:
         /* User Code End: fabs_s args */
         ) {
         /* User Code Start: fabs_s func */
-            return nullptr;
+            auto instr = new FArithUInst(MachineInstrType::FABS_S, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fabs_s func */
         }
         MachineInstr* create_FNEG_S(RiscvReg::Reg rd, RiscvReg::Reg rs1
@@ -748,7 +889,9 @@ public:
         /* User Code End: fneg_s args */
         ) {
         /* User Code Start: fneg_s func */
-            return nullptr;
+            auto instr = new FArithUInst(MachineInstrType::FNEG_S, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fneg_s func */
         }
         MachineInstr* create_FSQRT_S(RiscvReg::Reg rd, RiscvReg::Reg rs1
@@ -757,7 +900,9 @@ public:
         /* User Code End: fsqrt_s args */
         ) {
         /* User Code Start: fsqrt_s func */
-            return nullptr;
+            auto instr = new FArithUInst(MachineInstrType::FSQRT_S, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fsqrt_s func */
         } 
     // FCMP
@@ -767,7 +912,9 @@ public:
         /* User Code End: feq_s args */
         ) {
         /* User Code Start: feq_s func */
-            return nullptr;
+            auto instr = new FCMPInst(MachineInstrType::FEQ_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: feq_s func */
         }
         MachineInstr* create_FLT_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -776,7 +923,9 @@ public:
         /* User Code End: flt_s args */
         ) {
         /* User Code Start: flt_s func */
-            return nullptr;
+            auto instr = new FCMPInst(MachineInstrType::FLT_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: flt_s func */
         }
         MachineInstr* create_FLE_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
@@ -785,7 +934,9 @@ public:
         /* User Code End: fle_s args */
         ) {
         /* User Code Start: fle_s func */
-            return nullptr;
+            auto instr = new FCMPInst(MachineInstrType::FLE_S, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fle_s func */
         } 
     // FArithT
@@ -795,7 +946,9 @@ public:
         /* User Code End: fmadd_s args */
         ) {
         /* User Code Start: fmadd_s func */
-            return nullptr;
+            auto instr = new FArithTInst(MachineInstrType::FMADD_S, this->mctx->get_basic_block(), rd, rs1, rs2, rs3);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fmadd_s func */
         }
         MachineInstr* create_FNMADD_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2, RiscvReg::Reg rs3
@@ -804,7 +957,9 @@ public:
         /* User Code End: fnmadd_s args */
         ) {
         /* User Code Start: fnmadd_s func */
-            return nullptr;
+            auto instr = new FArithTInst(MachineInstrType::FNMADD_S, this->mctx->get_basic_block(), rd, rs1, rs2, rs3);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fnmadd_s func */
         }
         MachineInstr* create_FMSUB_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2, RiscvReg::Reg rs3
@@ -813,7 +968,9 @@ public:
         /* User Code End: fmsub_s args */
         ) {
         /* User Code Start: fmsub_s func */
-            return nullptr;
+            auto instr = new FArithTInst(MachineInstrType::FMSUB_S, this->mctx->get_basic_block(), rd, rs1, rs2, rs3);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fmsub_s func */
         }
         MachineInstr* create_FNMSUB_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2, RiscvReg::Reg rs3
@@ -822,7 +979,9 @@ public:
         /* User Code End: fnmsub_s args */
         ) {
         /* User Code Start: fnmsub_s func */
-            return nullptr;
+            auto instr = new FArithTInst(MachineInstrType::FNMSUB_S, this->mctx->get_basic_block(), rd, rs1, rs2, rs3);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fnmsub_s func */
         } 
     // FLoad
@@ -846,7 +1005,9 @@ public:
         /* User Code End: fcvt_s_w args */
         ) {
         /* User Code Start: fcvt_s_w func */
-            return nullptr;
+            auto instr = new FCVTInst(MachineInstrType::FCVT_S_W, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fcvt_s_w func */
         }
         MachineInstr* create_FCVT_W_S(RiscvReg::Reg rd, RiscvReg::Reg rs1
@@ -855,35 +1016,43 @@ public:
         /* User Code End: fcvt_w_s args */
         ) {
         /* User Code Start: fcvt_w_s func */
-            return nullptr;
+            auto instr = new FCVTInst(MachineInstrType::FCVT_W_S, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fcvt_w_s func */
         } 
     // FMV
-        MachineInstr* create_FMV_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t offset
+        MachineInstr* create_FMV_S(RiscvReg::Reg rd, RiscvReg::Reg rs1
         /* User Code Start: fmv_s args */
 
         /* User Code End: fmv_s args */
         ) {
         /* User Code Start: fmv_s func */
-            return nullptr;
+            auto instr = new FMVInst(MachineInstrType::FMV_S, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fmv_s func */
         }
-        MachineInstr* create_FMV_W_X(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t offset
+        MachineInstr* create_FMV_W_X(RiscvReg::Reg rd, RiscvReg::Reg rs1
         /* User Code Start: fmv_w_x args */
 
         /* User Code End: fmv_w_x args */
         ) {
         /* User Code Start: fmv_w_x func */
-            return nullptr;
+            auto instr = new FMVInst(MachineInstrType::FMV_W_X, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fmv_w_x func */
         }
-        MachineInstr* create_FMV_X_W(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t offset
+        MachineInstr* create_FMV_X_W(RiscvReg::Reg rd, RiscvReg::Reg rs1
         /* User Code Start: fmv_x_w args */
 
         /* User Code End: fmv_x_w args */
         ) {
         /* User Code Start: fmv_x_w func */
-            return nullptr;
+            auto instr = new FMVInst(MachineInstrType::FMV_X_W, this->mctx->get_basic_block(), rd, rs1);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
         /* User Code End: fmv_x_w func */
         }
 

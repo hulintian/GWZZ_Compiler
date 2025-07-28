@@ -1459,11 +1459,11 @@ public:
 
 class FMVInst : public MachineInstr {
 public:
-    FMVInst( MachineInstrType mty, MachineBasicBlock* p, RiscvReg::Reg rd , RiscvReg::Reg rs1 ,int32_t offset
+    FMVInst( MachineInstrType mty, MachineBasicBlock* p, RiscvReg::Reg rd , RiscvReg::Reg rs1 
         /* User Code Start: other FMV args */
 
         /* User Code End: other FMV args */
-    ) : MachineInstr(mty, p), _rd(rd) , _rs1(rs1) , _offset(offset)
+    ) : MachineInstr(mty, p), _rd(rd) , _rs1(rs1) 
         /* User Code Start: other FMV init construct */
 
         /* User Code End: other FMV init construct */
@@ -1481,20 +1481,17 @@ public:
         switch(this->mity) {
             case MachineInstrType::FMV_S : 
                 oss << "fmv.s"
-                    << " " << _rd<< ", ";
-                        oss << _offset << "(" << _rs1  <<  ")";
+                    << " " << _rd<< ", " << _rs1
                 ; 
                 break;
             case MachineInstrType::FMV_W_X : 
                 oss << "fmv.w.x"
-                    << " " << _rd<< ", ";
-                        oss << _offset << "(" << _rs1  <<  ")";
+                    << " " << _rd<< ", " << _rs1
                 ; 
                 break;
             case MachineInstrType::FMV_X_W : 
                 oss << "fmv.x.w"
-                    << " " << _rd<< ", ";
-                        oss << _offset << "(" << _rs1  <<  ")";
+                    << " " << _rd<< ", " << _rs1
                 ; 
                 break;default : break;
         }
@@ -1508,6 +1505,5 @@ public:
     /* User Code End: FMV_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
-    int32_t _offset;
 };
 }
