@@ -36,6 +36,11 @@ InstrGroups:
       - {type: int32_t, name: offset}
     Instructions: [lb, lh, lw, ld]
 
+  - Category: Move 
+    Description: Move from src_reg to dst_reg
+    Operands: [rd, rs1]
+    Instructions: [mv]
+
   - Category: LLA
     Description: LoadLocalAddress
     Operands: [rd]
@@ -44,7 +49,7 @@ InstrGroups:
     Instructions: [lla, la]
 
   - Category: LI
-    Description: LoadLocalAddress
+    Description: Load imm
     Operands: [rd]
     otherargs: 
       - {type: int, name: imm}
@@ -148,6 +153,13 @@ InstrGroups:
     otherargs: 
       - {type: int32_t, name: offset}
     Instructions: [flw]
+
+  - Category: FLoad
+    Description: 浮点存
+    Operands: [rd, rs1]
+    otherargs: 
+      - {type: int32_t, name: offset}
+    Instructions: [fsw, fsd]
 
   - Category: FCVT
     Description: 浮点向字转换, single to word, word to single

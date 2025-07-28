@@ -273,6 +273,18 @@ public:
             return ldinstr;
         /* User Code End: ld func */
         } 
+    // Move
+        MachineInstr* create_MV(RiscvReg::Reg rd, RiscvReg::Reg rs1
+        /* User Code Start: mv args */
+
+        /* User Code End: mv args */
+        ) {
+        /* User Code Start: mv func */
+            auto mv_instr = new MoveInst(MachineInstrType::MV, this->mctx->get_basic_block(), rd, rs1);
+            this->mctx->get_basic_block()->insert_instr(mv_instr);
+            return mv_instr;
+        /* User Code End: mv func */
+        } 
     // LLA
         MachineInstr* create_LLA(RiscvReg::Reg rd, std::string symbol
         /* User Code Start: lla args */

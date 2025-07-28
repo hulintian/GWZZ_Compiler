@@ -3,6 +3,7 @@
 #include "IR/Function.hpp"
 #include "IR/GlobalValue.hpp"
 #include "IR/Instructions.hpp"
+#include "backend/MFunction.hpp"
 #include "common/regarch.hpp"
 #include "common/type.hpp"
 #include "common/utils.hpp"
@@ -81,7 +82,8 @@ void ASMGen::translate_func(IR::Function* func) {
     // TODO reg alloca 
     
     // gen prologue and epilogue
-    this->gen_prolo_epil();
+    this->gen_prolo_epil(this->mctx->get_function());
+    this->mctx->set_function(nullptr);
 }
 
 void ASMGen::translate_bb(IR::BasicBlock* bb) {
@@ -94,7 +96,7 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
     //
     for(auto instr : bb->get_intrs()) {
         if(auto alloca = dynamic_cast<IR::AllocaInst*>(instr)) {
-            continue;  // Already handled in function translation
+            continue;  // handled in function translation
         } else if(auto load = dynamic_cast<IR::LoadInst*>(instr)) {
             // is gv ? is alloca ? is getelementptr
             auto isrc = load->get_src();
@@ -102,6 +104,7 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                 // 是全局符号，是 gp fp OR ARRAY?
                 RiscvReg::Reg dst = new RiscvReg::Reg(get_new_vreg_idx());
                 abuilder->create_LA(dst, gv->get_symbol());
+                abuilder->create_LW(dst, dst, 0);
                 this->mctx->get_function()->add_reg_mp(load, dst);
             } else if(auto lv = dynamic_cast<IR::AllocaInst*>(isrc)) {
                 // alloca 分配局部变量 包括常量和数组， 如果是常量
@@ -110,7 +113,7 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                 auto aty = lv->get_type();
                 RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
                 if(aty->is_array()) {
-
+                    // 数组的取值读得经过gep , 不用管
                 } else {
                     // this is saclar type 
                     if(aty->base_type == Int) {
@@ -163,24 +166,194 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
             }             
         } else if(auto store = dynamic_cast<IR::StoreInst*>(instr)) {
 
-//            else if(auto cv = dynamic_cast<IR::ConstantValue*>(isrc)) {
-//                // cv 
-//                RiscvReg::Reg dst;
-//                if(cv->get_type()->base_type == Int) {
-//                    dst = new RiscvReg::Reg(this->get_new_vreg_idx());
-//                    int iv = cv->get_value().iv;
-//                    abuilder->create_LI(dst, iv);
-//                } else {
-//                }
-//                this->mctx->get_function()->add_reg_mp(load, dst);
-//            }
+//          store 的来源有哪些？ stroe的目的的有哪些？（注：这里的store指的是ir的store指令）
+//              源：
+//                  1. 常量
+//                  2. 寄存器
+//              目的的：
+//                  1. 局部变量
+//                  2. 全局变量
+//                  3. gep来的地址
+            auto src = store->get_src();
+            auto src_ty = src->get_type();
+            auto dst = store->get_dst();
 
+            RiscvReg::Reg src_reg, dst_reg;
+
+            // 处理源
+            if(auto cv = dynamic_cast<IR::ConstantValue*>(src)) {
+                int const_v = cv->get_value().iv;
+                abuilder->create_LI(src_reg, const_v);
+            } else {
+                src_reg = this->mctx->get_function()->get_reg(src);
+            }
+
+            if(auto alloca_addr = dynamic_cast<IR::AllocaInst*>(dst)) {
+                auto sym = alloca_addr->get_name();
+                auto stack_offset = this->mctx->get_function()->get_symbol_bias(sym);
+                if(stack_offset > 2047 || stack_offset < -2048) {
+                    abuilder->create_LI(dst_reg, stack_offset);
+                    abuilder->create_ADD(dst_reg, RiscvReg::FP, dst_reg);
+                    // store 不用管类型，拿出来的时候要注意
+                    abuilder->create_SW(src_reg, dst_reg, 0);
+                } else {
+                    abuilder->create_SW(src_reg, RiscvReg::FP, stack_offset);
+                }
+            } else if(auto gep_addr = dynamic_cast<IR::GetElementPtrInst*>(dst)) {
+                dst_reg = this->mctx->get_function()->get_reg(gep_addr);
+                abuilder->create_SW(src_reg, dst_reg, 0);
+            } else if(auto gv_addr = dynamic_cast<IR::GlobalValue*>(dst)) {
+                auto sym = gv_addr->get_symbol();
+                dst_reg = this->mctx->get_function()->get_reg(gep_addr);
+                abuilder->create_LA(dst_reg, sym);
+                abuilder->create_SW(src_reg, dst_reg, 0);
+            }
         } else if(auto binary = dynamic_cast<IR::BinaryInst*>(instr)) {
             translate_binary(binary);
         } else if(auto convert = dynamic_cast<IR::ConvertInst*>(instr)) {
-
+            auto from_ty = convert->getsrc_type();
+            auto to_ty = convert->getdst_type();
+            auto src = convert->getsrc();
+            auto src_reg = this->mctx->get_function()->get_reg(src);
+            RiscvReg::Reg dst_reg;
+            if(from_ty->base_type == to_ty->base_type) {
+                // 保险，不可能到这
+                dst_reg = src_reg; 
+            } else {
+                if(from_ty->base_type == Int) {
+                    dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
+                    abuilder->create_FCVT_W_S(dst_reg, src_reg);
+                } else if(from_ty->base_type == Float) {
+                    dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+                    abuilder->create_FCVT_S_W(dst_reg, src_reg);
+                }
+            }
+            this->mctx->get_function()->add_reg_mp(convert, dst_reg);
         } else if(auto call = dynamic_cast<IR::CallInst*>(instr)) {
             // 返回值不管怎么样先放到一个虚拟寄存器中 a0 or fa0
+            // TODO tone of things
+            // gp cnt, fp cnt, 前8个放，超出的不管是啥都放的8位，多的根据sp向上偏移8位8位的加
+            // count the overflow arguments , and maintain the maximun
+            //
+            // func call 的实参可能来自哪里？
+            //      1. 常数
+            //      2. load -> reg  
+            //      3. gep --> 是个指针
+            //      4. Alloca   
+            //          4.1 base type
+            //          4.2 array type --> 也是个指针
+            //      4. reg 
+            auto called_func = call->get_func();
+            auto ret_ty = called_func->get_return_type();
+            auto args_value = call->get_args();
+            
+            int nr_args = args_value.size();
+
+            int gp_cnt = 0;
+            int fp_cnt = 0;
+            int ovfl_arg_regs = 0;
+
+            for(int i=0; i<nr_args; i++) {
+                auto val_i = args_value[i];
+                auto ty_val_i = args_value[i]->get_type();
+
+                // 从alloca来的， 必定是数组指针
+                if(auto arr_ptr = dynamic_cast<IR::AllocaInst*>(val_i)){
+                    // from alloca 
+                    // calculate the address 
+                    auto sym = arr_ptr->get_name();
+                    int stack_offset = this->mctx->get_function()->get_symbol_bias(sym);
+                    RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+                    if(stack_offset > 2047 || stack_offset < -2048) {
+                        abuilder->create_ADDI(dst, RiscvReg::FP, stack_offset);
+                    } else {
+                        abuilder->create_LI(dst, stack_offset);
+                        abuilder->create_ADD(dst, dst, RiscvReg::FP);
+                    }
+
+                    if(gp_cnt < 8) {
+                        abuilder->create_MV(RiscvReg::regs_arg[gp_cnt], dst);
+                    } else {
+                        int sp_bias = ovfl_arg_regs * 8;
+                        // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+                        if(sp_bias > 2047 || sp_bias < -2048) {
+                            // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
+                            abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
+                        } else {
+                            RiscvReg::Reg sp_bias_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                            abuilder->create_LI(sp_bias_reg, sp_bias);
+                            abuilder->create_ADD(sp_bias_reg, sp_bias_reg, RiscvReg::SP);
+                            abuilder->create_SD(dst, sp_bias_reg, 0);
+                        }
+                        ovfl_arg_regs++;
+                    }
+
+                    gp_cnt++;
+                } else if(auto rgep = dynamic_cast<IR::GetElementPtrInst*>(val_i)) {
+                    // from gep
+                    RiscvReg::Reg dst = this->mctx->get_function()->get_reg(rgep);
+
+                    if(gp_cnt < 8) {
+                        abuilder->create_MV(RiscvReg::regs_arg[gp_cnt], dst);
+                    } else {
+                        int sp_bias = ovfl_arg_regs * 8;
+                        // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+                        if(sp_bias > 2047 || sp_bias < -2048) {
+                            // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
+                            abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
+                        } else {
+                            RiscvReg::Reg sp_bias_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                            abuilder->create_LI(sp_bias_reg, sp_bias);
+                            abuilder->create_ADD(sp_bias_reg, sp_bias_reg, RiscvReg::SP);
+                            abuilder->create_SD(dst, sp_bias_reg, 0);
+                        }
+                        ovfl_arg_regs++;
+                    }
+
+                    gp_cnt++;
+                } else {
+                    // is base type
+                    RiscvReg::Reg dst = this->mctx->get_function()->get_reg(val_i);
+                    if(ty_val_i->base_type == Int) {
+                        if(gp_cnt < 8) {
+                            abuilder->create_MV(RiscvReg::regs_arg[gp_cnt], dst);
+                        } else {
+                            int sp_bias = ovfl_arg_regs * 8;
+                            // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+                            if(sp_bias > 2047 || sp_bias < -2048) {
+                                // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
+                                abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
+                            } else {
+                                RiscvReg::Reg sp_bias_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                                abuilder->create_LI(sp_bias_reg, sp_bias);
+                                abuilder->create_ADD(sp_bias_reg, sp_bias_reg, RiscvReg::SP);
+                                abuilder->create_SD(dst, sp_bias_reg, 0);
+                            }
+                            ovfl_arg_regs++;
+                        }
+                        gp_cnt++;
+                    }else {
+                        if(fp_cnt < 8) {
+                            abuilder->create_FMV_S(RiscvReg::fp_regs_arg[fp_cnt], dst);
+                        } else {
+                            int sp_bias = ovfl_arg_regs * 8;
+                            // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+                            if(sp_bias > 2047 || sp_bias < -2048) {
+                                // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
+                                abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
+                            } else {
+                                RiscvReg::Reg sp_bias_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                                abuilder->create_LI(sp_bias_reg, sp_bias);
+                                abuilder->create_ADD(sp_bias_reg, sp_bias_reg, RiscvReg::SP);
+                                abuilder->create_FSW(dst, sp_bias_reg, 0);
+                            }
+                            ovfl_arg_regs++;
+                        }
+                        fp_cnt++;
+                    }
+                }
+            }
+            this->mctx->get_function()->overflow_arguments = std::max(this->mctx->get_function()->overflow_arguments, ovfl_arg_regs);
         } else if(auto gep = dynamic_cast<IR::GetElementPtrInst*>(instr)) {
             // 翻译成 add 指令
             // 还要考虑全局的
@@ -188,36 +361,103 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
             Value* src = gep->get_indices()[0];
             std::string sym = gep->get_src()->get_name();
             // the base 
+            RiscvReg::Reg dst;
             if(auto ga = dynamic_cast<IR::GlobalValue*>(base_addr)) {
                 // from gv
-            } else {
-                // from local
-                int stack_offset = this->mctx->get_function()->get_symbol_bias(sym);
-                // RiscvReg::Reg base_addr_reg = this->mctx->get_function()->get_reg(src);
-                RiscvReg::Reg dst;
-                if(gep->get_type()->base_type == Int) {
-                    dst = new RiscvReg::Reg(this->get_new_vreg_idx());
-                    // check is imm 
-                    if(auto imm = dynamic_cast<IR::ConstantValue*>(src)) {
-                        // the bias
-                        int bias = stack_offset + imm->get_value().iv * 4;
-                            if( bias > 2047 || bias < -2048 ) {
-                                RiscvReg::Reg offset_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
-                                abuilder->create_LI(offset_dst, bias);
-                                abuilder->create_ADD(dst, RiscvReg::FP, offset_dst);
-                            } else {
-                                abuilder->create_ADDI(dst, RiscvReg::FP, bias);
-                            }
+                std::string gv_sym = ga->get_symbol();
+                RiscvReg::Reg gv_addr = new RiscvReg::Reg(this->get_new_vreg_idx());
+                abuilder->create_LLA(gv_addr, gv_sym);
+
+                dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+                // the bias imm or reg 
+                if(auto imm = dynamic_cast<IR::ConstantValue*>(src)) {
+                    // the bias
+                    int bias = imm->get_value().iv * 4;
+                    if( bias > 2047 || bias < -2048 ) {
+                        RiscvReg::Reg offset_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
+                        abuilder->create_LI(offset_dst, bias);
+                        abuilder->create_ADD(dst, RiscvReg::FP, offset_dst);
                     } else {
-                        // the bias 
-                        //  auto srge = this->mctx->get_function()->get_reg(src);
-                        // the base 
-                        
-                        // abuilder->create_ADD(dst, );
+                        abuilder->create_ADDI(dst, RiscvReg::FP, bias);
                     }
                     this->mctx->get_function()->add_reg_mp(gep, dst);
                 } else {
+                    // idx 不是立即数
+                    // get the bais from reg 
+                    auto bias_reg = this->mctx->get_function()->get_reg(src);
+                    // bias * 4 bias << 2
+                    abuilder->create_SLLI(bias_reg, bias_reg, 2);
+                    abuilder->create_ADD(dst, gv_addr, bias_reg);
+                    this->mctx->get_function()->add_reg_mp(gep, dst);
+                }
 
+            } else if(auto laddr = dynamic_cast<IR::AllocaInst*>(base_addr)) {
+                // from local
+                // TODO 还要看src是不是ptr type
+                int stack_offset = this->mctx->get_function()->get_symbol_bias(sym);
+                // RiscvReg::Reg base_addr_reg = this->mctx->get_function()->get_reg(src);
+
+                dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+                if(!laddr->get_type()->is_ptr()) {
+                    // check is imm 
+                    if(auto imm = dynamic_cast<IR::ConstantValue*>(src)) {
+                        // the bias
+                        int bias = stack_offset + (imm->get_value().iv << 2);
+                        if( bias > 2047 || bias < -2048 ) {
+                            RiscvReg::Reg offset_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
+                            abuilder->create_LI(offset_dst, bias);
+                            abuilder->create_ADD(dst, RiscvReg::FP, offset_dst);
+                        } else {
+                            abuilder->create_ADDI(dst, RiscvReg::FP, bias);
+                        }
+                        this->mctx->get_function()->add_reg_mp(gep, dst);
+                    } else {
+                        // idx is not const
+                        auto bias_reg = this->mctx->get_function()->get_reg(src);
+                        auto base_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                        abuilder->create_SLLI(bias_reg, bias_reg, 2);
+                        if(stack_offset > 2047 || stack_offset  < -2048) {
+                            abuilder->create_LI(base_reg, stack_offset);
+                            abuilder->create_ADD(dst, bias_reg, base_reg);
+                            abuilder->create_ADD(dst, RiscvReg::FP, dst);
+                        } else {
+                            abuilder->create_ADDI(dst, base_reg, stack_offset);
+                            abuilder->create_ADD(dst, RiscvReg::FP, dst);
+                        }
+                        this->mctx->get_function()->add_reg_mp(gep, dst);
+                    }
+                } else {
+                    // TODO the case of ptr src type
+                    // load double and then get the bias
+                    auto ptr_addr = new RiscvReg::Reg(this->get_new_vreg_idx());
+                    if(stack_offset > 2047 || stack_offset  < -2048) {
+                        abuilder->create_LI(ptr_addr, stack_offset);
+                        abuilder->create_ADD(ptr_addr, ptr_addr, RiscvReg::FP);
+                        abuilder->create_LD(ptr_addr, ptr_addr, 0);
+                    } else {
+                        abuilder->create_LD(ptr_addr, RiscvReg::FP, stack_offset);
+                    }
+                    // check bias is const
+                    if(auto imm = dynamic_cast<IR::ConstantValue*>(src)) {
+                        // the bias
+                        int bias = imm->get_value().iv << 2;
+                        if( bias > 2047 || bias < -2048 ) {
+                            RiscvReg::Reg offset_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
+                            abuilder->create_LI(offset_dst, bias);
+                            abuilder->create_ADD(dst, ptr_addr, offset_dst);
+                        } else {
+                            abuilder->create_ADDI(dst, ptr_addr, bias);
+                        }
+                        this->mctx->get_function()->add_reg_mp(gep, dst);
+                    } else {
+                        // idx is not const
+                        auto bias_reg = this->mctx->get_function()->get_reg(src);
+                        // auto base_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                        abuilder->create_SLLI(bias_reg, bias_reg, 2);
+                        // base is ptr addr 
+                        abuilder->create_ADD(dst, ptr_addr, bias_reg);
+                        this->mctx->get_function()->add_reg_mp(gep, dst);
+                    }
                 }
             }
 
@@ -229,6 +469,23 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                 auto jump = this->abuilder->create_J(this->mctx->get_function()->epilogue_bb);
             } else {
                 // TODO store to a0 or f0
+                if(this->mctx->get_function()->get_return_type()->base_type == Int) {
+                    auto ret_v = ret->get_ret_val();
+                    auto ret_reg = this->mctx->get_function()->get_reg(ret_v);
+                    if(ret_reg.is_gp()) {
+                        abuilder->create_MV(RiscvReg::A0, ret_reg);
+                    } else {
+                        abuilder->create_FMV_X_W(RiscvReg::A0, ret_reg);
+                    }
+                } else if( this->mctx->get_function()->get_return_type()->base_type == Float ) {
+                    auto ret_v = ret->get_ret_val();
+                    auto ret_reg = this->mctx->get_function()->get_reg(ret_v);
+                    if(!ret_reg.is_gp()) {
+                        abuilder->create_FMV_S(RiscvReg::FP10, ret_reg);
+                    } else {
+                        abuilder->create_FMV_W_X(RiscvReg::FP10, ret_reg);
+                    }
+                }
             }
         } else if(auto branch = dynamic_cast<IR::BranchInst*>(instr)) {
             auto idbb = branch->get_dst_bb(); 
@@ -241,13 +498,15 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
             auto true_mbb = this->mctx->get_function()->get_mbb(true_bb_idx);
             abuilder->create_BNEZ(cond_res_reg, true_mbb);
         } else if(auto phi = dynamic_cast<IR::PhiInst*>(instr)) {
-            // 在 ir中消除
+            // 在 ir中消除，后端不管
             continue;
         } else {
             // Handle unknown instruction type
             std::cerr << error << "Warning: Unknown instruction type in basic block" << std::endl;
         }
     }
+
+    this->mctx->set_basic_block(nullptr);
 }
 
 void ASMGen::translate_binary(IR::BinaryInst* binary) {
@@ -650,9 +909,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
     this->mctx->get_function()->add_reg_mp(binary, dst);
 }
 
-void ASMGen::gen_prolo_epil() {
+void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
+
 }
-
-
-
 }
