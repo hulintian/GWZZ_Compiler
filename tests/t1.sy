@@ -7,7 +7,7 @@ void b( ) {
     // putint(sum);
     // putline();
     float fc = 2.2;
-    int cc =  2 + fc;
+    int cc =  2 + ttttt[0][0];
     if(cc && fc) {
         int cc = 33333;
         // return fc;
@@ -38,7 +38,7 @@ int main( ) {
     // putintl(c);
     // b();
     // add(c, arr[0][0]);
-    // arr[0][0] = 11111;
+    arr[0][0] = 11111;
     //while(c==1 && arr[0][0] == 1) {
     //    b();
     //    break;
