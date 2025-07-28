@@ -3,6 +3,7 @@
 #include "IR/BasicBlock.hpp"
 #include "IR/Function.hpp"
 #include "IR/GlobalValue.hpp"
+#include "IR/Instructions.hpp"
 #include "IR/Module.hpp"
 #include "backend/MFunction.hpp"
 #include "backend/MModule.hpp"
@@ -48,6 +49,8 @@ public:
     void translate_func(IR::Function* func);
     void gen_prolo_epil();
     void translate_bb(IR::BasicBlock* bb);
+
+    void translate_binary(IR::BinaryInst* binst);
 
     int get_new_bb_idx() { return n_bb_idxs++; }
     int get_new_vreg_idx() { return vreg_idx++; }

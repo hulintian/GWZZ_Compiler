@@ -317,7 +317,15 @@ public:
             case BinaryOp::Shl:    if(ty->base_type == 1) { bit = BinaryInstType::shl; } else { bit = BinaryInstType::shl; }; break;
         }
 
-        auto instr = new BinaryInst(ty, bop, n_lhs, n_rhs, name, bit,this->get_cur_bb() );
+        bool is_cmp = is_cmp_op(bop);
+
+        Instruction* instr;
+        if(is_cmp) {
+            // cmp instr should put the res to int reg
+            instr = new BinaryInst(this->get_base_type(Int), bop, n_lhs, n_rhs, name, bit,this->get_cur_bb() );
+        } else {
+            instr = new BinaryInst(ty, bop, n_lhs, n_rhs, name, bit,this->get_cur_bb() );
+        }
 
         this->get_cur_bb()->add_instr(instr);
 
