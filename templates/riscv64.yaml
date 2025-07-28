@@ -85,7 +85,7 @@ InstrGroups:
 
   - Category: BranchU
     Description: Branch Instruction, condition is unary operations
-    Operands: [rs1, rs2]
+    Operands: [rs1]
     otherargs:     # offset
       - { type:  MachineBasicBlock*, name : dst_bb}
     Instructions: [bez, bnez, bgtz, bltz, bgez, blze]
@@ -157,6 +157,4 @@ InstrGroups:
   - Category: FMV
     Description: w_x 浮点寄存器搬运到整数寄存器， x_w整数寄存器搬运到浮点寄存器
     Operands: [rd, rs1]
-    otherargs: 
-      - {type: int32_t, name: offset}
     Instructions: [fmv_s, fmv_w_x, fmv_x_w]
