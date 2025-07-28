@@ -33,6 +33,8 @@ enum MachineInstrType {
     LH,
     LW,
     LD, 
+// Move
+    MV, 
 // LLA
     LLA,
     LA, 
@@ -407,6 +409,47 @@ public:
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
     int32_t _offset;
+};
+// Move
+
+class MoveInst : public MachineInstr {
+public:
+    MoveInst( MachineInstrType mty, MachineBasicBlock* p, RiscvReg::Reg rd , RiscvReg::Reg rs1 
+        /* User Code Start: other Move args */
+
+        /* User Code End: other Move args */
+    ) : MachineInstr(mty, p), _rd(rd) , _rs1(rs1) 
+        /* User Code Start: other Move init construct */
+
+        /* User Code End: other Move init construct */
+
+    {
+        /* User Code Start: MoveInst construct function */
+
+        /* User Code End: Move_Inst construct function */
+    }
+
+    std::vector<RiscvReg::Reg*> get_regs() override { return { &_rd, &_rs1 }; }
+
+    std::string to_asm() override { 
+        std::ostringstream oss; 
+        switch(this->mity) {
+            case MachineInstrType::MV : 
+                oss << "mv"
+                    << " " << _rd<< ", " << _rs1
+                ; 
+                break;default : break;
+        }
+        return oss.str();
+    }
+
+    /* User Code Start: Move_Inst methods */
+
+    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
+    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    /* User Code End: Move_Inst methods */
+    RiscvReg::Reg _rd;
+    RiscvReg::Reg _rs1;
 };
 // LLA
 
