@@ -22,6 +22,11 @@ public:
         return n2fmap.find(fn) != n2fmap.end();
     }
 
+    MachineFunction* get_func(std::string fn) {
+        assert(has_func(fn) && "func not exists");
+        return n2fmap[fn];
+    }
+
     void addfuncs(MachineFunction* nmfunc) {
         assert(!has_func(nmfunc->_name) && "Already has func" );
         this->funcs.push_back(nmfunc) ;

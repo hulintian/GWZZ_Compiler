@@ -1,6 +1,7 @@
 #pragma once 
 #include <cassert>
 #include <cstdint>
+#include <iostream>
 #include <ostream>
 #include <string>
 #include <set>
@@ -10,6 +11,7 @@
 #include "IR/Value.hpp"
 #include "common/regarch.hpp"
 #include "common/type.hpp"
+#include "common/utils.hpp"
 
 namespace backend {
 
@@ -47,6 +49,9 @@ public:
         v2r[v] = reg;
     }
     RiscvReg::Reg get_reg(Value* v) {
+        if(!has_reg(v)) {
+            std::cerr << error << "Not has value " << v->get_name() << "\n";
+        }
         assert(has_reg(v) && "Value has no register mapping");
         return v2r[v];
     }
@@ -85,8 +90,8 @@ public:
 
     Type* get_return_type() { return _ret_ty; }
     
-    friend std::ostream& operator<<(std::ostream& os, const MachineFunction& mf) {
-        os << mf._name;
+    friend std::ostream& operator<<(std::ostream& os, const MachineFunction* mf) {
+        os << mf->_name;
         return os;
     }
 
