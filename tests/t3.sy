@@ -3,13 +3,12 @@ const int g_c = 1 + 2;
 
 void bar() {
 
-
 }
 
 int main() {
     const int c_lv = 3 + 3;
     arr[1] = 0xafffffff;
-    putintl(c_lv);
+    // putintl(c_lv);
     return 0;
 }
 
