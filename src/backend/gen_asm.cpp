@@ -380,6 +380,7 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     }
                 }
             }
+            // 统计需要给超出的参数预留的栈空间
             this->mctx->get_function()->overflow_arguments = std::max(this->mctx->get_function()->overflow_arguments, ovfl_arg_regs);
 
             abuilder->create_CALL(mfunc);
@@ -517,7 +518,11 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                         ret_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                         abuilder->create_LI(ret_reg, ret_cv->get_value().iv);
                     } else {
-                        ret_reg = this->mctx->get_function()->get_reg(ret_v);
+                        if(ret_v) {
+                            ret_reg = this->mctx->get_function()->get_reg(ret_v);
+                        } else {
+                            ret_reg = RiscvReg::ZERO;
+                        }
                     }
                     if(ret_reg.is_gp()) {
                         abuilder->create_MV(RiscvReg::A0, ret_reg);
@@ -644,7 +649,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
             }
         } else {
         // is lv
-            lhs_reg = this->mctx->get_function()->get_reg(lhs);
+            lhs_reg = this->mctx->get_function()->get_reg(rhs);
         }
     }
 
@@ -958,6 +963,175 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
 }
 
 void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
+// need to calculate the stack size then mv the sp
+//
+// 1. write prologue bb
+    auto prologue = mfunc->prologue_bb;
+    this->mctx->set_basic_block(prologue);
+    int stack_size = -mfunc->get_stack_size();
+    if(stack_size > 2047 || stack_size < -2048) {
+        RiscvReg::Reg stack_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+        abuilder->create_LI(stack_size_reg, stack_size);
+        abuilder->create_ADD(RiscvReg::SP, RiscvReg::SP, stack_size_reg);
+    } else {
+        abuilder->create_ADDI(RiscvReg::SP, RiscvReg::SP, stack_size);
+    }
 
+    // save fp 
+    int fp_bias = -stack_size - 8;
+    if(fp_bias > 2047 || fp_bias < -2048) {
+        RiscvReg::Reg fp_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+        abuilder->create_LI(fp_size_reg, fp_bias);
+        abuilder->create_ADD(fp_size_reg, RiscvReg::SP, fp_size_reg);
+        abuilder->create_SD(RiscvReg::FP, fp_size_reg, 0);
+    } else {
+        abuilder->create_SD(RiscvReg::FP, RiscvReg::SP, fp_bias);
+    }
+    // save ra
+    int ra_bias = -stack_size - 16;
+    if(ra_bias > 2047 || ra_bias < -2048) {
+        RiscvReg::Reg ra_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+        abuilder->create_LI(ra_size_reg, ra_bias);
+        abuilder->create_ADD(ra_size_reg, RiscvReg::SP, ra_size_reg);
+        abuilder->create_SD(RiscvReg::RA, ra_size_reg, 0);
+    } else {
+        abuilder->create_SD(RiscvReg::RA, RiscvReg::SP, ra_bias);
+    }
+
+    // save old sp to fp
+    int rev_stack_size = mfunc->get_stack_size();
+    if(rev_stack_size > 2047 || rev_stack_size < -2048) {
+        RiscvReg::Reg rev_stack_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+        abuilder->create_LI(rev_stack_size_reg, rev_stack_size);
+        abuilder->create_ADD(RiscvReg::FP, RiscvReg::SP, rev_stack_size_reg);
+    } else {
+        abuilder->create_ADDI(RiscvReg::FP, RiscvReg::SP, rev_stack_size);
+    }
+
+    // TODO 
+    //      1. move arg to stack memeory
+    //      2. save spill regs 
+    //      3. save use save regs
+
+    // d_s => double or single == true use lw 
+    auto mv_to_mm_imm = [&](RiscvReg::Reg src, RiscvReg::Reg dst, int imm, bool d_s) {
+        // fp to gp ? store word double?
+        if(imm > 2047 || imm < -2048) {
+            RiscvReg::Reg imm_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+            abuilder->create_ADD(dst, dst, imm_reg);
+            if(src.is_gp()) {
+                if(d_s) {
+                    abuilder->create_SD(src, dst, 0);
+                } else {
+                    abuilder->create_SW(src, dst, 0);
+                }
+            }else {
+                // is float p
+                abuilder->create_FSW(src, dst, 0);
+            }
+        } else {
+            if(src.is_gp()) {
+                if(d_s) {
+                    abuilder->create_SD(src, dst, imm);
+                } else {
+                    abuilder->create_SW(src, dst, imm);
+                }
+            }else {
+                // is float p
+                abuilder->create_FSW(src, dst, imm);
+            }
+        }
+    };
+    
+    // 1. 处理入参，有几个参数对应前几个alloca指令
+    int parm_nr = mfunc->arg_types.size();
+    auto arg_types = mfunc->arg_types;
+    auto all_args_name= mfunc->args_name;
+    int gp_parm_cnt = 0;
+    int fp_parm_cnt = 0;
+    int ovf_arg_cnt = 0;
+    for(int i=0; i<parm_nr; i++) {
+        // the bias
+        int p_bias = mfunc->get_symbol_bias(all_args_name[i]);
+        if(arg_types[i]->is_ptr()) {
+            if(gp_parm_cnt < 8) {
+                mv_to_mm_imm(RiscvReg::regs_arg[gp_parm_cnt], RiscvReg::FP, p_bias, true);
+            } else {
+                // get from fp mv up 
+                int fpp_bias = ovf_arg_cnt * 8; 
+                RiscvReg::Reg tem_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                if(fpp_bias > 2047 || fpp_bias < -2048) {
+                    abuilder->create_LI(tem_reg, fpp_bias);
+                    abuilder->create_ADD(tem_reg, RiscvReg::FP, tem_reg);
+                    abuilder->create_LD(tem_reg, tem_reg, 0);
+                } else {
+                    abuilder->create_LD(tem_reg, RiscvReg::FP, fpp_bias);
+                }
+                mv_to_mm_imm(tem_reg, RiscvReg::FP, p_bias, true);
+                ovf_arg_cnt++;
+            }
+            gp_parm_cnt++;
+        } else {
+            if(arg_types[i]->base_type == Int) {
+                // a_x
+                if(gp_parm_cnt < 8) {
+                    mv_to_mm_imm(RiscvReg::regs_arg[gp_parm_cnt], RiscvReg::FP, p_bias, false);
+                } else {
+                    int fpp_bias = ovf_arg_cnt * 8; 
+                    RiscvReg::Reg tem_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                    if(fpp_bias > 2047 || fpp_bias < -2048) {
+                        abuilder->create_LI(tem_reg, fpp_bias);
+                        abuilder->create_ADD(tem_reg, RiscvReg::FP, tem_reg);
+                        abuilder->create_LW(tem_reg, tem_reg, 0);
+                    } else {
+                        abuilder->create_LW(tem_reg, RiscvReg::FP, fpp_bias);
+                    }
+                    mv_to_mm_imm(tem_reg, RiscvReg::FP, p_bias, false);
+                    ovf_arg_cnt++;
+                }
+                gp_parm_cnt++;
+            } else {
+                // fa_x
+                if(fp_parm_cnt < 8) {
+                    mv_to_mm_imm(RiscvReg::fp_regs_arg[fp_parm_cnt], RiscvReg::FP, p_bias, false);
+                } else {
+                    int fpp_bias = ovf_arg_cnt * 8; 
+                    RiscvReg::Reg tem_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                    if(fpp_bias > 2047 || fpp_bias < -2048) {
+                        abuilder->create_LI(tem_reg, fpp_bias);
+                        abuilder->create_ADD(tem_reg, RiscvReg::FP, tem_reg);
+                        abuilder->create_LW(tem_reg, tem_reg, 0);
+                    } else {
+                        abuilder->create_LW(tem_reg, RiscvReg::FP, fpp_bias);
+                    }
+                    mv_to_mm_imm(tem_reg, RiscvReg::FP, p_bias, false);
+                    ovf_arg_cnt++;
+                }
+                fp_parm_cnt++;
+            }
+        }
+    }
+
+
+    abuilder->create_J(mfunc->get_entry_bb());
+
+    // TODO 处理尾声基本块
+    //      1. 恢复现场
+
+    auto epilogue_bb =  mfunc->epilogue_bb;
+    this->mctx->set_basic_block(epilogue_bb);
+    // 先恢复现场
+    
+    // 恢复fp ra sp
+    abuilder->create_LD(RiscvReg::RA, RiscvReg::FP, -16);
+    abuilder->create_LD(RiscvReg::FP, RiscvReg::FP, -8);
+    if(rev_stack_size > 2047 || rev_stack_size < -2048) {
+        RiscvReg::Reg rev_stack_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+        abuilder->create_LI(rev_stack_size_reg, rev_stack_size);
+        abuilder->create_ADD(RiscvReg::SP, RiscvReg::SP, rev_stack_size_reg);
+    } else {
+        abuilder->create_ADDI(RiscvReg::SP, RiscvReg::SP, rev_stack_size);
+    }
+    abuilder->create_RET();
 }
 }
