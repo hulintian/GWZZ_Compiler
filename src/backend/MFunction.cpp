@@ -28,11 +28,12 @@ void MachineFunction::set_epilogue_bb(MachineBasicBlock* mbb) {
 }
 
 void MachineFunction::dump_asm(std::ostream& out) {
+    out << "    .align 1\n";
     out << this->_name << ": \n";
     this->prologue_bb->dump_asm(out);
     for(auto bb: bbs) {
         bb->dump_asm(out);
-        out << "\n";
+        //out << "\n";
     }
     this->epilogue_bb->dump_asm(out);
 }

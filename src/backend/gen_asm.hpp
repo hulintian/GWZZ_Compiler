@@ -35,6 +35,13 @@ public:
 
         // gv 直接搬运过来
         this->mctx->get_module()->global_items = std::move(m->get_gvs());
+        for(auto glit : this->get_cur_module()->global_items) {
+            if(glit->is_bss()) {
+                this->mctx->get_module()->bss_items.push_back(glit);
+            } else {
+                this->mctx->get_module()->data_items.push_back(glit);
+            }
+        }
 
         for(auto func : m->get_funcs()) {
             translate_func(func);
