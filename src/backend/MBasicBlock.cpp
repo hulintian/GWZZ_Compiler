@@ -10,7 +10,7 @@ void MachineBasicBlock::dump_asm(std::ostream& out) {
     for(auto i : m_instrs) {
         out << "    " << i->to_asm() << "\n";
     }
-    out << "\n";
+    // out << "\n";
 }
 
 }

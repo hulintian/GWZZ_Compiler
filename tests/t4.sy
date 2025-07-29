@@ -49,6 +49,7 @@ void main(){
     a = 1;
     b = a + 2*9;
 
-    putint(func(a, b));
-    putline();
+    func(a,b);
+    // putint(func(a, b));
+    // putline();
 }
