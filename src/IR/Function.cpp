@@ -65,6 +65,7 @@ void CFG::regen_cfg() {
                 auto next_bb = bi->get_dst_bb();
                 succ_bb[top->get_bb_idx()].insert(next_bb->get_bb_idx());
                 prev_bb[next_bb->get_bb_idx()].insert(top->get_bb_idx());
+
                 stk.push(next_bb);
             } else if(std::holds_alternative<CondBranchInst*>(*br_inst)) {
                 auto cbi = std::get<CondBranchInst*>(*br_inst);
@@ -75,6 +76,9 @@ void CFG::regen_cfg() {
 
                 prev_bb[next_t_bb->get_bb_idx()].insert(top->get_bb_idx());
                 prev_bb[next_f_bb->get_bb_idx()].insert(top->get_bb_idx());
+
+                stk.push(next_t_bb);
+                stk.push(next_f_bb);
             }
         }
     }

@@ -32,20 +32,20 @@ public:
 
     void addfuncs(MachineFunction* nmfunc) {
         assert(!has_func(nmfunc->_name) && "Already has func" );
-        this->funcs.push_back(nmfunc) ;
+        this->funcs.push_back(nmfunc);
         n2fmap[nmfunc->_name] = nmfunc;
     }
 
     std::string dump_gvs() {
         // return "gv, waiting to complete";
         std::stringstream oss;
-        
         // has data gvs 
         if(this->data_items.size() > 0) {
             oss << "    .data\n";
             oss << "    .align 3\n";
         }
         for(auto gv : this->data_items) {
+            oss << "    .globl " << gv->get_name() << "\n";
             if(gv->get_type().is_array()) {
                 int n = gv->get_type().nr_elems();
                 auto &arr_val = gv->get_var()->arr_val;
@@ -58,14 +58,12 @@ public:
                         oss << "    .word 0\n";
                     }
                 }
-
             } else {
                 unsigned gv_val = (unsigned)gv->get_var()->val->iv;
                 oss << gv->get_symbol() << ":" << "\n";
                 oss << "    .word " << gv_val << "\n";
             }
         }
-
         // has bss gvs
         if(this->bss_items.size() > 0) {
             oss << "    .bss\n";
@@ -81,7 +79,6 @@ public:
                 oss << "4\n";
             }
         }
-
         return oss.str();
     }
 
@@ -100,5 +97,4 @@ public:
         }
     }
 };
-
 }

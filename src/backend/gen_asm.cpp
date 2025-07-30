@@ -3,6 +3,7 @@
 #include "IR/Function.hpp"
 #include "IR/GlobalValue.hpp"
 #include "IR/Instructions.hpp"
+#include "backend/LinearRegAllocator.hpp"
 #include "backend/MFunction.hpp"
 #include "common/defines.hpp"
 #include "common/regarch.hpp"
@@ -84,10 +85,15 @@ void ASMGen::translate_func(IR::Function* func) {
         }
         // translate the bb
         translate_bb(func->get_cfg()->idx2bb[bi]);
-        std::cerr << "Translate bb " << bi << std::endl; 
+        // std::cerr << "Translate bb " << bi << std::endl; 
     }
 
     // TODO reg alloca 
+    RegAllocator *regallo = new RegAllocator(mfunc);
+    mfunc->allocator = regallo;
+
+    regallo->live_interval_analysis();
+    regallo->plot_reg_interval();
     
     // gen prologue and epilogue
     this->gen_prolo_epil(this->mctx->get_function());
@@ -478,15 +484,15 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     } else {
                         // idx is not const
                         auto bias_reg = this->mctx->get_function()->get_reg(src);
-                        auto base_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                         abuilder->create_SLLI(bias_reg, bias_reg, 2);
                         if(stack_offset > 2047 || stack_offset  < -2048) {
+                            auto base_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                             abuilder->create_LI(base_reg, stack_offset);
                             abuilder->create_ADD(dst, bias_reg, base_reg);
                             abuilder->create_ADD(dst, RiscvReg::FP, dst);
                         } else {
-                            abuilder->create_ADDI(dst, base_reg, stack_offset);
-                            abuilder->create_ADD(dst, RiscvReg::FP, dst);
+                            abuilder->create_ADDI(dst, RiscvReg::FP, stack_offset);
+                            abuilder->create_ADD(dst, dst, bias_reg);
                         }
                         this->mctx->get_function()->add_reg_mp(gep, dst);
                     }
@@ -1001,7 +1007,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
 
 void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
 // need to calculate the stack size then mv the sp
-//
+// 这里留下几个临时寄存器般砖, 用T0搬
 // 1. write prologue bb
     auto prologue = mfunc->prologue_bb;
     this->mctx->set_basic_block(prologue);
@@ -1017,7 +1023,7 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
     // save fp 
     int fp_bias = -stack_size - 8;
     if(fp_bias > 2047 || fp_bias < -2048) {
-        RiscvReg::Reg fp_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+        RiscvReg::Reg fp_size_reg = RiscvReg::T0;
         abuilder->create_LI(fp_size_reg, fp_bias);
         abuilder->create_ADD(fp_size_reg, RiscvReg::SP, fp_size_reg);
         abuilder->create_SD(RiscvReg::FP, fp_size_reg, 0);
@@ -1027,7 +1033,7 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
     // save ra
     int ra_bias = -stack_size - 16;
     if(ra_bias > 2047 || ra_bias < -2048) {
-        RiscvReg::Reg ra_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+        RiscvReg::Reg ra_size_reg = RiscvReg::T0;
         abuilder->create_LI(ra_size_reg, ra_bias);
         abuilder->create_ADD(ra_size_reg, RiscvReg::SP, ra_size_reg);
         abuilder->create_SD(RiscvReg::RA, ra_size_reg, 0);
@@ -1038,7 +1044,7 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
     // save old sp to fp
     int rev_stack_size = mfunc->get_stack_size();
     if(rev_stack_size > 2047 || rev_stack_size < -2048) {
-        RiscvReg::Reg rev_stack_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+        RiscvReg::Reg rev_stack_size_reg = RiscvReg::T0;
         abuilder->create_LI(rev_stack_size_reg, rev_stack_size);
         abuilder->create_ADD(RiscvReg::FP, RiscvReg::SP, rev_stack_size_reg);
     } else {
@@ -1054,7 +1060,8 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
     auto mv_to_mm_imm = [&](RiscvReg::Reg src, RiscvReg::Reg dst, int imm, bool d_s) {
         // fp to gp ? store word double?
         if(imm > 2047 || imm < -2048) {
-            RiscvReg::Reg imm_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+            RiscvReg::Reg imm_reg = RiscvReg::T0;
+            abuilder->create_LI(imm_reg, imm);
             abuilder->create_ADD(dst, dst, imm_reg);
             if(src.is_gp()) {
                 if(d_s) {
@@ -1096,7 +1103,7 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
             } else {
                 // get from fp mv up 
                 int fpp_bias = ovf_arg_cnt * 8; 
-                RiscvReg::Reg tem_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                RiscvReg::Reg tem_reg = RiscvReg::T1;
                 if(fpp_bias > 2047 || fpp_bias < -2048) {
                     abuilder->create_LI(tem_reg, fpp_bias);
                     abuilder->create_ADD(tem_reg, RiscvReg::FP, tem_reg);
@@ -1115,7 +1122,7 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
                     mv_to_mm_imm(RiscvReg::regs_arg[gp_parm_cnt], RiscvReg::FP, p_bias, false);
                 } else {
                     int fpp_bias = ovf_arg_cnt * 8; 
-                    RiscvReg::Reg tem_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                    RiscvReg::Reg tem_reg = RiscvReg::T1;
                     if(fpp_bias > 2047 || fpp_bias < -2048) {
                         abuilder->create_LI(tem_reg, fpp_bias);
                         abuilder->create_ADD(tem_reg, RiscvReg::FP, tem_reg);
@@ -1133,7 +1140,7 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
                     mv_to_mm_imm(RiscvReg::fp_regs_arg[fp_parm_cnt], RiscvReg::FP, p_bias, false);
                 } else {
                     int fpp_bias = ovf_arg_cnt * 8; 
-                    RiscvReg::Reg tem_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                    RiscvReg::Reg tem_reg = RiscvReg::T1;
                     if(fpp_bias > 2047 || fpp_bias < -2048) {
                         abuilder->create_LI(tem_reg, fpp_bias);
                         abuilder->create_ADD(tem_reg, RiscvReg::FP, tem_reg);
@@ -1163,7 +1170,7 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
     abuilder->create_LD(RiscvReg::RA, RiscvReg::FP, -16);
     abuilder->create_LD(RiscvReg::FP, RiscvReg::FP, -8);
     if(rev_stack_size > 2047 || rev_stack_size < -2048) {
-        RiscvReg::Reg rev_stack_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+        RiscvReg::Reg rev_stack_size_reg = RiscvReg::T0;
         abuilder->create_LI(rev_stack_size_reg, rev_stack_size);
         abuilder->create_ADD(RiscvReg::SP, RiscvReg::SP, rev_stack_size_reg);
     } else {

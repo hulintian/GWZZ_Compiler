@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <vector>
 #include "IR/Value.hpp"
+#include "backend/LinearRegAllocator.hpp"
 #include "common/regarch.hpp"
 #include "common/type.hpp"
 #include "common/utils.hpp"
@@ -46,6 +47,8 @@ public:
 
     std::map<Value*, RiscvReg::Reg> v2r;
 
+    RegAllocator* allocator;
+
     bool has_reg(Value* v) { return v2r.find(v) != v2r.end(); }
     void add_reg_mp(Value* v, RiscvReg::Reg reg) {
         assert(!has_reg(v) && "Value already has register mapping");
@@ -69,6 +72,7 @@ public:
     }
 
     MachineBasicBlock* get_entry_bb() { return entry_bb; }
+
     void set_entry_bb(MachineBasicBlock* ebb) { entry_bb = ebb; }
 
     bool has_mbb(int idx) { return idx_bb_mp.find(idx) != idx_bb_mp.end(); }
@@ -78,7 +82,9 @@ public:
     void set_prologue_bb(MachineBasicBlock* pbb);
     void set_epilogue_bb(MachineBasicBlock* ebb);
 
+    // 这个stack_size只是 fp、ra和alloca的空间，后面还需要加上为spill的、S_x的、和超出的参数分配的空间
     int32_t get_stack_size() {return stack_size;}
+
     void set_stack_size(int32_t stks) { this->stack_size = stks; }
 
     bool has_symbol(std::string s) { return symbol2bias.find(s) != symbol2bias.end(); }

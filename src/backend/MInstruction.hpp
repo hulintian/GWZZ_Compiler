@@ -140,6 +140,9 @@ public:
         MachineInstrType mity;
         MachineBasicBlock* parent;
 
+        // 根据dfs的顺序到给指令的序号
+        unsigned long long time = 0;
+
         MachineInstr(MachineInstrType ty, MachineBasicBlock* p): mity(ty), parent(p) {}
 };
 // IArith
