@@ -1,8 +1,10 @@
 #pragma once 
 
+#include "common/utils.hpp"
 #include <ostream>
 #include <list>
 #include <string>
+#include <algorithm>
 namespace backend {
 
 class MachineInstr;
@@ -26,6 +28,11 @@ public:
         return os;
     }
     void dump_asm(std::ostream& out);
+
+    // 在 instr 之前插入
+    void insert_instr_before(MachineInstr* pos, MachineInstr* to_insert);
+    // 在 instr 之后插入
+    void insert_instr_after(MachineInstr* pos, MachineInstr* to_insert);
 };
 
 }

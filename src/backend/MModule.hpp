@@ -94,7 +94,7 @@ public:
         os << "    .align 3\n";
         os << "    .globl main\n";
         os << "    .text\n";
-        // os << "\n";
+         os << "\n";
         for(auto f : funcs) {
             f->dump_asm(os); 
         }
