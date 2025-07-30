@@ -57,6 +57,11 @@ public:
     IR::Function* get_cur_func() { return ctx->get_current_function(); }
     IR::BasicBlock* get_cur_bb() { return ctx->get_current_basic_block(); }
     IR::Module* get_cur_module() { return ctx->get_current_module(); }
+
+    //by Sasara
+    IR::IRBuilder* get_ir_builder() const {
+        return builder;
+    }
 };
 
 }
