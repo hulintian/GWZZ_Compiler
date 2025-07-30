@@ -4,6 +4,7 @@
 #include "common/utils.hpp"
 //User Code .Sasara
 #include "IR/Function.hpp"
+#include <iostream>
 //User Code .Sasara
 namespace IR {
 
@@ -11,12 +12,17 @@ void BasicBlock::dump(std::ostream& out) {
     out << this->bb_label  << "\n";
     // << std::to_string(this->get_bb_idx())
     for(auto i : this->get_intrs()) {
-         print_indent(out, 4);
-         out << i->to_str() 
-             << '\n';
+        assert(i->get_parent() == this && "Instruction's parent pointer is inconsistent!");
+        print_indent(out, 4);
+        out << i->to_str() 
+            << '\n';
     }
 }
 //User Code Start. Sasara
+void BasicBlock::add_instr(Instruction* i) {
+    this->get_intrs().push_back(i);
+    i->set_parent(this);
+}
 Instruction* BasicBlock::get_terminator() const{
     if (_instrs.empty()) {
         return nullptr;
@@ -49,14 +55,24 @@ void BasicBlock::remove_predecessor(BasicBlock* bb){
 void BasicBlock::add_predecessor(BasicBlock* bb){
     _parent->get_cfg()->add_predecessor(this,bb);
 }
-void BasicBlock::remove_instr(Instruction* inst) {
-    //迭代器find
+Instruction* BasicBlock::remove_instr(Instruction* inst) {
+    std::cout << "  [ERASE] Find result for " << inst->to_str() << ": ";
     auto it = std::find(_instrs.begin(), _instrs.end(), inst);
     if (it != _instrs.end()) {
-        _instrs.erase(it);//指令可能还会重新insert,所以不delete
-    } else {
-        assert(false && "Instruction to be removed not found in BasicBlock!");
+        std::cout << "FOUND!" << std::endl;
+        _instrs.erase(it);
+        return inst;
+    }else{
+        std::cout << "NOT FOUND!" << std::endl;
     }
+    inst->set_parent(nullptr);
+    return nullptr;
+}
+void BasicBlock::delete_instr(Instruction* inst){
+    if (!inst) return;
+    inst->sever_all_uses();
+    this->remove_instr(inst);
+    delete inst;
 }
 
 void BasicBlock::add_instr_before_terminator(Instruction* inst) {
@@ -70,6 +86,10 @@ void BasicBlock::add_instr_before_terminator(Instruction* inst) {
     //更新信息
     inst->set_parent(this);
     _instrs.insert(insert_pos, inst);
+}
+void BasicBlock::add_instruction_at_front(Instruction* inst) {
+    inst->set_parent(this);
+    _instrs.insert(_instrs.begin(), inst);
 }
 
 //User Code End. Sasara

@@ -9,7 +9,7 @@ namespace IR {
 
 // ======================= Start Alloca =======================
 
-std::string AllocaInst::to_str() {
+std::string AllocaInst::to_str(){
     /* User Code Start: Alloca::to_str */
     // auto ty = this->get_type();
     return "Alloca " + this->get_name() + " " + type_string(*this->get_type()) + ", align " + std::to_string(this->_alignment) ;
@@ -52,7 +52,7 @@ std::string LoadInst::to_llvm() {
 
 // ======================= Start Store =======================
 
-std::string StoreInst::to_str() {
+std::string StoreInst::to_str(){
     /* User Code Start: Store::to_str */
     std::string dst = "none", src = "none";
     if(this->get_dst()) {
@@ -219,7 +219,33 @@ std::string GetElementPtrInst::to_llvm() {
 
 std::string PhiInst::to_str() {
     /* User Code Start: Phi::to_str */
-    return "Phi";
+    std::string str = this->get_name() + " = Phi " + type_string(*this->get_type());
+    
+    for (unsigned i = 0; i < get_num_incoming(); ++i) {
+        str += (i == 0) ? " [ " : ", [ ";
+        
+        Value* val = get_incoming_value(i);
+        BasicBlock* bb = get_incoming_block(i);
+
+        // --- 核心修复：添加 nullptr 检查 ---
+        if (val) {
+            str += val->get_name();
+        } else {
+            str += "<undef>"; // 或者 "<pending>"
+        }
+        
+        str += ", ";
+
+        if (bb) {
+            str += bb->get_name();
+        } else {
+            str += "<bad_block>";
+        }
+
+        str += " ]";
+    }
+    
+    return str;
     /* User Code End: Phi::to_str */
 }
 

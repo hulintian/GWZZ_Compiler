@@ -628,11 +628,27 @@ public:
      
     Instruction* create_phi(
         /* User Code Start: create_phi args */
-
+        Type* ty, 
+        //unsigned num_reserved_operands,
+        //const std::string& name,
+        IR::AllocaInst* alloca_source
         /* User Code End: create_phi args */
     ){
         /* User Code Start: create_phi */
-        return nullptr;
+        BasicBlock* current_bb = this->get_cur_bb();
+        if (!current_bb) {
+            // 或者抛出异常
+            return nullptr;
+        }
+        unsigned num_preds = current_bb->get_predecessors().size();
+
+        auto name = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
+        auto inst = new PhiInst(ty, num_preds, name, current_bb, alloca_source);
+        for (auto* pred : current_bb->get_predecessors()) {
+            inst->add_incoming(nullptr, pred);
+        }
+        current_bb->add_instruction_at_front(inst);
+        return inst;
         /* User Code End: create_phi */
     }
      

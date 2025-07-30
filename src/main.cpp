@@ -15,7 +15,6 @@
 #include "frontend/Sema.hpp"
 /* User Code Start: Sasara */
 #include "pass/PassManager.hpp"
-#include "pass/analysis/FunctionCounter.hpp"
 #include "pass/transform/DummyTransform.hpp"
 #include "pass/transform/HelloWorld.hpp"
 #include "pass/transform/DomTreePrinter.hpp"
@@ -25,6 +24,7 @@
 #include "pass/transform/LICM.hpp"
 #include "pass/transform/DomFrontierPrinter.hpp"
 #include "pass/transform/CFGSimplify.hpp"
+#include "pass/transform/Mem2Reg.hpp"
 /* User Code End: Sasara */
 #include <fstream>
 
@@ -54,14 +54,17 @@ int main(int argc, char** argv) {
     frontend::CodeGen* cg = new frontend::CodeGen();
     auto m = cg->gen(cu);
     /* User Code Start: Sasara */
-    pass::PassManager pm;
+    IR::IRBuilder* builder = cg->get_ir_builder();
+    pass::PassManager pm(builder);
     pm.add_module_transform_pass(std::make_unique<pass::HelloWorldPass>());
     //pm.add_module_transform_pass(std::make_unique<pass::DummyTransformPass>());
     pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
     pm.add_function_transform_pass(std::make_unique<pass::DomTreePrinterPass>());
     pm.add_function_transform_pass(std::make_unique<pass::DomFrontierPrinterPass>());
+    pm.add_function_transform_pass(std::make_unique<pass::Mem2RegPass>());
+    pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::AliasTestPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::LoopInfoPrinterPass>());
+    //pm.add_function_transform_pass(std::make_unique<pass::LoopInfoPrinterPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::PredPrinterPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::LICMPass>());
     cout << "====================Running optimization passes...====================\n";
@@ -69,9 +72,6 @@ int main(int argc, char** argv) {
     /* User Code End: Sasara */
     cout << "====================The ir of " << input_path << " =======================\n";
     m->dump(cout);
-
-    delete m;
-    delete cg;
 
     return 0;
 }

@@ -11,7 +11,8 @@ enum ScalarType {
     Int = 0,
     Float,
     String,
-    Void
+    Void,
+    Label
 };
 
 /// define of type 
@@ -30,6 +31,11 @@ struct Type {
         //解引用
         element_type.dims.erase(element_type.dims.begin());
         return element_type;
+    }
+    static Type* get_label_ty() {
+        // 使用静态局部变量，可以保证它只被创建一次（单例）
+        static Type label_type_singleton(Label); 
+        return &label_type_singleton;
     }
     //User Code End. Sasara
     /// compute the total number of elements in array.
@@ -101,6 +107,7 @@ inline std::string type_string(Type t) {
         case Int : s = "int" ; break;
         case Float : s = "float" ; break;
         case String : s = "string" ; break;
+        case Label : s = "label"; break;
     }
 
     if(!t.is_array()) return s;

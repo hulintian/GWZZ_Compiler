@@ -54,7 +54,7 @@ private:
 };
 
 class Module;
-class Function {
+class Function : public Value{
 public:
     Function(Module* m, 
             const std::string& func_name, 
@@ -62,7 +62,7 @@ public:
             std::vector<Type*> arg_types, 
             std::vector<std::string> arg_names, 
             bool is_lib)
-        : _parent(m), _func_name(func_name),_return_type(return_type), _arg_types(arg_types), _arg_names(arg_names), _is_lib(is_lib){
+        :Value(return_type, func_name), _parent(m), _func_name(func_name),_return_type(return_type), _arg_types(arg_types), _arg_names(arg_names), _is_lib(is_lib){
             this->_cfg = new CFG();
         }
     
@@ -97,7 +97,7 @@ public:
         return _arg_types;
     }
     //User Code Start. Sasara
-    const Module* get_parent()const{
+    Module* get_parent()const{
         return _parent;
     }
 
