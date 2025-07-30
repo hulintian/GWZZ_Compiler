@@ -16,7 +16,7 @@ class AnalysisPass;
 //分析结果管理器
 class AnalysisManager{
 private:
-    pass::PassManager& pm;
+    PassManager& pm;
     using FunctionAnalysisMap = std::map<AnalysisID, std::unique_ptr<AnalysisResult>>;
     std::map<const IR::Function*,FunctionAnalysisMap,std::less<>> function_results;
     std::map<AnalysisID,std::unique_ptr<AnalysisResult>> module_results;

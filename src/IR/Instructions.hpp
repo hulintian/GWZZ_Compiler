@@ -7,7 +7,7 @@
 #include "common/type.hpp" 
 #include "common/defines.hpp" 
 #include "IR/BasicBlock.hpp"
-
+#include <iostream> 
 namespace IR {
 
 class BasicBlock;
@@ -16,8 +16,8 @@ class Instruction : public User {
 public :
     Instruction(Type* t, std::string name, BasicBlock* bb) : User(t, name), parent(bb){}
 
-    virtual std::string to_str() = 0;
-    virtual std::string to_llvm() = 0;
+    virtual std::string to_str()=0;
+    virtual std::string to_llvm()= 0;
     //User Code Start. Sasara
     //偷个懒。这个写法简单，但依赖IR正确性。有更健壮的写法。
     virtual bool is_unconditional_br() const {
@@ -31,6 +31,14 @@ public :
     }
     void set_parent(BasicBlock* new_parent){
         this->parent = new_parent;
+    }
+    void sever_all_uses(){
+        for (Value* operand : get_operands()) {
+            if (operand) {
+                operand->remove_use(this);
+            }
+        }
+        //operands_clear();
     }
     //User Code End. Sasara
     BasicBlock* get_parent() { return this->parent; }
@@ -91,7 +99,6 @@ public:
     }
 
     /* User Code Start: Alloca place */
-
     /* User Code End: Alloca place */
     std::string to_str();
     std::string to_llvm();
@@ -102,6 +109,10 @@ public:
         /* User Code Start: Alloca::get_alignment */
         return _alignment;
         /* User Code End: Alloca::get_alignment */
+    }
+    //by .Sasara
+    Type* get_alloca_ty() const {
+        return this->get_type();
     }
      
 private:
@@ -116,7 +127,7 @@ public:
     /* User Code End: Load */
     {
         /* User Code Start: Load construct function */
-
+        add_operand(src);
         /* User Code End: Load construct function */
     }
 
@@ -125,7 +136,10 @@ public:
     /* User Code End: Load place */
     std::string to_str();
     std::string to_llvm();
-
+    void replace_all_uses_with(Value* replacement){
+        _src = replacement;
+        set_operand(0,replacement);
+    }
      
     unsigned get_alignment() const {
         /* User Code Start: Load::get_alignment */
@@ -148,11 +162,12 @@ class StoreInst : public Instruction {
 public:
     StoreInst(Type* ty, Value* dst, Value* src, std::string _name, unsigned alignment, BasicBlock* bb)
     /* User Code Start: Store */
-    : Instruction(ty, _name, bb), _dst(dst), _src(src), _alignment(alignment)
+    : Instruction(ty, _name, bb), /*_dst(dst), _src(src),*/ _alignment(alignment)
     /* User Code End: Store */
     {
         /* User Code Start: Store construct function */
-
+        add_operand(src); 
+        add_operand(dst);
         /* User Code End: Store construct function */
     }
 
@@ -165,16 +180,21 @@ public:
      
     Value* get_dst() const {
         /* User Code Start: Store::get_dst */
-        return _dst;
+        return get_operand(1);
         /* User Code End: Store::get_dst */
     }
       
     Value* get_src() const {
         /* User Code Start: Store::get_src */
-        return _src;
+        return get_operand(0);
         /* User Code End: Store::get_src */
     }
-      
+    Value* get_value_operand() const {
+        return  get_operand(0);
+    }
+    Value* get_ptr_operand() const {
+        return get_operand(1);
+    }  
     unsigned get_alignment() const {
         /* User Code Start: Store::get_alignment */
         return _alignment;
@@ -182,8 +202,8 @@ public:
     }
      
 private:
-    Value* _dst;
-    Value* _src;
+    //Value* _dst;
+    //Value* _src;
     unsigned _alignment;
 };
 
@@ -195,7 +215,8 @@ public:
     /* User Code End: Binary */
     {
         /* User Code Start: Binary construct function */
-
+        add_operand(lhs);
+        add_operand(rhs);
         /* User Code End: Binary construct function */
     }
 
@@ -252,7 +273,7 @@ public:
         /* User Code End: Convert */
     {
         /* User Code Start: Convert construct function */
-
+        add_operand(src);
         /* User Code End: Convert construct function */
     }
 
@@ -295,7 +316,10 @@ public:
     /* User Code End: Call */
     {
         /* User Code Start: Call construct function */
-
+        add_operand(const_cast<IR::Function*>(func)); // Function 也是 Value
+        for (Value* arg : _args) {
+            add_operand(arg);
+        }
         /* User Code End: Call construct function */
     }
 
@@ -331,7 +355,9 @@ public:
     /* User Code End: Return */
     {
         /* User Code Start: Return construct function */
-
+        if (ret_val) { // 只有在有返回值时才添加
+            add_operand(ret_val);
+        }
         /* User Code End: Return construct function */
     }
 
@@ -360,7 +386,10 @@ public:
     /* User Code End: GetElementPtr */
     {
         /* User Code Start: GetElementPtr construct function */
-
+        add_operand(src); // 基地址是第一个操作数
+        for (Value* index : _indices) {
+            add_operand(index);
+        }
         /* User Code End: GetElementPtr construct function */
     }
 
@@ -397,38 +426,56 @@ private:
 
 class PhiInst : public Instruction {
 public:
-    PhiInst(Type* ty, std::string& name, std::vector<BasicBlock*> candidate_bbs, std::vector<Value*> candidate_vars, BasicBlock* bb)
-    /* User Code Start: Phi */
-    :Instruction(ty, name, bb), _candidate_bbs(std::move(candidate_bbs)), _candidate_vars(std::move(candidate_vars))
-    /* User Code End: Phi */
-    {
-        /* User Code Start: Phi construct function */
-
-        /* User Code End: Phi construct function */
+    
+    PhiInst(Type* ty, unsigned num_reserved_operands, const std::string& name, BasicBlock* bb, IR::AllocaInst* alloca_src)
+    : Instruction(ty, name, bb), _alloca_src(alloca_src) {
+    
     }
 
     /* User Code Start: Phi place */
+    AllocaInst* get_alloca_src()const{
+        return _alloca_src;
+    }
 
+    void add_incoming(Value* value, BasicBlock* pred_bb) {
+        // [value_0, block_0, value_1, block_1, value_2, block_2, ...]
+        for (unsigned i = 1; i < get_operands().size(); i += 2) {
+            if (get_operand(i) == pred_bb) {
+                set_operand(i - 1, value);
+                return;
+            }
+        }
+        add_operand(value);
+        add_operand(pred_bb);
+    }
+    void remove_incoming_by_block(BasicBlock* pred_bb);//CFG变化用
+    unsigned get_num_incoming() const {
+        return get_operands().size() / 2;
+    }
+    Value* get_incoming_value(unsigned index) const {
+        assert(index * 2 < get_operands().size() && "Index out of range for Phi incoming value");
+        return get_operand(index * 2);
+    } 
+    BasicBlock* get_incoming_block(unsigned index) const {
+        assert(index * 2 + 1 < get_operands().size() && "Index out of range for Phi incoming block");
+        return static_cast<BasicBlock*>(get_operand(index * 2 + 1));
+    }
+    Value* get_incoming_value_for_block(const BasicBlock* pred_bb) const {
+        for (unsigned i = 0; i < get_num_incoming(); ++i) {
+            if (get_incoming_block(i) == pred_bb) {
+                return get_incoming_value(i);
+            }
+        }
+        return nullptr;
+    }
     /* User Code End: Phi place */
     std::string to_str();
     std::string to_llvm();
 
-     
-    std::vector<BasicBlock*> get_candidate_bbs() const {
-        /* User Code Start: Phi::get_candidate_bbs */
-        return _candidate_bbs;
-        /* User Code End: Phi::get_candidate_bbs */
-    }
-      
-    std::vector<Value*> get_candidate_vars() const {
-        /* User Code Start: Phi::get_candidate_vars */
-        return _candidate_vars;
-        /* User Code End: Phi::get_candidate_vars */
-    }
-     
+    
 private:
-    std::vector<BasicBlock*> _candidate_bbs;
-    std::vector<Value*> _candidate_vars;
+    //std::map<BasicBlock*, Value*> _incoming_map;
+    IR::AllocaInst* _alloca_src; //标记来源
 };
 
 class CondBranchInst : public Instruction {
@@ -439,7 +486,7 @@ public:
     /* User Code End: CondBranch */
     {
         /* User Code Start: CondBranch construct function */
-
+        add_operand(cond);
         /* User Code End: CondBranch construct function */
     }
 
