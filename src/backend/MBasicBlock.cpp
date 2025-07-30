@@ -1,6 +1,8 @@
 #include "backend/MBasicBlock.hpp"
 #include "backend/MFunction.hpp"
 #include "backend/MInstruction.hpp"
+#include "common/utils.hpp"
+#include <iostream>
 #include <ostream>
 
 namespace backend {
@@ -8,7 +10,11 @@ namespace backend {
 void MachineBasicBlock::dump_asm(std::ostream& out) {
     out << bb_label << ": \n";
     for(auto i : m_instrs) {
+#ifndef SHOW_INST_TIME
         out << "    " << i->to_asm() << "\n";
+#else
+        out << i->time << "    " << i->to_asm() << "\n";
+#endif
     }
     // out << "\n";
 }
@@ -19,7 +25,7 @@ void MachineBasicBlock::insert_instr_before(MachineInstr* pos, MachineInstr* to_
     if (it != m_instrs.end()) {
         m_instrs.insert(it, to_insert);
     } else {
-    
+        std::cerr << error << " Not exist instr: " << pos;
     }
 }
 
@@ -29,6 +35,8 @@ void MachineBasicBlock::insert_instr_after(MachineInstr* pos, MachineInstr* to_i
     if (it != m_instrs.end()) {
         ++it; // 移到pos之后
         m_instrs.insert(it, to_insert);
+    } else {
+        std::cerr << error << " Not exist instr: " << pos;
     }
 }
 
