@@ -3,6 +3,7 @@
 #include "pass/Pass.hpp"
 #include "pass/AnalysisManager.hpp"
 #include "IR/Module.hpp"
+#include "IR/IRBuilder.hpp"
 #include <vector>
 #include <memory>
 
@@ -11,7 +12,7 @@ namespace pass{
 class PassManager{
 public:
     //构造函数，自动建立AM并绑定
-    PassManager():am(*this){};
+    PassManager(IR::IRBuilder * bd):am(*this),_builder(*bd){}
     void add_module_transform_pass(std::unique_ptr<ModuleTransformPass> pass) {
         transform_passes.push_back(std::move(pass));
     }
@@ -41,10 +42,11 @@ public:
         }
     }
     AnalysisManager& get_analysis_manager() { return am; }
-
+    IR::IRBuilder& get_ir_builder(){return _builder;}
 private:
     std::vector<std::unique_ptr<TransformPass>> transform_passes;
     AnalysisManager am; 
+    IR::IRBuilder _builder ;
 };
 
 }
