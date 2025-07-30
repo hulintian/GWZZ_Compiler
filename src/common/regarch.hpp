@@ -164,6 +164,9 @@ const std::vector<const Reg*> regs_callersaved = std::vector<const Reg*>({&T0, &
 const std::vector<const Reg*> regs_calleesaved = std::vector<const Reg*>({&S1, &S2, &S3, &S4, &S5, &S6, &S7, &S8, &S9, &S10, &S11, &RA, &FP});
 const std::vector<const Reg*> regs_allocatable = std::vector<const Reg*>({&T0, &T1, &T2, &T3, &T4, &T5, &T6, &A0, &A1, &A2, &A3, &A4, &A5, &A6, &A7, &S1, &S2, &S3, &S4, &S5, &S6, &S7, &S8, &S9, &S10, &S11, &RA});
 
+const std::vector<const Reg*> regs_saved = std::vector<const Reg*>({&S1, &S2, &S3, &S4, &S5, &S6, &S7, &S8, &S9, &S10, &S11});
+const std::vector<const Reg*> temp_regs = std::vector<const Reg*>({&T0, &T1, &T2, &T3, &T4, &T5, &T6});
+
 const std::vector<const Reg*> regs_arg = std::vector<const Reg*>({&A0, &A1, &A2, &A3, &A4, &A5, &A6, &A7});
 // const std::vector<int> caller_to_offset({0,0,0,0,0,0,1,2,0,0,3,4,5,6,7,8,9,10,0,0,0,0,0,0,0,0,0,0,11,12,13,14});
 
@@ -190,5 +193,9 @@ const std::vector<const Reg*> fp_regs_arg = std::vector<const Reg*>({
     &FP10, &FP11, &FP12, &FP13, &FP14, &FP15, &FP16, &FP17
 });
 
+const std::vector<const Reg*>  fp_Temp_regs = std::vector<const Reg*>({ 
+        &FP0, &FP1, &FP2, &FP3, &FP4, &FP5, &FP6, &FP7,
+        &FP28, &FP29, &FP30, &FP31
+});
 
 }
