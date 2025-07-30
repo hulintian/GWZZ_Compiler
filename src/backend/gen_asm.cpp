@@ -64,7 +64,13 @@ void ASMGen::translate_func(IR::Function* func) {
     // std::cout << "==========================================================\n";
 
     // dfs to translate the basic block 
+    // regenerate the cfg 
+    func->get_cfg()->regen_cfg();
     int entry_idx = func->get_entry_bb()->get_bb_idx();
+
+    mfunc->next_bb[prolo_bb->_bb_idx].insert(entry_idx);
+    mfunc->prev_bb[entry_idx].insert(prolo_bb->_bb_idx);
+
     std::stack<int> next_bb_idx;
     // set the logical entry 
     auto ebb = this->mctx->get_function()->get_mbb(entry_idx);
@@ -78,6 +84,7 @@ void ASMGen::translate_func(IR::Function* func) {
         }
         // translate the bb
         translate_bb(func->get_cfg()->idx2bb[bi]);
+        std::cerr << "Translate bb " << bi << std::endl; 
     }
 
     // TODO reg alloca 
@@ -216,7 +223,22 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
             auto from_ty = convert->getsrc_type();
             auto to_ty = convert->getdst_type();
             auto src = convert->getsrc();
-            auto src_reg = this->mctx->get_function()->get_reg(src);
+            // what src can from val or const
+            RiscvReg::Reg src_reg;
+            if(auto iscv = dynamic_cast<IR::ConstantValue*>(src)) {
+                int cv = iscv->get_value().iv;
+                if(iscv->get_type()->base_type == Float) {
+                    src_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
+                    auto  t_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                    abuilder->create_LI(t_reg, cv);
+                    abuilder->create_FMV_W_X(src_reg, t_reg);
+                } else {
+                    src_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                    abuilder->create_LI(src_reg, cv);
+                }
+            } else {
+                src_reg = this->mctx->get_function()->get_reg(src);
+            }
             RiscvReg::Reg dst_reg;
             if(from_ty->base_type == to_ty->base_type) {
                 // 保险，不可能到这
@@ -544,12 +566,27 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
             auto idbb = branch->get_dst_bb(); 
             auto dst_bb = this->mctx->get_function()->get_mbb(idbb->get_bb_idx());
             auto jump = this->abuilder->create_J(dst_bb);
+            
+            // contruct the cfg for machine bb
+            auto dst_bb_idx = dst_bb->_bb_idx;
+            this->mctx->get_function()->next_bb[this->mctx->get_basic_block()->_bb_idx].insert(dst_bb_idx);
+            this->mctx->get_function()->prev_bb[dst_bb_idx].insert(this->mctx->get_basic_block()->_bb_idx);
         } else if(auto cond_br = dynamic_cast<IR::CondBranchInst*>(instr)) {
             auto cond = cond_br->get_cond();
             auto cond_res_reg = this->mctx->get_function()->get_reg(cond);
             auto true_bb_idx = cond_br->get_true_bb()->get_bb_idx();
             auto true_mbb = this->mctx->get_function()->get_mbb(true_bb_idx);
             abuilder->create_BNEZ(cond_res_reg, true_mbb);
+            auto false_bb_idx = cond_br->get_false_bb()->get_bb_idx();
+            auto false_mbb = this->mctx->get_function()->get_mbb(false_bb_idx);
+            abuilder->create_J(false_mbb);
+            // get cur idx, true bb idx, false bb idx 
+            int cur_bb_idx = this->mctx->get_basic_block()->_bb_idx;
+            this->mctx->get_function()->next_bb[cur_bb_idx].insert(true_bb_idx);
+            this->mctx->get_function()->next_bb[cur_bb_idx].insert(false_bb_idx);
+
+            this->mctx->get_function()->prev_bb[true_bb_idx].insert(cur_bb_idx);
+            this->mctx->get_function()->prev_bb[false_bb_idx].insert(cur_bb_idx);
         } else if(auto phi = dynamic_cast<IR::PhiInst*>(instr)) {
             // 在 ir中消除，后端不管
             continue;
@@ -636,9 +673,9 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         // if is gv 
             std::string sym = isgv->get_symbol();
             if(isgv->get_type().base_type == Int) {
-                lhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                rhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
             } else {
-                lhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+                rhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
             }
             auto gv_addr = new RiscvReg::Reg(this->get_new_vreg_idx());
             abuilder->create_LA(gv_addr, sym);
@@ -649,7 +686,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
             }
         } else {
         // is lv
-            lhs_reg = this->mctx->get_function()->get_reg(rhs);
+            rhs_reg = this->mctx->get_function()->get_reg(rhs);
         }
     }
 

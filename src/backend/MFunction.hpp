@@ -29,7 +29,10 @@ public:
 
     int32_t  stack_size;
     int overflow_arguments = 0;
+
     std::vector<RiscvReg::Reg> spills;
+    std::vector<RiscvReg::Reg> X_used_save_regs;
+    std::vector<RiscvReg::Reg> F_used_save_regs;
 
     MachineBasicBlock* entry_bb;
 
