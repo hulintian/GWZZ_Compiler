@@ -131,8 +131,8 @@ enum MachineInstrType {
 
 class MachineInstr {
 public:
-        virtual std::vector<RiscvReg::Reg> get_srcs() = 0;
-        virtual std::vector<RiscvReg::Reg> get_dsts() = 0;
+        virtual std::vector<RiscvReg::Reg*> get_srcs() = 0;
+        virtual std::vector<RiscvReg::Reg*> get_dsts() = 0;
         virtual std::vector<RiscvReg::Reg*> get_regs() = 0;
 
         virtual std::string to_asm() = 0;
@@ -141,7 +141,7 @@ public:
         MachineBasicBlock* parent;
 
         // 根据dfs的顺序到给指令的序号
-        unsigned long long time = 0;
+        long long time = 0;
 
         MachineInstr(MachineInstrType ty, MachineBasicBlock* p): mity(ty), parent(p) {}
 };
@@ -215,8 +215,8 @@ public:
 
     /* User Code Start: IArith_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1, &_rs2 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: IArith_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -299,8 +299,8 @@ public:
     }
 
     /* User Code Start: IArithIMM_Inst methods */
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
 
     /* User Code End: IArithIMM_Inst methods */
     RiscvReg::Reg _rd;
@@ -348,8 +348,8 @@ public:
     }
 
     /* User Code Start: IArithU_Inst methods */
-    std::vector<RiscvReg::Reg> get_srcs() override { return { }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
 
     /* User Code End: IArithU_Inst methods */
     RiscvReg::Reg _rd;
@@ -409,8 +409,8 @@ public:
 
     /* User Code Start: Load_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: Load_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -451,8 +451,8 @@ public:
 
     /* User Code Start: Move_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: Move_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -499,8 +499,8 @@ public:
 
     /* User Code Start: LLA_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: LLA_Inst methods */
     RiscvReg::Reg _rd;
     std::string _symbol;
@@ -540,8 +540,8 @@ public:
     }
 
     /* User Code Start: LI_Inst methods */
-    std::vector<RiscvReg::Reg> get_srcs() override { return { }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: LI_Inst methods */
     RiscvReg::Reg _rd;
     int _imm;
@@ -600,8 +600,8 @@ public:
 
     /* User Code Start: Store_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1, &_rs2 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { }; }
     /* User Code End: Store_Inst methods */
     RiscvReg::Reg _rs1;
     RiscvReg::Reg _rs2;
@@ -647,8 +647,8 @@ public:
 
     /* User Code Start: CondSet_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1, &_rs2 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: CondSet_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -704,8 +704,8 @@ public:
 
     /* User Code Start: CondSetU_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: CondSetU_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -752,8 +752,8 @@ public:
 
     /* User Code Start: CondSetIMM_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: CondSetIMM_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -849,8 +849,8 @@ public:
 
     /* User Code Start: Branch_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1, &_rs2 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { }; }
     /* User Code End: Branch_Inst methods */
     RiscvReg::Reg _rs1;
     RiscvReg::Reg _rs2;
@@ -922,8 +922,8 @@ public:
 
     /* User Code Start: BranchU_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return {  }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return {  }; }
     /* User Code End: BranchU_Inst methods */
     RiscvReg::Reg _rs1;
     MachineBasicBlock* _dst_bb;
@@ -963,8 +963,8 @@ public:
 
     /* User Code Start: Jump_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return {  }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return {  }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return {  }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return {  }; }
     /* User Code End: Jump_Inst methods */
     MachineBasicBlock* _dst_bb;
 };
@@ -1009,8 +1009,8 @@ public:
     }
 
     /* User Code Start: JAL_Inst methods */
-    std::vector<RiscvReg::Reg> get_srcs() override { return {  }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return {  }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
 
     /* User Code End: JAL_Inst methods */
     RiscvReg::Reg _rd;
@@ -1050,8 +1050,8 @@ public:
     }
 
     /* User Code Start: Call_Inst methods */
-    std::vector<RiscvReg::Reg> get_srcs() override { return {  }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return {  }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return {  }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return {  }; }
 
     /* User Code End: Call_Inst methods */
     MachineFunction* _func;
@@ -1090,8 +1090,8 @@ public:
 
     /* User Code Start: Return_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return {  }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return {  }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return {  }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return {  }; }
     /* User Code End: Return_Inst methods */
 };
 // Multiply
@@ -1163,8 +1163,8 @@ public:
     }
 
     /* User Code Start: Multiply_Inst methods */
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1, &_rs2 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
 
     /* User Code End: Multiply_Inst methods */
     RiscvReg::Reg _rd;
@@ -1246,8 +1246,8 @@ public:
 
     /* User Code Start: FArith_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1, &_rs2 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: FArith_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1298,8 +1298,8 @@ public:
 
     /* User Code Start: FArithU_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: FArithU_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1349,8 +1349,8 @@ public:
 
     /* User Code Start: FCMP_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1, &_rs2 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: FCMP_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1406,8 +1406,8 @@ public:
 
     /* User Code Start: FArithT_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2, _rs3 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1, &_rs2, &_rs3 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: FArithT_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1450,8 +1450,8 @@ public:
 
     /* User Code Start: FLoad_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: FLoad_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1499,8 +1499,8 @@ public:
 
     /* User Code Start: FStore_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1, _rs2 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1, &_rs2 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { }; }
     /* User Code End: FStore_Inst methods */
     RiscvReg::Reg _rs1;
     RiscvReg::Reg _rs2;
@@ -1546,8 +1546,8 @@ public:
 
     /* User Code Start: FCVT_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: FCVT_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
@@ -1597,8 +1597,8 @@ public:
 
     /* User Code Start: FMV_Inst methods */
 
-    std::vector<RiscvReg::Reg> get_srcs() override { return { _rs1 }; }
-    std::vector<RiscvReg::Reg> get_dsts() override { return { _rd }; }
+    std::vector<RiscvReg::Reg*> get_srcs() override { return { &_rs1 }; }
+    std::vector<RiscvReg::Reg*> get_dsts() override { return { &_rd }; }
     /* User Code End: FMV_Inst methods */
     RiscvReg::Reg _rd;
     RiscvReg::Reg _rs1;
