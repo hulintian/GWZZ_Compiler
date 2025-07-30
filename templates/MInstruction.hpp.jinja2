@@ -17,8 +17,8 @@ enum MachineInstrType {
 
 class MachineInstr {
 public:
-        virtual std::vector<RiscvReg::Reg> get_srcs() = 0;
-        virtual std::vector<RiscvReg::Reg> get_dsts() = 0;
+        virtual std::vector<RiscvReg::Reg*> get_srcs() = 0;
+        virtual std::vector<RiscvReg::Reg*> get_dsts() = 0;
         virtual std::vector<RiscvReg::Reg*> get_regs() = 0;
 
         virtual std::string to_asm() = 0;
