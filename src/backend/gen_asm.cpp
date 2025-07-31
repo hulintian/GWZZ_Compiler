@@ -366,6 +366,31 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     }
 
                     gp_cnt++;
+                }else if(auto global_addr = dynamic_cast<IR::GlobalValue*>(val_i)) { 
+                    // 来自全局的数组的地址
+                    RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+                    abuilder->create_LA(dst, global_addr->get_symbol());
+                    
+
+                    if(gp_cnt < 8) {
+                        abuilder->create_MV(RiscvReg::regs_arg[gp_cnt], dst);
+                    } else {
+                        int sp_bias = ovfl_arg_regs * 8;
+                        // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+                        if(sp_bias > 2047 || sp_bias < -2048) {
+                            // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
+                            abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
+                        } else {
+                            RiscvReg::Reg sp_bias_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                            abuilder->create_LI(sp_bias_reg, sp_bias);
+                            abuilder->create_ADD(sp_bias_reg, sp_bias_reg, RiscvReg::SP);
+                            abuilder->create_SD(dst, sp_bias_reg, 0);
+                        }
+                        ovfl_arg_regs++;
+                    }
+
+
+                    gp_cnt++;
                 } else {
                     // is base type
                     // TODO for const value
