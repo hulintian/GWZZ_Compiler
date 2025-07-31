@@ -5,7 +5,7 @@ gen/
 tmp/
 refs
 docs
-# tests/
+tests/
 antlr4
 # *.gdb
 /.cache/
