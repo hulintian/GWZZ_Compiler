@@ -1,5 +1,5 @@
 #include "MModule.hpp"
-#include "gen_asm.hpp"
+#include "backend/gen_asm.hpp"
 #include "codegen.hpp"
 #include "Sysy22Lexer.h"
 #include "Sysy22Parser.h"
@@ -79,7 +79,7 @@ int main(int argc, char** argv) {
 
     frontend::Sema sema;
     sema.visit_compUnits(cu);
-#ifdef SHOW_ASM
+#ifdef SHOW_AST
     cu.print(cout, 0);
 #endif
 
