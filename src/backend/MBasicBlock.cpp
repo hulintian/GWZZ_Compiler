@@ -1,7 +1,7 @@
-#include "backend/MBasicBlock.hpp"
-#include "backend/MFunction.hpp"
-#include "backend/MInstruction.hpp"
-#include "common/utils.hpp"
+#include "MBasicBlock.hpp"
+#include "MFunction.hpp"
+#include "MInstruction.hpp"
+#include "utils.hpp"
 #include <iostream>
 #include <ostream>
 

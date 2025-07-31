@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IR/Value.hpp"
-#include "common/defines.hpp"
-#include "common/type.hpp"
+#include "Value.hpp"
+#include "defines.hpp"
+#include "type.hpp"
 #include <cassert>
 #include <memory>
 #include <ostream>

@@ -1,5 +1,5 @@
-#include "IR/GlobalValue.hpp"
-#include "common/type.hpp"
+#include "GlobalValue.hpp"
+#include "type.hpp"
 #include <ostream>
 
 namespace IR {

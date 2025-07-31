@@ -1,9 +1,9 @@
-#include "backend/MModule.hpp"
-#include "backend/gen_asm.hpp"
-#include "frontend/codegen.hpp"
-#include "grammar/Sysy22Lexer.h"
-#include "grammar/Sysy22Parser.h"
-#include "grammar/Sysy22Visitor.h"
+#include "MModule.hpp"
+#include "gen_asm.hpp"
+#include "codegen.hpp"
+#include "Sysy22Lexer.h"
+#include "Sysy22Parser.h"
+#include "Sysy22Visitor.h"
 #include "support/Any.h"
 #include "antlr4-runtime/ANTLRInputStream.h"
 #include "antlr4-runtime/CommonTokenStream.h"
@@ -14,7 +14,7 @@
 #include "antlr4-runtime/tree/ParseTree.h"
 #include <frontend/ASTVisitor.h>
 #include <ostream>
-#include "frontend/Sema.hpp"
+#include "Sema.hpp"
 
 #include <fstream>
 

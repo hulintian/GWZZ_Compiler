@@ -8,11 +8,11 @@
 #include <map>
 #include <unordered_map>
 #include <vector>
-#include "IR/Value.hpp"
-#include "backend/LinearRegAllocator.hpp"
-#include "common/regarch.hpp"
-#include "common/type.hpp"
-#include "common/utils.hpp"
+#include "Value.hpp"
+#include "LinearRegAllocator.hpp"
+#include "regarch.hpp"
+#include "type.hpp"
+#include "utils.hpp"
 
 namespace backend {
 

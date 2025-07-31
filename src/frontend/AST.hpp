@@ -1,7 +1,7 @@
 #pragma once
 
-#include "common/Display.hpp"
-#include "common/defines.hpp"
+#include "Display.hpp"
+#include "defines.hpp"
 #include <memory>
 #include <optional>
 #include <variant>
