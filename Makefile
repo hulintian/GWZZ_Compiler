@@ -12,6 +12,13 @@ ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 
 LDFLAGS = -L./antlr4/lib -lantlr4-runtime
 
+INCLUDE_FLAGS += -I./src/frontend
+INCLUDE_FLAGS += -I./src/backend
+INCLUDE_FLAGS += -I./src/IR
+INCLUDE_FLAGS += -I./src/common
+INCLUDE_FLAGS += -I./src/grammar
+INCLUDE_FLAGS += -I./src/utils
+
 ANTLR_OUT_PATH = src/grammar
 BUILD_DIR = build
 SRC_DIR = src

@@ -1,7 +1,7 @@
 #pragma once
-#include "common/regarch.hpp"
-#include "backend/MBasicBlock.hpp"
-#include "backend/MFunction.hpp"
+#include "regarch.hpp"
+#include "MBasicBlock.hpp"
+#include "MFunction.hpp"
 #include <sstream>
 #include <string>
 

@@ -1,5 +1,5 @@
 #include "BasicBlock.hpp"
-#include "IR/Instructions.hpp"
+#include "Instructions.hpp"
 #include <string>
 #include "common/utils.hpp"
 

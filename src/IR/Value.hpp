@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "common/type.hpp"
+#include "type.hpp"
 #include <list>
 
 class Value ;

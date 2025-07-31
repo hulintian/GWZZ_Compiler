@@ -1,9 +1,9 @@
 #pragma once 
 
-#include "IR/BasicBlock.hpp"
+#include "BasicBlock.hpp"
 // #include "IR/Instructions.hpp"
-#include "IR/Value.hpp"
-#include "common/type.hpp"
+#include "Value.hpp"
+#include "type.hpp"
 #include <cassert>
 #include <cstdarg>
 #include <list>

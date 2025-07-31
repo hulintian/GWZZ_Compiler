@@ -1,6 +1,6 @@
-#include "IR/Function.hpp"
-#include "IR/BasicBlock.hpp"
-#include "IR/Instructions.hpp"
+#include "Function.hpp"
+#include "BasicBlock.hpp"
+#include "Instructions.hpp"
 #include "common/type.hpp"
 #include <cstddef>
 #include <optional>

@@ -1,5 +1,5 @@
-#include "backend/MFunction.hpp"
-#include "backend/MBasicBlock.hpp"
+#include "MFunction.hpp"
+#include "MBasicBlock.hpp"
 #include <cassert>
 #include <ostream>
 

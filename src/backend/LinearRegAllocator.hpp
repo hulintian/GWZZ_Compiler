@@ -1,7 +1,7 @@
 #pragma once 
 
-#include "backend/MBasicBlock.hpp"
-#include "common/regarch.hpp"
+#include "MBasicBlock.hpp"
+#include "regarch.hpp"
 #include <vector>
 #include <set>
 #include <stack>

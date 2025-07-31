@@ -1,8 +1,8 @@
 #pragma once
 
-#include "grammar/Sysy22BaseVisitor.h"
+#include "Sysy22BaseVisitor.h"
 #include "AST.hpp"
-#include "grammar/Sysy22Parser.h"
+#include "Sysy22Parser.h"
 #include <memory>
 #include <vector>
 

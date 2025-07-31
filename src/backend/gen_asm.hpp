@@ -1,15 +1,15 @@
 #pragma once 
 
-#include "IR/BasicBlock.hpp"
-#include "IR/Function.hpp"
-#include "IR/GlobalValue.hpp"
-#include "IR/Instructions.hpp"
-#include "IR/Module.hpp"
-#include "backend/MFunction.hpp"
-#include "backend/MModule.hpp"
-#include "backend/miscs.hpp"
-#include "backend/ASMBuilder.hpp"
-#include "common/regarch.hpp"
+#include "BasicBlock.hpp"
+#include "Function.hpp"
+#include "GlobalValue.hpp"
+#include "Instructions.hpp"
+#include "Module.hpp"
+#include "MFunction.hpp"
+#include "MModule.hpp"
+#include "miscs.hpp"
+#include "ASMBuilder.hpp"
+#include "regarch.hpp"
 
 namespace backend {
 

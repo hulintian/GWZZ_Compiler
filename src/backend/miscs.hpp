@@ -1,9 +1,9 @@
 #pragma once 
 
-#include "IR/BasicBlock.hpp"
-#include "IR/Function.hpp"
-#include "backend/MFunction.hpp"
-#include "backend/MModule.hpp"
+#include "BasicBlock.hpp"
+#include "Function.hpp"
+#include "MFunction.hpp"
+#include "MModule.hpp"
 namespace backend {
 class MCtx {
 public:
