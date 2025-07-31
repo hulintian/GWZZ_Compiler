@@ -23,6 +23,7 @@ public:
     MachineModule* _parent;
     std::string _name;
     Type* _ret_ty;
+    bool is_lib = false;
     std::vector<Type*> arg_types;
     std::vector<std::string> args_name;        // the symbols 
 
