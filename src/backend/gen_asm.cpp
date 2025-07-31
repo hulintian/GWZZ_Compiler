@@ -281,7 +281,23 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
             auto args_value = call->get_args();
             
             auto func_name = called_func->get_func_name();
-            auto mfunc = this->get_cur_module()->get_func(func_name);
+
+            MachineFunction* mfunc;
+            if(!this->mctx->get_module()->has_func(func_name)) {
+                // maybe lib 
+                if(this->mctx->get_module()->_name2lib_m_func.find(func_name) != this->mctx->get_module()->_name2lib_m_func.end())  {
+                    mfunc = this->mctx->get_module()->_name2lib_m_func[func_name];
+                }
+                if(this->mctx->get_module()->_name2lib_func.find(func_name) != this->mctx->get_module()->_name2lib_func.end()) {
+                    auto lib_func = this->mctx->get_module()->_name2lib_func[func_name];
+                    auto args_type = lib_func->get_params_type();
+                    auto pnames = lib_func->get_func_p_names();
+                    mfunc = new MachineFunction(this->mctx->get_module(), func_name, ret_ty, args_type , pnames);
+                    this->mctx->get_module()->_name2lib_m_func[func_name] = mfunc;
+                }
+            } else {
+                mfunc = this->get_cur_module()->get_func(func_name);
+            }
             int nr_args = args_value.size();
 
             int gp_cnt = 0;
