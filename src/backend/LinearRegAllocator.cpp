@@ -31,7 +31,11 @@ void RegAllocator::live_interval_analysis() {
         for(auto i : this->_parent->next_bb[bbi]) {
             if(!visited[i] && i != _parent->epilogue_bb->_bb_idx) bb_idx_stack.push(i);
         }
-        traverse_bb(bb);
+
+        if(!visited[bbi]) {
+            visited[bbi] = true;
+            traverse_bb(bb);
+        }
     }
     traverse_bb(this->_parent->epilogue_bb);
 }
@@ -129,6 +133,8 @@ void RegAllocator::alloca_regs() {
         
         auto cur_bb = this->_parent->find_m_bb(bbi);
         // loop to alloca regs 
+        if(!visited[bbi]) {
+        visited[bbi] = true;
         for(auto instr : cur_bb->m_instrs) {
             
             for(auto  ur : instr->get_srcs()) {
@@ -237,6 +243,7 @@ void RegAllocator::alloca_regs() {
                 }
             }
 
+        }
         }
     }
 }
