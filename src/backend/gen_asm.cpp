@@ -214,6 +214,7 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                 auto sym = alloca_addr->get_name();
                 auto stack_offset = this->mctx->get_function()->get_symbol_bias(sym);
                 if(stack_offset > 2047 || stack_offset < -2048) {
+                    dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                     abuilder->create_LI(dst_reg, stack_offset);
                     abuilder->create_ADD(dst_reg, RiscvReg::FP, dst_reg);
                     // store 不用管类型，拿出来的时候要注意
