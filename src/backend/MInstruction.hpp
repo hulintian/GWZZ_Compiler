@@ -1042,7 +1042,7 @@ public:
         switch(this->mity) {
             case MachineInstrType::CALL : 
                 oss << "call"
-                        << ", "<<  _func
+                        << " "<<  _func
                 ; 
                 break;default : break;
         }
