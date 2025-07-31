@@ -217,9 +217,17 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     abuilder->create_LI(dst_reg, stack_offset);
                     abuilder->create_ADD(dst_reg, RiscvReg::FP, dst_reg);
                     // store 不用管类型，拿出来的时候要注意
-                    abuilder->create_SW(src_reg, dst_reg, 0);
+                    if(src_reg.is_gp()) {
+                        abuilder->create_SW(src_reg, dst_reg, 0);
+                    } else {
+                        abuilder->create_FSW(src_reg, dst_reg, 0);
+                    }
                 } else {
-                    abuilder->create_SW(src_reg, RiscvReg::FP, stack_offset);
+                    if(src_reg.is_gp()) {
+                        abuilder->create_SW(src_reg, RiscvReg::FP, stack_offset);
+                    } else {
+                        abuilder->create_FSW(src_reg, RiscvReg::FP, stack_offset);
+                    }
                 }
             } else if(auto gep_addr = dynamic_cast<IR::GetElementPtrInst*>(dst)) {
                 dst_reg = this->mctx->get_function()->get_reg(gep_addr);
@@ -228,7 +236,11 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                 auto sym = gv_addr->get_symbol();
                 dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                 abuilder->create_LA(dst_reg, sym);
-                abuilder->create_SW(src_reg, dst_reg, 0);
+                if(src_reg.is_gp()) {
+                    abuilder->create_SW(src_reg, dst_reg, 0);
+                } else {
+                    abuilder->create_FSW(src_reg, dst_reg, 0);
+                }
             }
         } else if(auto binary = dynamic_cast<IR::BinaryInst*>(instr)) {
             translate_binary(binary);
@@ -762,7 +774,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
             if(constv == 0) {
                 dst = lhs_reg;
             } else {
-                abuilder->create_SUBI(dst, lhs_reg, constv);
+                abuilder->create_ADDI(dst, lhs_reg, -constv);
             }
         } else {
             abuilder->create_SUB(dst, lhs_reg, rhs_reg);
