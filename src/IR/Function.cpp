@@ -1,7 +1,7 @@
 #include "Function.hpp"
 #include "BasicBlock.hpp"
 #include "Instructions.hpp"
-#include "common/type.hpp"
+#include "type.hpp"
 #include <cstddef>
 #include <optional>
 #include <ostream>
