@@ -1,7 +1,7 @@
 .cache/**
 build
 bin/
-gen
+gen/
 tmp/
 refs
 docs
