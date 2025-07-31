@@ -1,5 +1,5 @@
 #include "MModule.hpp"
-#include "backend/gen_asm.hpp"
+#include "gen_asm.hpp"
 #include "codegen.hpp"
 #include "Sysy22Lexer.h"
 #include "Sysy22Parser.h"
