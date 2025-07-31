@@ -974,7 +974,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         abuilder->create_SNEZ(dst, dst);
     } else if (bop == IR::BinaryInstType::lt) {
         // handle lt
-        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+        dst = new RiscvReg::Reg(this->get_new_vreg_idx());
         if(can_imm) {
             if(constv == 0) {
                 abuilder->create_SLTZ(dst, lhs_reg);
@@ -997,7 +997,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
     } else if (bop == IR::BinaryInstType::gt) {
         // handle gt
         // lhs > rhs ==> rhs < lhs
-        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
         if(can_imm) {
             if(constv == 0) {
                 abuilder->create_SGTZ(dst, lhs_reg);
@@ -1022,7 +1022,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
     } else if (bop == IR::BinaryInstType::le) {
         // handle le
         // lhs <= rhs ==> ~(lhs > rhs) ==> ~( rhs < lhs )
-        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
         if(can_imm) {
             if(constv == 0) {
                 abuilder->create_SGTZ(dst, lhs_reg);
@@ -1047,7 +1047,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         abuilder->create_FLE_S(dst, lhs_reg, rhs_reg);
     } else if (bop == IR::BinaryInstType::ge) {
         // handle ge , not lt is gt
-        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
         if(can_imm) {
             if(constv == 0) {
                 abuilder->create_SGTZ(dst, lhs_reg);
