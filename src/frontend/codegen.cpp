@@ -294,7 +294,7 @@ void CodeGen::gen_stmt(const ast::Stmt& stmt) {
             builder->create_ret(ret_val);
         } else {
             // bool for_test = this->get_cur_func()->get_return_type()->base_type == Void;
-            assert(this->get_cur_func()->get_return_type()->base_type != Void && "Non void function, but return a void value\n" );
+            assert(this->get_cur_func()->get_return_type()->base_type == Void && "Non void function, but return a void value\n" );
             builder->create_ret(nullptr);
         }
     }
