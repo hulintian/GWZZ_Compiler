@@ -10,7 +10,7 @@
 #include <string> 
 #include "GlobalValue.hpp" 
 #include "Context.hpp" 
-#include "frontend/AST.hpp"
+#include "AST.hpp"
 
 namespace IR {
 class IRBuilder {
