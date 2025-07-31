@@ -1,15 +1,15 @@
 #pragma once
-#include <IR/IRBuilder.hpp>
+#include <IRBuilder.hpp>
 #include <memory>
 #include <vector>
 
-#include "IR/BasicBlock.hpp"
-#include "IR/Context.hpp"
-#include "IR/Function.hpp"
-#include "IR/GlobalValue.hpp"
-#include "IR/Module.hpp"
-#include "IR/Value.hpp"
-#include "frontend/AST.hpp"
+#include "BasicBlock.hpp"
+#include "Context.hpp"
+#include "Function.hpp"
+#include "GlobalValue.hpp"
+#include "Module.hpp"
+#include "Value.hpp"
+#include "AST.hpp"
 
 namespace frontend {
 

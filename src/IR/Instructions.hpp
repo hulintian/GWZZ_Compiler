@@ -1,12 +1,12 @@
 #pragma once
-#include "IR/User.hpp"
-#include "IR/Value.hpp"
-#include "common/type.hpp"
+#include "User.hpp"
+#include "Value.hpp"
+#include "type.hpp"
 #include <string> 
-#include "common/type.hpp" 
-#include "common/defines.hpp" 
-#include "IR/Function.hpp" 
-#include "IR/BasicBlock.hpp"
+#include "type.hpp" 
+#include "defines.hpp" 
+#include "Function.hpp" 
+#include "BasicBlock.hpp"
 
 namespace IR {
 

@@ -2,9 +2,9 @@
 
 
 
-#include "common/defines.hpp"
-#include "frontend/AST.hpp"
-#include "frontend/SymbolTable.hpp"
+#include "defines.hpp"
+#include "AST.hpp"
+#include "SymbolTable.hpp"
 #include <memory>
 #include <optional>
 #include <vector>

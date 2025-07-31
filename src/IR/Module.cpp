@@ -1,4 +1,4 @@
-#include "IR/Module.hpp"
+#include "Module.hpp"
 
 namespace IR {
 void Module::dump(std::ostream &out) {
