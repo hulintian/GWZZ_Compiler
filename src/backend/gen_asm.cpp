@@ -226,7 +226,7 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                 abuilder->create_SW(src_reg, dst_reg, 0);
             } else if(auto gv_addr = dynamic_cast<IR::GlobalValue*>(dst)) {
                 auto sym = gv_addr->get_symbol();
-                dst_reg = this->mctx->get_function()->get_reg(gep_addr);
+                dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                 abuilder->create_LA(dst_reg, sym);
                 abuilder->create_SW(src_reg, dst_reg, 0);
             }
