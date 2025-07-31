@@ -1,5 +1,5 @@
-#include "IR/Instructions.hpp"
-#include "common/type.hpp"
+#include "Instructions.hpp"
+#include "type.hpp"
 #include <string>
 
 namespace IR {

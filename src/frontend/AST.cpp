@@ -1,7 +1,7 @@
-#include "frontend/AST.hpp"
-#include "common/defines.hpp"
-#include "common/type.hpp"
-#include "common/utils.hpp"
+#include "AST.hpp"
+#include "defines.hpp"
+#include "type.hpp"
+#include "utils.hpp"
 #include <string_view>
 
 using namespace frontend::ast;

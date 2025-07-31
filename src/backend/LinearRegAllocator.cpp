@@ -2,12 +2,12 @@
 #include <iostream>
 #include <stack>
 #include <algorithm>
-#include "backend/LinearRegAllocator.hpp"
-#include "IR/Instructions.hpp"
-#include "backend/MBasicBlock.hpp"
-#include "backend/MInstruction.hpp"
-#include "common/regarch.hpp"
-#include "common/utils.hpp"
+#include "LinearRegAllocator.hpp"
+#include "Instructions.hpp"
+#include "MBasicBlock.hpp"
+#include "MInstruction.hpp"
+#include "regarch.hpp"
+#include "utils.hpp"
 
 namespace backend {
 

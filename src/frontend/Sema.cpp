@@ -1,10 +1,10 @@
-#include "frontend/Sema.hpp"
+#include "Sema.hpp"
 #include "InputMismatchException.h"
-#include "common/defines.hpp"
-#include "common/type.hpp"
-#include "frontend/AST.hpp"
-#include "frontend/SymbolTable.hpp"
-#include "common/utils.hpp"
+#include "defines.hpp"
+#include "type.hpp"
+#include "AST.hpp"
+#include "SymbolTable.hpp"
+#include "utils.hpp"
 #include <algorithm>
 #include <any>
 #include <cassert>

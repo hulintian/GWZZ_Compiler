@@ -1,12 +1,12 @@
-#include "common/defines.hpp"
-#include "common/type.hpp"
-#include "frontend/AST.hpp"
+#include "defines.hpp"
+#include "type.hpp"
+#include "AST.hpp"
 #include <any>
 #include <cassert>
 #include <future>
 #include <memory>
 #include <vector>
-#include "frontend/ASTVisitor.h"
+#include "ASTVisitor.h"
 
 using namespace frontend;
 using namespace ast;

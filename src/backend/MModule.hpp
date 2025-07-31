@@ -1,9 +1,9 @@
 #pragma once 
 
-#include "IR/Function.hpp"
-#include "IR/GlobalValue.hpp"
-#include <backend/MBasicBlock.hpp>
-#include <backend/MFunction.hpp>
+#include "Function.hpp"
+#include "GlobalValue.hpp"
+#include "MBasicBlock.hpp"
+#include "MFunction.hpp"
 #include <cassert>
 #include <ostream>
 #include <sstream>

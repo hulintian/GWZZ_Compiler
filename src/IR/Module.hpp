@@ -1,8 +1,8 @@
 #pragma once 
 
-#include "IR/Function.hpp"
-#include "IR/GlobalValue.hpp"
-#include "common/utils.hpp"
+#include "Function.hpp"
+#include "GlobalValue.hpp"
+#include "utils.hpp"
 
 #include <cassert>
 #include <iostream>

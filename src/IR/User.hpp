@@ -1,7 +1,7 @@
 #pragma once 
 
-#include "IR/Value.hpp"
-#include "common/type.hpp"
+#include "Value.hpp"
+#include "type.hpp"
 
 /*
  *  @brief The user
