@@ -6,7 +6,7 @@
 
 # set args -S -o test/speed_t1.s ~/compiler2025/RISCV-性能/01_mm1.sy
 # set args -S -o tmp/tests_t86.s ~/compiler2025/functional/functional_recover/functional/86_long_code2.sy
-set args -S -o tmp/tests_t58.s ~/compiler2025/functional/functional_recover/functional/58_sort_test4.sy 
+set args -S -o tmp/tests_t37.s ~/compiler2025/functional/functional_recover/functional/37_op_priority3.sy
 
 set print pretty on
 set print object on
