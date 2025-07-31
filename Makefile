@@ -7,6 +7,7 @@ INCLUDE_FLAGS = -I./antlr4 -I./antlr4/antlr4-runtime -I./src
 CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE 
 # CXXFLAGS += -DSHOW_INST_TIME
 CXXFLAGS += -DSHOW_ASM
+CXXFLAGS += -DSHOW_AST
 
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 

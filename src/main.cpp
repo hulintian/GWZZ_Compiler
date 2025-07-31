@@ -76,12 +76,12 @@ int main(int argc, char** argv) {
     av.visit(tree);
     auto &cu = av.compUnit();
     // cu.print(cout, 0);
-
-    frontend::Sema sema;
-    sema.visit_compUnits(cu);
 #ifdef SHOW_AST
     cu.print(cout, 0);
 #endif
+
+    frontend::Sema sema;
+    sema.visit_compUnits(cu);
 
     frontend::CodeGen* cg = new frontend::CodeGen();
     auto m = cg->gen(cu);
