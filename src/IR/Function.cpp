@@ -54,6 +54,7 @@ void CFG::regen_cfg() {
     // start from entry bb 
     BasicBlock* bb = this->entry_bb;
     std::stack<BasicBlock*> stk;
+    std::map<int, bool> visited;
     stk.push(bb);
     while(!stk.empty()) {
         auto top = stk.top();
@@ -66,7 +67,10 @@ void CFG::regen_cfg() {
                 succ_bb[top->get_bb_idx()].insert(next_bb->get_bb_idx());
                 prev_bb[next_bb->get_bb_idx()].insert(top->get_bb_idx());
 
-                stk.push(next_bb);
+                if(!visited[next_bb->get_bb_idx()]) {
+                    stk.push(next_bb);
+                    visited[next_bb->get_bb_idx()] = true;
+                }
             } else if(std::holds_alternative<CondBranchInst*>(*br_inst)) {
                 auto cbi = std::get<CondBranchInst*>(*br_inst);
                 auto next_t_bb = cbi->get_true_bb();
@@ -77,8 +81,15 @@ void CFG::regen_cfg() {
                 prev_bb[next_t_bb->get_bb_idx()].insert(top->get_bb_idx());
                 prev_bb[next_f_bb->get_bb_idx()].insert(top->get_bb_idx());
 
-                stk.push(next_t_bb);
-                stk.push(next_f_bb);
+                if(!visited[next_t_bb->get_bb_idx()]) {
+                    stk.push(next_t_bb);
+                    visited[next_t_bb->get_bb_idx()] = true;
+                } 
+
+                if(!visited[next_f_bb->get_bb_idx()]) {
+                    stk.push(next_f_bb);
+                    visited[next_f_bb->get_bb_idx()] = false;
+                }
             }
         }
     }

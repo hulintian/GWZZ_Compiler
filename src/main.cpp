@@ -83,13 +83,15 @@ int main(int argc, char** argv) {
 
     frontend::CodeGen* cg = new frontend::CodeGen();
     auto m = cg->gen(cu);
-    // cout << "====================The ir of " << input_path << " =======================\n";
-    // m->dump(cout);
+#ifdef SHOW_ASM
+    cout << "====================The ir of " << opts.input_file << " =======================\n";
+    m->dump(cout);
+#endif
 
-    // cout << "====================The asm of " << input_path << " =======================\n";
     backend::ASMGen* asmg = new backend::ASMGen();
     backend::MachineModule *mm = asmg->translate(m);
 #ifdef SHOW_ASM
+    cout << "====================The asm of " << opts.input_file << " =======================\n";
     mm->dump_asm(cout);
 #endif
     mm->dump_asm(opf);
