@@ -1080,9 +1080,9 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
     this->mctx->set_basic_block(prologue);
     int stack_size = -mfunc->get_stack_size();
     if(stack_size > 2047 || stack_size < -2048) {
-        RiscvReg::Reg stack_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
-        abuilder->create_LI(stack_size_reg, stack_size);
-        abuilder->create_ADD(RiscvReg::SP, RiscvReg::SP, stack_size_reg);
+        // RiscvReg::Reg stack_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+        abuilder->create_LI(RiscvReg::T0, stack_size);
+        abuilder->create_ADD(RiscvReg::SP, RiscvReg::SP, RiscvReg::T0);
     } else {
         abuilder->create_ADDI(RiscvReg::SP, RiscvReg::SP, stack_size);
     }
