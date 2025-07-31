@@ -43,6 +43,10 @@ public:
             }
         }
 
+        // 搬运 lib funcs 
+        this->mctx->get_module()->lib_funcs = std::move(m->get_lib_funcs());
+        this->mctx->get_module()->_name2lib_func = std::move(m->get_name2lib_func());
+
         for(auto func : m->get_funcs()) {
             translate_func(func);
         }

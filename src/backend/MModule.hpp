@@ -1,5 +1,6 @@
 #pragma once 
 
+#include "IR/Function.hpp"
 #include "IR/GlobalValue.hpp"
 #include <backend/MBasicBlock.hpp>
 #include <backend/MFunction.hpp>
@@ -19,7 +20,11 @@ public:
     std::vector<IR::GlobalValue*> data_items;
     std::vector<IR::GlobalValue*> bss_items;
 
+    std::vector<IR::Function*> lib_funcs;
+
     std::unordered_map<std::string, MachineFunction*> n2fmap;
+    std::map<std::string, IR::Function*> _name2lib_func;
+    std::map<std::string, MachineFunction*> _name2lib_m_func;
 
     bool has_func(std::string fn) {
         return n2fmap.find(fn) != n2fmap.end();

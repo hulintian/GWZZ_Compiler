@@ -69,7 +69,8 @@ public:
     }
 
     std::vector<Function*>& get_funcs() { return _funcs; }
-
+    std::vector<Function*>& get_lib_funcs() { return _lib_funcs; }
+    std::map<std::string, Function*>& get_name2lib_func() { return _name2lib_func; }
 
 private:
     // TODO Need maintain the function and global variable

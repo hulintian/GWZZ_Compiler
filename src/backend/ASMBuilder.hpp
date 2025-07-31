@@ -26,6 +26,12 @@ public:
             this->mctx->get_module()->addfuncs(nmfunc);
             return nmfunc;
         }
+
+        MachineFunction* create_m_lib_func( std::string func_name, Type* ret_ty, std::vector<Type*> tys, std::vector<std::string> agsn ) {
+            auto nmfunc = new MachineFunction(this->mctx->get_module(), func_name, ret_ty, tys, agsn);
+            this->mctx->get_module()->addfuncs(nmfunc);
+            return nmfunc;
+        }
     /* User Code End: code space 1 */ 
     // IArith
         MachineInstr* create_ADD(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
