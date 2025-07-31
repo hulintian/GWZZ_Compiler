@@ -74,6 +74,18 @@ public:
 
         return nullptr;
     }
+
+    temp_reg_live_interval_meta_data* find_def_meta_data(RiscvReg::Reg reg, long long ts) {
+        
+        for(auto interval : regs_live_interval) {
+            if( interval->temp_reg == reg &&
+                    ts == interval->start_ ) {
+                return interval;
+            }
+        }
+
+        return nullptr;
+    }
     
     void sort_interval_regs() {
         std::sort(this->regs_live_interval.begin(), this->regs_live_interval.end(), 
