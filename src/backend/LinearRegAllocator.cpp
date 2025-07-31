@@ -135,7 +135,9 @@ void RegAllocator::alloca_regs() {
                 if(!ur->is_standard()) {
                     if(reg2meta.find(ur) != reg2meta.end()) {
                         auto md = reg2meta[ur];
+#ifdef SHOW_INST_TIME
                         std::cerr << info << instr->time << " Allocate register for " << ur->name() << " from " << md->start_ << " to " << md->end << " ";
+#endif
                         if(meta2machine.find(md) != meta2machine.end()) {
                             *ur = *meta2machine[md];
                         }else if(meta2stackbias.find(md) != meta2stackbias.end()) {
@@ -143,7 +145,9 @@ void RegAllocator::alloca_regs() {
                         } else {
                             std::cerr << error << "Not found " << ur->name() << " from " << md->start_ << " to " << md->end << "\n";
                         }
+#ifdef SHOW_INST_TIME
                         std::cerr << "Machine reg " << ur->name() << "\n";
+#endif
                     } else {
                         // should never run 
                         std::cerr << error << " Not find metadata  for reg " << ur->name() << "\n";
@@ -188,7 +192,7 @@ void RegAllocator::alloca_regs() {
                                     meta2machine[md] = mreg;
                                     *def_r = *mreg;
                                 } else {
-                                    // 处理spill
+                                    // TODO 处理spill
                                 }
                             } else {
                                 if(!stk_save_regs.empty()) {
@@ -198,6 +202,7 @@ void RegAllocator::alloca_regs() {
                                     *def_r = *mreg;
                                     this->used_S_x.insert(*mreg);
                                 } else {
+                                    // TODO 处理spill
 
                                 }
                             }
@@ -209,6 +214,8 @@ void RegAllocator::alloca_regs() {
                                     stk_fp_temp_regs.pop();
                                     meta2machine[md] = mreg;
                                     *def_r = *mreg;
+                                } else {
+                                    // TODO 处理spill
                                 }
                             } else {
                                 if(!stk_fp_save_regs.empty()) {
@@ -218,6 +225,7 @@ void RegAllocator::alloca_regs() {
                                     *def_r = *mreg;
                                     this->used_FS_x.insert(*mreg);
                                 } else {
+                                    // TODO 处理spill
 
                                 }
                             }

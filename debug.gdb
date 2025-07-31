@@ -1,4 +1,4 @@
-set args tests/t1.sy 
+set args -S -o  tests/myt1.s tests/t1.sy 
 # set args tests/to2.sy 
 # set args tests/t6_fib.sy
 # set args tests/test/24_if_test1.sy 

@@ -93,7 +93,9 @@ void ASMGen::translate_func(IR::Function* func) {
     mfunc->allocator = regallo;
 
     regallo->live_interval_analysis();
+#ifdef SHOW_INST_TIME
     regallo->plot_reg_interval();
+#endif
     regallo->alloca_regs();
     
     // gen prologue and epilogue
