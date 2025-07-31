@@ -954,7 +954,7 @@ public:
         switch(this->mity) {
             case MachineInstrType::J : 
                 oss << "j"
-                        << ", "<<  _dst_bb
+                        << " "<<  _dst_bb
                 ; 
                 break;default : break;
         }
