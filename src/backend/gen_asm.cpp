@@ -642,7 +642,14 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
             auto cond_res_reg = this->mctx->get_function()->get_reg(cond);
             auto true_bb_idx = cond_br->get_true_bb()->get_bb_idx();
             auto true_mbb = this->mctx->get_function()->get_mbb(true_bb_idx);
-            abuilder->create_BNEZ(cond_res_reg, true_mbb);
+            if(cond_res_reg.is_gp()) {
+                abuilder->create_BNEZ(cond_res_reg, true_mbb);
+            } else {
+                // mv fp to gp 
+                auto cond_gp = new RiscvReg::Reg(this->get_new_vreg_idx());
+                abuilder->create_FMV_X_W(cond_gp, cond_res_reg);
+                abuilder->create_BNEZ(cond_gp, true_mbb);
+            }
             auto false_bb_idx = cond_br->get_false_bb()->get_bb_idx();
             auto false_mbb = this->mctx->get_function()->get_mbb(false_bb_idx);
             abuilder->create_J(false_mbb);
