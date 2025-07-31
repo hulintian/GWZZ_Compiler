@@ -181,7 +181,7 @@ std::string ReturnInst::to_str() {
 
 std::string ReturnInst::to_llvm() {
     /* User Code Start: Return::to_llvm */
-
+    return "ret";
     /* User Code End: Return::to_llvm */
 }
 
@@ -241,7 +241,7 @@ std::string CondBranchInst::to_str() {
 
 std::string CondBranchInst::to_llvm() {
     /* User Code Start: CondBranch::to_llvm */
-
+    return "br";
     /* User Code End: CondBranch::to_llvm */
 }
 
@@ -257,7 +257,7 @@ std::string BranchInst::to_str() {
 
 std::string BranchInst::to_llvm() {
     /* User Code Start: Branch::to_llvm */
-
+    return "br";
     /* User Code End: Branch::to_llvm */
 }
 
