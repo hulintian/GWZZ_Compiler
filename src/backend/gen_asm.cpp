@@ -94,6 +94,7 @@ void ASMGen::translate_func(IR::Function* func) {
 
     regallo->live_interval_analysis();
     regallo->plot_reg_interval();
+    regallo->alloca_regs();
     
     // gen prologue and epilogue
     this->gen_prolo_epil(this->mctx->get_function());
