@@ -77,14 +77,18 @@ void ASMGen::translate_func(IR::Function* func) {
     auto ebb = this->mctx->get_function()->get_mbb(entry_idx);
     this->mctx->get_function()->entry_bb = ebb;
     next_bb_idx.push(entry_idx);
+    std::map<int, bool> visited;
     while(!next_bb_idx.empty()) {
         int bi = next_bb_idx.top();
         next_bb_idx.pop();
         for(auto next_idx : func->get_cfg()->succ_bb[bi]) {
-            next_bb_idx.push(next_idx);
+            if(!visited[next_idx]) next_bb_idx.push(next_idx);
         }
         // translate the bb
-        translate_bb(func->get_cfg()->idx2bb[bi]);
+        if(!visited[bi]) {
+            translate_bb(func->get_cfg()->idx2bb[bi]);
+            visited[bi] = true;
+        }
         // std::cerr << "Translate bb " << bi << std::endl; 
     }
 
