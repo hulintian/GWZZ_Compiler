@@ -3,12 +3,9 @@
 #include "codegen.hpp"
 #include "Sysy22Lexer.h"
 #include "Sysy22Parser.h"
-#include "antlr4-runtime/ANTLRInputStream.h"
-#include "antlr4-runtime/CommonTokenStream.h"
-#include <chrono>
 #include <iostream>
 #include <fstream>
-#include <frontend/ASTVisitor.h>
+#include <ASTVisitor.h>
 #include <ostream>
 #include "Sema.hpp"
 
