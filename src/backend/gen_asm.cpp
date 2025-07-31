@@ -253,8 +253,8 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
             if(auto iscv = dynamic_cast<IR::ConstantValue*>(src)) {
                 int cv = iscv->get_value().iv;
                 if(iscv->get_type()->base_type == Float) {
-                    src_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
-                    auto  t_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                    src_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);         // the fp reg 
+                    auto  t_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
                     abuilder->create_LI(t_reg, cv);
                     abuilder->create_FMV_W_X(src_reg, t_reg);
                 } else {
@@ -270,10 +270,10 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                 dst_reg = src_reg; 
             } else {
                 if(from_ty->base_type == Int) {
-                    dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
+                    dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
                     abuilder->create_FCVT_W_S(dst_reg, src_reg);
                 } else if(from_ty->base_type == Float) {
-                    dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+                    dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
                     abuilder->create_FCVT_S_W(dst_reg, src_reg);
                 }
             }
@@ -687,7 +687,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         } else {
             // is fp
             auto ilhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
-            lhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+            lhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
             int const_fv = cv->get_value().iv;
             abuilder->create_LI(ilhs_reg, const_fv);
             abuilder->create_FMV_W_X(lhs_reg, ilhs_reg);
@@ -733,7 +733,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         } else if ( ircv->get_type()->base_type == Float ) {
             can_imm = false;
             rhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
-            auto irhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+            auto irhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
             abuilder->create_LI(irhs_reg, constv);
             abuilder->create_FMV_W_X(rhs_reg, irhs_reg);
         } else {
