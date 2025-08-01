@@ -40,7 +40,8 @@ public:
     std::set<RiscvReg::Reg> used_S_x;
     std::set<RiscvReg::Reg> used_FS_x;
 
-    int spill_cnt = 0;
+    int spill_size_cnt = 0;
+    int max_spill_size_cnt = 0;
 
     long long latest_call_timestamp = -1;
 
