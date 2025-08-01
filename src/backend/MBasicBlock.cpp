@@ -23,7 +23,7 @@ void MachineBasicBlock::dump_asm(std::ostream& out) {
 void MachineBasicBlock::insert_instr_before(MachineInstr* pos, MachineInstr* to_insert) {
     auto it = std::find(m_instrs.begin(), m_instrs.end(), pos);
     if (it != m_instrs.end()) {
-        std::cerr << info << "Insrt " << to_insert->to_asm() << "\n";
+        // std::cerr << info << "Insrt " << to_insert->to_asm() << "\n";
         m_instrs.insert(it, to_insert);
     } else {
         std::cerr << error << " Not exist instr: " << pos;

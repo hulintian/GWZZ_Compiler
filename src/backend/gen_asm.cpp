@@ -108,7 +108,8 @@ void ASMGen::translate_func(IR::Function* func) {
     ssz += regallo->used_S_x.size() * 8;
     ssz += regallo->used_FS_x.size() * 8;
     ssz += this->mctx->get_function()->overflow_arguments * 8;
-    this->mctx->get_function()->set_stack_size(ssz);
+    ssz += this->mctx->get_function()->allocator->max_spill_size_cnt;
+    this->mctx->get_function()->set_stack_size(ssz + 8);      // 多的这个8个是0(sp)
     
     // gen prologue and epilogue
     this->gen_prolo_epil(this->mctx->get_function());
@@ -131,9 +132,16 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
             auto isrc = load->get_src();
             if(auto gv = dynamic_cast<IR::GlobalValue*>(isrc)) {
                 // 是全局符号，是 gp fp OR ARRAY?
-                RiscvReg::Reg dst = new RiscvReg::Reg(get_new_vreg_idx());
-                abuilder->create_LA(dst, gv->get_symbol());
-                abuilder->create_LW(dst, dst, 0);
+                RiscvReg::Reg dst_addr = new RiscvReg::Reg(get_new_vreg_idx());
+                RiscvReg::Reg dst ;
+                abuilder->create_LA(dst_addr, gv->get_symbol());
+                if(gv->get_type().base_type == Int) {
+                    dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+                    abuilder->create_LW(dst, dst_addr, 0);
+                } else {
+                    dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+                    abuilder->create_FLW(dst, dst_addr, 0);
+                }
                 this->mctx->get_function()->add_reg_mp(load, dst);
             } else if(auto lv = dynamic_cast<IR::AllocaInst*>(isrc)) {
                 // alloca 分配局部变量 包括常量和数组， 如果是常量
@@ -332,7 +340,7 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
 
             int gp_cnt = 0;
             int fp_cnt = 0;
-            int ovfl_arg_regs = 0;
+            int ovfl_arg_regs = 1;
 
             for(int i=0; i<nr_args; i++) {
                 auto val_i = args_value[i];
@@ -359,12 +367,12 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                         // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
                         if(sp_bias > 2047 || sp_bias < -2048) {
                             // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
-                            abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
-                        } else {
                             RiscvReg::Reg sp_bias_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                             abuilder->create_LI(sp_bias_reg, sp_bias);
                             abuilder->create_ADD(sp_bias_reg, sp_bias_reg, RiscvReg::SP);
                             abuilder->create_SD(dst, sp_bias_reg, 0);
+                        } else {
+                            abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
                         }
                         ovfl_arg_regs++;
                     }
@@ -381,12 +389,12 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                         // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
                         if(sp_bias > 2047 || sp_bias < -2048) {
                             // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
-                            abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
-                        } else {
                             RiscvReg::Reg sp_bias_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                             abuilder->create_LI(sp_bias_reg, sp_bias);
                             abuilder->create_ADD(sp_bias_reg, sp_bias_reg, RiscvReg::SP);
                             abuilder->create_SD(dst, sp_bias_reg, 0);
+                        } else {
+                            abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
                         }
                         ovfl_arg_regs++;
                     }
@@ -405,12 +413,12 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                         // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
                         if(sp_bias > 2047 || sp_bias < -2048) {
                             // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
-                            abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
-                        } else {
                             RiscvReg::Reg sp_bias_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                             abuilder->create_LI(sp_bias_reg, sp_bias);
                             abuilder->create_ADD(sp_bias_reg, sp_bias_reg, RiscvReg::SP);
                             abuilder->create_SD(dst, sp_bias_reg, 0);
+                        } else {
+                            abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
                         }
                         ovfl_arg_regs++;
                     }
@@ -436,12 +444,12 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                             // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
                             if(sp_bias > 2047 || sp_bias < -2048) {
                                 // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
-                                abuilder->create_SD(dst,RiscvReg::SP, sp_bias);
-                            } else {
                                 RiscvReg::Reg sp_bias_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                                 abuilder->create_LI(sp_bias_reg, sp_bias);
                                 abuilder->create_ADD(sp_bias_reg, sp_bias_reg, RiscvReg::SP);
                                 abuilder->create_SW(dst, sp_bias_reg, 0);
+                            } else {
+                                abuilder->create_SW(dst,RiscvReg::SP, sp_bias);
                             }
                             ovfl_arg_regs++;
                         }
@@ -493,7 +501,7 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     abuilder->create_MV(func_rv, RiscvReg::A0);
                 } else {
                     func_rv = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
-                    abuilder->create_MV(func_rv, RiscvReg::FP10);
+                    abuilder->create_FMV_S(func_rv, RiscvReg::FP10);
                 }
                 this->mctx->get_function()->add_reg_mp(call, func_rv);
             }
@@ -701,7 +709,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         } else {
             // is fp
             auto ilhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
-            lhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
+            lhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
             int const_fv = cv->get_value().iv;
             abuilder->create_LI(ilhs_reg, const_fv);
             abuilder->create_FMV_W_X(lhs_reg, ilhs_reg);
@@ -1184,7 +1192,7 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
     auto all_args_name= mfunc->args_name;
     int gp_parm_cnt = 0;
     int fp_parm_cnt = 0;
-    int ovf_arg_cnt = 0;
+    int ovf_arg_cnt = 1;
     for(int i=0; i<parm_nr; i++) {
         // the bias
         int p_bias = mfunc->get_symbol_bias(all_args_name[i]);
