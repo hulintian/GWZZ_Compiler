@@ -338,10 +338,10 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     int stack_offset = this->mctx->get_function()->get_symbol_bias(sym);
                     RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
                     if(stack_offset > 2047 || stack_offset < -2048) {
-                        abuilder->create_ADDI(dst, RiscvReg::FP, stack_offset);
-                    } else {
                         abuilder->create_LI(dst, stack_offset);
                         abuilder->create_ADD(dst, dst, RiscvReg::FP);
+                    } else {
+                        abuilder->create_ADDI(dst, RiscvReg::FP, stack_offset);
                     }
 
                     if(gp_cnt < 8) {
@@ -1008,7 +1008,9 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
             if(constv == 0) {
                 abuilder->create_SGTZ(dst, lhs_reg);
             } else {
-                abuilder->create_SGTI(dst, lhs_reg, constv);
+                rhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                abuilder->create_LI(rhs_reg, constv);
+                abuilder->create_SLT(dst, rhs_reg, lhs_reg);
             }
         }else {
             abuilder->create_SLT(dst, rhs_reg, lhs_reg);
@@ -1034,7 +1036,9 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
                 abuilder->create_SGTZ(dst, lhs_reg);
                 abuilder->create_XORI(dst, dst, 1);
             } else {
-                abuilder->create_SGTI(dst, lhs_reg, constv);
+                rhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                abuilder->create_LI(rhs_reg, constv);
+                abuilder->create_SLT(dst, rhs_reg, lhs_reg);
                 abuilder->create_XORI(dst, dst, 1);
             }
         } else {
@@ -1053,12 +1057,16 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         abuilder->create_FLE_S(dst, lhs_reg, rhs_reg);
     } else if (bop == IR::BinaryInstType::ge) {
         // handle ge , not lt is gt
+        // lhs >= rhs ==> !(lhs < rhs)
         dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
         if(can_imm) {
             if(constv == 0) {
-                abuilder->create_SGTZ(dst, lhs_reg);
+                // lhs >= 0 ==> !(lhs < 0)
+                abuilder->create_SLTZ(dst, lhs_reg);
+                abuilder->create_SNEZ(dst, lhs_reg);
             } else {
-                abuilder->create_SGTI(dst, lhs_reg, constv);
+                abuilder->create_SLTI(dst, lhs_reg, constv);
+                abuilder->create_SNEZ(dst, lhs_reg);
             }
         } else {
             abuilder->create_SLT(dst, rhs_reg, lhs_reg); // 
