@@ -232,7 +232,12 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                 }
             } else if(auto gep_addr = dynamic_cast<IR::GetElementPtrInst*>(dst)) {
                 dst_reg = this->mctx->get_function()->get_reg(gep_addr);
-                abuilder->create_SW(src_reg, dst_reg, 0);
+                // abuilder->create_SW(src_reg, dst_reg, 0);
+                if(src_reg.is_gp()) {
+                    abuilder->create_SW(src_reg, dst_reg, 0);
+                } else {
+                    abuilder->create_FSW(src_reg, dst_reg, 0);
+                }
             } else if(auto gv_addr = dynamic_cast<IR::GlobalValue*>(dst)) {
                 auto sym = gv_addr->get_symbol();
                 dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
@@ -272,10 +277,10 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
             } else {
                 if(from_ty->base_type == Int) {
                     dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
-                    abuilder->create_FCVT_W_S(dst_reg, src_reg);
+                    abuilder->create_FCVT_S_W(dst_reg, src_reg);
                 } else if(from_ty->base_type == Float) {
                     dst_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
-                    abuilder->create_FCVT_S_W(dst_reg, src_reg);
+                    abuilder->create_FCVT_W_S(dst_reg, src_reg);
                 }
             }
             this->mctx->get_function()->add_reg_mp(convert, dst_reg);
