@@ -60,6 +60,15 @@ void ASMGen::translate_func(IR::Function* func) {
         this->mctx->get_function()->add_symbol(ai->get_name(), -16-sum_lss);
         // std::cout << ai->to_str() << ";  Size : " << size << std::endl;
     }
+    if(sum_lss % 8 != 0) {
+#ifdef DEBUG
+        std::cerr << warn << "sum_lss is " << sum_lss; 
+#endif
+        sum_lss = ((sum_lss/8)+1)*8;
+#ifdef DEBUG
+        std::cerr << " exist not 8 byte align fixed it to" << sum_lss <<  "\n";
+#endif
+    }
     this->mctx->get_function()->local_variable_size = sum_lss;
     this->mctx->get_function()->set_stack_size(16+sum_lss);
     // std::cout << "LA use " << sum_lss << std::endl;
