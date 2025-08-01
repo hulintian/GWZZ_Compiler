@@ -125,6 +125,9 @@ void RegAllocator::alloca_regs() {
     int spilled_operands = 0;
     // slot 从哪开始？ 
     int stack_0_size = this->_parent->local_variable_size + 16;
+    if(stack_0_size % 8 != 0) {
+        std::cerr << error << "spill start ptr is fp-" << stack_0_size << " is not 8 size align\n"; 
+    }
     std::map<RiscvReg::Reg, int> slot;
 
     while(!bb_idx_stack.empty()) {
