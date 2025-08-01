@@ -6,6 +6,7 @@
 #include "Instructions.hpp"
 #include "MBasicBlock.hpp"
 #include "MInstruction.hpp"
+#include "ASMBuilder.hpp"
 #include "regarch.hpp"
 #include "utils.hpp"
 
@@ -119,9 +120,11 @@ void RegAllocator::alloca_regs() {
     // 用来找old value的 
     std::map<RiscvReg::Reg, temp_reg_live_interval_meta_data*> reg2meta;
 
-    auto deal_spill = [&](temp_reg_live_interval_meta_data* meta) {
 
-    };
+    int spilled_operands = 0;
+    // slot 从哪开始？ 
+    int stack_size = this->_parent->get_stack_size();
+    std::map<RiscvReg::Reg, int> slot;
 
     while(!bb_idx_stack.empty()) {
         int bbi = bb_idx_stack.top();
@@ -197,7 +200,13 @@ void RegAllocator::alloca_regs() {
                                     stk_temp_regs.pop();
                                     meta2machine[md] = mreg;
                                     *def_r = *mreg;
-                                } else {
+                                } else if(!stk_save_regs.empty()) {
+                                    auto *mreg = stk_save_regs.top();
+                                    stk_save_regs.pop();
+                                    meta2machine[md] = mreg;
+                                    *def_r = *mreg;
+                                    this->used_S_x.insert(*mreg);
+                                }else {
                                     // TODO 处理spill
                                 }
                             } else {
@@ -220,6 +229,12 @@ void RegAllocator::alloca_regs() {
                                     stk_fp_temp_regs.pop();
                                     meta2machine[md] = mreg;
                                     *def_r = *mreg;
+                                } else if(!stk_fp_save_regs.empty()){
+                                    auto *mreg = stk_fp_save_regs.top();
+                                    stk_fp_save_regs.pop();
+                                    meta2machine[md] = mreg;
+                                    *def_r = *mreg;
+                                    this->used_FS_x.insert(*mreg);
                                 } else {
                                     // TODO 处理spill
                                 }
@@ -242,6 +257,80 @@ void RegAllocator::alloca_regs() {
                     }
                 }
             }
+
+
+            auto load_from_mem = [&](RiscvReg::Reg dst, RiscvReg::Reg addr, int bias, bool front_o_back) {
+                if(bias > 2047 || bias < -2048) {
+                    if(dst.is_gp()) {
+                        auto calculate_bias = new LIInst(MachineInstrType::LI, cur_bb, dst, bias);
+                        auto add_2_dst = new IArithInst(MachineInstrType::ADD, cur_bb, dst, dst, addr);
+                        auto ld_f_mem = new LoadInst(MachineInstrType::LD, cur_bb, dst, addr, bias);
+                        if(front_o_back) {
+                            cur_bb->insert_instr_before(instr, calculate_bias);
+                            cur_bb->insert_instr_before(instr, add_2_dst);
+                            cur_bb->insert_instr_before(instr, ld_f_mem);
+                        } else {
+                            cur_bb->insert_instr_after(instr, calculate_bias);
+                            cur_bb->insert_instr_after(instr, add_2_dst);
+                            cur_bb->insert_instr_after(instr, ld_f_mem);
+                        }
+                    } else {
+                        auto calculate_bias = new LIInst(MachineInstrType::LI, cur_bb, dst, bias);
+                        auto add_2_dst = new IArithInst(MachineInstrType::ADD, cur_bb, dst, dst, addr);
+                        auto ld_f_mem = new LoadInst(MachineInstrType::LD, cur_bb, dst, addr, bias);
+                        if(front_o_back) {
+                            cur_bb->insert_instr_before(instr, calculate_bias);
+                            cur_bb->insert_instr_before(instr, add_2_dst);
+                            cur_bb->insert_instr_before(instr, ld_f_mem);
+                        } else {
+                            cur_bb->insert_instr_after(instr, calculate_bias);
+                            cur_bb->insert_instr_after(instr, add_2_dst);
+                            cur_bb->insert_instr_after(instr, ld_f_mem);
+                        }
+                    }
+                } else {
+                    if(dst.is_gp()) {
+                        auto ld_f_mem = new LoadInst(MachineInstrType::LD, cur_bb, dst, addr, bias);
+                    }
+                }
+
+            };
+
+            auto store_to_mem = [&]() {
+
+            };
+            
+            
+            // TODO 在最后处理没有分配的寄存器
+            // 如果存在相同的源操作数，就用同一个
+            int spill_ld_cnt = 0;
+            std::map<RiscvReg::Reg, RiscvReg::Reg> forsamspilled;
+            for(auto opd : instr->get_srcs()) {
+                if(!opd->is_standard()) {
+                    spilled_operands++;
+                    if(forsamspilled.find(*opd) != forsamspilled.end())  {
+                        *opd = forsamspilled[opd];
+                        int bias = meta2stackbias[reg2meta[*opd]];
+                        load_from_mem(RiscvReg::temp_regs[spill_ld_cnt], RiscvReg::FP, bias, true);
+                    } else {
+                        if(opd->is_gp()) {
+                            int bias = slot[*opd];
+                        } else {
+
+                        }
+                    }
+                    // std::cerr << warn << "Src operand " << opd->name() <<  " In instruction :" << instr->time << " " << instr->to_asm() << " is spilled\n"; 
+                    // cur_bb->insert_instr_before(instr, new IArithUInst(MachineInstrType::AUIPC, cur_bb, RiscvReg::S11, 100));
+                }
+            }
+            for(auto opd : instr->get_dsts()) {
+                if(!opd->is_standard()) {
+                    std::cerr << warn << "Dst operand " << opd->name() <<  " In instruction :" << instr->time << " " << instr->to_asm() << " is spilled\n"; 
+                    // cur_bb->insert_instr_after(instr, new IArithUInst(MachineInstrType::AUIPC, cur_bb, RiscvReg::S11, 100));
+                }
+            }
+
+            // TODO 还原使用的寄存器
 
         }
         }
