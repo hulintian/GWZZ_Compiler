@@ -1108,17 +1108,10 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
 // 1. write prologue bb
     auto prologue = mfunc->prologue_bb;
     this->mctx->set_basic_block(prologue);
-    int stack_size = -mfunc->get_stack_size() ; 
-    if(stack_size > 2047 || stack_size < -2048) {
-        // RiscvReg::Reg stack_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
-        abuilder->create_LI(RiscvReg::T0, stack_size);
-        abuilder->create_ADD(RiscvReg::SP, RiscvReg::SP, RiscvReg::T0);
-    } else {
-        abuilder->create_ADDI(RiscvReg::SP, RiscvReg::SP, stack_size);
-    }
+
 
     // save fp 
-    int fp_bias = -stack_size - 8;
+    int fp_bias = - 8;
     if(fp_bias > 2047 || fp_bias < -2048) {
         RiscvReg::Reg fp_size_reg = RiscvReg::T0;
         abuilder->create_LI(fp_size_reg, fp_bias);
@@ -1128,7 +1121,7 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
         abuilder->create_SD(RiscvReg::FP, RiscvReg::SP, fp_bias);
     }
     // save ra
-    int ra_bias = -stack_size - 16;
+    int ra_bias = - 16;
     if(ra_bias > 2047 || ra_bias < -2048) {
         RiscvReg::Reg ra_size_reg = RiscvReg::T0;
         abuilder->create_LI(ra_size_reg, ra_bias);
@@ -1137,6 +1130,16 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
     } else {
         abuilder->create_SD(RiscvReg::RA, RiscvReg::SP, ra_bias);
     }
+
+    int stack_size = -mfunc->get_stack_size() ; 
+    if(stack_size > 2047 || stack_size < -2048) {
+        // RiscvReg::Reg stack_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
+        abuilder->create_LI(RiscvReg::T0, stack_size);
+        abuilder->create_ADD(RiscvReg::SP, RiscvReg::SP, RiscvReg::T0);
+    } else {
+        abuilder->create_ADDI(RiscvReg::SP, RiscvReg::SP, stack_size);
+    }
+
 
     // save old sp to fp
     int rev_stack_size = mfunc->get_stack_size();
