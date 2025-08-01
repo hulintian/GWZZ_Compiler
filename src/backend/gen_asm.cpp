@@ -60,6 +60,7 @@ void ASMGen::translate_func(IR::Function* func) {
         this->mctx->get_function()->add_symbol(ai->get_name(), -16-sum_lss);
         // std::cout << ai->to_str() << ";  Size : " << size << std::endl;
     }
+    this->mctx->get_function()->local_variable_size = sum_lss;
     this->mctx->get_function()->set_stack_size(16+sum_lss);
     // std::cout << "LA use " << sum_lss << std::endl;
     // std::cout << "==========================================================\n";
@@ -91,7 +92,7 @@ void ASMGen::translate_func(IR::Function* func) {
         }
         // std::cerr << "Translate bb " << bi << std::endl; 
     }
-
+    // after translate, the immerged params are know 
     // TODO reg alloca 
     RegAllocator *regallo = new RegAllocator(mfunc);
     mfunc->allocator = regallo;
@@ -101,6 +102,13 @@ void ASMGen::translate_func(IR::Function* func) {
     regallo->plot_reg_interval();
 #endif
     regallo->alloca_regs();
+    
+    // after reg allocas 
+    int ssz = this->mctx->get_function()->get_stack_size();
+    ssz += regallo->used_S_x.size() * 8;
+    ssz += regallo->used_FS_x.size() * 8;
+    ssz += this->mctx->get_function()->overflow_arguments * 8;
+    this->mctx->get_function()->set_stack_size(ssz);
     
     // gen prologue and epilogue
     this->gen_prolo_epil(this->mctx->get_function());
@@ -943,7 +951,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
     } else if (bop == IR::BinaryInstType::oeq) {
         // handle oeq
         // the res is in x reg
-        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
         if(can_imm) {
             auto irhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
             abuilder->create_LI(irhs_reg, constv);
@@ -969,7 +977,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         }
     } else if (bop == IR::BinaryInstType::one) {
         // handle one
-        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
         if(can_imm) {
             auto irhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
             abuilder->create_LI(irhs_reg, constv);
@@ -992,7 +1000,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         }
     } else if (bop == IR::BinaryInstType::olt) {
         // handle olt
-        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
         if(can_imm) {
             auto irhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
             abuilder->create_LI(irhs_reg, constv);
@@ -1017,7 +1025,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         }
     } else if (bop == IR::BinaryInstType::ogt) {
         // handle ogt
-        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
 
         if(can_imm) {
             auto irhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
@@ -1047,7 +1055,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         }
     } else if (bop == IR::BinaryInstType::ole) {
         // handle ole
-        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
         if(can_imm) {
             auto irhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
             abuilder->create_LI(irhs_reg, constv);
@@ -1074,7 +1082,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         }
     } else if (bop == IR::BinaryInstType::oge) {
         // handle oge
-        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+        dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
         if(can_imm) {
             auto irhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
             abuilder->create_LI(irhs_reg, constv);
@@ -1092,7 +1100,7 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
 // 1. write prologue bb
     auto prologue = mfunc->prologue_bb;
     this->mctx->set_basic_block(prologue);
-    int stack_size = -mfunc->get_stack_size();
+    int stack_size = -mfunc->get_stack_size() ; 
     if(stack_size > 2047 || stack_size < -2048) {
         // RiscvReg::Reg stack_size_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
         abuilder->create_LI(RiscvReg::T0, stack_size);
@@ -1131,6 +1139,8 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
     } else {
         abuilder->create_ADDI(RiscvReg::FP, RiscvReg::SP, rev_stack_size);
     }
+
+
 
     // TODO 
     //      1. move arg to stack memeory
@@ -1236,9 +1246,43 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
             }
         }
     }
+    
+    // keep saved regs
+    int save_space_start_idx = -16 - mfunc->local_variable_size;
+    int sfx_cnt = 0;
+    std::map<RiscvReg::Reg, int> memo_sr_offset;
+    for(auto sx : mfunc->allocator->used_S_x) {
+        sfx_cnt++;
+        int fp_bias = save_space_start_idx - sfx_cnt * 8;
+        memo_sr_offset[sx] = fp_bias;
+        if(fp_bias > 2047 || fp_bias < -2048) {
+            abuilder->create_LI(RiscvReg::T0, fp_bias);
+            abuilder->create_ADD(RiscvReg::T0, RiscvReg::FP, RiscvReg::T0);
+            abuilder->create_SD(sx, RiscvReg::T0, 0);
+        } else {
+            abuilder->create_SD(sx, RiscvReg::FP, fp_bias);
+        }
+    }
+
+    for(auto fsx : mfunc->allocator->used_FS_x) {
+        sfx_cnt++;
+        int fp_bias = save_space_start_idx - sfx_cnt * 8;
+        memo_sr_offset[fsx] = fp_bias;
+        if(fp_bias > 2047 || fp_bias < -2048) {
+            abuilder->create_LI(RiscvReg::T0, fp_bias);
+            abuilder->create_ADD(RiscvReg::T0, RiscvReg::FP, RiscvReg::T0);
+            abuilder->create_FSD(fsx, RiscvReg::T0, 0);
+        } else {
+            abuilder->create_FSD(fsx, RiscvReg::FP, fp_bias);
+        }
+    }
 
 
     abuilder->create_J(mfunc->get_entry_bb());
+
+
+    // 
+    // ======================== 尾声块 =====================================
 
     // TODO 处理尾声基本块
     //      1. 恢复现场
@@ -1246,6 +1290,24 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
     auto epilogue_bb =  mfunc->epilogue_bb;
     this->mctx->set_basic_block(epilogue_bb);
     // 先恢复现场
+    // reload saved regs
+    for(auto [reg, fp_bias] : memo_sr_offset) {
+        if(fp_bias > 2047 || fp_bias < -2048) {
+            abuilder->create_LI(RiscvReg::T0, fp_bias);
+            abuilder->create_ADD(RiscvReg::T0, RiscvReg::FP, RiscvReg::T0);
+            if(reg.is_gp()) {
+                abuilder->create_LD(reg, RiscvReg::T0, 0);
+            } else {
+                abuilder->create_FLW(reg, RiscvReg::T0, 0);
+            }
+        } else {
+            if(reg.is_gp()) {
+                abuilder->create_LD(reg, RiscvReg::FP, fp_bias);
+            } else {
+                abuilder->create_FLW(reg, RiscvReg::FP, fp_bias);
+            }
+        }
+    }
     
     // 恢复fp ra sp
     abuilder->create_LD(RiscvReg::RA, RiscvReg::FP, -16);

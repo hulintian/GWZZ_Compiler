@@ -11,5 +11,6 @@ for sy in tmp/functional/*.sy; do
     # 日志文件名
     logfile="tmp/func/t_${base}.log"
     # 编译并 tee 日志
+    echo "--------- Compiling ${sfile} ----------------"
     ./bin/compiler -S "$sfile" "$sy" | tee "$logfile"
 done
