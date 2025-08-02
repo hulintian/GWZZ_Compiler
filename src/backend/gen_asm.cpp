@@ -114,11 +114,32 @@ void ASMGen::translate_func(IR::Function* func) {
     
     // after reg allocas 
     int ssz = this->mctx->get_function()->get_stack_size();
+#ifdef DEBUG
+    std::cerr << info << "In function : " << fname << "\n";
+    std::cerr << info << "Stack size : " << ssz << "\n";
+    std::cerr << info << "For used sx size : " << this->mctx->get_function()->allocator->used_S_x.size() * 8 << "\n";
+    std::cerr << info << "For used fx size : " << this->mctx->get_function()->allocator->used_FS_x.size() * 8 << "\n";
+    std::cerr << info << "For spill regs size : " << this->mctx->get_function()->allocator->max_spill_size_cnt << "\n";
+#endif
     ssz += regallo->used_S_x.size() * 8;
     ssz += regallo->used_FS_x.size() * 8;
     ssz += this->mctx->get_function()->overflow_arguments * 8;
     ssz += this->mctx->get_function()->allocator->max_spill_size_cnt;
     this->mctx->get_function()->set_stack_size(ssz + 8);      // 多的这个8个是0(sp)
+    int sz = this->mctx->get_function()->get_stack_size();
+    if(sz % 16 != 0) {
+#ifdef DEBUG
+        std::cerr << warn << "stack size is : " << sz << ", Not 16 align, ";
+#endif
+        sz = ((sz / 16) + 1) * 16;
+#ifdef DEBUG
+        std::cerr << "Change it to " << sz << "\n";
+#endif
+    }
+    this->mctx->get_function()->set_stack_size(sz);      // 多的这个8个是0(sp)
+#ifdef DEBUG
+    std::cerr << info << "The sum is : " << this->mctx->get_function()->get_stack_size() << "\n";
+#endif
     
     // gen prologue and epilogue
     this->gen_prolo_epil(this->mctx->get_function());

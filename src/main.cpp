@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
 
     frontend::CodeGen* cg = new frontend::CodeGen();
     auto m = cg->gen(cu);
-#ifdef SHOW_ASM
+#ifdef SHOW_IR
     cout << "====================The ir of " << opts.input_file << " =======================\n";
     m->dump(cout);
 #endif

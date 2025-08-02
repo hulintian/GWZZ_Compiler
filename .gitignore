@@ -10,3 +10,4 @@ antlr4
 # *.gdb
 /.cache/
 RISCV-性能
+functional
