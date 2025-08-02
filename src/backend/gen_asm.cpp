@@ -565,9 +565,9 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     if( bias > 2047 || bias < -2048 ) {
                         RiscvReg::Reg offset_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
                         abuilder->create_LI(offset_dst, bias);
-                        abuilder->create_ADD(dst, RiscvReg::FP, offset_dst);
+                        abuilder->create_ADD(dst, gv_addr, offset_dst);
                     } else {
-                        abuilder->create_ADDI(dst, RiscvReg::FP, bias);
+                        abuilder->create_ADDI(dst, gv_addr, bias);
                     }
                     this->mctx->get_function()->add_reg_mp(gep, dst);
                 } else {
