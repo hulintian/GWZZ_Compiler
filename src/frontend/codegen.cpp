@@ -175,7 +175,7 @@ void CodeGen::gen_decl(const ast::Decl& decl) {
 
     std::string new_name = name;
     if(this->get_cur_func()->has_symbol(name)) {
-        new_name += std::to_string(amc[name] + 1);
+        new_name += "@_"+std::to_string(amc[name] + 1);
     }
     auto val = builder->create_alloca(new_name, type);
     alias_map[name] = val;

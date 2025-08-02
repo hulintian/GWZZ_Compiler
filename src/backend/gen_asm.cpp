@@ -16,6 +16,10 @@
 namespace backend {
 
 void ASMGen::translate_func(IR::Function* func) {
+
+#ifdef DEBUG
+        std::cerr << info << "Translating function: " << func->get_name() << "\n" ;
+#endif
     auto fname = func->get_func_name();
     auto frt = func->get_return_type();
     auto fptys = func->get_params_type();
@@ -57,6 +61,9 @@ void ASMGen::translate_func(IR::Function* func) {
         }
         sum_lss += size;
         // add the bias 
+#ifdef DEBUG
+        std::cerr << info << "Add symbol : " << ai->get_name() << "\n" ;
+#endif
         this->mctx->get_function()->add_symbol(ai->get_name(), -16-sum_lss);
         // std::cout << ai->to_str() << ";  Size : " << size << std::endl;
     }
