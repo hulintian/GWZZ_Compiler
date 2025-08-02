@@ -200,7 +200,7 @@ const std::vector<const Reg*>  fp_Temp_regs = std::vector<const Reg*>({
 
 inline bool is_in_pool(const std::vector<const Reg*> pool, const Reg* reg) {
     for(auto pr : pool) {
-        if(pr->id() == reg->id()) { return true; }
+        if(pr->id() == reg->id() && pr->is_gp() == reg->is_gp() ) { return true; }
     }
     return false;
 }
