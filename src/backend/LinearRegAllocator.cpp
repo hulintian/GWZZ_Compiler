@@ -198,17 +198,27 @@ void RegAllocator::alloca_regs() {
             for(auto def_r : instr->get_dsts()) {
                 if(!def_r->is_standard()) {
                     if(temp_reg_live_interval_meta_data* md = this->find_def_meta_data(def_r, instr->time)) {
+#ifdef DEBUG
+                        std::cout << "In instr " << instr->to_asm() << "    \n";
+                        std::cout <<  "        let " << def_r->name();
+#endif
                         // 更新定义的到 meta指针
                         reg2meta[md->temp_reg] = md;
                         if(def_r->is_gp()) {
                             // 整数寄存器
                             if(!md->pass_call_instr) {
                                 if(!stk_temp_regs.empty()) {
+#ifdef DEBUG
+                        std::cout << " through 1 " ;
+#endif
                                     auto *mreg = stk_temp_regs.top();
                                     stk_temp_regs.pop();
                                     meta2machine[md] = mreg;
                                     *def_r = *mreg;
                                 } else if(!stk_save_regs.empty()) {
+#ifdef DEBUG
+                        std::cout << " through 2 " ;
+#endif
                                     auto *mreg = stk_save_regs.top();
                                     stk_save_regs.pop();
                                     meta2machine[md] = mreg;
@@ -219,6 +229,9 @@ void RegAllocator::alloca_regs() {
                                 }
                             } else {
                                 if(!stk_save_regs.empty()) {
+#ifdef DEBUG
+                        std::cout << " through 3 " ;
+#endif
                                     auto *mreg = stk_save_regs.top();
                                     stk_save_regs.pop();
                                     meta2machine[md] = mreg;
@@ -233,11 +246,17 @@ void RegAllocator::alloca_regs() {
                             // 浮点寄存器
                             if(!md->pass_call_instr) {
                                 if(!stk_fp_temp_regs.empty()) {
+#ifdef DEBUG
+                        std::cout << " through 4 " ;
+#endif
                                     auto *mreg = stk_fp_temp_regs.top();
                                     stk_fp_temp_regs.pop();
                                     meta2machine[md] = mreg;
                                     *def_r = *mreg;
                                 } else if(!stk_fp_save_regs.empty()){
+#ifdef DEBUG
+                        std::cout << " through 5 " ;
+#endif
                                     auto *mreg = stk_fp_save_regs.top();
                                     stk_fp_save_regs.pop();
                                     meta2machine[md] = mreg;
@@ -248,6 +267,9 @@ void RegAllocator::alloca_regs() {
                                 }
                             } else {
                                 if(!stk_fp_save_regs.empty()) {
+#ifdef DEBUG
+                        std::cout << " through 6 " ;
+#endif
                                     auto *mreg = stk_fp_save_regs.top();
                                     stk_fp_save_regs.pop();
                                     meta2machine[md] = mreg;
@@ -260,6 +282,9 @@ void RegAllocator::alloca_regs() {
                             }
 
                         }
+#ifdef DEBUG
+                        std::cout <<  " be " << def_r->name() << "\n";
+#endif
                     } else {
                         std::cerr << error << "Not exist " << def_r->name() << "'s interval meta data\n";
                     }
@@ -452,16 +477,16 @@ void RegAllocator::alloca_regs() {
                                 // cur_bb->insert_instr_after(instr, store_vreg);
                                 // 地址要提前取回
                             } else {
-                                auto usable_reg = find_an_usable_reg(true);
+                                auto usable_reg = find_an_usable_reg(false);
                                 // u_x.insert(usable_reg);
-                                auto store_reg = new StoreInst(MachineInstrType::SD, cur_bb, usable_reg, RiscvReg::FP, bias+8);
-                                auto ld_f_mm = new LoadInst(MachineInstrType::LD, cur_bb, usable_reg, RiscvReg::FP, bias);
+                                auto store_reg = new FStoreInst(MachineInstrType::FSW, cur_bb, usable_reg, RiscvReg::FP, bias+8);
+                                auto ld_f_mm = new FLoadInst(MachineInstrType::FLW, cur_bb, usable_reg, RiscvReg::FP, bias);
                             
                                 cur_bb->insert_instr_before(instr, store_reg);
                                 cur_bb->insert_instr_before(instr, ld_f_mm);
 
                                 *opd = *usable_reg;
-                                auto load_back_reg = new LoadInst(MachineInstrType::LD, cur_bb, usable_reg, RiscvReg::FP, bias);
+                                auto load_back_reg = new FLoadInst(MachineInstrType::FLW, cur_bb, usable_reg, RiscvReg::FP, bias);
                                 cur_bb->insert_instr_after(instr, load_back_reg);
                             }
                         }
@@ -575,7 +600,7 @@ void RegAllocator::alloca_regs() {
                             auto load_fp_back = new FLoadInst(MachineInstrType::FLW, cur_bb, usable_f_reg, RiscvReg::FP, final_bias+8);
                             cur_bb->insert_instr_after(instr, load_fp_back);
 
-                            auto store_vreg = new FStoreInst(MachineInstrType::FSW, cur_bb, usable_f_reg, RiscvReg::FP, bias);
+                            auto store_vreg = new FStoreInst(MachineInstrType::FSW, cur_bb, usable_f_reg, RiscvReg::FP, final_bias);
                             cur_bb->insert_instr_after(instr, store_vreg);
                             // 地址要提前取回
                         } else {
