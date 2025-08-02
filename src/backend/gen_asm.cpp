@@ -667,15 +667,30 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     if(ret_reg.is_gp()) {
                         abuilder->create_MV(RiscvReg::A0, ret_reg);
                     } else {
-                        abuilder->create_FMV_X_W(RiscvReg::A0, ret_reg);
+                        abuilder->create_FCVT_W_S(RiscvReg::A0, ret_reg);
                     }
                 } else if( this->mctx->get_function()->get_return_type()->base_type == Float ) {
                     auto ret_v = ret->get_ret_val();
-                    auto ret_reg = this->mctx->get_function()->get_reg(ret_v);
+                    RiscvReg::Reg ret_reg;
+                    if(auto cv = dynamic_cast<IR::ConstantValue*>(ret_v)) {
+                        ret_reg = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+                        int c_v = cv->get_value().iv;
+                        if(cv->get_type()->base_type == Float) {
+                            auto ireg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                            abuilder->create_LI(ireg, c_v);
+                            abuilder->create_FMV_W_X(ret_reg, ireg);
+                        } else {
+                            auto ireg = new RiscvReg::Reg(this->get_new_vreg_idx());
+                            abuilder->create_LI(ireg, c_v);
+                            abuilder->create_FCVT_S_W(ret_reg, ireg);
+                        }
+                    } else {
+                        ret_reg = this->mctx->get_function()->get_reg(ret_v);
+                    }
                     if(!ret_reg.is_gp()) {
                         abuilder->create_FMV_S(RiscvReg::FP10, ret_reg);
                     } else {
-                        abuilder->create_FMV_W_X(RiscvReg::FP10, ret_reg);
+                        abuilder->create_FCVT_S_W(RiscvReg::FP10, ret_reg);
                     }
                 }
                 abuilder->create_J(this->mctx->get_function()->epilogue_bb);
