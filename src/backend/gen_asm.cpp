@@ -1048,7 +1048,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
             abuilder->create_FMV_W_X(rhs_reg, irhs_reg);
         } 
         abuilder->create_FEQ_S(dst, lhs_reg, rhs_reg);
-        abuilder->create_SNEZ(dst, dst);
+        abuilder->create_XORI(dst, dst, 1);
     } else if (bop == IR::BinaryInstType::lt) {
         // handle lt
         dst = new RiscvReg::Reg(this->get_new_vreg_idx());
