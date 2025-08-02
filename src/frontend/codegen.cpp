@@ -390,7 +390,7 @@ Value* CodeGen::gen_cond_expr(ast::Expr* expr, IR::BasicBlock* true_bb, IR::Basi
             auto next_cond_bb = builder->create_bb();
             auto lcond = gen_cond_expr(lhs.get(), true_bb, next_cond_bb);
             if(lcond != nullptr) {
-                builder->create_cond_br(lcond, next_cond_bb, false_bb);
+                builder->create_cond_br(lcond, true_bb, next_cond_bb);
             }
             this->ctx->set_current_basic_block(next_cond_bb);
 
