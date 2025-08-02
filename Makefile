@@ -8,7 +8,8 @@ CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE
 # CXXFLAGS += -DSHOW_INST_TIME
 # CXXFLAGS += -DSHOW_ASM
 # CXXFLAGS += -DSHOW_AST
-# CXXFLAGS += -DBEBUG
+CXXFLAGS += -DDEBUG
+# CXXFLAGS += -DSHOW_IR
 
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 
