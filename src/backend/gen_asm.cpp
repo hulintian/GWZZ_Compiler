@@ -1003,7 +1003,10 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
         dst = new RiscvReg::Reg(this->get_new_vreg_idx());
         if(can_imm) {
             if(constv == 0) {
-                abuilder->create_SEQZ(dst, lhs_reg);
+                // abuilder->create_SEQZ(dst, lhs_reg);
+                // not eq 0
+                abuilder->create_SNEZ(dst, lhs_reg);
+                // abuilder->create_XORI(dst, lhs_reg, 1);
             } else {
                 rhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                 abuilder->create_XORI(dst, lhs_reg, constv);
@@ -1109,13 +1112,15 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
             if(constv == 0) {
                 // lhs >= 0 ==> !(lhs < 0)
                 abuilder->create_SLTZ(dst, lhs_reg);
-                abuilder->create_SNEZ(dst, lhs_reg);
+                // abuilder->create_SNEZ(dst, lhs_reg);
+                abuilder->create_XORI(dst, dst, 1);
             } else {
                 abuilder->create_SLTI(dst, lhs_reg, constv);
-                abuilder->create_SNEZ(dst, lhs_reg);
+                // abuilder->create_SNEZ(dst, lhs_reg);
+                abuilder->create_XORI(dst, dst, 1);
             }
         } else {
-            abuilder->create_SLT(dst, rhs_reg, lhs_reg); // 
+            abuilder->create_SLT(dst, lhs_reg, rhs_reg); // 
             abuilder->create_XORI(dst, dst, 1);
         }
     } else if (bop == IR::BinaryInstType::oge) {
