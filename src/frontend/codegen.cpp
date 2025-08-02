@@ -453,7 +453,7 @@ Value* CodeGen::gen_expr(const ast::Expr* expr) {
             // wait to impl when deal with cond expr, cmp with 0, this should return i1 type
             case UnaryOp::Not: 
                                auto opd  = this->gen_expr(*od);
-                               return  builder->create_ne(opd, opd) ; break;
+                               return  builder->create_eq(opd, this->builder->create_const_value(builder->get_base_type(opd->get_type()->base_type), *zero)) ; break;
         }
         return nullptr; // should never go here
     } else if( auto call = dynamic_cast<const ast::Call*>(expr)) {
