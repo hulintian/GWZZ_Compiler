@@ -7,7 +7,7 @@
 # set args -S -o test/speed_t1.s ~/compiler2025/RISCV-性能/01_mm1.sy
 # set args -S -o tmp/tests_t86.s ~/compiler2025/functional/functional_recover/functional/86_long_code2.sy
 set args -S -o tmp/tests_t89.s ~/compiler2025/functional/functional_recover/functional/89_many_globals.sy
-set args -S -o tmp/tests_th38.s ~/compiler2025/functional/functional_recover/h_functional/38_light2d.sy
+set args -S -o tmp/tests_th29.s ~/compiler2025/functional/functional_recover/h_functional/29_long_line.sy
 
 set print pretty on
 set print object on
