@@ -39,6 +39,10 @@ void CodeGen::add_libs() {
     // 我加的
     builder->reg_lib_func("putline", new Type(Void), {}, {});
     builder->reg_lib_func("putintl", new Type(Void), {new Type(Int)}, {"a"});
+
+    // 内存清零
+    builder->reg_lib_func("__clear_mem__", new Type(Void), {new Type(Int, std::vector<int>{0}),new Type(Int)  }, {"addr", "size"});
+
 }
 
 IR::Module* CodeGen::gen(const ast::CompUnits& cu) {
