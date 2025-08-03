@@ -602,10 +602,10 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                             RiscvReg::Reg offset_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
                             abuilder->create_LI(offset_dst, bias);
                             abuilder->create_ADD(dst, RiscvReg::FP, offset_dst);
-                            abuilder->create_LD(dst, dst, 0);
+                            // abuilder->create_LD(dst, dst, 0);
                         } else {
                             abuilder->create_ADDI(dst, RiscvReg::FP, bias);
-                            abuilder->create_LD(dst, dst, 0);
+                            // abuilder->create_LD(dst, dst, 0);
                         }
                         this->mctx->get_function()->add_reg_mp(gep, dst);
                     } else {
