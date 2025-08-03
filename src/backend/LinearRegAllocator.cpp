@@ -436,7 +436,7 @@ void RegAllocator::alloca_regs() {
 
                                 *opd = *usable_reg;
 
-                                auto load_back_reg = new LoadInst(MachineInstrType::LD, cur_bb, usable_reg, RiscvReg::FP, bias);
+                                auto load_back_reg = new LoadInst(MachineInstrType::LD, cur_bb, usable_reg, RiscvReg::FP, bias+8);
                                 cur_bb->insert_instr_after(instr, load_back_reg);
                             }
                         } else {
