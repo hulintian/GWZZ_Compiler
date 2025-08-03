@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <vector>
 #include "LinearRegAllocator.hpp"
-#include "Instructions.hpp"
 #include "MBasicBlock.hpp"
 #include "MInstruction.hpp"
 #include "ASMBuilder.hpp"
@@ -50,7 +49,7 @@ void RegAllocator::traverse_bb(MachineBasicBlock* mbb) {
         auto def_regs = instr->get_dsts();
         auto use_regs = instr->get_srcs();
 
-        if(auto call = dynamic_cast<IR::CallInst*>(instr)) {
+        if(auto call = dynamic_cast<CallInst*>(instr)) {
             this->latest_call_timestamp = timestamp;
         }
 
@@ -58,7 +57,7 @@ void RegAllocator::traverse_bb(MachineBasicBlock* mbb) {
             if(!ur->is_standard()) {
                 if(reg_activated.find(ur) != reg_activated.end()) {
                     reg_activated[ur]->end = timestamp;
-                    if(latest_call_timestamp != -1) {
+                    if(this->latest_call_timestamp != -1) {
                         if(reg_activated[ur]->start_ < latest_call_timestamp &&
                             reg_activated[ur]->end > latest_call_timestamp) {
                             reg_activated[ur]->pass_call_instr = true;
@@ -200,7 +199,7 @@ void RegAllocator::alloca_regs() {
                     if(temp_reg_live_interval_meta_data* md = this->find_def_meta_data(def_r, instr->time)) {
 #ifdef DEBUG
                         std::cout << "In instr " << instr->to_asm() << "    \n";
-                        std::cout <<  "        let " << def_r->name();
+                        std::cout << instr->time <<  "        let " << def_r->name();
 #endif
                         // 更新定义的到 meta指针
                         reg2meta[md->temp_reg] = md;
@@ -231,6 +230,9 @@ void RegAllocator::alloca_regs() {
                                 if(!stk_save_regs.empty()) {
 #ifdef DEBUG
                         std::cout << " through 3 " ;
+#endif
+#ifdef SHOW_PASS_CALL_REGS
+                        std::cerr << warn << "Reg " << def_r << " passes call \n";
 #endif
                                     auto *mreg = stk_save_regs.top();
                                     stk_save_regs.pop();
