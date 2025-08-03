@@ -58,7 +58,7 @@ public:
 
     void translate_gv(IR::GlobalValue);
     void translate_func(IR::Function* func);
-    void gen_prolo_epil(backend::MachineFunction* mfunc);
+    void gen_prolo_epil(backend::MachineFunction* mfunc, IR::Function* src_func);
     void translate_bb(IR::BasicBlock* bb);
 
     void translate_binary(IR::BinaryInst* binst);
