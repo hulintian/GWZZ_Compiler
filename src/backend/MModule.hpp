@@ -91,26 +91,54 @@ public:
         std::ostringstream out;
 
         out << "    .globl __clear_mem__\n";
+        out << "    .align 1\n";
         out << "__clear_mem__:\n";
         out << "    addi    sp, sp, -16\n";
         out << "    sd      ra, 8(sp)\n";
         out << "    sd      s0, 0(sp)\n";
-        out << "\n";
+        // out << "\n";
         out << "    mv      s0, a0        \n";
         out << "    li      t0, 0         \n";
-        out << "\n";
+        // out << "\n";
         out << ".Lclear_loop:\n";
         out << "    beq     t0, a1, .Ldone    \n";
         out << "    sw      zero, 0(s0)       \n";
         out << "    addi    s0, s0, 4         \n";
         out << "    addi    t0, t0, 4         \n";
         out << "    j       .Lclear_loop\n";
-        out << "\n";
+        // out << "\n";
         out << ".Ldone:\n";
         out << "    ld      s0, 0(sp)\n";
         out << "    ld      ra, 8(sp)\n";
         out << "    addi    sp, sp, 16\n";
         out << "    ret\n";
+        // out << "__clear_mem__:\n";
+        // out << ".entry___memset_zero__:\n";
+        // out << "    sd fp, -8(sp)\n";
+        // out << "    sd ra, -16(sp)\n";
+        // out << "    addi sp, sp, -16\n";
+        // out << "    addi fp, sp, 16\n";
+        // out << "    mv t0, a0\n";
+        // out << ".Lmemzero:\n";
+        // out << "    li t1, 0\n";
+        // out << "    slt t2, t1, a1\n";
+        // out << "    beqz t2, .exit___memset_zero__\n";
+        // out << ".Lmemzero_loop:\n";
+        // out << "    li t3, 0\n";
+        // out << "    li t2, 4\n";
+        // out << "    mul t2, t2, t1\n";
+        // out << "    add t2, t2, t0\n";
+        // out << "    sw t3, 0(t2)\n";
+        // out << "    addi t1, t1, 1\n";
+        // out << "    slt t2, t1, a1\n";
+        // out << "    beqz t2, .exit___memset_zero__\n";
+        // out << "    j .Lmemzero_loop\n";
+        // out << ".exit___memset_zero__:\n";
+        // out << "    addi sp, sp, 16\n";
+        // out << "    ld fp, -8(sp)\n";
+        // out << "    ld ra, -16(sp)\n";
+        // out << "    ret\n";
+ 
 
         return out.str();
     }
@@ -121,10 +149,10 @@ public:
         os << "    .attribute stack_align, 16\n";
         os << "    .attribute arch, \"rv64i2p1_m2p0_a2p1_f2p2_d2p2_c2p0_zicsr2p0_zifencei2p0_zba1p0_zbb1p0\"\n";
         os << this->dump_gvs();
-        os << generate_clear_mem_asm();
         os << "    .align 3\n";
         os << "    .globl main\n";
         os << "    .text\n";
+        os << generate_clear_mem_asm();
          os << "\n";
         for(auto f : funcs) {
             f->dump_asm(os); 
