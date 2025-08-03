@@ -10,6 +10,7 @@
 #include "type.hpp"
 #include "utils.hpp"
 #include <cinttypes>
+#include <filesystem>
 #include <iostream>
 #include <string>
 
@@ -149,7 +150,7 @@ void ASMGen::translate_func(IR::Function* func) {
 #endif
     
     // gen prologue and epilogue
-    this->gen_prolo_epil(this->mctx->get_function());
+    this->gen_prolo_epil(this->mctx->get_function(), func);
     this->mctx->set_function(nullptr);
 }
 
@@ -1167,7 +1168,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
     this->mctx->get_function()->add_reg_mp(binary, dst);
 }
 
-void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
+void ASMGen::gen_prolo_epil(MachineFunction* mfunc, IR::Function* src_func) {
 // need to calculate the stack size then mv the sp
 // 这里留下几个临时寄存器般砖, 用T0搬
 // 1. write prologue bb
@@ -1322,6 +1323,42 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc) {
             }
         }
     }
+
+    // TODO if has array ( not ptr type , need memeory clear), 在不保存完参数后 a0-a7都可以用了
+    //
+    //
+    // 1. get allocas , need to get the ir function 
+    auto allocas = src_func->get_allocas();
+    for(auto lv : allocas ) {
+        auto ty = lv->get_type();
+        if(ty->is_array() && !ty->is_ptr()) {
+            auto sym = lv->get_name();
+            // the start size 
+            auto stack_bias = mfunc->get_symbol_bias(sym);
+            if(stack_bias > 2047 || stack_size < -2048) {
+                abuilder->create_LI(RiscvReg::A0, stack_bias);
+                abuilder->create_ADD(RiscvReg::A0, RiscvReg::FP, RiscvReg::A0);
+            } else {
+                abuilder->create_ADDI(RiscvReg::A0, RiscvReg::FP, stack_bias);
+            }
+            auto arr_size = ty->nr_elems() << 2;
+            abuilder->create_LI(RiscvReg::A1, arr_size);
+
+            auto lib_func = this->mctx->get_module()->_name2lib_func["__clear_mem__"];
+            auto args_type = lib_func->get_params_type();
+            auto pnames = lib_func->get_func_p_names();
+            auto mfunc = new MachineFunction(this->mctx->get_module(), "__clear_mem__", lib_func->get_return_type(), args_type , pnames);
+            this->mctx->get_module()->_name2lib_m_func["__clear_mem__"] = mfunc;
+
+            abuilder->create_CALL(mfunc);
+
+#ifdef MEM_CLEAR
+            std::cerr << info << "Clear memory for array " <<  sym <<  " from FP " << stack_bias << " to " << stack_bias+arr_size << "\n";
+#endif
+        }
+    }
+
+    
     
     // keep saved regs
     int save_space_start_idx = -16 - mfunc->local_variable_size;
