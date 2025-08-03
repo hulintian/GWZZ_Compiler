@@ -43,6 +43,9 @@ public:
     int spill_size_cnt = 0;
     int max_spill_size_cnt = 0;
 
+    void add_spill(int val) { this->spill_size_cnt += val;  }
+    int get_spill_size() { return this->spill_size_cnt; }
+
     long long latest_call_timestamp = -1;
 
     struct temp_reg_live_interval_meta_data {

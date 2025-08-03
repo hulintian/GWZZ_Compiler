@@ -152,10 +152,32 @@ void RegAllocator::alloca_regs() {
 #endif
                         if(meta2machine.find(md) != meta2machine.end()) {
                             *ur = *meta2machine[md];
-                        }else if(meta2stackbias.find(md) != meta2stackbias.end()) {
+                        }else if(slot.find(ur) != slot.end()) {
 #ifdef BEBUGG
                             std::cerr << info << " Reg " << ur->name() << " is spilled to fp-" << meta2stackbias[md] << "\n";
 #endif
+                            // directly use a free reg on the top of stack 
+                            // get the bias from slot
+                            int bias = slot[ur];
+                            if(ur->is_gp()) {
+                                if(!stk_temp_regs.empty()) {
+                                    auto single_life_reg = stk_temp_regs.top();
+                                    if(bias < 2047 && bias > -2048) {
+                                        auto ld_from_mm = new LoadInst(MachineInstrType::LD, cur_bb, single_life_reg, RiscvReg::FP, bias);
+                                        cur_bb->insert_instr_before(instr, ld_from_mm);
+                                        *ur = *single_life_reg;
+                                    }
+                                }
+                            } else {
+                                if(!stk_fp_temp_regs.empty()) {
+                                    auto single_life_reg = stk_fp_temp_regs.top();
+                                    if(bias < 2047 && bias > -2048) {
+                                        auto ld_from_mm = new FLoadInst(MachineInstrType::FLW, cur_bb, single_life_reg, RiscvReg::FP, bias);
+                                        cur_bb->insert_instr_before(instr, ld_from_mm);
+                                        *ur = *single_life_reg;
+                                    }
+                                }
+                            }
                         } else {
 #ifdef BEBUGG
                             std::cerr << error << "Not found " << ur->name() << " from " << md->start_ << " to " << md->end << "\n";
