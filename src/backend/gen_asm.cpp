@@ -127,12 +127,12 @@ void ASMGen::translate_func(IR::Function* func) {
     std::cerr << info << "Stack size : " << ssz << "\n";
     std::cerr << info << "For used sx size : " << this->mctx->get_function()->allocator->used_S_x.size() * 8 << "\n";
     std::cerr << info << "For used fx size : " << this->mctx->get_function()->allocator->used_FS_x.size() * 8 << "\n";
-    std::cerr << info << "For spill regs size : " << this->mctx->get_function()->allocator->max_spill_size_cnt << "\n";
+    std::cerr << info << "For spill regs size : " << this->mctx->get_function()->allocator->get_spill_size() << "\n";
 #endif
     ssz += regallo->used_S_x.size() * 8;
     ssz += regallo->used_FS_x.size() * 8;
     ssz += this->mctx->get_function()->overflow_arguments * 8;
-    ssz += this->mctx->get_function()->allocator->max_spill_size_cnt;
+    ssz += this->mctx->get_function()->allocator->get_spill_size();
     this->mctx->get_function()->set_stack_size(ssz + 8);      // 多的这个8个是0(sp)
     int sz = this->mctx->get_function()->get_stack_size();
     if(sz % 16 != 0) {
