@@ -255,15 +255,16 @@ public:
         /* User Code End: create_store args */
     ){
         /* User Code Start: create_store */
+        Value* true_src = src;
         unsigned alignment = type->is_ptr() ? 8 : 4;
         if(src->get_type()->base_type != dst->get_type()->base_type) {
             if(dst->get_type()->base_type == 0) {
-                this->cvt_to_int(src);
+                true_src = this->cvt_to_int(src);
             } else {
-                this->cvt_to_float(src);
+                true_src = this->cvt_to_float(src);
             }
         }
-        auto inst = new StoreInst(type, dst, src, name, alignment, this->get_cur_bb());
+        auto inst = new StoreInst(type, dst, true_src, name, alignment, this->get_cur_bb());
         this->get_cur_bb()->add_instr(inst);
         return inst;
         /* User Code End: create_store */
