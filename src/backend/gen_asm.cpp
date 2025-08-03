@@ -396,6 +396,11 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     } else {
                         abuilder->create_ADDI(dst, RiscvReg::FP, stack_offset);
                     }
+                    // TODO 还得看源头是不是存的指针
+                    //      是指针的话，拿地址，不是，就是地址
+                    if(arr_ptr->get_type()->is_ptr()) {
+                        abuilder->create_LD(dst, dst, 0);
+                    }
 
                     if(gp_cnt < 8) {
                         abuilder->create_MV(RiscvReg::regs_arg[gp_cnt], dst);
@@ -592,12 +597,15 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     if(auto imm = dynamic_cast<IR::ConstantValue*>(src)) {
                         // the bias
                         int bias = stack_offset + (imm->get_value().iv << 2);
+                        // 计算指针存的地方，然后再把指针取出来
                         if( bias > 2047 || bias < -2048 ) {
                             RiscvReg::Reg offset_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, true);
                             abuilder->create_LI(offset_dst, bias);
                             abuilder->create_ADD(dst, RiscvReg::FP, offset_dst);
+                            abuilder->create_LD(dst, dst, 0);
                         } else {
                             abuilder->create_ADDI(dst, RiscvReg::FP, bias);
+                            abuilder->create_LD(dst, dst, 0);
                         }
                         this->mctx->get_function()->add_reg_mp(gep, dst);
                     } else {
