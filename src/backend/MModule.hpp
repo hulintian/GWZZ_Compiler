@@ -87,12 +87,41 @@ public:
         return oss.str();
     }
 
+    std::string generate_clear_mem_asm() {
+        std::ostringstream out;
+
+        out << "    .globl __clear_mem__\n";
+        out << "__clear_mem__:\n";
+        out << "    addi    sp, sp, -16\n";
+        out << "    sd      ra, 8(sp)\n";
+        out << "    sd      s0, 0(sp)\n";
+        out << "\n";
+        out << "    mv      s0, a0        \n";
+        out << "    li      t0, 0         \n";
+        out << "\n";
+        out << ".Lclear_loop:\n";
+        out << "    beq     t0, a1, .Ldone    \n";
+        out << "    sw      zero, 0(s0)       \n";
+        out << "    addi    s0, s0, 4         \n";
+        out << "    addi    t0, t0, 4         \n";
+        out << "    j       .Lclear_loop\n";
+        out << "\n";
+        out << ".Ldone:\n";
+        out << "    ld      s0, 0(sp)\n";
+        out << "    ld      ra, 8(sp)\n";
+        out << "    addi    sp, sp, 16\n";
+        out << "    ret\n";
+
+        return out.str();
+    }
+
     void dump_asm(std::ostream& os) {
         os << "    .option pic\n";
         os << "    .attribute unaligned_access, 0\n";
         os << "    .attribute stack_align, 16\n";
         os << "    .attribute arch, \"rv64i2p1_m2p0_a2p1_f2p2_d2p2_c2p0_zicsr2p0_zifencei2p0_zba1p0_zbb1p0\"\n";
         os << this->dump_gvs();
+        os << generate_clear_mem_asm();
         os << "    .align 3\n";
         os << "    .globl main\n";
         os << "    .text\n";
