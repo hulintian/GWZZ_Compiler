@@ -147,10 +147,15 @@ void CodeGen::gen_block(const ast::Block& block) {
             // 对于重复定义的要建一个别名表
             // first check in gv, then check in alias,but first replace in alias map
             // gv中找，check exists same symbol in 
+            // TODO 局部变量和全局变量重名的情况
             auto &decl = std::get<std::unique_ptr<ast::Decl>>(child);
             auto &name = decl->ident()->identifier();
             auto old_sym = this->get_cur_func()->find_alias(name);
             gen_decl(*decl);
+
+            if(old_sym == nullptr) {
+                old_sym = this->get_cur_module()->get_gv(name);
+            }
 
             if(old_sym != nullptr) {
                 old_alias[name] = old_sym;
@@ -174,7 +179,7 @@ void CodeGen::gen_decl(const ast::Decl& decl) {
     auto &amc = this->get_cur_func()->get_alias_cnt_map();
 
     std::string new_name = name;
-    if(this->get_cur_func()->has_symbol(name)) {
+    if(this->get_cur_func()->has_symbol(name) || this->ctx->get_current_module()->has_gv(name)) {
         new_name += "@_"+std::to_string(amc[name] + 1);
     }
     auto val = builder->create_alloca(new_name, type);
