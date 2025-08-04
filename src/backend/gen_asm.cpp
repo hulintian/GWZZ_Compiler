@@ -513,13 +513,6 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                             // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
                             if(sp_bias > 2047 || sp_bias < -2048) {
                                 // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
-
-                                if(dst.is_gp()) {
-                                    abuilder->create_SW(dst,RiscvReg::SP, sp_bias);
-                                } else {
-                                    abuilder->create_FSW(dst,RiscvReg::SP, sp_bias);
-                                }
-                            } else {
                                 RiscvReg::Reg sp_bias_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
                                 abuilder->create_LI(sp_bias_reg, sp_bias);
                                 abuilder->create_ADD(sp_bias_reg, sp_bias_reg, RiscvReg::SP);
@@ -530,6 +523,13 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                                     abuilder->create_FSW(dst, sp_bias_reg, 0);
                                 }
 
+                            } else {
+
+                                if(dst.is_gp()) {
+                                    abuilder->create_SW(dst,RiscvReg::SP, sp_bias);
+                                } else {
+                                    abuilder->create_FSW(dst,RiscvReg::SP, sp_bias);
+                                }
                             }
                             ovfl_arg_regs++;
                         }

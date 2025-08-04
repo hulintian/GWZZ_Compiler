@@ -1,9 +1,9 @@
 # include head files
 headers:
-  - common/type.hpp
-  - common/defines.hpp
-  - IR/Function.hpp
-  - IR/BasicBlock.hpp
+  - type.hpp
+  - defines.hpp
+  - Function.hpp
+  - BasicBlock.hpp
 
 classes:
   - classname: Alloca
