@@ -25,6 +25,8 @@
 #include "pass/transform/DomFrontierPrinter.hpp"
 #include "pass/transform/CFGSimplify.hpp"
 #include "pass/transform/Mem2Reg.hpp"
+#include "pass/transform/DCE.hpp"
+#include "pass/transform/PHISimplify.hpp"
 /* User Code End: Sasara */
 #include <fstream>
 
@@ -56,13 +58,16 @@ int main(int argc, char** argv) {
     /* User Code Start: Sasara */
     IR::IRBuilder* builder = cg->get_ir_builder();
     pass::PassManager pm(builder);
-    pm.add_module_transform_pass(std::make_unique<pass::HelloWorldPass>());
+    //pm.add_module_transform_pass(std::make_unique<pass::HelloWorldPass>());
     //pm.add_module_transform_pass(std::make_unique<pass::DummyTransformPass>());
     pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::DomTreePrinterPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::DomFrontierPrinterPass>());
+    //pm.add_function_transform_pass(std::make_unique<pass::DomTreePrinterPass>());
+    //pm.add_function_transform_pass(std::make_unique<pass::DomFrontierPrinterPass>());
     pm.add_function_transform_pass(std::make_unique<pass::Mem2RegPass>());
     pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
+    pm.add_function_transform_pass(std::make_unique<pass::DCEPass>());
+    pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
+    pm.add_function_transform_pass(std::make_unique<pass::PHISimplifyPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::AliasTestPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::LoopInfoPrinterPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::PredPrinterPass>());

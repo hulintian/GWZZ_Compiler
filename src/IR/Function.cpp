@@ -116,6 +116,10 @@ void CFG::add_predecessor(BasicBlock* bb, BasicBlock* pred_to_add) {
     //写时作废
     _predecessors_built = false;
 }
+void CFG::refresh_predecessors(){
+    _predecessors_built = false;
+}
+
 
 }
 
