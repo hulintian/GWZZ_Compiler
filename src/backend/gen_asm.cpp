@@ -1365,7 +1365,7 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc, IR::Function* src_func) {
     
     
     // keep saved regs
-    int save_space_start_idx = -16 - mfunc->local_variable_size;
+    int save_space_start_idx = -16 - mfunc->local_variable_size - mfunc->allocator->get_spill_size();
     int sfx_cnt = 0;
     std::map<RiscvReg::Reg, int> memo_sr_offset;
     for(auto sx : mfunc->allocator->used_S_x) {
