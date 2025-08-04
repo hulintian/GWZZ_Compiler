@@ -3,6 +3,7 @@
 namespace IR{
 class BasicBlock;
 class Instruction;
+class IRBuilder;
 }
 namespace pass{
 class Loop;
@@ -16,7 +17,10 @@ public:
 
 private:
     using LoopInvariantsSet = std::set<IR::Instruction *>; 
-    bool run_on_loop (Loop* loop,const DominatorTreeResult& dom_tree,AliasAnalysisResult& AA);
+    bool run_on_loop (Loop* loop,
+                      const DominatorTreeResult& dom_tree,
+                      AliasAnalysisResult& AA,
+                      IR::IRBuilder& ir_builder);
     bool is_loop_invariant (IR::Instruction* inst, 
                             const Loop* loop, 
                             const LoopInvariantsSet& hoisted_insts);
@@ -24,6 +28,8 @@ private:
                                 const Loop* loop,
                                 const DominatorTreeResult& dom_tree,
                                 AliasAnalysisResult& AA);
-    IR::BasicBlock* get_or_create_preheader(Loop* loop, const DominatorTreeResult& dom_tree);
+    IR::BasicBlock* get_or_create_preheader(Loop* loop, 
+                                            const DominatorTreeResult& dom_tree,
+                                            IR::IRBuilder& ir_builder);
 };
 }

@@ -39,7 +39,7 @@ bool CFGSimplifyPass::run(IR::Function& func,PassManager& pm){
                 // 更新 successor 的前驱列表
                 successor->remove_predecessor(bb); // 从后继的前驱中移除自己
                 for (IR::BasicBlock* pred : predecessors) {
-                    successor->add_predecessor(pred); // 把自己的前驱“送给”后继
+                    successor->add_predecessor(pred); // 把自己的前驱送给后继
                 }
 
                 func.rm_basic_block(bb);

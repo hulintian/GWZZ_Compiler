@@ -26,6 +26,7 @@ public :
     virtual void replace_successor(BasicBlock* old_succ, BasicBlock* new_succ) {
         assert(false && "replace_successor called on a terminator with no successors!");
     }
+    bool is_instruction() const override { return true; }
     bool is_terminator(){
         return this->get_parent()->get_terminator()==this;
     }
@@ -136,10 +137,7 @@ public:
     /* User Code End: Load place */
     std::string to_str();
     std::string to_llvm();
-    void replace_all_uses_with(Value* replacement){
-        _src = replacement;
-        set_operand(0,replacement);
-    }
+    
      
     unsigned get_alignment() const {
         /* User Code Start: Load::get_alignment */
@@ -149,7 +147,7 @@ public:
       
     Value* get_src() const {
         /* User Code Start: Load::get_src */
-        return _src;
+        return get_operand(0); 
         /* User Code End: Load::get_src */
     }
      
@@ -241,13 +239,13 @@ public:
       
     Value* get_lhs() const {
         /* User Code Start: Binary::get_lhs */
-        return _lhs;
+        return get_operand(0);
         /* User Code End: Binary::get_lhs */
     }
       
     Value* get_rhs() const {
         /* User Code Start: Binary::get_rhs */
-        return _rhs;
+        return get_operand(1);
         /* User Code End: Binary::get_rhs */
     }
       
@@ -260,8 +258,8 @@ public:
 private:
     Type* _ty;
     BinaryOp _bop;
-    Value* _lhs;
-    Value* _rhs;
+    Value* _lhs;// 待移除
+    Value* _rhs;// 待移除
     BinaryInstType _instr_type;
 };
 
@@ -286,7 +284,7 @@ public:
      
     Value* getsrc() const {
         /* User Code Start: Convert::get_rc */
-        return src;
+        return get_operand(0);
         /* User Code End: Convert::get_rc */
     }
       
@@ -303,7 +301,7 @@ public:
     }
      
 private:
-    Value* src;
+    Value* src; //待移除
     Type* src_type;
     Type* dst_type;
 };
@@ -332,19 +330,28 @@ public:
      
     const IR::Function* get_func() const {
         /* User Code Start: Call::get_func */
-        return _func;
+        return static_cast<const IR::Function*>(get_operand(0));
         /* User Code End: Call::get_func */
     }
       
     std::vector<Value*> get_args() const {
         /* User Code Start: Call::get_args */
-        return _args;
+        std::vector<Value*> args;
+        for (unsigned i = 1; i < get_num_operand(); ++i) {
+            args.push_back(get_operand(i));
+        }
+        return args;
         /* User Code End: Call::get_args */
+    }
+    Value* get_arg(unsigned i) const {
+        /* User Code Start: Call::get_arg */
+        return get_operand(i + 1);
+        /* User Code End: Call::get_arg */
     }
      
 private:
-    const IR::Function* _func;
-    std::vector<Value*> _args;
+    const IR::Function* _func; //待移除
+    std::vector<Value*> _args; //待移除
 };
 
 class ReturnInst : public Instruction {
@@ -370,11 +377,16 @@ public:
      
     Value* get_ret_val() const {
         /* User Code Start: Return::get_ret_val */
-        return _ret_val;
+        //.by Sasara
+        if (get_num_operand() > 0) {
+            return get_operand(0);
+        }
+        return nullptr;
         /* User Code End: Return::get_ret_val */
     }
      
 private:
+    // 统一用操作数？ 待移除
     Value* _ret_val;
 };
 
@@ -408,20 +420,29 @@ public:
       
     std::vector<Value*> get_indices() const {
         /* User Code Start: GetElementPtr::get_indices */
-        return _indices;
+        std::vector<Value*> indices;
+        for (unsigned i = 1; i < get_num_operand(); ++i) {
+            indices.push_back(get_operand(i));
+        }
+        return indices;
         /* User Code End: GetElementPtr::get_indices */
     }
       
     Value* get_src() const {
         /* User Code Start: GetElementPtr::get_src */
-        return _src;
+        return get_operand(0);
         /* User Code End: GetElementPtr::get_src */
+    }
+    Value* get_index(unsigned i) const {
+        /* User Code Start: GetElementPtr::get_index */
+        return get_operand(i + 1);
+        /* User Code End: GetElementPtr::get_index */
     }
      
 private:
-    Type* _arr_type;
-    std::vector<Value*> _indices;
-    Value* _src;
+    Type* _arr_type; 
+    std::vector<Value*> _indices; //待移除
+    Value* _src;    //待移除
 };
 
 class PhiInst : public Instruction {
@@ -438,27 +459,43 @@ public:
     }
 
     void add_incoming(Value* value, BasicBlock* pred_bb) {
-        // [value_0, block_0, value_1, block_1, value_2, block_2, ...]
-        for (unsigned i = 1; i < get_operands().size(); i += 2) {
-            if (get_operand(i) == pred_bb) {
-                set_operand(i - 1, value);
+        for (size_t i = 0; i < _incoming_blocks.size(); ++i) {
+            if (_incoming_blocks[i] == pred_bb) {
+                this->set_operand(i, value);
                 return;
             }
         }
-        add_operand(value);
-        add_operand(pred_bb);
+        this->add_operand(value); 
+        _incoming_blocks.push_back(pred_bb);
     }
-    void remove_incoming_by_block(BasicBlock* pred_bb);//CFG变化用
+
+    void remove_incoming_by_block(BasicBlock* pred_bb) {
+        for (size_t i = 0; i < _incoming_blocks.size(); ++i) {
+            if (_incoming_blocks[i] == pred_bb) {
+                // 从两个列表中移除对应索引的元素
+                _incoming_blocks.erase(_incoming_blocks.begin() + i);
+                this->remove_operand(i); // 你需要在Instruction基类中实现这个函数
+                return;
+            }
+        }
+    }
+
+    void clear_all_incomings(){
+        _incoming_blocks.clear();
+        this->operands_clear();
+    }
+
     unsigned get_num_incoming() const {
-        return get_operands().size() / 2;
+        assert(get_num_operand() == _incoming_blocks.size() && "PHI operands and blocks are out of sync!");
+        return get_num_operand();
     }
     Value* get_incoming_value(unsigned index) const {
-        assert(index * 2 < get_operands().size() && "Index out of range for Phi incoming value");
-        return get_operand(index * 2);
+        assert(index < get_num_operand() && "Index out of range for Phi incoming value");
+        return get_operand(index);
     } 
     BasicBlock* get_incoming_block(unsigned index) const {
-        assert(index * 2 + 1 < get_operands().size() && "Index out of range for Phi incoming block");
-        return static_cast<BasicBlock*>(get_operand(index * 2 + 1));
+        assert(index < _incoming_blocks.size() && "Index out of range for Phi incoming block");
+        return _incoming_blocks[index];
     }
     Value* get_incoming_value_for_block(const BasicBlock* pred_bb) const {
         for (unsigned i = 0; i < get_num_incoming(); ++i) {
@@ -474,7 +511,7 @@ public:
 
     
 private:
-    //std::map<BasicBlock*, Value*> _incoming_map;
+    std::vector<BasicBlock*> _incoming_blocks; 
     IR::AllocaInst* _alloca_src; //标记来源
 };
 
@@ -487,6 +524,8 @@ public:
     {
         /* User Code Start: CondBranch construct function */
         add_operand(cond);
+        add_operand(true_bb);
+        add_operand(false_bb);
         /* User Code End: CondBranch construct function */
     }
 
@@ -494,15 +533,15 @@ public:
     // by .Sasara
     void replace_successor(BasicBlock* old_succ, BasicBlock* new_succ){
         bool replaced = false;
-        if (_true_bb == old_succ) {
-            _true_bb = new_succ;
+        if (get_operand(1) == old_succ) {
+            set_operand(1, new_succ);
             replaced = true;
         }
-        if (_false_bb == old_succ) {
-            _false_bb = new_succ;
+        if (get_operand(2) == old_succ) {
+            set_operand(2, new_succ);
             replaced = true;
         }
-        if(!replaced){
+        if (!replaced) {
             assert(false && "Cannot replace a successor that doesn't exist!");
         }
     }
@@ -513,26 +552,26 @@ public:
      
     Value* get_cond() const {
         /* User Code Start: CondBranch::get_cond */
-        return _cond;
+        return get_operand(0);
         /* User Code End: CondBranch::get_cond */
     }
       
     BasicBlock* get_true_bb() const {
         /* User Code Start: CondBranch::get_true_bb */
-        return _true_bb;
+        return static_cast<BasicBlock*>(get_operand(1));
         /* User Code End: CondBranch::get_true_bb */
     }
       
     BasicBlock* get_false_bb() const {
         /* User Code Start: CondBranch::get_false_bb */
-        return _false_bb;
+        return static_cast<BasicBlock*>(get_operand(2));
         /* User Code End: CondBranch::get_false_bb */
     }
      
 private:
-    Value* _cond;
-    BasicBlock* _true_bb;
-    BasicBlock* _false_bb;
+    Value* _cond; //待移除
+    BasicBlock* _true_bb; //待移除
+    BasicBlock* _false_bb; //待移除
 };
 
 class BranchInst : public Instruction {
@@ -543,7 +582,7 @@ public:
     /* User Code End: Branch */
     {
         /* User Code Start: Branch construct function */
-
+        add_operand(dst_bb);
         /* User Code End: Branch construct function */
     }
 
@@ -552,11 +591,11 @@ public:
     bool is_unconditional_br() const override{
         return true; // 基类默认返回 false
     }
-    void set_target(BasicBlock* new_target) { _dst_bb = new_target; }
+    void set_target(BasicBlock* new_target) { set_operand(0, new_target); }
     void replace_successor(BasicBlock* old_succ, BasicBlock* new_succ) {
-        if (_dst_bb == old_succ) {
-            set_target(new_succ);
-        }else{
+        if (get_operand(0) == old_succ) {
+            set_operand(0, new_succ);
+        } else {
             assert(false && "Cannot replace a successor that doesn't exist!");
         }
     }
@@ -567,7 +606,7 @@ public:
      
     BasicBlock* get_dst_bb() const {
         /* User Code Start: Branch::get_dst_bb */
-        return _dst_bb;
+        return static_cast<BasicBlock*>(get_operand(0));
         /* User Code End: Branch::get_dst_bb */
     }
      

@@ -22,12 +22,10 @@ void collect_first_store_values(
 {
     for (auto* alloca : promotables) {
         const auto& users = use_def.get_users(alloca);
-
         // 遍历该 alloca 的所有 store
         for (auto* user : users) {
             auto* store = dynamic_cast<IR::StoreInst*>(user);
             if (!store) continue;
-
             // 仅处理 store 到 alloca 本身的情况
             if (store->get_ptr_operand() != alloca) continue;
 
@@ -101,13 +99,13 @@ bool Mem2RegPass::run(IR::Function& function, PassManager& pm) {
     collect_first_store_values(function, promotable_set, use_def, first_store_map);
 
     // Debug 输出验证
-    // for (auto& [alloca, bbmap] : first_store_map) {
-    //     std::cout << "Alloca " << alloca->get_name() << ":\n";
-    //     for (auto& [bb, val] : bbmap) {
-    //         std::cout << "  Initial store in BB " << bb->get_name()
-    //                 << " -> " << val->get_name() << "\n";
-    //     }
-    // }
+    for (auto& [alloca, bbmap] : first_store_map) {
+        std::cout << "Alloca " << alloca->get_name() << ":\n";
+        for (auto& [bb, val] : bbmap) {
+            std::cout << "  Initial store in BB " << bb->get_name()
+                    << " -> " << val->get_name() << "\n";
+        }
+    }
     // 构建树形 dom_tree
     std::map<IR::BasicBlock*, std::vector<IR::BasicBlock*>> dom_tree_children;
     for (auto& bb : function.get_basic_blocks()) {
@@ -125,7 +123,7 @@ bool Mem2RegPass::run(IR::Function& function, PassManager& pm) {
     }
 
 
-    rename_variables(function.get_entry_bb(), first_store_map, dom_tree_children,to_remove);
+    rename_variables(function.get_entry_bb(), first_store_map, dom_tree_children,to_remove,use_def);
 
     cleanup_instructions(promotable_allocas,to_remove);
     return true;
@@ -189,9 +187,11 @@ void Mem2RegPass::insert_phi_nodes(IR::Function& function,
 void Mem2RegPass::rename_variables(IR::BasicBlock* bb,
                       const std::map<IR::AllocaInst*, std::map<IR::BasicBlock*,Value*>,std::less<void*>>& first_store_map,
                       const std::map<IR::BasicBlock*, std::vector<IR::BasicBlock*>>& dom_tree_children,
-                      std::set<IR::Instruction*> to_remove) {
+                      std::set<IR::Instruction*>& to_remove,
+                      const UseDefResult& use_def) {
     //std::cout << "Renaming BB " << bb->get_name() << std::endl;
     // 先处理phi
+    std::map<IR::AllocaInst*, int> pushed_counts;
     std::vector<IR::AllocaInst*> pushed_in_this_bb;
     for (auto& [alloca, bb2phi] : _alloca_to_phis_map) {
         auto it_phi = bb2phi.find(bb);
@@ -200,11 +200,12 @@ void Mem2RegPass::rename_variables(IR::BasicBlock* bb,
             // 只处理被提升的变量
             if (value_stack.count(alloca)) {
                 value_stack[alloca].push(phi);
+                pushed_counts[alloca]++;
                 pushed_in_this_bb.push_back(alloca);
 
-                // std::cout << "Push PHI " << alloca->get_name()
-                //           << " := " << phi->get_name()
-                //           << " at entry of BB " << bb->get_name() << std::endl;
+                std::cout << "Push PHI " << alloca->get_name()
+                          << " := " << phi->get_name()
+                          << " at entry of BB " << bb->get_name() << std::endl;
             }
         }
     }
@@ -220,11 +221,12 @@ void Mem2RegPass::rename_variables(IR::BasicBlock* bb,
                 if (value_stack.count(alloca)) {
                     Value* val = store->get_value_operand();
                     value_stack[alloca].push(val);
+                    pushed_counts[alloca]++;
 
-                    // std::cout << "Push " << alloca->get_name()
-                    //   << " := " << val->get_name()
-                    //   << " in BB " << bb->get_name() << std::endl;
-                    // 延迟删除
+                    std::cout << "Push " << alloca->get_name()
+                      << " := " << val->get_name()
+                      << " in BB " << bb->get_name() << std::endl;
+                    //延迟删除
                     to_remove.insert(instr);
                 }
             }
@@ -240,13 +242,13 @@ void Mem2RegPass::rename_variables(IR::BasicBlock* bb,
                     }
 
                     Value* replacement = value_stack[alloca].top();
-
-
-                    // std::cout << "Replace Load " << alloca->get_name()
-                    //             << " → " << replacement->get_name()
-                    //             << " in BB " << bb->get_name() << std::endl;
-                    // load->replace_all_uses_with(replacement);
-                    // to_remove.insert(instr);
+                    std::cout << "Replace Load " << alloca->get_name()
+                                << " → " << replacement->get_name()
+                                << " in BB " << bb->get_name() << std::endl;
+                    for (auto* user : use_def.get_users(load)) {
+                        user->replace_operand(load, replacement);
+                    }
+                    to_remove.insert(instr);
                 }
             }
             continue;
@@ -272,11 +274,11 @@ void Mem2RegPass::rename_variables(IR::BasicBlock* bb,
             // 正常情况都是覆盖
             phi_in_succ->add_incoming(cur_version, bb);
 
-            // std::cout << "Phi wiring: succ BB " << succ->get_name()
-            //           << " phi(" << phi_in_succ->get_name() << ") for $"
-            //           << alloca->get_name()
-            //           << " gets value " << cur_version->get_name()
-            //           << " from pred " << bb->get_name() << std::endl;
+            std::cout << "Phi wiring: succ BB " << succ->get_name()
+                      << " phi(" << phi_in_succ->get_name() << ") for $"
+                      << alloca->get_name()
+                      << " gets value " << cur_version->get_name()
+                      << " from pred " << bb->get_name() << std::endl;
         }
     }
 
@@ -284,17 +286,16 @@ void Mem2RegPass::rename_variables(IR::BasicBlock* bb,
     auto it = dom_tree_children.find(bb);
     if (it != dom_tree_children.end()) {
         for (auto* child : it->second) {
-            rename_variables(child, first_store_map, dom_tree_children,to_remove);
+            rename_variables(child, first_store_map, dom_tree_children,to_remove,use_def);
         }
     }
 
     // 回溯
-    for (auto* instr : bb->get_intrs()) {
-        if (auto* store = dynamic_cast<IR::StoreInst*>(instr)) {
-            if (auto* alloca = dynamic_cast<IR::AllocaInst*>(store->get_ptr_operand())) {
-                if (value_stack.count(alloca)) {
-                    value_stack[alloca].pop();
-                }
+    for (auto const& [alloca, count] : pushed_counts) {
+        auto& stack = value_stack[alloca];
+        for (int i = 0; i < count; ++i) {
+            if (!stack.empty()) {
+                stack.pop();
             }
         }
     }
