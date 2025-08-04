@@ -4,8 +4,6 @@
 > 作者： 格llvm致知/黑龙江科技大学  
 > 版本： (初赛)v1.0
 
-[--简要说明--]
-
 ---
 
 ## 目录
@@ -31,21 +29,15 @@
 
 ## 1. 简介
 
-<!-- 详细描述你的项目目标。是为了课程设计？参加编译大赛？还是纯粹的技术学习？ -->
-<!-- 描述你的编译器实现了SysY语言的哪些特性（例如：整数、浮点数、数组、控制流等）。-->
-<!-- 描述你的编译器目标平台是什么（例如：ARMv7-A, RISC-V等）。-->
-
 本项目是一个从零开始构建的SysY语言编译器。它将`.sy`源文件作为输入，经过完整的前端、中端优化和后端处理，最终生成指定平台（如RISC-V）的汇编代码。
 
 ## 2. 环境搭建
 
 ### 2.1. 依赖
 
-*   **CMake**: 版本 `3.16` 或更高
-*   **GCC/Clang**: 支持C++17标准
-*   **Flex**: 用于词法分析
-*   **Bison**: 用于语法分析
-*   **[其他依赖，例如Google Test]**
+*   **Make**: GNU Make 4.4.1
+*   **Clang**: 支持C++17标准
+*   **ANTLR4**: 用于词法分析和语法分析
 
 ### 2.2. 编译
 
@@ -58,7 +50,7 @@ cd [你的项目目录]
 make all
 
 # 4. 编译产物
-# 可执行文件 `compiler` 将生成在 `~/bin` 目录下。
+# 可执行文件 `compiler` 将生成在 `./bin` 目录下。
 ```
 
 ## 3. 项目架构
@@ -71,17 +63,10 @@ make all
 
 ### 3.2. 词法分析 (Lexer)
 
-<!-- 描述你如何实现词法分析。 -->
-*   **工具**：`Flex`
-*   **源文件**：`src/frontend/Lexer.l`
-*   **功能**：读取`.sy`文件，输出Token流，识别关键字、标识符、常量、运算符和分隔符。
 
 ### 3.3. 语法分析 (Parser)
 
-<!-- 描述你如何实现语法分析。 -->
-*   **工具**：`Bison`
-*   **源文件**：`src/frontend/Parser.y`
-*   **功能**：接收Lexer的Token流，根据SysY的上下文无关文法构建抽象语法树（AST）。
+* 词法分析和语法分析均使用`ANTLR4`实现
 
 ### 3.4. 语义分析与AST
 
@@ -105,7 +90,7 @@ make all
     *   `Module`: 编译单元，包含一个函数和全局变量列表。
 *   **特点**：
     *   采用强类型系统。
-    *   基于SSA形式，使用`PhiInst`处理来自不同前驱的值。
+    *   支持SSA形式，使用`PhiInst`处理来自不同前驱的值。
     *   所有指令和操作数通过`_operands`列表统一管理，便于编写通用的优化Pass。
 
 ### 3.6. 优化遍 (Optimization Passes)
@@ -127,10 +112,10 @@ make all
 ### 3.7. 目标代码生成 (Code Generation)
 
 <!-- 描述你的后端实现。 -->
-*   **目标平台**：[例如：RISC-V 32-bit]
+*   **目标平台**：[rv64gc]
 *   **指令选择**：通过一个选择模式匹配（Pattern Matching）或简单遍历IR的方式，将IR指令翻译为目标机器指令。
-*   **寄存器分配**：[例如：线性扫描算法 或 简单的图着色算法]
-*   **栈帧管理**：在函数序言（prologue）和尾声（epilogue）中正确处理栈指针（`sp`）和帧指针（`fp`），为局部变量和保存的寄存器分配栈空间。
+*   **寄存器分配**：线性扫描算法进行寄存器分配，通过两趟扫描，第一趟扫描用于获取寄存器的活跃区间，第二趟扫描用于分配寄存器。
+*   **栈帧管理**：在函数序言（prologue）和尾声（epilogue）中处理栈指针（`sp`）和帧指针（`fp`），根据翻译中间表示时收集到的alloca指令和寄存器分配过程中的溢出和保存的寄存器分配栈空间。
 
 ## 4. 如何使用
 
@@ -140,7 +125,7 @@ make all
 ./bin/compiler -o output.s tests/source/some_test.sy
 
 # 开启所有优化
-./bin/compiler -O2 -o output_opt.s tests/source/some_test.sy
+./bin/compiler -O1 -o output_opt.s tests/source/some_test.sy
 ```
 <!-- 列出你的编译器支持的命令行选项。-->
 *   `-o <file>`: 指定输出文件名。
@@ -153,24 +138,25 @@ make all
 
 ```sh
 # 运行所有功能测试
-cd build
-ctest
+make clean && make --all 
 
-# 或者手动运行测试脚本
-cd ..
-python3 tests/run_tests.py
+# 或者手动运行测试脚本，测试样例放在tmp目录下，tmp目录被gitignore的
+sh run_compiler_all.sh
 ```
-测试用例位于`/tests`目录下，分为功能测试（`functional`）和性能测试（`performance`）。每个测试用例包含一个`.sy`源文件和一个`.out`文件（预期输出）。
+测试用例位于`./tmp`目录下，分为功能测试（`functional`）和性能测试（`RVXN`）。
 
 ## 6. 未来工作
 
-- [ ] 实现完整的SysY-2022库函数支持。
 - [ ] 添加更多高级优化，如函数内联、循环展开等。
-- [ ] 支持更多后端平台。
 - [ ] 完善错误处理和诊断信息。
 
-## 7. 参考文献
+## 7. 参考文献/项目
 
-*   [SysY-2022 语言标准]([链接到语言标准文档])
 *   *Compilers: Principles, Techniques, and Tools* (The Dragon Book)
+* RISC-V 开放架构设计之道
+* 深入理解LLVM代码生成
 *   [LLVM官方文档](https://llvm.org/docs/)
+*   [godbolt](godbolt.org)
+* [return_0;](https://gitlab.eduxiji.net/educg-group-26173-2487151/T202410003203057-1317)
+
+
