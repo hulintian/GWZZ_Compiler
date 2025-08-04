@@ -55,10 +55,14 @@ void ASMGen::translate_func(IR::Function* func) {
             if(aty->is_array()) {
                 size = aty->nr_elems() * 4;
             } else {
-                size = 4;
+                size = 8;
             }
         } else {
             size = 8;
+        }
+        // 对齐
+        if(sum_lss % 8 != 0 ) {
+            sum_lss = ((sum_lss / 8) + 1) * 8;
         }
         sum_lss += size;
         // add the bias 
@@ -428,7 +432,7 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     if(gp_cnt < 8) {
                         abuilder->create_MV(RiscvReg::regs_arg[gp_cnt], dst);
                     } else {
-                        int sp_bias = ovfl_arg_regs * 8;
+                        int sp_bias = ovfl_arg_regs * 4;
                         // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
                         if(sp_bias > 2047 || sp_bias < -2048) {
                             // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
@@ -1379,14 +1383,14 @@ void ASMGen::gen_prolo_epil(MachineFunction* mfunc, IR::Function* src_func) {
 
     for(auto fsx : mfunc->allocator->used_FS_x) {
         sfx_cnt++;
-        int fp_bias = save_space_start_idx - sfx_cnt * 8;
+        int fp_bias = save_space_start_idx - sfx_cnt *8;
         memo_sr_offset[fsx] = fp_bias;
         if(fp_bias > 2047 || fp_bias < -2048) {
             abuilder->create_LI(RiscvReg::T0, fp_bias);
             abuilder->create_ADD(RiscvReg::T0, RiscvReg::FP, RiscvReg::T0);
-            abuilder->create_FSD(fsx, RiscvReg::T0, 0);
+            abuilder->create_FSW(fsx, RiscvReg::T0, 0);
         } else {
-            abuilder->create_FSD(fsx, RiscvReg::FP, fp_bias);
+            abuilder->create_FSW(fsx, RiscvReg::FP, fp_bias);
         }
     }
 
