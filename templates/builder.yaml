@@ -1,7 +1,7 @@
 headers:
-  - IR/GlobalValue.hpp
-  - IR/Context.hpp
-  - frontend/AST.hpp
+  - GlobalValue.hpp
+  - Context.hpp
+  - AST.hpp
 
 members:
   #  - type : IR::Module* 

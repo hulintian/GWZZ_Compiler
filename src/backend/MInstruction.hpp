@@ -116,7 +116,8 @@ enum MachineInstrType {
     FMSUB_S,
     FNMSUB_S, 
 // FLoad
-    FLW, 
+    FLW,
+    FLD, 
 // FStore
     FSW,
     FSD, 
@@ -1440,6 +1441,12 @@ public:
         switch(this->mity) {
             case MachineInstrType::FLW : 
                 oss << "flw"
+                    << " " << _rd<< ", ";
+                        oss << _offset << "(" << _rs1  <<  ")";
+                ; 
+                break;
+            case MachineInstrType::FLD : 
+                oss << "fld"
                     << " " << _rd<< ", ";
                         oss << _offset << "(" << _rs1  <<  ")";
                 ; 
