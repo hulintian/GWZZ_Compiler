@@ -477,6 +477,16 @@ Value* CodeGen::gen_expr(const ast::Expr* expr) {
             if(func_args[i].index() == 0) {
                 auto &expr = std::get<std::unique_ptr<ast::Expr>>(func_args[i]);
                 auto ag = this->gen_expr(*expr);
+                // TODO cmp the types
+                if(!ag->get_type()->is_array() && !ag->get_type()->is_ptr()) {
+                    if(ag->get_type()->base_type != func_params[i]->base_type) {
+                        if(ag->get_type()->base_type == Int) {
+                            ag = this->builder->create_cvt(ag, new Type(Int), new Type(Float));
+                        } else {
+                            ag = this->builder->create_cvt(ag, new Type(Float), new Type(Int));
+                        }
+                    }
+                }
                 // assert(*ag->get_type() == *func_params[i] ); TODO should assert here
                 args.push_back(ag);
             }else if(func_args[i].index() == 1){
