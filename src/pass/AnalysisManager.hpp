@@ -31,6 +31,20 @@ public:
             function_results.erase(func);
         }
     }
+    //函数模板：移除指定的分析结果
+    template <typename PassT>
+    void invalidate_function_result(const IR::Function& F) {
+        pass::AnalysisID id = pass::get_pass_id<PassT>();
+        // 检查该函数的分析结果映射是否存在
+        auto func_results_it = function_results.find(&F);
+        if (func_results_it != function_results.end()) {
+            auto& analysis_map = func_results_it->second;
+            if (analysis_map.count(id)) {
+                analysis_map.erase(id);
+            }
+        }
+    }
+
     //函数模板，返回的是具体分析结果的引用，相当于枢纽
     //get_function_result
     template <typename PassT>

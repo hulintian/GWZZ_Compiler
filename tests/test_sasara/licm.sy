@@ -1,27 +1,17 @@
-int g_var = 100; 
-
-int pure_func(int a) {
-    return a * 2;
-}
-
 int main() {
-    int x = 10;
-    int y = 20;
-    int arr[10];
-    arr[0] = 0;
-
     int i = 0;
-    while (i < 10) {
+    int a = 3, b = 4;
+    int tmp = 0;
+    int sum = 0;
 
-        int a = x + y; 
-        int b = a + 1;
-        int c = i * 5;
-        int d = g_var;
-        int e = arr[0];
-        int f = pure_func(a);
-
-        i = i + 1;
+    if (a > 1) {
+        i = 0;
+        while (i < 5) {
+            tmp = a + b;
+            sum = sum + tmp;
+            i = i + 1;
+        }
     }
 
-    return 0;
+    return sum;
 }

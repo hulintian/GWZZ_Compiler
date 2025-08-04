@@ -42,6 +42,7 @@ public:
         this->_bbs.remove(bb);
         delete bb;
     }
+    void refresh_predecessors();
     void build_predecessors() const;
     const std::vector<BasicBlock*>& get_predecessors(const BasicBlock* bb) const;
     void rm_predecessor(BasicBlock* bb, BasicBlock* pred_to_remove);
@@ -110,6 +111,11 @@ public:
     void build_predecessors() {
         _cfg->build_predecessors();
     }
+
+    void refresh_predecessors(){
+        _cfg->refresh_predecessors();
+    }
+
     //回调函数，后续遍历
     void post_order_traversal(std::function<void(BasicBlock*)> callback) const;
     //逆后序

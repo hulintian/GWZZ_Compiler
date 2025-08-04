@@ -25,6 +25,10 @@ struct Type {
     bool is_array() const { return dims.size() > 0; }
     
     //User Code Start. Sasara
+    bool is_void() const {
+        return base_type == Void && dims.empty();
+    }
+
     Type get_pointer_element_type() const {
         assert(is_ptr() && "Cannot get element type of a non-pointer type!");
         Type element_type = *this;
