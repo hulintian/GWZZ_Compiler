@@ -1016,6 +1016,18 @@ public:
             this->mctx->get_basic_block()->insert_instr(flwinstr);
             return flwinstr;
         /* User Code End: flw func */
+        }
+        MachineInstr* create_FLD(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t offset
+        /* User Code Start: fld args */
+
+        /* User Code End: fld args */
+        ) {
+        /* User Code Start: fld func */
+            assert(offset < 2047 && offset > -2048 && "Offset is out of range\n");
+            auto fldinstr = new FLoadInst(MachineInstrType::FLD, this->mctx->get_basic_block(), rd, rs1, offset);
+            this->mctx->get_basic_block()->insert_instr(fldinstr);
+            return fldinstr;
+        /* User Code End: fld func */
         } 
     // FStore
         MachineInstr* create_FSW(RiscvReg::Reg rs1, RiscvReg::Reg rs2, int32_t offset
