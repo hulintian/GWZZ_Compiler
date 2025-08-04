@@ -1539,12 +1539,12 @@ public:
         switch(this->mity) {
             case MachineInstrType::FCVT_S_W : 
                 oss << "fcvt.s.w"
-                    << " " << _rd<< ", " << _rs1
+                    << " " << _rd<< ", " << _rs1 << ", rtz"
                 ; 
                 break;
             case MachineInstrType::FCVT_W_S : 
                 oss << "fcvt.w.s"
-                    << " " << _rd<< ", " << _rs1
+                    << " " << _rd<< ", " << _rs1 << ", rtz"
                 ; 
                 break;default : break;
         }
