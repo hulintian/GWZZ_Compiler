@@ -432,7 +432,7 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
                     if(gp_cnt < 8) {
                         abuilder->create_MV(RiscvReg::regs_arg[gp_cnt], dst);
                     } else {
-                        int sp_bias = ovfl_arg_regs * 4;
+                        int sp_bias = ovfl_arg_regs * 8;
                         // RiscvReg::Reg dst = new RiscvReg::Reg(this->get_new_vreg_idx());
                         if(sp_bias > 2047 || sp_bias < -2048) {
                             // abuilder->create_ADDI(dst, RiscvReg::SP, fp_bias);
