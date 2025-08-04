@@ -1,7 +1,7 @@
 headers:
-  - common/regarch.hpp
-  - backend/MBasicBlock.hpp
-  - backend/MFunction.hpp
+  - regarch.hpp
+  - MBasicBlock.hpp
+  - MFunction.hpp
 
 InstrGroups:
   # rv32im
@@ -152,7 +152,7 @@ InstrGroups:
     Operands: [rd, rs1]
     otherargs: 
       - {type: int32_t, name: offset}
-    Instructions: [flw]
+    Instructions: [flw, fld]
 
   - Category: FStore
     Description: 浮点存

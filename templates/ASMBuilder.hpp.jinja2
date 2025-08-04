@@ -1,7 +1,7 @@
 #pragma once 
-#include "backend/MBasicBlock.hpp"
-#include "backend/MInstruction.hpp"
-#include "backend/miscs.hpp"
+#include "MBasicBlock.hpp"
+#include "MInstruction.hpp"
+#include "miscs.hpp"
 #include <cassert>
 
 namespace backend {
