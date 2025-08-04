@@ -58,10 +58,10 @@ void ASMGen::translate_func(IR::Function* func) {
                 size = 8;
             }
         } else {
-            size = 8;
+            size = 4;
         }
         // 对齐
-        if(sum_lss % 8 != 0 ) {
+        if(size == 8 && sum_lss % 8 != 0 ) {
             sum_lss = ((sum_lss / 8) + 1) * 8;
         }
         sum_lss += size;
@@ -139,16 +139,16 @@ void ASMGen::translate_func(IR::Function* func) {
     ssz += this->mctx->get_function()->allocator->get_spill_size();
     this->mctx->get_function()->set_stack_size(ssz + 8);      // 多的这个8个是0(sp)
     int sz = this->mctx->get_function()->get_stack_size();
-    if(sz % 16 != 0) {
-#ifdef DEBUG
-        std::cerr << warn << "stack size is : " << sz << ", Not 16 align, ";
-#endif
-        sz = ((sz / 16) + 1) * 16;
-#ifdef DEBUG
-        std::cerr << "Change it to " << sz << "\n";
-#endif
-    }
-    this->mctx->get_function()->set_stack_size(sz);      // 多的这个8个是0(sp)
+//     if(sz % 16 != 0) {
+// #ifdef DEBUG
+//         std::cerr << warn << "stack size is : " << sz << ", Not 16 align, ";
+// #endif
+//         sz = ((sz / 16) + 1) * 16;
+// #ifdef DEBUG
+//         std::cerr << "Change it to " << sz << "\n";
+// #endif
+//     }
+    // this->mctx->get_function()->set_stack_size(sz);      // 多的这个8个是0(sp)
 #ifdef DEBUG
     std::cerr << info << "The sum is : " << this->mctx->get_function()->get_stack_size() << "\n";
 #endif
