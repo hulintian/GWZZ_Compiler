@@ -7,7 +7,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/compiler",
-            "args": ["tests/test_sasara/promotion.sy"],
+            "args": ["tests/test_sasara/loop.sy"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [

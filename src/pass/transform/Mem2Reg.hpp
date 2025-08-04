@@ -42,7 +42,8 @@ private:
     void rename_variables(IR::BasicBlock* bb,
                       const std::map<IR::AllocaInst*, std::map<IR::BasicBlock*,Value*>,std::less<void*>>& first_store_map,
                       const std::map<IR::BasicBlock*, std::vector<IR::BasicBlock*>>& dom_tree_children,
-                      std::set<IR::Instruction*> to_remove);
+                      std::set<IR::Instruction*>& to_remove,
+                      const UseDefResult& use_def_result);
  
 };
 

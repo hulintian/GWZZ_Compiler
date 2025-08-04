@@ -1,39 +1,12 @@
-// test_refactored.sy
-
-// 辅助函数，有一个清晰的if-else菱形结构
-int process_values(int x, int y, int z) {
-    // 外层循环
-    while (x < 10) { 
-        // if-else 分支
-        if (y < 5) { 
-            z = z + 1;
-            x = x * 2; 
-        } else {
-            // 内层循环
-            while (z < 100) { 
-                int remainder = x % 2;
-                if (remainder == 0) { 
-                    y = y + 1;
-                } else { 
-                    y = y - 1;
-                }
-                z = z * 3;
-            }
-        }
-        // 外层循环的更新语句
-        x = x + 1; 
-    }
-    // 返回最终的z值
-    return z; 
-}
-
-// main 函数，负责初始化和调用
 int main() {
-    int start_x = 1;
-    int start_y = 2;
-    int start_z = 3;
-    
-    int final_z = process_values(start_x, start_y, start_z);
-    
-    return 0; 
+  int i = 0, j = 0, sum = 0;
+  while (i < 2) {
+    j = 0;
+    while (j < 3) {
+      sum = sum + i + j;
+      j = j + 1;
+    }
+    i = i + 1;
+  }
+  return sum;
 }
