@@ -58,7 +58,7 @@ void ASMGen::translate_func(IR::Function* func) {
                 size = 8;
             }
         } else {
-            size = 4;
+            size = 8;
         }
         // 对齐
         if(size == 8 && sum_lss % 8 != 0 ) {
