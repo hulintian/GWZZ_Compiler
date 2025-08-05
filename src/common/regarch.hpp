@@ -1,4 +1,4 @@
-// 这个是使用 return_0;的代码
+// 这个是使用 return_0;的代码，做了点修改，把fs_x s_x ft_x t_x 这些寄存器分开，用于定寄存器分配的可选寄存器范围
 #pragma once
 
 #include <string>
