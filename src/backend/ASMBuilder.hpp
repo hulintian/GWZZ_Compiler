@@ -123,6 +123,28 @@ public:
             this->get_cur_bb()->insert_instr(instr);
             return instr;
         /* User Code End: srl func */
+        }
+        MachineInstr* create_ADDW(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
+        /* User Code Start: addw args */
+
+        /* User Code End: addw args */
+        ) {
+        /* User Code Start: addw func */
+            auto instr = new IArithInst(MachineInstrType::ADDW, this->mctx->get_basic_block(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
+        /* User Code End: addw func */
+        }
+        MachineInstr* create_SUBW(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
+        /* User Code Start: subw args */
+
+        /* User Code End: subw args */
+        ) {
+        /* User Code Start: subw func */
+            auto instr = new IArithInst(MachineInstrType::SUBW, this->get_cur_bb(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
+        /* User Code End: subw func */
         } 
     // IArithIMM
         MachineInstr* create_ADDI(RiscvReg::Reg rd, RiscvReg::Reg rs1, int32_t imm
@@ -746,6 +768,17 @@ public:
             return instr;
         /* User Code End: mulhu func */
         }
+        MachineInstr* create_MULW(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
+        /* User Code Start: mulw args */
+
+        /* User Code End: mulw args */
+        ) {
+        /* User Code Start: mulw func */
+            auto instr = new MultiplyInst(MachineInstrType::MULW, this->get_cur_bb(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
+        /* User Code End: mulw func */
+        }
         MachineInstr* create_DIV(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
         /* User Code Start: div args */
 
@@ -768,6 +801,17 @@ public:
             return instr;
         /* User Code End: divu func */
         }
+        MachineInstr* create_DIVW(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
+        /* User Code Start: divw args */
+
+        /* User Code End: divw args */
+        ) {
+        /* User Code Start: divw func */
+            auto instr = new MultiplyInst(MachineInstrType::DIVW, this->get_cur_bb(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
+        /* User Code End: divw func */
+        }
         MachineInstr* create_REM(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
         /* User Code Start: rem args */
 
@@ -789,6 +833,17 @@ public:
             this->get_cur_bb()->insert_instr(instr);
             return instr;
         /* User Code End: remu func */
+        }
+        MachineInstr* create_REMW(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
+        /* User Code Start: remw args */
+
+        /* User Code End: remw args */
+        ) {
+        /* User Code Start: remw func */
+            auto instr = new MultiplyInst(MachineInstrType::MULW, this->get_cur_bb(), rd, rs1, rs2);
+            this->get_cur_bb()->insert_instr(instr);
+            return instr;
+        /* User Code End: remw func */
         } 
     // FArith
         MachineInstr* create_FADD_S(RiscvReg::Reg rd, RiscvReg::Reg rs1, RiscvReg::Reg rs2
