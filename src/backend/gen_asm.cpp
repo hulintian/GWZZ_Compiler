@@ -860,7 +860,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
                 abuilder->create_ADDI(dst, lhs_reg, constv);
             }
         } else {
-            abuilder->create_ADD(dst, lhs_reg, rhs_reg);
+            abuilder->create_ADDW(dst, lhs_reg, rhs_reg);
         }
     } else if (bop == IR::BinaryInstType::sub) {
         dst = new RiscvReg::Reg(this->get_new_vreg_idx());
@@ -883,14 +883,14 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
                 abuilder->create_LI(rhs_reg, constv);
             }
         }
-        abuilder->create_MUL(dst, lhs_reg, rhs_reg);
+        abuilder->create_MULW(dst, lhs_reg, rhs_reg);
     } else if (bop == IR::BinaryInstType::sdiv) {
         dst = new RiscvReg::Reg(this->get_new_vreg_idx());
         if (can_imm) {
             rhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
             abuilder->create_LI(rhs_reg, constv);
         }
-        abuilder->create_DIV(dst, lhs_reg, rhs_reg);
+        abuilder->create_DIVW(dst, lhs_reg, rhs_reg);
     } else if (bop == IR::BinaryInstType::udiv) {
         dst = new RiscvReg::Reg(this->get_new_vreg_idx());
         if (can_imm) {
@@ -904,7 +904,7 @@ void ASMGen::translate_binary(IR::BinaryInst* binary) {
             rhs_reg = new RiscvReg::Reg(this->get_new_vreg_idx());
             abuilder->create_LI(rhs_reg, constv);
         }
-        abuilder->create_REM(dst, lhs_reg, rhs_reg);
+        abuilder->create_REMW(dst, lhs_reg, rhs_reg);
     } else if (bop == IR::BinaryInstType::urem) {
         dst = new RiscvReg::Reg(this->get_new_vreg_idx());
         if (can_imm) {

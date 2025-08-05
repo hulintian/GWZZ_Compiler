@@ -15,7 +15,9 @@ enum MachineInstrType {
     XOR,
     SLL,
     SRA,
-    SRL, 
+    SRL,
+    ADDW,
+    SUBW, 
 // IArithIMM
     ADDI,
     SUBI,
@@ -88,10 +90,13 @@ enum MachineInstrType {
     MULH,
     MULHSU,
     MULHU,
+    MULW,
     DIV,
     DIVU,
+    DIVW,
     REM,
-    REMU, 
+    REMU,
+    REMW, 
 // FArith
     FADD_S,
     FSUB_S,
@@ -207,6 +212,16 @@ public:
                 break;
             case MachineInstrType::SRL : 
                 oss << "srl"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
+                ; 
+                break;
+            case MachineInstrType::ADDW : 
+                oss << "addw"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
+                ; 
+                break;
+            case MachineInstrType::SUBW : 
+                oss << "subw"
                     << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;default : break;
@@ -1033,6 +1048,7 @@ public:
     {
         /* User Code Start: CallInst construct function */
 
+        // TODO the call instr need to add _sysy_ for starttime and stoptime
         /* User Code End: Call_Inst construct function */
     }
 
@@ -1042,20 +1058,16 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::CALL : 
-                oss << "call ";
-                if(_func->_name == "starttime") {
-                    oss << "_sysy_starttime" ;
-                } else if(_func->_name == "stoptime") {
-                    oss << "_sysy_stoptime";
-                } else {
-                    oss << " "<<  _func;
-                }
+                oss << "call"
+                        << " "<<  _func
+                ; 
                 break;default : break;
         }
         return oss.str();
     }
 
     /* User Code Start: Call_Inst methods */
+
     std::vector<RiscvReg::Reg*> get_srcs() override { return {  }; }
     std::vector<RiscvReg::Reg*> get_dsts() override { return {  }; }
 
@@ -1144,6 +1156,11 @@ public:
                     << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
+            case MachineInstrType::MULW : 
+                oss << "mulw"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
+                ; 
+                break;
             case MachineInstrType::DIV : 
                 oss << "div"
                     << " " << _rd<< ", " << _rs1<< ", " << _rs2
@@ -1154,6 +1171,11 @@ public:
                     << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;
+            case MachineInstrType::DIVW : 
+                oss << "divw"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
+                ; 
+                break;
             case MachineInstrType::REM : 
                 oss << "rem"
                     << " " << _rd<< ", " << _rs1<< ", " << _rs2
@@ -1161,6 +1183,11 @@ public:
                 break;
             case MachineInstrType::REMU : 
                 oss << "remu"
+                    << " " << _rd<< ", " << _rs1<< ", " << _rs2
+                ; 
+                break;
+            case MachineInstrType::REMW : 
+                oss << "remw"
                     << " " << _rd<< ", " << _rs1<< ", " << _rs2
                 ; 
                 break;default : break;
