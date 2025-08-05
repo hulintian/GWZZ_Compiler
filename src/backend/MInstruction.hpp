@@ -1058,7 +1058,7 @@ public:
         std::ostringstream oss; 
         switch(this->mity) {
             case MachineInstrType::CALL : 
-                oss << "call";
+                oss << "call ";
                 if(_func->_name == "starttime") {
                     oss << "_sysy_starttime";
                 } else if(_func->_name == "stoptime") {
