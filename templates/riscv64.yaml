@@ -10,7 +10,7 @@ InstrGroups:
     Description: Integer computation operations
     Operands: [rd, rs1, rs2]
     # 加，减，按位与，按位或，逻辑左移，算术右移，逻辑右移，生成高20位立即数
-    Instructions: [add, sub, and, or, xor, sll, sra, srl]
+    Instructions: [add, sub, and, or, xor, sll, sra, srl, addw, subw]
 
     # 整数立即数计算
   - Category: IArithIMM
@@ -124,7 +124,7 @@ InstrGroups:
   - Category: Multiply
     Description: 乘除取余
     Operands: [rd, rs1, rs2]
-    Instructions: [mul, mulh, mulhsu, mulhu, div, divu, rem, remu]
+    Instructions: [mul, mulh, mulhsu, mulhu, mulw, div, divu, divw, rem, remu, remw]
 
 # rv32fd 
   - Category: FArith
