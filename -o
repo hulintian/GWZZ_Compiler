@@ -70,11 +70,11 @@ BB0:
     la t0, $seed
     lw t0, 0(t0)
     li t1, 19980130
-    mul t1, t0, t1
+    mulw t1, t0, t1
     li t0, 23333
-    add t0, t1, t0
+    addw t0, t1, t0
     li t1, 100000007
-    rem t1, t0, t1
+    remw t1, t0, t1
     la t0, $seed
     sw t1, 0(t0)
     j BB1
@@ -88,7 +88,7 @@ BB2:
     la t0, $seed
     lw t0, 0(t0)
     li t1, 100000007
-    add t1, t0, t1
+    addw t1, t0, t1
     la t0, $seed
     sw t1, 0(t0)
     j BB3
@@ -116,7 +116,7 @@ BB4:
 BB5: 
     flw ft0, -24(fp)
     li t0, 0
-    fcvt.s.w ft1, t0
+    fcvt.s.w ft1, t0, rtz
     flt.s t0, ft1, ft0
     bnez t0, BB6
     j BB7
@@ -127,7 +127,7 @@ BB6:
 BB7: 
     flw ft1, -24(fp)
     li t0, 0
-    fcvt.s.w ft0, t0
+    fcvt.s.w ft0, t0, rtz
     fsub.s ft0, ft0, ft1
     fmv.s fa0, ft0
     j BB62
@@ -148,18 +148,18 @@ BB63:
 BB8: 
     flw ft0, -24(fp)
     li t0, 8
-    fcvt.s.w ft1, t0
+    fcvt.s.w ft1, t0, rtz
     fdiv.s ft1, ft0, ft1
     li t0, 1056964608
     fmv.w.x ft0, t0
     fadd.s ft1, ft1, ft0
     flw ft0, -24(fp)
     li t0, 2
-    fcvt.s.w ft2, t0
+    fcvt.s.w ft2, t0, rtz
     fmul.s ft2, ft2, ft0
     flw ft0, -24(fp)
     li t0, 4
-    fcvt.s.w ft3, t0
+    fcvt.s.w ft3, t0, rtz
     fadd.s ft3, ft3, ft0
     fdiv.s ft3, ft2, ft3
     fadd.s ft3, ft1, ft3
@@ -179,7 +179,7 @@ BB10:
     fdiv.s ft2, ft1, ft2
     fadd.s ft2, ft3, ft2
     li t0, 2
-    fcvt.s.w ft3, t0
+    fcvt.s.w ft3, t0, rtz
     fdiv.s ft3, ft2, ft3
     fsw ft3, -32(fp)
     lw t0, -40(fp)
@@ -207,11 +207,11 @@ BB65:
 BB12: 
     flw ft0, -24(fp)
     li t0, 3
-    fcvt.s.w ft1, t0
+    fcvt.s.w ft1, t0, rtz
     fmul.s ft1, ft1, ft0
     flw ft0, -24(fp)
     li t0, 4
-    fcvt.s.w ft2, t0
+    fcvt.s.w ft2, t0, rtz
     fmul.s ft2, ft2, ft0
     flw ft0, -24(fp)
     fmul.s ft0, ft2, ft0
@@ -291,13 +291,13 @@ BB19:
     la t0, $TWO_PI
     flw ft1, 0(t0)
     fdiv.s ft1, ft0, ft1
-    fcvt.w.s t0, ft1
+    fcvt.w.s t0, ft1, rtz
     sw t0, -32(fp)
     flw ft1, -24(fp)
     lw t0, -32(fp)
     la t1, $TWO_PI
     flw ft0, 0(t1)
-    fcvt.s.w ft2, t0
+    fcvt.s.w ft2, t0, rtz
     fmul.s ft2, ft2, ft0
     fsub.s ft2, ft1, ft2
     fsw ft2, -24(fp)
@@ -309,7 +309,7 @@ BB21:
     la t0, $TWO_PI
     flw ft0, 0(t0)
     li t0, 0
-    fcvt.s.w ft2, t0
+    fcvt.s.w ft2, t0, rtz
     fsub.s ft2, ft2, ft0
     flt.s t0, ft1, ft2
     bnez t0, BB19
@@ -335,7 +335,7 @@ BB25:
     la t0, $PI
     flw ft2, 0(t0)
     li t0, 0
-    fcvt.s.w ft0, t0
+    fcvt.s.w ft0, t0, rtz
     fsub.s ft0, ft0, ft2
     flt.s t0, ft1, ft0
     bnez t0, BB26
@@ -373,7 +373,7 @@ BB28:
     la t0, $PI
     flw ft1, 0(t0)
     li t0, 2
-    fcvt.s.w ft2, t0
+    fcvt.s.w ft2, t0, rtz
     fdiv.s ft2, ft1, ft2
     fadd.s ft2, ft0, ft2
     fmv.s fa0, ft2
@@ -614,7 +614,7 @@ BB44:
 BB45: 
     call rand
     mv t1, a0
-    fcvt.s.w ft1, t1
+    fcvt.s.w ft1, t1, rtz
     fsw ft1, -56(fp)
     la t1, $TWO_PI
     flw ft1, 0(t1)
@@ -622,14 +622,14 @@ BB45:
     flw ft0, -56(fp)
     la t0, $RAND_MAX
     lw t0, 0(t0)
-    fcvt.s.w ft2, t0
+    fcvt.s.w ft2, t0, rtz
     fdiv.s ft2, ft0, ft2
-    fcvt.s.w ft0, t1
+    fcvt.s.w ft0, t1, rtz
     fadd.s ft0, ft0, ft2
     fmul.s ft0, ft1, ft0
     la t1, $N
     lw t1, 0(t1)
-    fcvt.s.w ft1, t1
+    fcvt.s.w ft1, t1, rtz
     fdiv.s ft1, ft0, ft1
     fsw ft1, -64(fp)
     flw fs0, -40(fp)
@@ -659,7 +659,7 @@ BB46:
     flw ft0, -40(fp)
     la t1, $N
     lw t1, 0(t1)
-    fcvt.s.w ft1, t1
+    fcvt.s.w ft1, t1, rtz
     fdiv.s ft1, ft0, ft1
     fmv.s fa0, ft1
     j BB80
@@ -735,20 +735,20 @@ BB51:
     j BB53
 BB52: 
     lw t0, -32(fp)
-    fcvt.s.w ft0, t0
+    fcvt.s.w ft0, t0, rtz
     fsw ft0, -40(fp)
     lw t0, -24(fp)
-    fcvt.s.w ft0, t0
+    fcvt.s.w ft0, t0, rtz
     fsw ft0, -48(fp)
     flw ft0, -40(fp)
     la t0, $W
     lw t0, 0(t0)
-    fcvt.s.w ft1, t0
+    fcvt.s.w ft1, t0, rtz
     fdiv.s ft1, ft0, ft1
     flw ft0, -48(fp)
     la t0, $H
     lw t0, 0(t0)
-    fcvt.s.w ft2, t0
+    fcvt.s.w ft2, t0, rtz
     fdiv.s ft2, ft0, ft2
     fmv.s fa0, ft1
     fmv.s fa1, ft2
@@ -757,7 +757,7 @@ BB52:
     li t0, 1132396544
     fmv.w.x ft1, t0
     fmul.s ft1, ft2, ft1
-    fcvt.w.s t0, ft1
+    fcvt.w.s t0, ft1, rtz
     sw t0, -56(fp)
     j BB54
 BB53: 
