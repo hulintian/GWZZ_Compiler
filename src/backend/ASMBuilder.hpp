@@ -840,7 +840,7 @@ public:
         /* User Code End: remw args */
         ) {
         /* User Code Start: remw func */
-            auto instr = new MultiplyInst(MachineInstrType::MULW, this->get_cur_bb(), rd, rs1, rs2);
+            auto instr = new MultiplyInst(MachineInstrType::REMW, this->get_cur_bb(), rd, rs1, rs2);
             this->get_cur_bb()->insert_instr(instr);
             return instr;
         /* User Code End: remw func */
