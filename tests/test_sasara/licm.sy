@@ -1,16 +1,46 @@
-int main() {
-    int i = 0;
-    int a = 3, b = 4;
-    int tmp = 0;
-    int sum = 0;
+// final_opt_test.sy
 
-    if (a > 1) {
-        i = 0;
-        while (i < 5) {
-            tmp = a + b;
-            sum = sum + tmp;
-            i = i + 1;
+int main() {
+    int n = 100;
+    int x = 10;
+    int y = 20;
+    int sum = 0;
+    
+    // dead_const 只是为了测试DCE
+    int dead_const = 50; 
+
+    // 这个值在整个循环中是恒定的 (10)
+    // 它将产生一个可以被PHISimplifyPass简化的PHI节点
+    int constant_in_loop;
+    if (n > 10) {
+        constant_in_loop = x;
+    } else {
+        constant_in_loop = x; 
+    }
+
+    int i = 0;
+    while (i < n) {
+        // --- 循环不变量计算链 ---
+        // invariant_base 依赖于在循环中恒定的 constant_in_loop
+        int invariant_base = constant_in_loop * 2;
+        // invariant_final 依赖于 invariant_base
+        int invariant_final = invariant_base + 5;
+
+        // --- 循环演进变量（归纳变量） ---
+        sum = sum + i;
+
+        // --- 依赖于不变量的计算 ---
+        sum = sum + invariant_final;
+
+        // --- 内层循环中的死代码 ---
+        int j = 0;
+        while (j < 5) {
+            // 这个计算的结果从未被使用
+            int dead_inner_calc = y * 2;
+            j = j + 1;
         }
+
+        i = i + 1;
     }
 
     return sum;
