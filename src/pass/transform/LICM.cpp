@@ -13,43 +13,74 @@
 
 namespace pass{
 
-bool LICMPass::run(IR::Function& function,PassManager& pm){
-    auto& loop_info = pm.get_analysis_manager().get_function_result<LoopInfoPass>(function);
-    auto& dom_tree = pm.get_analysis_manager().get_function_result<DominatorTreePass>(function);
-    auto& AA = pm.get_analysis_manager().get_module_result<AliasAnalysisPass>(*function.get_parent());
-    auto& builder = pm.get_ir_builder();
+void LICMPass::refresh_analyses() {
+    std::cout << "LICM: Refreshing analyses due to CFG change...\n";
+    _pm->get_analysis_manager().invalidate_function_analyses(_F);
+    // 重新获取
+    _dom_tree = &_pm->get_analysis_manager().get_function_result<DominatorTreePass>(*_F);
+    _loop_info = &_pm->get_analysis_manager().get_function_result<LoopInfoPass>(*_F);
+    _AA = &_pm->get_analysis_manager().get_module_result<AliasAnalysisPass>(*_F->get_parent());
+    _F->get_cfg()->refresh_predecessors();
+}
 
+bool LICMPass::run(IR::Function& function,PassManager& pm){
+    _pm = &pm;
+    _F = &function;
+    _builder = &pm.get_ir_builder();
+    _dom_tree = &pm.get_analysis_manager().get_function_result<DominatorTreePass>(function);
+    _AA = &pm.get_analysis_manager().get_module_result<AliasAnalysisPass>(*function.get_parent());
+    _loop_info = &pm.get_analysis_manager().get_function_result<LoopInfoPass>(function);
     bool function_changed = false;
-    for(auto& top_level_loop : loop_info.top_level_loops){
-        function_changed = run_on_loop(top_level_loop, dom_tree,AA,builder);
+    
+    // 使用一个循环来确保所有新产生的优化机会都能被处理
+    std::vector<Loop*> top_level_loops_copy = _loop_info->top_level_loops;
+    for (Loop* top_loop : top_level_loops_copy) {
+        if (run_on_loop(top_loop)) {
+            function_changed = true;
+        }
     }
-    if(!function_changed){
-        std::cout<<"什么都没变化！\n";
-    }
+    _pm = nullptr;
+    _F = nullptr;
+    _AA = nullptr;
+    _builder = nullptr;
+    _dom_tree = nullptr;
+    _loop_info = nullptr;
+    
     return function_changed;
 }
 
 
-bool LICMPass::run_on_loop(Loop* loop, const DominatorTreeResult& dom_tree,AliasAnalysisResult& AA,IR::IRBuilder& builder){
+bool LICMPass::run_on_loop(Loop* loop){
     bool changed_anything = false;
-    for(auto& sub_loop : loop->get_sub_loops()){
-        changed_anything = run_on_loop(sub_loop, dom_tree,AA,builder);
+    std::vector<Loop*> sub_loops_copy = loop->get_sub_loops();
+    for (Loop* sub_loop_old_ptr : sub_loops_copy) {
+        Loop* sub_loop_current_ptr = _loop_info->get_loop_for(sub_loop_old_ptr->get_header());
+        if(!sub_loop_current_ptr) continue;
+        if(run_on_loop(sub_loop_current_ptr)){
+            changed_anything = true;
+        }
     }
-    IR::BasicBlock *preheader = get_or_create_preheader(loop, dom_tree,builder);
+
+    Loop* current_loop = _loop_info->get_loop_for(loop->get_header());
+    if (!current_loop) {
+        return true; 
+    }
+    IR::BasicBlock *preheader = get_or_create_preheader(current_loop);
     if(!preheader){
         std::cout<<"创建preheader失败!\n";
         return changed_anything;
     }
     std::cout<<"创建preheader成功!\n";
+    changed_anything = true;
     LoopInvariantsSet hoisted_insts;
     bool made_change_in_this_iteration = true;
     while (made_change_in_this_iteration){
         made_change_in_this_iteration = false;
         std::vector<std::pair<IR::Instruction*, IR::BasicBlock*>> instructions_to_move;
-        for (auto &bb : loop->get_blocks()) {
+        for (auto &bb : current_loop->get_blocks()) {
             for (auto &inst : bb->get_intrs()) {
-                bool invariant = is_loop_invariant(inst, loop, hoisted_insts);
-                bool safe = can_be_safely_hoisted(inst, loop, dom_tree, AA);
+                bool invariant = is_loop_invariant(inst, current_loop, hoisted_insts);
+                bool safe = can_be_safely_hoisted(inst, current_loop, *_dom_tree, *_AA);
                 
                 std::cout << "LICM: Check inst '" << inst->get_name()
                         << "' in BB " << bb->get_name()
@@ -124,7 +155,7 @@ bool LICMPass::can_be_safely_hoisted(IR::Instruction* inst, const Loop* loop,
 }
 
 
-IR::BasicBlock* LICMPass::get_or_create_preheader(Loop* loop, const DominatorTreeResult& dom_tree,IR::IRBuilder& builder) {
+IR::BasicBlock* LICMPass::get_or_create_preheader(Loop* loop) {
     IR::BasicBlock* header = loop->get_header();
     IR::Function* func = header->get_parent();
 
@@ -136,41 +167,63 @@ IR::BasicBlock* LICMPass::get_or_create_preheader(Loop* loop, const DominatorTre
         }
     }
 
-    if (external_preds.size() != 1) {
-        //这里应该create 前驱块的，但pm没有调用IRbuilder的功能，以后有机会再加。
-        builder.set_cur_module(func->get_parent());
-        builder.set_cur_func(func);
-        auto new_bb = builder.create_bb();
-        builder.set_cur_bb(new_bb);
-        builder.create_br(header);
-        for(auto& pre : external_preds){
-            pre->get_terminator()->replace_successor(header,new_bb);
+    if (external_preds.empty()) {
+        std::cerr << "LICM Error: Loop with no external predecessors found.\n";
+        return nullptr;
+    }
+    if (external_preds.size() == 1 && external_preds[0]->get_parent()->get_cfg()->entry_bb!=external_preds[0]) {
+        IR::BasicBlock* single_pred = external_preds[0];
+        // 还须满足无条件br
+        if (single_pred->get_terminator()->get_num_operand() == 1) {
+            std::cout << "LICM: Found existing preheader " << single_pred->get_name() 
+                      << " for loop " << header->get_name() << "\n";
+            return single_pred;
         }
+    }
 
-        for (auto& inst : header->get_intrs()){
-            if (auto* phi = dynamic_cast<IR::PhiInst*>(inst)){
-                
+    std::cout << "LICM: Creating new preheader for loop " << header->get_name() << "\n";
+
+    _builder->set_cur_module(func->get_parent());
+    _builder->set_cur_func(func);
+    auto new_bb = _builder->create_bb();//就默认命名了
+    _F->get_cfg()->refresh_predecessors();
+    _builder->set_cur_bb(new_bb);
+    _builder->create_br(header);
+    for (auto& inst : header->get_intrs()){
+        auto* phi_in_header = dynamic_cast<IR::PhiInst*>(inst);
+        if (!phi_in_header) {
+            break; 
+        }
+        auto* pre_phi_inst = _builder->create_phi(phi_in_header->get_type(),phi_in_header->get_alloca_src());
+        auto* pre_phi = static_cast<IR::PhiInst*>(pre_phi_inst);
+        //迁移
+        for (int i = phi_in_header->get_num_incoming() - 1; i >= 0; --i){
+            IR::BasicBlock* incoming_bb = phi_in_header->get_incoming_block(i);
+            bool is_external_pred = false;
+            for (IR::BasicBlock* ext_pred : external_preds) {
+                if (incoming_bb == ext_pred) {
+                    is_external_pred = true;
+                    break;
+                }
             }
+            if (is_external_pred){
+                pre_phi->add_incoming(phi_in_header->get_incoming_value(i),incoming_bb);
+                phi_in_header->remove_incoming_by_index(i);
+            } 
         }
-
-
-
-
-
-        func->get_cfg()->refresh_predecessors();
-        return new_bb;
+        if (pre_phi->get_num_incoming() > 0) {
+            phi_in_header->add_incoming(pre_phi, new_bb);
+        } else {
+            pre_phi->get_parent()->remove_instr(pre_phi);
+        }
     }
-    IR::BasicBlock* single_pred = external_preds[0];
-
-    //后继也应该是唯一的，且指向循环头
-    if (single_pred->get_successors().size() != 1) {
-        return nullptr;
+    for (IR::BasicBlock* pred : external_preds){
+        pred->get_terminator()->replace_successor(header,new_bb);
     }
-    //过滤entry
-    if (single_pred == single_pred->get_parent()->get_entry_bb()) {
-        return nullptr;
-    }
-    return single_pred;
+    //更新 
+    refresh_analyses();
+    
+    return new_bb;
 }
 
 

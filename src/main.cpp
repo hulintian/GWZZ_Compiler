@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
     //pm.add_function_transform_pass(std::make_unique<pass::AliasTestPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::LoopInfoPrinterPass>());
     //pm.add_function_transform_pass(std::make_unique<pass::PredPrinterPass>());
-    //pm.add_function_transform_pass(std::make_unique<pass::LICMPass>());
+    pm.add_function_transform_pass(std::make_unique<pass::LICMPass>());
     cout << "====================Running optimization passes...====================\n";
     pm.run(*m);
     /* User Code End: Sasara */

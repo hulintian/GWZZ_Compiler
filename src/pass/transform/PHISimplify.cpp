@@ -6,6 +6,7 @@
 #include "IR/Instructions.hpp"
 #include "IR/Value.hpp"
 
+#include <set>
 #include <map>
 #include <iostream>
 #include <vector>
@@ -36,7 +37,12 @@ bool PHISimplifyPass::cleanup_duplicate_entries(IR::PhiInst* phi){
 
 bool PHISimplifyPass::run(IR::Function& F,PassManager& pm){
     bool function_changed = false;
-    auto& use_def = pm.get_analysis_manager().get_function_result<UseDefAnalysisPass>(F);
+    auto use = pm.get_analysis_manager().get_function_result<UseDefAnalysisPass>(F);
+    UseDefResult *use_def = &use;
+
+    std::vector<IR::Instruction*> dead_instructions;
+    std::set<IR::PhiInst*> simplified_phis;
+
     bool made_change_in_iteration = true;
     while (made_change_in_iteration){
         made_change_in_iteration = false;
@@ -48,6 +54,10 @@ bool PHISimplifyPass::run(IR::Function& F,PassManager& pm){
             for (auto& inst : bb->get_intrs()) {
                 auto* phi = dynamic_cast<IR::PhiInst*>(inst);
                 if (!phi) continue;
+
+                if (simplified_phis.count(phi)) {
+                    continue;
+                }
                 // phi bb去重
                 if (cleanup_duplicate_entries(phi)) {
                     made_change_in_iteration = true;
@@ -55,7 +65,7 @@ bool PHISimplifyPass::run(IR::Function& F,PassManager& pm){
 
                 // 一般不太可能
                 if (phi->get_num_incoming() == 0) {
-                    to_replace.push_back({phi, nullptr}); // 用undef或null替换
+                    to_replace.push_back({phi, nullptr}); 
                     continue;
                 }
                 // 找不等于自身的VAL作为基准
@@ -69,7 +79,7 @@ bool PHISimplifyPass::run(IR::Function& F,PassManager& pm){
                 }
                 // 所有入口值都等于PHI
                 if (common_value == nullptr) {
-                    to_replace.push_back({phi, nullptr}); // 用undef或null替换
+                    to_replace.push_back({phi, nullptr}); 
                     continue;
                 }
                 // 检查剩下的
@@ -89,13 +99,14 @@ bool PHISimplifyPass::run(IR::Function& F,PassManager& pm){
         }
         if (!to_replace.empty()){
             made_change_in_iteration = true;
+            function_changed = true;
             for(auto& pair : to_replace){
                 IR::PhiInst* phi = pair.first;
                 Value* replacement = pair.second;
                 if (replacement) {
                     std::cout << "PHI Simplify: Replacing " << phi->get_name() 
                               << " with " << replacement->get_name() << "\n";
-                    for (auto* user : use_def.get_users(phi)) {
+                    for (auto* user : use_def->get_users(phi)) {
                         user->replace_operand(phi, replacement);
                     }
                 }else{
@@ -108,21 +119,22 @@ bool PHISimplifyPass::run(IR::Function& F,PassManager& pm){
                     assert(false && "Undefined PHI node detected!");
                 }
                 to_erase.push_back(phi);
+                simplified_phis.insert(phi);
             }
-        }
-        if (!to_erase.empty()) {
-            made_change_in_iteration = true;
-            // 移除指令
-            for (IR::PhiInst* instr : to_erase) {
-                instr->get_parent()->remove_instr(instr);
-            }
-        }
-        if (made_change_in_iteration) {
-            function_changed = true;
+            dead_instructions.insert(dead_instructions.end(), 
+                                     to_erase.begin(), 
+                                     to_erase.end());
             pm.get_analysis_manager().invalidate_function_result<UseDefAnalysisPass>(F);
-            if(!to_replace.empty()) 
-                use_def = pm.get_analysis_manager().get_function_result<UseDefAnalysisPass>(F);
+            use_def = &pm.get_analysis_manager().get_function_result<UseDefAnalysisPass>(F);
         }
+        
+    }
+    if (!dead_instructions.empty()) {
+        std::cout << "PHI Simplify: Deleting " << dead_instructions.size() << " simplified PHI nodes.\n";
+        for (IR::Instruction* instr : dead_instructions) {
+            instr->get_parent()->remove_instr(instr);
+        }
+        pm.get_analysis_manager().invalidate_function_result<UseDefAnalysisPass>(F);
     }
     return function_changed;
 }
