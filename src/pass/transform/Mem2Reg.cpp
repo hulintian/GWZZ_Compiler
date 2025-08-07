@@ -8,6 +8,7 @@
 #include "IR/Instructions.hpp"
 #include "IR/Value.hpp"
 #include "IR/IRBuilder.hpp"
+#include "IR/UndefValue.hpp"
 #include <deque>
 #include <set>
 namespace pass{
@@ -31,7 +32,6 @@ void collect_first_store_values(
 
             IR::BasicBlock* bb = store->get_parent();
 
-            // 仅记录每个基本块内对该变量的第一个 store
             if (!first_store_map[alloca].count(bb)) {
                 first_store_map[alloca][bb] = store->get_value_operand();
             }
@@ -47,33 +47,35 @@ static void cleanup_instructions(std::vector<IR::AllocaInst*> promotable_allocas
     }
 }
 
-static bool is_alloca_promotable(const IR::AllocaInst* alloca_inst,const UseDefResult& use_def_result) {
+static bool is_alloca_promotable(IR::AllocaInst* alloca_inst, const UseDefResult& use_def_result) {
     if (alloca_inst->get_alloca_ty()->is_array()) {
         return false;
     }
     const std::vector<IR::User*>& users = use_def_result.get_users(alloca_inst);
     if (users.empty()) {
-        //DCE
         return false;
     }
-
-    bool has_at_least_one_load = false;
-
-    for (const IR::User* user : users) {
-        const IR::Instruction* user_instr = static_cast<const IR::Instruction*>(user);
-        if(auto* store = dynamic_cast<const IR::StoreInst*>(user_instr)){
-            if(store->get_ptr_operand()==alloca_inst){
+    //合法jiancha
+    for (IR::User* user : users) {
+        if (dynamic_cast<const IR::LoadInst*>(user)) {
+            continue; 
+        }
+        if (auto* store = dynamic_cast<const IR::StoreInst*>(user)) {
+            if (store->get_ptr_operand() == alloca_inst) {
                 continue;
-            }else{
-                return false;
             }
-        }else if(dynamic_cast<const IR::LoadInst*>(user_instr)){
-            has_at_least_one_load = true;
-        }else{
-            return false;
+        }
+        std::cout << "DEBUG: Alloca " << alloca_inst->get_name() 
+                  << " is not promotable due to user: " 
+                  << static_cast<IR::Instruction*>(user)->to_str() << std::endl;
+        return false;
+    }
+    for (const IR::User* user : users) {
+        if (dynamic_cast<const IR::LoadInst*>(user)) {
+            return true; 
         }
     }
-    return has_at_least_one_load;
+    return false;
 }
 
 bool Mem2RegPass::run(IR::Function& function, PassManager& pm) { 
@@ -114,6 +116,12 @@ bool Mem2RegPass::run(IR::Function& function, PassManager& pm) {
             dom_tree_children[idom].push_back(bb);
         }
     }
+    value_stack.clear(); // 确保值栈是空的
+    for (auto* alloca : promotable_allocas) {
+        value_stack[alloca].push(IR::UndefValue::get(alloca->get_alloca_ty()));
+    }
+
+
     // 栈初始化
     for (auto* alloca : promotable_allocas) {
         auto it = first_store_map[alloca].find(function.get_entry_bb());
@@ -269,7 +277,13 @@ void Mem2RegPass::rename_variables(IR::BasicBlock* bb,
                           << bb->get_name() << "\n";
                 std::exit(1);
             }
-            Value* cur_version = value_stack[alloca].top();
+            Value* cur_version;
+            if (value_stack.count(alloca) && !value_stack[alloca].empty()) {
+                cur_version = value_stack[alloca].top();
+            } else {
+                // 应该永远不被执行
+                cur_version = IR::UndefValue::get(alloca->get_alloca_ty());
+            }
             IR::PhiInst* phi_in_succ = it_phi_in_succ->second;
             // 正常情况都是覆盖
             phi_in_succ->add_incoming(cur_version, bb);

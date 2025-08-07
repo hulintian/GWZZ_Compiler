@@ -479,6 +479,14 @@ public:
             }
         }
     }
+    void remove_incoming_by_index(size_t index){
+        if(index<_incoming_blocks.size()&&index < this->get_num_operand()){
+            _incoming_blocks.erase(_incoming_blocks.begin() + index);
+            this->remove_operand(index);
+        }
+    }
+
+    
 
     void clear_all_incomings(){
         _incoming_blocks.clear();
