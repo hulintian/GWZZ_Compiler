@@ -1,17 +1,17 @@
 # IDE specific files (JetBrains CLion, VSCode, etc.)
 .idea/
 .vscode/
-/.cache/
+.cache/
 
 # Build artifacts
-/build/
-/bin/
-/tmp/
+build/
+bin/
+tmp/
 docs
 functional
 
 # Generated files
-/gen/
+gen/
 
 # Executables or object files
 *.o
@@ -19,12 +19,12 @@ functional
 *.exe
 
 # Documentation
-/docs/
+docs/
 
 # Third-party libraries or large directories
-/antlr4/
+antlr4/
 
 # Other
 *.gdb
-/RISCV-性能
-/refs/
+RISCV-性能
+refs/
