@@ -2,8 +2,8 @@
 
 #include <map>
 #include <memory>
-#include "pass/Analysis.hpp"
-#include "pass/PassManager.hpp"
+#include "Analysis.hpp"
+#include "PassManager.hpp"
 #include <functional>
 
 namespace IR {

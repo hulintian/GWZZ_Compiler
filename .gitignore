@@ -7,8 +7,10 @@
 build/
 bin/
 tmp/
-docs/
-functional/
+
+docs
+functional
+
 
 # Generated files
 gen/
@@ -27,4 +29,6 @@ antlr4/
 # Other
 *.gdb
 RISCV-性能
+
 refs/
+

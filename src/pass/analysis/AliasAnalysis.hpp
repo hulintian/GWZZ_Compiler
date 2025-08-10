@@ -1,8 +1,8 @@
 #pragma once
 
-#include "pass/Pass.hpp"
-#include "pass/Analysis.hpp"
-#include "IR/Value.hpp"
+#include "Pass.hpp"
+#include "Analysis.hpp"
+#include "Value.hpp"
 
 namespace pass{
 

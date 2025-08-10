@@ -1,20 +1,22 @@
 #pragma once 
 
-#include "IR/BasicBlock.hpp"
-#include "IR/Value.hpp"
-#include "common/type.hpp"
+#include "BasicBlock.hpp"
+// #include "IR/Instructions.hpp"
+#include "Value.hpp"
+#include "type.hpp"
 #include <cassert>
 #include <cstdarg>
 #include <list>
 #include <map>
+#include <set>
 #include <ostream>
 #include <stack>
+#include <string>
 #include <vector>
 
 //User Code Start. Sasara
 #include <set>
 #include <functional>
-#include <algorithm>
 //User Code End. Sasara
 namespace IR {
 
@@ -25,14 +27,15 @@ public:
 
     std::list<BasicBlock*> _bbs;
     std::map<int, BasicBlock*> idx2bb;
-    std::map<int, int> prev_bb;
-    std::map<int, int> succ_bb;
+    std::map<int, std::set<int>> prev_bb;
+    std::map<int, std::set<int>> succ_bb;
     BasicBlock* entry_bb;
 
     void regen_cfg();
 
     void insert_bb(BasicBlock* bb) {
         this->_bbs.push_back(bb);
+        idx2bb[bb->get_bb_idx()] = bb;
     }
     
     void dump(std::ostream &out) ;
@@ -40,16 +43,18 @@ public:
     // User Code Start. Sasara
     void rm_bb(BasicBlock* bb){
         this->_bbs.remove(bb);
-        delete bb;
+        delete bb;                      //
     }
+
+    // TODO 在更新CFG的时候把上面三个表也更新了
     void refresh_predecessors();
     void build_predecessors() const;
     const std::vector<BasicBlock*>& get_predecessors(const BasicBlock* bb) const;
     void rm_predecessor(BasicBlock* bb, BasicBlock* pred_to_remove);
     void add_predecessor(BasicBlock* bb, BasicBlock* pred_to_add);
 private:
-    mutable std::map<BasicBlock*, std::vector<BasicBlock*>> _predecessor_map;
-    mutable bool _predecessors_built = false;
+    mutable std::map<BasicBlock*, std::vector<BasicBlock*>> _predecessor_map;       
+    mutable bool _predecessors_built = false;                                       
     void _build_predecessors()const;
     // User Code End. Sasara
 };
@@ -70,6 +75,8 @@ public:
     std::string get_func_name() const {
         return _func_name;
     }
+
+    std::vector<std::string> get_func_p_names() { return _arg_names; }
 
     bool is_lib() const {
         return _is_lib;
@@ -195,6 +202,10 @@ public:
     void add_allocas(Instruction* inst) {
         allocas.push_back(inst);
     }
+
+    std::list<BasicBlock*>& get_bbs() { return this->_cfg->_bbs; }
+
+    std::vector<Instruction*> get_allocas() { return allocas; }
 
 private:
     CFG* _cfg;

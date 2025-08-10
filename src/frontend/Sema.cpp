@@ -1,18 +1,15 @@
-#include "frontend/Sema.hpp"
-#include "InputMismatchException.h"
-#include "common/defines.hpp"
-#include "common/type.hpp"
-#include "frontend/AST.hpp"
-#include "frontend/SymbolTable.hpp"
-#include "common/utils.hpp"
+#include "Sema.hpp"
+#include "defines.hpp"
+#include "type.hpp"
+#include "AST.hpp"
+#include "SymbolTable.hpp"
+#include "utils.hpp"
 #include <algorithm>
-#include <any>
 #include <cassert>
 #include <iterator>
 #include <memory>
 #include <iostream>
 #include <optional>
-#include <system_error>
 #include <vector>
 #include <map>
 
@@ -252,6 +249,7 @@ void Sema::visit_stmt(const ast::Stmt& node) {
         if(!ret && func->return_type) {
             std::cerr << error << "Not void function, need return a value.\n";
         }
+        if(!ret) { return; }
         // 检查return value
         auto ty = visit_expr(ret);
         // unction returns  void
@@ -660,7 +658,7 @@ std::optional<ConstValue> Sema::eval(const ast::Expr* expr) {
             }
             int index = implicit_cast(Int, opt_val.value()).iv;        // get the integer index
             int dim_size = 1;
-            for(int i = subscripts.size()-2; i >= 0; i++) {
+            for(int i = subscripts.size()-2; i >= 0; --i) {
                 auto opt_val = eval(subscripts[i]);
                 if(!opt_val) {
                     return std::nullopt;        // can't eavluate, need to wait variable
@@ -685,7 +683,10 @@ std::optional<ConstValue> Sema::eval(const ast::Expr* expr) {
     if(auto call_ptr = dynamic_cast<const ast::Call*>(expr)) {
         return std::nullopt;
     }
+    
+    std::string msg = "expr is null";
 
+    return std::nullopt;
 }
 
 }

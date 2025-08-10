@@ -1,14 +1,14 @@
-#include "pass/transform/LICM.hpp"
-#include "pass/analysis/DominatorTree.hpp"
-#include "pass/analysis/AliasAnalysis.hpp"
-#include "pass/analysis/LoopInfo.hpp"
-#include "pass/PassManager.hpp"
+#include "LICM.hpp"
+#include "DominatorTree.hpp"
+#include "AliasAnalysis.hpp"
+#include "LoopInfo.hpp"
+#include "PassManager.hpp"
 
-#include "IR/IRBuilder.hpp"
-#include "IR/Value.hpp"
-#include "IR/Function.hpp"
-#include "IR/BasicBlock.hpp"
-#include "IR/Instructions.hpp"
+#include "IRBuilder.hpp"
+#include "Value.hpp"
+#include "Function.hpp"
+#include "BasicBlock.hpp"
+#include "Instructions.hpp"
 #include <set>
 
 namespace pass{

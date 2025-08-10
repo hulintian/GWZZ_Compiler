@@ -1,0 +1,172 @@
+headers:
+  - regarch.hpp
+  - MBasicBlock.hpp
+  - MFunction.hpp
+
+InstrGroups:
+  # rv32im
+    # 整数计算(寄存器-寄存器类似， R类指令)
+  - Category: IArith
+    Description: Integer computation operations
+    Operands: [rd, rs1, rs2]
+    # 加，减，按位与，按位或，逻辑左移，算术右移，逻辑右移，生成高20位立即数
+    Instructions: [add, sub, and, or, xor, sll, sra, srl, addw, subw]
+
+    # 整数立即数计算
+  - Category: IArithIMM
+    Description: Integer arithmetic operations
+    Operands: [rd, rs1]
+    otherargs: 
+      - {type: int32_t, name: imm}
+    Instructions: [addi, subi, andi, ori, xori, slli, srai, srli]
+
+    # 长立即数指令
+  - Category: IArithU
+    Description: Integer arithmetic operations
+    Operands: [rd]
+    otherargs: 
+      - {type: int32_t, name: imm}
+    Instructions: [lui, auipc]
+
+    # 访存
+  - Category: Load 
+    Description: Load Instruction
+    Operands: [rd, rs1]
+    otherargs: 
+      - {type: int32_t, name: offset}
+    Instructions: [lb, lh, lw, ld]
+
+  - Category: Move 
+    Description: Move from src_reg to dst_reg
+    Operands: [rd, rs1]
+    Instructions: [mv]
+
+  - Category: LLA
+    Description: LoadLocalAddress
+    Operands: [rd]
+    otherargs: 
+      - {type: std::string, name: symbol}
+    Instructions: [lla, la]
+
+  - Category: LI
+    Description: Load imm
+    Operands: [rd]
+    otherargs: 
+      - {type: int, name: imm}
+    Instructions: [li]
+
+  - Category: Store 
+    Description: Store Instruction
+    Operands: [rs1, rs2]
+    otherargs: 
+      - {type: int32_t, name: offset}
+    Instructions: [sb, sh, sw, sd]
+
+
+  - Category: CondSet
+    Description: 条件置位
+    Operands: [rd, rs1, rs2]
+    Instructions: [slt, sltu]
+
+  - Category: CondSetU
+    Description: 条件置位
+    Operands: [rd, rs1]
+    Instructions: [seqz, snez, sltz, sgtz]
+
+  - Category: CondSetIMM
+    Description: 条件置位
+    Operands: [rd, rs1]
+    otherargs: 
+      - {type: int32_t, name: imm}
+    Instructions: [slti, sgti]
+
+# 条件跳转
+  - Category: Branch
+    Description: Branch Instruction
+    Operands: [rs1, rs2]
+    otherargs:     # offset
+      - { type:  MachineBasicBlock*, name : dst_bb}
+    Instructions: [beq, bne, blt, bge, bltu, bgeu, bgt, bgtu, ble, bleu]
+
+  - Category: BranchU
+    Description: Branch Instruction, condition is unary operations
+    Operands: [rs1]
+    otherargs:     # offset
+      - { type:  MachineBasicBlock*, name : dst_bb}
+    Instructions: [bez, bnez, bgtz, bltz, bgez, blze]
+
+# 无条件跳转
+  - Category: Jump
+    Description: jump directly
+    otherargs:     # offset
+      - { type:  MachineBasicBlock*, name : dst_bb}
+    Instructions: [j]
+
+  - Category: JAL
+    Description: jump directly
+    Operands: [rd]
+    otherargs:     # offset
+      - { type:  MachineBasicBlock*, name : dst_bb}
+    Instructions: [jal, jalr]
+
+    # 函数
+  - Category: Call
+    Description: Function Call
+    otherargs:     # offset
+      - { type:  MachineFunction*, name : func}
+    Instructions: [call]
+
+  - Category: Return
+    Description: Function return
+    Instructions: [ret]
+
+# rv32m 
+  - Category: Multiply
+    Description: 乘除取余
+    Operands: [rd, rs1, rs2]
+    Instructions: [mul, mulh, mulhsu, mulhu, mulw, div, divu, divw, rem, remu, remw]
+
+# rv32fd 
+  - Category: FArith
+    Description: 浮点运算
+    Operands: [rd, rs1, rs2]
+    Instructions: [fadd_s, fsub_s, fmul_s, fdiv_s, fsgnj_s, fsgnjn_s, fsgnjx_s, fmin_s, fmax_s]
+
+  - Category: FArithU
+    Description: 浮点运算
+    Operands: [rd, rs1]
+    Instructions: [fabs_s, fneg_s, fsqrt_s]
+
+  - Category: FCMP
+    Description: 浮点运算
+    Operands: [rd, rs1, rs2]
+    Instructions: [feq_s, flt_s, fle_s]
+
+  - Category: FArithT
+    Description: 浮点运算，乘加，4操作数
+    Operands: [rd, rs1, rs2, rs3]
+    Instructions: [fmadd_s, fnmadd_s, fmsub_s, fnmsub_s]
+
+  - Category: FLoad
+    Description: 浮点加载
+    Operands: [rd, rs1]
+    otherargs: 
+      - {type: int32_t, name: offset}
+    Instructions: [flw, fld]
+
+  - Category: FStore
+    Description: 浮点存
+    Operands: [rs1, rs2]
+    otherargs: 
+      - {type: int32_t, name: offset}
+    Instructions: [fsw, fsd]
+
+  - Category: FCVT
+    Description: 浮点向字转换, single to word, word to single
+    Operands: [rd, rs1]
+    Instructions: [fcvt_s_w, fcvt_w_s]
+
+  - Category: FMV
+    Description: w_x 浮点寄存器搬运到整数寄存器， x_w整数寄存器搬运到浮点寄存器
+    Operands: [rd, rs1]
+    Instructions: [fmv_s, fmv_w_x, fmv_x_w]

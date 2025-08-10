@@ -1,9 +1,9 @@
 // src/pass/DummyTransform.hpp
 #pragma once
 
-#include "pass/Pass.hpp"
-#include "pass/analysis/FunctionCounter.hpp" 
-#include "pass/PassManager.hpp"         
+#include "Pass.hpp"
+#include "FunctionCounter.hpp" 
+#include "PassManager.hpp"         
 #include <iostream>
 
 namespace pass{

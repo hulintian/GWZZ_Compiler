@@ -1,14 +1,14 @@
-#include "frontend/codegen.hpp"
-#include "IR/BasicBlock.hpp"
-#include "IR/Function.hpp"
-#include "IR/GlobalValue.hpp"
-#include "IR/Instructions.hpp"
-#include "IR/Module.hpp"
-#include "IR/Value.hpp"
-#include "common/defines.hpp"
-#include "common/type.hpp"
-#include "common/utils.hpp"
-#include "frontend/AST.hpp"
+#include "codegen.hpp"
+#include "BasicBlock.hpp"
+#include "Function.hpp"
+#include "GlobalValue.hpp"
+#include "Instructions.hpp"
+#include "Module.hpp"
+#include "Value.hpp"
+#include "defines.hpp"
+#include "type.hpp"
+#include "utils.hpp"
+#include "AST.hpp"
 #include <cassert>
 #include <cmath>
 #include <memory>
@@ -39,6 +39,10 @@ void CodeGen::add_libs() {
     // 我加的
     builder->reg_lib_func("putline", new Type(Void), {}, {});
     builder->reg_lib_func("putintl", new Type(Void), {new Type(Int)}, {"a"});
+
+    // 内存清零
+    builder->reg_lib_func("__clear_mem__", new Type(Void), {new Type(Int, std::vector<int>{0}),new Type(Int)  }, {"addr", "size"});
+
 }
 
 IR::Module* CodeGen::gen(const ast::CompUnits& cu) {
@@ -147,10 +151,15 @@ void CodeGen::gen_block(const ast::Block& block) {
             // 对于重复定义的要建一个别名表
             // first check in gv, then check in alias,but first replace in alias map
             // gv中找，check exists same symbol in 
+            // TODO 局部变量和全局变量重名的情况
             auto &decl = std::get<std::unique_ptr<ast::Decl>>(child);
             auto &name = decl->ident()->identifier();
             auto old_sym = this->get_cur_func()->find_alias(name);
             gen_decl(*decl);
+
+            if(old_sym == nullptr) {
+                old_sym = this->get_cur_module()->get_gv(name);
+            }
 
             if(old_sym != nullptr) {
                 old_alias[name] = old_sym;
@@ -174,8 +183,8 @@ void CodeGen::gen_decl(const ast::Decl& decl) {
     auto &amc = this->get_cur_func()->get_alias_cnt_map();
 
     std::string new_name = name;
-    if(this->get_cur_func()->has_symbol(name)) {
-        new_name += std::to_string(amc[name] + 1);
+    if(this->get_cur_func()->has_symbol(name) || this->ctx->get_current_module()->has_gv(name)) {
+        new_name += "@_"+std::to_string(amc[name] + 1);
     }
     auto val = builder->create_alloca(new_name, type);
     alias_map[name] = val;
@@ -287,10 +296,14 @@ void CodeGen::gen_stmt(const ast::Stmt& stmt) {
     } else if(auto ret = dynamic_cast<const ast::Return*>(statement)) {
         if(auto &ret_exp  = ret->rets()) {
             auto ret_val = gen_expr(*ret_exp);
+            auto func_rty = this->get_cur_func()->get_return_type();
+            if( func_rty->base_type != ret_val->get_type()->base_type) {
+                ret_val = builder->create_cvt(ret_val, ret_val->get_type(), func_rty);
+            }
             builder->create_ret(ret_val);
         } else {
             // bool for_test = this->get_cur_func()->get_return_type()->base_type == Void;
-            assert(this->get_cur_func()->get_return_type()->base_type != Void && "Non void function, but return a void value\n" );
+            assert(this->get_cur_func()->get_return_type()->base_type == Void && "Non void function, but return a void value\n" );
             builder->create_ret(nullptr);
         }
     }
@@ -386,7 +399,7 @@ Value* CodeGen::gen_cond_expr(ast::Expr* expr, IR::BasicBlock* true_bb, IR::Basi
             auto next_cond_bb = builder->create_bb();
             auto lcond = gen_cond_expr(lhs.get(), true_bb, next_cond_bb);
             if(lcond != nullptr) {
-                builder->create_cond_br(lcond, next_cond_bb, false_bb);
+                builder->create_cond_br(lcond, true_bb, next_cond_bb);
             }
             this->ctx->set_current_basic_block(next_cond_bb);
 
@@ -445,9 +458,11 @@ Value* CodeGen::gen_expr(const ast::Expr* expr) {
         auto zero = new ConstValue(0);
         switch (uop) {
             case UnaryOp::Add: return gen_expr(*od) ; break;
-            case UnaryOp::Sub:  builder->create_sub(builder->create_const_value(builder->get_base_type(Int), *zero), this->gen_expr(*od)) ; break;
+            case UnaryOp::Sub: return builder->create_sub(builder->create_const_value(builder->get_base_type(Int), *zero), this->gen_expr(*od)) ; break;
             // wait to impl when deal with cond expr, cmp with 0, this should return i1 type
-            case UnaryOp::Not:  builder->create_eq(builder->create_const_value(builder->get_base_type(Int), *zero), this->gen_expr(*od)) ; break;
+            case UnaryOp::Not: 
+                               auto opd  = this->gen_expr(*od);
+                               return  builder->create_eq(opd, this->builder->create_const_value(builder->get_base_type(opd->get_type()->base_type), *zero)) ; break;
         }
         return nullptr; // should never go here
     } else if( auto call = dynamic_cast<const ast::Call*>(expr)) {
@@ -462,6 +477,16 @@ Value* CodeGen::gen_expr(const ast::Expr* expr) {
             if(func_args[i].index() == 0) {
                 auto &expr = std::get<std::unique_ptr<ast::Expr>>(func_args[i]);
                 auto ag = this->gen_expr(*expr);
+                // TODO cmp the types
+                if(!ag->get_type()->is_array() && !ag->get_type()->is_ptr()) {
+                    if(ag->get_type()->base_type != func_params[i]->base_type) {
+                        if(ag->get_type()->base_type == Int) {
+                            ag = this->builder->create_cvt(ag, new Type(Int), new Type(Float));
+                        } else {
+                            ag = this->builder->create_cvt(ag, new Type(Float), new Type(Int));
+                        }
+                    }
+                }
                 // assert(*ag->get_type() == *func_params[i] ); TODO should assert here
                 args.push_back(ag);
             }else if(func_args[i].index() == 1){

@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "common/type.hpp"
+#include "type.hpp"
 #include <list>
 
 class Value ;
@@ -22,6 +22,7 @@ public:
     Type *get_type() const { return _type; };
     std::string get_name() { return _name; }
     std::list<Use> &get_use_list() { return _use_list; }
+
     void add_use(Value *val, unsigned arg_no = 0) { 
         Use u = {val, arg_no};
         _use_list.push_back(u);
@@ -35,7 +36,7 @@ public:
 private:
     Type *_type;
     std::string _name;
-    int idx;
+    // int idx;
     std::list<Use> _use_list;
 };
 
