@@ -1,13 +1,30 @@
-.cache/**
-build
+# IDE specific files (JetBrains CLion, VSCode, etc.)
+.idea/
+.vscode/
+.cache/
+
+# Build artifacts
+build/
 bin/
-gen/
 tmp/
-refs
 docs
-tests/
-antlr4
-# *.gdb
-/.cache/
-RISCV-性能
 functional
+
+# Generated files
+gen/
+
+# Executables or object files
+*.o
+*.out
+*.exe
+
+# Documentation
+docs/
+
+# Third-party libraries or large directories
+antlr4/
+
+# Other
+*.gdb
+RISCV-性能
+refs/

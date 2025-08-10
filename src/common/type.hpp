@@ -12,7 +12,8 @@ enum ScalarType {
     Int = 0,
     Float,
     String,
-    Void
+    Void,
+    Label
 };
 
 /// define of type 
@@ -24,6 +25,24 @@ struct Type {
     int nr_dims() const { return dims.size(); }
     bool is_array() const { return dims.size() > 0; }
     
+    //User Code Start. Sasara
+    bool is_void() const {
+        return base_type == Void && dims.empty();
+    }
+
+    Type get_pointer_element_type() const {
+        assert(is_ptr() && "Cannot get element type of a non-pointer type!");
+        Type element_type = *this;
+        //解引用
+        element_type.dims.erase(element_type.dims.begin());
+        return element_type;
+    }
+    static Type* get_label_ty() {
+        // 使用静态局部变量，可以保证它只被创建一次（单例）
+        static Type label_type_singleton(Label); 
+        return &label_type_singleton;
+    }
+    //User Code End. Sasara
     /// compute the total number of elements in array.
     int nr_elems() const {
         int count = 1;
@@ -93,6 +112,7 @@ inline std::string type_string(Type t) {
         case Int : s = "int" ; break;
         case Float : s = "float" ; break;
         case String : s = "string" ; break;
+        case Label : s = "label"; break;
     }
 
     if(!t.is_array()) return s;
