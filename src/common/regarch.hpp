@@ -211,4 +211,3 @@ inline bool is_in_pool(const std::vector<const Reg*> pool, const Reg* reg) {
 }
 
 
-}
