@@ -1,7 +1,7 @@
 #pragma once
 
-#include "pass/Pass.hpp"
-#include "IR/Module.hpp"
+#include "Pass.hpp"
+#include "Module.hpp"
 #include <iostream>
 
 namespace pass{

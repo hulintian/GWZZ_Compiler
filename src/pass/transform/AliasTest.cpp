@@ -1,8 +1,8 @@
-#include "pass/transform/AliasTest.hpp"
-#include "pass/analysis/AliasAnalysis.hpp"
-#include "pass/PassManager.hpp"
-#include "IR/Instructions.hpp"
-#include "IR/Function.hpp"
+#include "AliasTest.hpp"
+#include "AliasAnalysis.hpp"
+#include "PassManager.hpp"
+#include "Instructions.hpp"
+#include "Function.hpp"
 
 #include <iostream>
 #include <vector>

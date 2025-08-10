@@ -1,9 +1,9 @@
 #pragma once
 
-#include "pass/Pass.hpp"
-#include "pass/Analysis.hpp"
-#include "pass/analysis/Loop.hpp"
-#include "pass/analysis/DominatorTree.hpp"
+#include "Pass.hpp"
+#include "Analysis.hpp"
+#include "Loop.hpp"
+#include "DominatorTree.hpp"
 
 namespace IR{
 class Function;

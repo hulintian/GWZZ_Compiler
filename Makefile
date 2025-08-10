@@ -12,7 +12,7 @@ CXXFLAGS += -DSHOW_ASM
 CXXFLAGS += -DSHOW_IR
 CXXFLAGS += -DMEM_CLEAR
 # CXXFLAGS += -DSHOW_PASS_CALL_REGS
-CXXFLAGS += -DO1
+# CXXFLAGS += -DO1
 
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 
@@ -24,6 +24,9 @@ INCLUDE_FLAGS += -I./src/IR
 INCLUDE_FLAGS += -I./src/common
 INCLUDE_FLAGS += -I./src/grammar
 INCLUDE_FLAGS += -I./src/utils
+INCLUDE_FLAGS += -I./src/pass
+INCLUDE_FLAGS += -I./src/pass/analysis
+INCLUDE_FLAGS += -I./src/pass/transform
 
 ANTLR_OUT_PATH = src/grammar
 BUILD_DIR = build
