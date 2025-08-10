@@ -1,5 +1,5 @@
 #pragma once
-#include "pass/Pass.hpp"
+#include "Pass.hpp"
 #include <set>
 
 namespace IR {

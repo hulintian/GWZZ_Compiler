@@ -3,12 +3,30 @@ ANTLR=antlr4
 CXX = g++
 CC = gcc
 
-INCLUDE_FLAGS = -I./antlr4 -I./antlr4/antlr4-runtime -I./src 
-CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE # -fsanitize=address -fno-omit-frame-pointer
+INCLUDE_FLAGS = -I/usr/include/antlr4-runtime -I./src 
+CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE 
+# CXXFLAGS += -DSHOW_INST_TIME
+CXXFLAGS += -DSHOW_ASM
+# CXXFLAGS += -DSHOW_AST
+#CXXFLAGS += -DDEBUG
+CXXFLAGS += -DSHOW_IR
+CXXFLAGS += -DMEM_CLEAR
+# CXXFLAGS += -DSHOW_PASS_CALL_REGS
+# CXXFLAGS += -DO1
 
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 
-LDFLAGS = -L./antlr4/lib -Wl,-rpath,'$$ORIGIN/../antlr4/lib'
+LDFLAGS = -L./antlr4/lib -lantlr4-runtime
+
+INCLUDE_FLAGS += -I./src/frontend
+INCLUDE_FLAGS += -I./src/backend
+INCLUDE_FLAGS += -I./src/IR
+INCLUDE_FLAGS += -I./src/common
+INCLUDE_FLAGS += -I./src/grammar
+INCLUDE_FLAGS += -I./src/utils
+INCLUDE_FLAGS += -I./src/pass
+INCLUDE_FLAGS += -I./src/pass/analysis
+INCLUDE_FLAGS += -I./src/pass/transform
 
 ANTLR_OUT_PATH = src/grammar
 BUILD_DIR = build

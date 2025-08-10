@@ -58,6 +58,8 @@ def main():
     generate("instrs.yaml", "Instructions.hpp.jinja2", "Instructions.hpp", "../src/IR")
     generate("instrs.yaml", "Instructions.cpp.jinja2", "Instructions.cpp", "../src/IR")
     generate("builder.yaml", "IRBuilder.hpp.jinja2", "IRBuilder.hpp", "../src/IR")
+    generate("riscv64.yaml", "MInstruction.hpp.jinja2", "MInstruction.hpp", "../src/backend")
+    generate("riscv64.yaml", "ASMBuilder.hpp.jinja2", "ASMBuilder.hpp", "../src/backend")
 
 
 if __name__ == "__main__":

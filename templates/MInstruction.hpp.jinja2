@@ -1,0 +1,106 @@
+#pragma once 
+{%- for header in headers %}
+#include "{{ header }}"
+{%- endfor %}
+#include <sstream>
+#include <string>
+
+namespace backend {
+enum MachineInstrType {
+{%- for group in InstrGroups %} 
+// {{ group.Category }}
+    {%- for instr in group.Instructions %}
+    {{ instr.upper() }},
+    {%- endfor %}
+{%- endfor %}
+};
+
+class MachineInstr {
+public:
+        virtual std::vector<RiscvReg::Reg*> get_srcs() = 0;
+        virtual std::vector<RiscvReg::Reg*> get_dsts() = 0;
+        virtual std::vector<RiscvReg::Reg*> get_regs() = 0;
+
+        virtual std::string to_asm() = 0;
+
+        MachineInstrType mity;
+        MachineBasicBlock* parent;
+
+        // 根据dfs的顺序到给指令的序号
+        long long time = 0;
+
+        MachineInstr(MachineInstrType ty, MachineBasicBlock* p): mity(ty), parent(p) {}
+};
+
+{%- for group in InstrGroups %}
+// {{ group.Category }}
+
+class {{ group.Category }}Inst : public MachineInstr {
+public:
+    {{ group.Category }}Inst( MachineInstrType mty, MachineBasicBlock* p{% for op in group.Operands %}, RiscvReg::Reg {{ op }} {% endfor %}{% for oa in group.otherargs %},{{ oa.type }} {{ oa.name }}{% endfor %}
+        /* User Code Start: other {{ group.Category }} args */
+
+        /* User Code End: other {{ group.Category }} args */
+    ) : MachineInstr(mty, p){% for op in group.Operands %}, _{{ op }}({{ op }}) {% endfor %}{% for oa in group.otherargs %}, _{{ oa.name }}({{ oa.name }}){% endfor %}
+        /* User Code Start: other {{ group.Category }} init construct */
+
+        /* User Code End: other {{ group.Category }} init construct */
+
+    {
+        /* User Code Start: {{ group.Category }}Inst construct function */
+
+        /* User Code End: {{ group.Category }}_Inst construct function */
+    }
+
+    std::vector<RiscvReg::Reg*> get_regs() override { return { {% for op in group.Operands %}&_{{ op }}{% if not loop.last %}, {% endif %}{% endfor %} }; }
+
+    std::string to_asm() override { 
+        std::ostringstream oss; 
+        switch(this->mity) {
+            {%- for instr in group.Instructions %}
+            case MachineInstrType::{{ instr.upper() }} : 
+                oss << "{{ instr|replace('_', '.') }}" 
+
+                {%- if group.Operands|length > 0 %}
+                    << " " << _{{ group.Operands[0] }}
+                {%- endif -%}
+
+                {%- set has_offset = (group.otherargs|selectattr("name", "equalto", "offset")|list|length) > 0 %}
+                {%- if has_offset -%}
+                    << ", ";
+                        oss << _offset << "(" << _{{ group.Operands[1] }}  <<  ")";
+                    {%- for oa in group.otherargs if oa.name != "offset" %}
+                        << ", "<<  _{{ oa.name }}
+                    {%- endfor -%}
+                {%- else %}
+                    {%- for opd in group.Operands -%}
+                        {%- if not loop.first -%}
+                        << ", " << _{{ opd }}
+                        {%- endif -%}
+                    {%- endfor -%}
+                    {%- for oa in group.otherargs %}
+                        << ", "<<  _{{ oa.name }}
+                    {%- endfor -%}
+                {%- endif %}
+                ; 
+                break;
+            {%- endfor -%}
+            default : break;
+        }
+        return oss.str();
+    }
+
+    /* User Code Start: {{ group.Category }}_Inst methods */
+
+    /* User Code End: {{ group.Category }}_Inst methods */
+    
+    {%- for op in group.Operands %}
+    RiscvReg::Reg _{{op}};
+    {%- endfor %}
+    {%- for oa in group.otherargs %}
+    {{ oa.type }} _{{ oa.name }};
+    {%- endfor %}
+};
+
+{%- endfor %}
+}

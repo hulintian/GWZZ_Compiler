@@ -1,7 +1,7 @@
 #pragma once
-#include "pass/Pass.hpp"
-#include "IR/Value.hpp"
-#include "IR/User.hpp"
+#include "Pass.hpp"
+#include "Value.hpp"
+#include "User.hpp"
 #include <map>
 #include <vector>
 

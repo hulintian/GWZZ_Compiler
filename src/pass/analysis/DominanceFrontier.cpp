@@ -1,5 +1,5 @@
-#include "pass/analysis/DominanceFrontier.hpp"
-#include "pass/PassManager.hpp"
+#include "DominanceFrontier.hpp"
+#include "PassManager.hpp"
 #include <memory>
 
 namespace pass{

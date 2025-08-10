@@ -1,5 +1,5 @@
 #pragma once
-#include "IR/BasicBlock.hpp"
+#include "BasicBlock.hpp"
 #include <vector>
 #include <set>
 #include <memory>

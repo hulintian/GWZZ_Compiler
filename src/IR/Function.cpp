@@ -1,6 +1,12 @@
-#include "IR/Function.hpp"
-#include "common/type.hpp"
+#include "Function.hpp"
+#include "BasicBlock.hpp"
+#include "Instructions.hpp"
+#include "type.hpp"
+#include <optional>
 #include <ostream>
+#include <stack>
+#include <algorithm>
+#include <variant>
 
 namespace IR {
 
@@ -49,9 +55,6 @@ void CFG::build_predecessors()const{
     _build_predecessors();
 }
 
-
-void CFG::regen_cfg() {
-}
 void Function::post_order_traversal(std::function<void(BasicBlock*)> callback) const{
     std::set<BasicBlock*> visited;
     std::stack<BasicBlock*> stack;
@@ -118,6 +121,66 @@ void CFG::add_predecessor(BasicBlock* bb, BasicBlock* pred_to_add) {
 }
 void CFG::refresh_predecessors(){
     _predecessors_built = false;
+}
+
+
+using BrInst = std::variant<BranchInst*, CondBranchInst*>;
+std::optional<BrInst> get_br_instr(Instruction* instr) {    
+    if(auto res = dynamic_cast<BranchInst*>(instr)) {
+        return res;
+    } else if(auto res = dynamic_cast<CondBranchInst*>(instr)) { 
+        return res;
+    }
+    return std::nullopt;
+}
+
+void CFG::regen_cfg() {
+    // update bb2idx 
+
+    // start from entry bb 
+    BasicBlock* bb = this->entry_bb;
+    std::stack<BasicBlock*> stk;
+    this->succ_bb.clear();
+    this->prev_bb.clear();
+    std::map<int, bool> visited;
+    stk.push(bb);
+    while(!stk.empty()) {
+        auto top = stk.top();
+        stk.pop();
+        auto br_inst = get_br_instr(top->get_intrs().back());
+        if(br_inst) {
+            if(std::holds_alternative<BranchInst*>(*br_inst)) {
+                auto bi = std::get<BranchInst*>(*br_inst);
+                auto next_bb = bi->get_dst_bb();
+                succ_bb[top->get_bb_idx()].insert(next_bb->get_bb_idx());
+                prev_bb[next_bb->get_bb_idx()].insert(top->get_bb_idx());
+
+                if(!visited[next_bb->get_bb_idx()]) {
+                    stk.push(next_bb);
+                    visited[next_bb->get_bb_idx()] = true;
+                }
+            } else if(std::holds_alternative<CondBranchInst*>(*br_inst)) {
+                auto cbi = std::get<CondBranchInst*>(*br_inst);
+                auto next_t_bb = cbi->get_true_bb();
+                auto next_f_bb = cbi->get_false_bb();
+                succ_bb[top->get_bb_idx()].insert(next_t_bb->get_bb_idx());
+                succ_bb[top->get_bb_idx()].insert(next_f_bb->get_bb_idx());
+
+                prev_bb[next_t_bb->get_bb_idx()].insert(top->get_bb_idx());
+                prev_bb[next_f_bb->get_bb_idx()].insert(top->get_bb_idx());
+
+                if(!visited[next_t_bb->get_bb_idx()]) {
+                    stk.push(next_t_bb);
+                    visited[next_t_bb->get_bb_idx()] = true;
+                } 
+
+                if(!visited[next_f_bb->get_bb_idx()]) {
+                    stk.push(next_f_bb);
+                    visited[next_f_bb->get_bb_idx()] = false;
+                }
+            }
+        }
+    }
 }
 
 
