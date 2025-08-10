@@ -1,6 +1,0 @@
-int main() {
-    int arr[10];
-    arr[0] = 5;
-    arr[5] = arr[0];
-    return 0;
-}

@@ -1,9 +1,0 @@
-int foo(int a, int b) {
-    int x;
-    int y;
-    y = a;
-    {
-        int y;
-        y = x;
-    }
-}
