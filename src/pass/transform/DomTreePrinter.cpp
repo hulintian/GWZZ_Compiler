@@ -1,6 +1,6 @@
-#include "pass/transform/DomTreePrinter.hpp"
-#include "pass/analysis/DominatorTree.hpp"
-#include "pass/PassManager.hpp"
+#include "DomTreePrinter.hpp"
+#include "DominatorTree.hpp"
+#include "PassManager.hpp"
 
 namespace pass{
 

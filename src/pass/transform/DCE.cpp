@@ -1,9 +1,9 @@
-#include "pass/transform/DCE.hpp"
-#include "pass/PassManager.hpp"
-#include "pass/analysis/UseDefAnalysis.hpp"
-#include "IR/Function.hpp"
-#include "IR/BasicBlock.hpp"
-#include "IR/Instructions.hpp"
+#include "transform/DCE.hpp"
+#include "PassManager.hpp"
+#include "analysis/UseDefAnalysis.hpp"
+#include "Function.hpp"
+#include "BasicBlock.hpp"
+#include "Instructions.hpp"
 
 
 namespace pass{

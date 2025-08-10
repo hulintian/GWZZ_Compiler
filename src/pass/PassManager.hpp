@@ -1,9 +1,9 @@
 #pragma once
 
-#include "pass/Pass.hpp"
-#include "pass/AnalysisManager.hpp"
-#include "IR/Module.hpp"
-#include "IR/IRBuilder.hpp"
+#include "Pass.hpp"
+#include "AnalysisManager.hpp"
+#include "Module.hpp"
+#include "IRBuilder.hpp"
 #include <vector>
 #include <memory>
 

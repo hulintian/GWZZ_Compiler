@@ -1,10 +1,10 @@
-#include "pass/transform/PHISimplify.hpp"
-#include "pass/PassManager.hpp"
-#include "pass/analysis/UseDefAnalysis.hpp"
-#include "IR/Function.hpp"
-#include "IR/BasicBlock.hpp"
-#include "IR/Instructions.hpp"
-#include "IR/Value.hpp"
+#include "PHISimplify.hpp"
+#include "PassManager.hpp"
+#include "UseDefAnalysis.hpp"
+#include "Function.hpp"
+#include "BasicBlock.hpp"
+#include "Instructions.hpp"
+#include "Value.hpp"
 
 #include <set>
 #include <map>

@@ -1,6 +1,6 @@
 #pragma once 
-#include "pass/PassManager.hpp"
-#include "pass/Pass.hpp"
+#include "PassManager.hpp"
+#include "Pass.hpp"
 #include <iostream>
 
 namespace pass{

@@ -9,19 +9,19 @@
 #include <ostream>
 #include "frontend/Sema.hpp"
 /* User Code Start: Sasara */
-#include "pass/PassManager.hpp"
-#include "pass/transform/DummyTransform.hpp"
-#include "pass/transform/HelloWorld.hpp"
-#include "pass/transform/DomTreePrinter.hpp"
-#include "pass/transform/AliasTest.hpp"
-#include "pass/transform/LoopInfoPrinter.hpp"
-#include "pass/transform/PredPrinter.hpp"
-#include "pass/transform/LICM.hpp"
-#include "pass/transform/DomFrontierPrinter.hpp"
-#include "pass/transform/CFGSimplify.hpp"
-#include "pass/transform/Mem2Reg.hpp"
-#include "pass/transform/DCE.hpp"
-#include "pass/transform/PHISimplify.hpp"
+#include "PassManager.hpp"
+#include "DummyTransform.hpp"
+#include "HelloWorld.hpp"
+#include "DomTreePrinter.hpp"
+#include "AliasTest.hpp"
+#include "LoopInfoPrinter.hpp"
+#include "PredPrinter.hpp"
+#include "LICM.hpp"
+#include "DomFrontierPrinter.hpp"
+#include "CFGSimplify.hpp"
+#include "Mem2Reg.hpp"
+#include "DCE.hpp"
+#include "PHISimplify.hpp"
 /* User Code End: Sasara */
 #include <fstream>
 #include <string>

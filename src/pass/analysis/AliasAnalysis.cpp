@@ -1,6 +1,6 @@
-#include "pass/analysis/AliasAnalysis.hpp"
-#include "IR/Instructions.hpp"
-#include "IR/GlobalValue.hpp"
+#include "AliasAnalysis.hpp"
+#include "Instructions.hpp"
+#include "GlobalValue.hpp"
 
 namespace pass{
 
