@@ -6,6 +6,7 @@
 #include "IR/Function.hpp"
 #include <iostream>
 //User Code .Sasara
+#include <algorithm>
 namespace IR {
 
 void BasicBlock::dump(std::ostream& out) {

@@ -106,8 +106,13 @@ int main(int argc, char** argv) {
 
     frontend::CodeGen* cg = new frontend::CodeGen();
     auto m = cg->gen(cu);
+
+
+#ifdef O1
     /* User Code Start: Sasara */
+    // TODO 这些放到codegen里面，或则在ir里独立出来一个opt的文件
     IR::IRBuilder* builder = cg->get_ir_builder();
+    // builder拿来干啥
     pass::PassManager pm(builder);
     //pm.add_module_transform_pass(std::make_unique<pass::HelloWorldPass>());
     //pm.add_module_transform_pass(std::make_unique<pass::DummyTransformPass>());
@@ -126,7 +131,10 @@ int main(int argc, char** argv) {
     cout << "====================Running optimization passes...====================\n";
     pm.run(*m);
     /* User Code End: Sasara */
-    cout << "====================The ir of " << input_path << " =======================\n";
+#endif
+
+#ifdef SHOW_IR
+    cout << "====================The ir of " << opts.input_file << " =======================\n";
     m->dump(cout);
 #endif
 
