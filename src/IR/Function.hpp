@@ -17,7 +17,6 @@
 //User Code Start. Sasara
 #include <set>
 #include <functional>
-#include <algorithm>
 //User Code End. Sasara
 namespace IR {
 
@@ -44,16 +43,18 @@ public:
     // User Code Start. Sasara
     void rm_bb(BasicBlock* bb){
         this->_bbs.remove(bb);
-        delete bb;
+        delete bb;                      //
     }
+
+    // TODO 在更新CFG的时候把上面三个表也更新了
     void refresh_predecessors();
     void build_predecessors() const;
     const std::vector<BasicBlock*>& get_predecessors(const BasicBlock* bb) const;
     void rm_predecessor(BasicBlock* bb, BasicBlock* pred_to_remove);
     void add_predecessor(BasicBlock* bb, BasicBlock* pred_to_add);
 private:
-    mutable std::map<BasicBlock*, std::vector<BasicBlock*>> _predecessor_map;
-    mutable bool _predecessors_built = false;
+    mutable std::map<BasicBlock*, std::vector<BasicBlock*>> _predecessor_map;       
+    mutable bool _predecessors_built = false;                                       
     void _build_predecessors()const;
     // User Code End. Sasara
 };
@@ -222,8 +223,6 @@ private:
     // only for while stmt
     std::stack<BasicBlock*> break_dst;
     std::stack<BasicBlock*> continue_dst;
-
-    std::vector<Instruction*> allocas;
 
     std::vector<Instruction*> allocas;
 

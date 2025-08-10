@@ -2,10 +2,10 @@
 #include "BasicBlock.hpp"
 #include "Instructions.hpp"
 #include "type.hpp"
-#include <cstddef>
 #include <optional>
 #include <ostream>
 #include <stack>
+#include <algorithm>
 #include <variant>
 
 namespace IR {
@@ -55,9 +55,6 @@ void CFG::build_predecessors()const{
     _build_predecessors();
 }
 
-
-void CFG::regen_cfg() {
-}
 void Function::post_order_traversal(std::function<void(BasicBlock*)> callback) const{
     std::set<BasicBlock*> visited;
     std::stack<BasicBlock*> stack;
@@ -143,6 +140,8 @@ void CFG::regen_cfg() {
     // start from entry bb 
     BasicBlock* bb = this->entry_bb;
     std::stack<BasicBlock*> stk;
+    this->succ_bb.clear();
+    this->prev_bb.clear();
     std::map<int, bool> visited;
     stk.push(bb);
     while(!stk.empty()) {
