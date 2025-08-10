@@ -1,9 +1,9 @@
 #pragma once
-#include "pass/Pass.hpp"
-#include "pass/Analysis.hpp"
-#include "IR/BasicBlock.hpp"
-#include "IR/Function.hpp"
-#include "IR/Module.hpp"
+#include "Pass.hpp"
+#include "Analysis.hpp"
+#include "BasicBlock.hpp"
+#include "Function.hpp"
+#include "Module.hpp"
 #include <map>
 #include <vector>
 

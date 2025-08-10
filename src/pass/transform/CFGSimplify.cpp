@@ -1,8 +1,8 @@
-#include "pass/transform/CFGSimplify.hpp"
-#include "pass/PassManager.hpp"
-#include "IR/Function.hpp"
-#include "IR/BasicBlock.hpp"
-#include "IR/Instructions.hpp"
+#include "CFGSimplify.hpp"
+#include "PassManager.hpp"
+#include "Function.hpp"
+#include "BasicBlock.hpp"
+#include "Instructions.hpp"
 #include <vector>
 #include <set>
 

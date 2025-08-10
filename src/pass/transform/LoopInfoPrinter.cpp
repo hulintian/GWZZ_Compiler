@@ -1,6 +1,6 @@
-#include "pass/transform/LoopInfoPrinter.hpp"
-#include "pass/analysis/LoopInfo.hpp"
-#include "pass/PassManager.hpp"
+#include "LoopInfoPrinter.hpp"
+#include "LoopInfo.hpp"
+#include "PassManager.hpp"
 #include <iostream>
 
 namespace pass{

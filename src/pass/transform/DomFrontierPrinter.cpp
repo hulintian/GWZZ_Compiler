@@ -1,6 +1,6 @@
-#include "pass/transform/DomFrontierPrinter.hpp"
-#include "pass/analysis/DominanceFrontier.hpp"
-#include "pass/PassManager.hpp"
+#include "DomFrontierPrinter.hpp"
+#include "DominanceFrontier.hpp"
+#include "PassManager.hpp"
 #include <iostream>
 
 namespace pass{
