@@ -1,9 +1,9 @@
 #include "BasicBlock.hpp"
 #include "Instructions.hpp"
 #include <string>
-#include "common/utils.hpp"
+#include "utils.hpp"
 //User Code .Sasara
-#include "IR/Function.hpp"
+#include "Function.hpp"
 #include <iostream>
 //User Code .Sasara
 #include <algorithm>

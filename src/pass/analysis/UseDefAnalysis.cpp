@@ -1,7 +1,7 @@
-#include "pass/analysis/UseDefAnalysis.hpp"
-#include "pass/PassManager.hpp"
-#include "IR/Function.hpp"
-#include "IR/Instructions.hpp"
+#include "UseDefAnalysis.hpp"
+#include "PassManager.hpp"
+#include "Function.hpp"
+#include "Instructions.hpp"
 #include <iostream>
 namespace pass {
 

@@ -1,5 +1,5 @@
-#include "pass/analysis/LoopInfo.hpp"
-#include "pass/PassManager.hpp"
+#include "LoopInfo.hpp"
+#include "PassManager.hpp"
 #include <stack>
 namespace pass{
 

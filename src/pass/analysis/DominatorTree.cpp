@@ -1,4 +1,4 @@
-#include "pass/analysis/DominatorTree.hpp"
+#include "DominatorTree.hpp"
 #include <memory>
 
 namespace pass{

@@ -1,6 +1,6 @@
 #pragma once
 #include <memory> 
-#include "pass/Analysis.hpp"
+#include "Analysis.hpp"
 namespace IR{
 class Module;
 class Function;

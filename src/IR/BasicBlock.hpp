@@ -1,6 +1,6 @@
 #pragma once
-#include "IR/Value.hpp"
-#include "common/type.hpp"
+#include "Value.hpp"
+#include "type.hpp"
 #include <cassert>
 #include <ostream>
 #include <string>
