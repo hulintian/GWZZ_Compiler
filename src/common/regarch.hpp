@@ -1,8 +1,10 @@
 // 这个是使用 return_0;的代码，做了点修改，把fs_x s_x ft_x t_x 这些寄存器分开，用于定寄存器分配的可选寄存器范围
+// 这个是使用 return_0;的代码
 #pragma once
 
 #include <string>
 #include <ostream>
+#include <vector>
 #include <vector>
 #include <map>
 
@@ -62,6 +64,7 @@ protected:
     bool is_gp_;
 public:
     Reg() = default;
+    // is_standard -> 是否是物理寄存器； is_gp -> 是否是整数寄存器
     // is_standard -> 是否是物理寄存器； is_gp -> 是否是整数寄存器
     Reg(int index, bool is_standard = false, bool is_gp = true) : index_(index), is_standard_(is_standard), is_gp_(is_gp) {
         if (is_standard_ && !(0 <= index_ && index_ < RegCount)) 
@@ -204,5 +207,8 @@ inline bool is_in_pool(const std::vector<const Reg*> pool, const Reg* reg) {
     }
     return false;
 }
+
+}
+
 
 }

@@ -36,6 +36,7 @@ public:
 
     void add_gv(GlobalValue* gv) {
         // assert(_name2gv.find(gv->get_symbol()) == _name2gv.end() && "Already have the GlobalValue");
+        // assert(_name2gv.find(gv->get_symbol()) == _name2gv.end() && "Already have the GlobalValue");
         _gvs.push_back(gv);
         _name2gv[gv->get_symbol()] = gv;
     }
