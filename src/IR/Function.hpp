@@ -13,6 +13,12 @@
 #include <stack>
 #include <string>
 #include <vector>
+
+//User Code Start. Sasara
+#include <set>
+#include <functional>
+#include <algorithm>
+//User Code End. Sasara
 namespace IR {
 
 class CFG {
@@ -34,10 +40,26 @@ public:
     }
     
     void dump(std::ostream &out) ;
+
+    // User Code Start. Sasara
+    void rm_bb(BasicBlock* bb){
+        this->_bbs.remove(bb);
+        delete bb;
+    }
+    void refresh_predecessors();
+    void build_predecessors() const;
+    const std::vector<BasicBlock*>& get_predecessors(const BasicBlock* bb) const;
+    void rm_predecessor(BasicBlock* bb, BasicBlock* pred_to_remove);
+    void add_predecessor(BasicBlock* bb, BasicBlock* pred_to_add);
+private:
+    mutable std::map<BasicBlock*, std::vector<BasicBlock*>> _predecessor_map;
+    mutable bool _predecessors_built = false;
+    void _build_predecessors()const;
+    // User Code End. Sasara
 };
 
 class Module;
-class Function {
+class Function : public Value{
 public:
     Function(Module* m, 
             const std::string& func_name, 
@@ -45,7 +67,7 @@ public:
             std::vector<Type*> arg_types, 
             std::vector<std::string> arg_names, 
             bool is_lib)
-        : _parent(m), _func_name(func_name),_return_type(return_type), _arg_types(arg_types), _arg_names(arg_names), _is_lib(is_lib){
+        :Value(return_type, func_name), _parent(m), _func_name(func_name),_return_type(return_type), _arg_types(arg_types), _arg_names(arg_names), _is_lib(is_lib){
             this->_cfg = new CFG();
         }
     
@@ -81,7 +103,30 @@ public:
     const std::vector<Type*> get_params_type() const {
         return _arg_types;
     }
-    
+    //User Code Start. Sasara
+    Module* get_parent()const{
+        return _parent;
+    }
+
+    const std::list<BasicBlock*>& get_basic_blocks() const {
+        return _cfg->_bbs;
+    }
+    void rm_basic_block(BasicBlock* bb){
+        _cfg->rm_bb(bb);
+    }
+    void build_predecessors() {
+        _cfg->build_predecessors();
+    }
+
+    void refresh_predecessors(){
+        _cfg->refresh_predecessors();
+    }
+
+    //回调函数，后续遍历
+    void post_order_traversal(std::function<void(BasicBlock*)> callback) const;
+    //逆后序
+    std::vector<BasicBlock*> get_reverse_post_order() const;
+    //User Code End. Sasara
     CFG* get_cfg() const {
         return _cfg;
     }
@@ -144,10 +189,12 @@ public:
     }
 
     BasicBlock* get_break_point() {
+        assert(!this->break_dst.empty() && "Attempted to get break point outside of a loop!");
         return this->break_dst.top();
     }
 
     BasicBlock* get_continue_point() {
+        assert(!this->continue_dst.empty() && "Attempted to get continue point outside of a loop!");
         return this->continue_dst.top();
     }
 
@@ -175,6 +222,8 @@ private:
     // only for while stmt
     std::stack<BasicBlock*> break_dst;
     std::stack<BasicBlock*> continue_dst;
+
+    std::vector<Instruction*> allocas;
 
     std::vector<Instruction*> allocas;
 

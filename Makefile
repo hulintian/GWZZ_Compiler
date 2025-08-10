@@ -1,7 +1,7 @@
 Parser=Sysy22.g4
 ANTLR=antlr4
-CXX = clang++
-CC = clang
+CXX = g++
+CC = gcc
 
 INCLUDE_FLAGS = -I./antlr4 -I./antlr4/antlr4-runtime -I./src 
 CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE 
@@ -43,7 +43,7 @@ all: $(TARGET)
 
 $(TARGET) : $(OBJECTS)
 	mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(TARGET) $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS) -lantlr4-runtime
 
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.cpp 
 	mkdir -p $(dir $@)

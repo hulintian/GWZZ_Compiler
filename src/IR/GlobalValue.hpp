@@ -40,6 +40,7 @@ private:
     std::shared_ptr<Var> _var;
     bool _is_inited;
     bool _is_const;
+    bool _is_const;
     bool _is_bss;
 };
 

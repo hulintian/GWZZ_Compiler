@@ -15,7 +15,10 @@ struct Use {
 class Value {
 public:
     Value(Type *t, const std::string &name) : _type(t), _name(name) {}
+    //User Code Start. Sasara :add virtual 关键字
     virtual ~Value() = default;
+    virtual bool is_instruction() const { return false; }
+    //User Code End. Sasara
     Type *get_type() const { return _type; };
     std::string get_name() { return _name; }
     std::list<Use> &get_use_list() { return _use_list; }
