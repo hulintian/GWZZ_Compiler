@@ -10,7 +10,8 @@
 # set args -S -o tmp/tests_th39.s ~/compiler2025/functional/functional_recover/h_functional/39_fp_params.sy
 # set args -S -o tmp/tests_t78.s ~/compiler2025/functional/functional_recover/functional/78_side_effect.sy
 # set args -S -o tmp/tests_t79.s /tmp/test/t79.sy
-set args -S -o tmp/tests_t89.s ~/compiler2025/functional/functional_recover/functional/89_many_globals.sy
+# set args -S -o tmp/tests_t89.s ~/compiler2025/functional/functional_recover/functional/89_many_globals.sy
+set args -S -o tmp/tests_t00.s ~/compiler2025/functional/functional_recover/functional/00_main.sy
 
 set print pretty on
 set print object on
