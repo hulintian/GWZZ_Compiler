@@ -29,7 +29,9 @@ public:
         // calculate the bbs 
         int cnt = 0;
         for(auto f : m->get_funcs()) {
-            cnt += f->get_bbs().size();
+            for(auto bb : f->get_bbs()) {
+                cnt = std::max(cnt, bb->get_bb_idx());
+            }
         }
         n_bb_idxs = cnt+1;
 

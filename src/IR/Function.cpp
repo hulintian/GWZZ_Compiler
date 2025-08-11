@@ -54,7 +54,7 @@ void CFG::_build_predecessors()const{
 void CFG::build_predecessors()const{
     _build_predecessors();
 }
-
+// 后序
 void Function::post_order_traversal(std::function<void(BasicBlock*)> callback) const{
     std::set<BasicBlock*> visited;
     std::stack<BasicBlock*> stack;
@@ -78,6 +78,7 @@ void Function::post_order_traversal(std::function<void(BasicBlock*)> callback) c
         post_order_stack.pop();
     }
 }
+//逆后序
 std::vector<BasicBlock*> Function::get_reverse_post_order()const{
     std::vector<BasicBlock*> post_order_list;
     this->post_order_traversal([&post_order_list](BasicBlock* bb) {
@@ -95,30 +96,30 @@ const std::vector<BasicBlock*>& CFG::get_predecessors(const BasicBlock* bb) cons
     return _predecessor_map.at(const_cast<IR::BasicBlock*>(bb));
 }
 
-void CFG::rm_predecessor(BasicBlock* bb, BasicBlock* pred_to_remove){
-    if(!_predecessors_built){
-        _build_predecessors();
-    } 
-    assert(_predecessors_built && "Predecessors not built! Call build_predecessors() first.");
-    auto it = _predecessor_map.find(bb);
-    if (it == _predecessor_map.end()) {
-        assert(false && "BasicBlock not found in predecessor map!");
-        return;
-    }
-    std::vector<BasicBlock*>& preds = it->second;
-    auto new_end = std::remove(preds.begin(), preds.end(), pred_to_remove);
-    preds.erase(new_end, preds.end());
-    //写时作废
-    _predecessors_built = false;
-}
-void CFG::add_predecessor(BasicBlock* bb, BasicBlock* pred_to_add) {
-    if(!_predecessors_built){
-        _build_predecessors();
-    } 
-    _predecessor_map[bb].push_back(pred_to_add);
-    //写时作废
-    _predecessors_built = false;
-}
+// void CFG::rm_predecessor(BasicBlock* bb, BasicBlock* pred_to_remove){
+//     if(!_predecessors_built){
+//         _build_predecessors();
+//     } 
+//     assert(_predecessors_built && "Predecessors not built! Call build_predecessors() first.");
+//     auto it = _predecessor_map.find(bb);
+//     if (it == _predecessor_map.end()) {
+//         assert(false && "BasicBlock not found in predecessor map!");
+//         return;
+//     }
+//     std::vector<BasicBlock*>& preds = it->second;
+//     auto new_end = std::remove(preds.begin(), preds.end(), pred_to_remove);
+//     preds.erase(new_end, preds.end());
+//     //写时作废
+//     _predecessors_built = false;
+// }
+// void CFG::add_predecessor(BasicBlock* bb, BasicBlock* pred_to_add) {
+//     if(!_predecessors_built){
+//         _build_predecessors();
+//     } 
+//     _predecessor_map[bb].push_back(pred_to_add);
+//     //写时作废
+//     _predecessors_built = false;
+// }
 void CFG::refresh_predecessors(){
     _predecessors_built = false;
 }
@@ -183,6 +184,74 @@ void CFG::regen_cfg() {
     }
 }
 
+
+void CFG::dump_cfg(const std::string& title) const {
+    std::cout << "--- " << title << " ---\n";
+
+    // 1. 打印所有基本块及其索引 (bb_idx)
+    std::cout << "\n[1] Basic Blocks in CFG (" << _bbs.size() << " total):\n";
+    for (const auto& bb : _bbs) {
+        if (bb) {
+            // 假设你的BasicBlock有get_bb_idx()和get_name()方法
+            std::cout << "  - BB ID: " << bb->get_bb_idx() 
+                      << ", Name: " << bb->get_name() << "\n";
+        } else {
+            std::cout << "  - NULL Basic Block Pointer found!\n";
+        }
+    }
+
+    // 2. 打印索引到基本块指针的映射 (idx2bb)
+    std::cout << "\n[2] Index to BasicBlock Map (idx2bb):\n";
+    for (const auto& pair : idx2bb) {
+        if (pair.second) {
+            std::cout << "  - Index " << pair.first << " -> BB '" 
+                      << pair.second->get_name() << "'\n";
+        } else {
+            std::cout << "  - Index " << pair.first << " -> NULL Pointer!\n";
+        }
+    }
+    
+    // 3. 打印后继关系 (succ_bb)
+    std::cout << "\n[3] Successor Map (succ_bb):\n";
+    // 最好遍历所有已知的块，而不是只遍历map的键，以防有块没有后继
+    for (const auto& bb : _bbs) {
+        if (!bb) continue;
+        int current_idx = bb->get_bb_idx();
+        std::cout << "  - BB " << current_idx << " ('" << bb->get_name() << "') successors: ";
+        
+        auto it = succ_bb.find(current_idx);
+        if (it != succ_bb.end() && !it->second.empty()) {
+            std::cout << "{ ";
+            for (int succ_idx : it->second) {
+                std::cout << succ_idx << " ";
+            }
+            std::cout << "}\n";
+        } else {
+            std::cout << "{ (none) }\n";
+        }
+    }
+
+    // 4. 打印前驱关系 (prev_bb)
+    std::cout << "\n[4] Predecessor Map (prev_bb):\n";
+    for (const auto& bb : _bbs) {
+        if (!bb) continue;
+        int current_idx = bb->get_bb_idx();
+        std::cout << "  - BB " << current_idx << " ('" << bb->get_name() << "') predecessors: ";
+
+        auto it = prev_bb.find(current_idx);
+        if (it != prev_bb.end() && !it->second.empty()) {
+            std::cout << "{ ";
+            for (int pred_idx : it->second) {
+                std::cout << pred_idx << " ";
+            }
+            std::cout << "}\n";
+        } else {
+            std::cout << "{ (none) }\n";
+        }
+    }
+
+    std::cout << "--- End of " << title << " ---\n\n";
+}
 
 }
 

@@ -30,8 +30,8 @@ public:
     const std::vector<BasicBlock*>& get_successors() const;
     const std::vector<BasicBlock*>& get_predecessors() const;
     
-    void remove_predecessor(BasicBlock* bb);
-    void add_predecessor(BasicBlock* bb);
+    // void remove_predecessor(BasicBlock* bb);
+    // void add_predecessor(BasicBlock* bb);
     Instruction* remove_instr(Instruction* inst);
     void delete_instr(Instruction* inst);
     // 在基本块的终结指令之前，插入指令。

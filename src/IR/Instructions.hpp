@@ -8,6 +8,7 @@
 #include "defines.hpp" 
 #include "BasicBlock.hpp"
 #include <iostream> 
+#include <set>
 namespace IR {
 
 class BasicBlock;
@@ -478,14 +479,11 @@ public:
     }
 
     void remove_incoming_by_block(BasicBlock* pred_bb) {
-        for (size_t i = 0; i < _incoming_blocks.size(); ++i) {
+        for (int i = _incoming_blocks.size()-1; i >=0 ; --i) {
             if (_incoming_blocks[i] == pred_bb) {
-                // 从两个列表中移除对应索引的元素
-                _incoming_blocks.erase(_incoming_blocks.begin() + i);
-                this->remove_operand(i); // 你需要在Instruction基类中实现这个函数
-                return;
+                remove_incoming_by_index(i);
             }
-        }
+        }  
     }
     void remove_incoming_by_index(size_t index){
         if(index<_incoming_blocks.size()&&index < this->get_num_operand()){
@@ -514,7 +512,7 @@ public:
         return _incoming_blocks[index];
     }
     Value* get_incoming_value_for_block(const BasicBlock* pred_bb) const {
-        for (unsigned i = 0; i < get_num_incoming(); ++i) {
+        for (int i = get_num_incoming()-1; i >=0; --i) {
             if (get_incoming_block(i) == pred_bb) {
                 return get_incoming_value(i);
             }
@@ -557,7 +555,10 @@ public:
             set_operand(2, new_succ);
             replaced = true;
         }
-        if (!replaced) {
+        if(replaced){
+            this->get_parent()->get_parent()->refresh_predecessors();
+        }
+        else{
             assert(false && "Cannot replace a successor that doesn't exist!");
         }
     }
@@ -611,6 +612,7 @@ public:
     void replace_successor(BasicBlock* old_succ, BasicBlock* new_succ) {
         if (get_operand(0) == old_succ) {
             set_operand(0, new_succ);
+            this->get_parent()->get_parent()->refresh_predecessors();
         } else {
             assert(false && "Cannot replace a successor that doesn't exist!");
         }
