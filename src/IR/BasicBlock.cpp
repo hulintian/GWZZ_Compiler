@@ -50,12 +50,12 @@ const std::vector<BasicBlock*>& BasicBlock::get_successors() const{
 const std::vector<BasicBlock*>& BasicBlock::get_predecessors() const{
     return _parent->get_cfg()->get_predecessors(this);
 }
-void BasicBlock::remove_predecessor(BasicBlock* bb){
-    _parent->get_cfg()->rm_predecessor(this,bb);
-}
-void BasicBlock::add_predecessor(BasicBlock* bb){
-    _parent->get_cfg()->add_predecessor(this,bb);
-}
+// void BasicBlock::remove_predecessor(BasicBlock* bb){
+//     _parent->get_cfg()->rm_predecessor(this,bb);
+// }
+// void BasicBlock::add_predecessor(BasicBlock* bb){
+//     _parent->get_cfg()->add_predecessor(this,bb);
+// }
 Instruction* BasicBlock::remove_instr(Instruction* inst) {
     std::cout << "  [ERASE] Find result for " << inst->to_str() << ": ";
     auto it = std::find(_instrs.begin(), _instrs.end(), inst);

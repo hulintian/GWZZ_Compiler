@@ -7,22 +7,10 @@
 #include <fstream>
 #include <ASTVisitor.h>
 #include <ostream>
-#include "frontend/Sema.hpp"
-/* User Code Start: Sasara */
-#include "PassManager.hpp"
-#include "DummyTransform.hpp"
-#include "HelloWorld.hpp"
-#include "DomTreePrinter.hpp"
-#include "AliasTest.hpp"
-#include "LoopInfoPrinter.hpp"
-#include "PredPrinter.hpp"
-#include "LICM.hpp"
-#include "DomFrontierPrinter.hpp"
-#include "CFGSimplify.hpp"
-#include "Mem2Reg.hpp"
-#include "DCE.hpp"
-#include "PHISimplify.hpp"
-/* User Code End: Sasara */
+//#include "frontend/Sema.hpp"
+#include "Sema.hpp"
+#include "opt.hpp"
+
 #include <fstream>
 #include <string>
 
@@ -109,29 +97,19 @@ int main(int argc, char** argv) {
 
 
 #ifdef O1
-    /* User Code Start: Sasara */
     // TODO 这些放到codegen里面，或则在ir里独立出来一个opt的文件
-    IR::IRBuilder* builder = cg->get_ir_builder();
-    // builder拿来干啥
-    pass::PassManager pm(builder);
-    //pm.add_module_transform_pass(std::make_unique<pass::HelloWorldPass>());
-    //pm.add_module_transform_pass(std::make_unique<pass::DummyTransformPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
-    //pm.add_function_transform_pass(std::make_unique<pass::DomTreePrinterPass>());
-    //pm.add_function_transform_pass(std::make_unique<pass::DomFrontierPrinterPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::Mem2RegPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::DCEPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::PHISimplifyPass>());
-    //pm.add_function_transform_pass(std::make_unique<pass::AliasTestPass>());
-    //pm.add_function_transform_pass(std::make_unique<pass::LoopInfoPrinterPass>());
-    //pm.add_function_transform_pass(std::make_unique<pass::PredPrinterPass>());
-    pm.add_function_transform_pass(std::make_unique<pass::LICMPass>());
-    cout << "====================Running optimization passes...====================\n";
-    pm.run(*m);
-    /* User Code End: Sasara */
 #endif
+    if(opts.opt_O1){
+        IR::IRBuilder* builder = cg->get_ir_builder();  
+        opt::run_passes(m,builder);  
+    }
+    //同步CFG
+    for (auto& func : m->get_functions()) {
+        if (!func->is_lib()) {
+            func->get_cfg()->regen_cfg();
+            func->get_cfg()->dump_cfg("Final CFG for Backend");
+        }
+    }
 
 #ifdef SHOW_IR
     cout << "====================The ir of " << opts.input_file << " =======================\n";

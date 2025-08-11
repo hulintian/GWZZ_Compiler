@@ -3,16 +3,16 @@ ANTLR=antlr4
 CXX = g++
 CC = gcc
 
-INCLUDE_FLAGS = -I/usr/include/antlr4-runtime -I./src 
+INCLUDE_FLAGS = -I/usr/include/antlr4-runtime -I./src -I./antlr4/antlr4-runtime
 CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE 
 # CXXFLAGS += -DSHOW_INST_TIME
-CXXFLAGS += -DSHOW_ASM
+#CXXFLAGS += -DSHOW_ASM
 # CXXFLAGS += -DSHOW_AST
 #CXXFLAGS += -DDEBUG
 CXXFLAGS += -DSHOW_IR
 CXXFLAGS += -DMEM_CLEAR
 # CXXFLAGS += -DSHOW_PASS_CALL_REGS
-# CXXFLAGS += -DO1
+#CXXFLAGS += -DO1
 
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 
@@ -51,7 +51,7 @@ $(TARGET) : $(OBJECTS)
 
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.cpp 
 	mkdir -p $(dir $@)
-	$(CC) $(CXXFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.d : $(SRC_DIR)/%.cpp  
 	mkdir -p $(dir $@)

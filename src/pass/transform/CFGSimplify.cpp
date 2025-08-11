@@ -16,39 +16,59 @@ bool CFGSimplifyPass::run(IR::Function& func,PassManager& pm){
     while (changed_in_iteration){
         changed_in_iteration = false;
 
-        std::vector<IR::BasicBlock*> worklist;
-        std::set<IR::BasicBlock*> deleted_blocks_this_iteration;
-        for (auto& bb : func.get_basic_blocks()) {
-            worklist.push_back(bb);
-        }
-        for (IR::BasicBlock* bb : worklist){
-            if (deleted_blocks_this_iteration.count(bb)) {
-                continue;
-            }
+        std::vector<IR::BasicBlock*> to_remove;
+        //pre , old ,new
+        std::vector<std::tuple<IR::BasicBlock*, IR::BasicBlock*, IR::BasicBlock*>> edges_to_redirect;
+        
+        for (auto& bb : func.get_basic_blocks()){
+
             if (bb->get_intrs().size() == 1 && bb->get_terminator()->is_unconditional_br()) {
                 auto br_inst = dynamic_cast<IR::BranchInst*>(bb->get_terminator());
                 IR::BasicBlock* successor = br_inst->get_dst_bb();
                 if (bb == func.get_entry_bb() || bb == successor) {
                     continue;
                 }
-                //核心
-                std::vector<IR::BasicBlock*> predecessors = bb->get_predecessors();
-                for (IR::BasicBlock* pred : predecessors) {
-                    pred->get_terminator()->replace_successor(bb, successor);
+                // 所有条件满足 
+                to_remove.push_back(bb);
+                for (IR::BasicBlock* pred : bb->get_predecessors()) {
+                    edges_to_redirect.emplace_back(pred, bb, successor);
                 }
-                // 更新 successor 的前驱列表
-                successor->remove_predecessor(bb); // 从后继的前驱中移除自己
-                for (IR::BasicBlock* pred : predecessors) {
-                    successor->add_predecessor(pred); // 把自己的前驱送给后继
-                }
-
-                func.rm_basic_block(bb);
-                deleted_blocks_this_iteration.insert(bb);
-                changed_in_iteration = true;
-                function_changed = true;
+                break;
             }
         }
+        if (!to_remove.empty()){
+            changed_in_iteration = true;
+            function_changed = true;
+            for (const auto& edge : edges_to_redirect) {
+                IR::BasicBlock* pred = std::get<0>(edge);
+                IR::BasicBlock* old_succ = std::get<1>(edge);
+                IR::BasicBlock* new_succ = std::get<2>(edge);
+                pred->get_terminator()->replace_successor(old_succ, new_succ);
+            }
+            //调整phi
+            for (auto& bb_removed : to_remove){
+                auto successor = bb_removed->get_successors().at(0);
+                std::vector<IR::BasicBlock*> predecessors = bb_removed->get_predecessors();
+
+                for (auto& inst : successor->get_intrs()){
+                    if (auto* phi = dynamic_cast<IR::PhiInst*>(inst)){
+                        Value* val = phi->get_incoming_value_for_block(bb_removed);
+                        phi->remove_incoming_by_block(bb_removed);
+                        if (val) {
+                            for (IR::BasicBlock* pred : predecessors) {
+                                phi->add_incoming(val, pred);
+                            }
+                        }
+                    }
+                }
+            }
+            for (IR::BasicBlock* bb_to_remove : to_remove) {
+                func.rm_basic_block(bb_to_remove);
+            }
+            func.refresh_predecessors();
+        }
     }
+    return function_changed;
 }
 
 
