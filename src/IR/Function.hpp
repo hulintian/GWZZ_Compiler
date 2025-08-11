@@ -41,17 +41,21 @@ public:
     void dump(std::ostream &out) ;
 
     // User Code Start. Sasara
+
+    void dump_cfg(const std::string& title = "CFG Dump") const;
+
     void rm_bb(BasicBlock* bb){
+        if (!bb) return;
         this->_bbs.remove(bb);
-        delete bb;                      //
+        idx2bb.erase(bb->get_bb_idx());
+        delete bb;                      
     }
 
     // TODO 在更新CFG的时候把上面三个表也更新了
     void refresh_predecessors();
     void build_predecessors() const;
     const std::vector<BasicBlock*>& get_predecessors(const BasicBlock* bb) const;
-    void rm_predecessor(BasicBlock* bb, BasicBlock* pred_to_remove);
-    void add_predecessor(BasicBlock* bb, BasicBlock* pred_to_add);
+
 private:
     mutable std::map<BasicBlock*, std::vector<BasicBlock*>> _predecessor_map;       
     mutable bool _predecessors_built = false;                                       
