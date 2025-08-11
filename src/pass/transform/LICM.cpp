@@ -20,7 +20,7 @@ void LICMPass::refresh_analyses() {
     _dom_tree = &_pm->get_analysis_manager().get_function_result<DominatorTreePass>(*_F);
     _loop_info = &_pm->get_analysis_manager().get_function_result<LoopInfoPass>(*_F);
     _AA = &_pm->get_analysis_manager().get_module_result<AliasAnalysisPass>(*_F->get_parent());
-    _F->get_cfg()->refresh_predecessors();
+    _F->refresh_predecessors();
 }
 
 bool LICMPass::run(IR::Function& function,PassManager& pm){
@@ -186,7 +186,7 @@ IR::BasicBlock* LICMPass::get_or_create_preheader(Loop* loop) {
     _builder->set_cur_module(func->get_parent());
     _builder->set_cur_func(func);
     auto new_bb = _builder->create_bb();//就默认命名了
-    _F->get_cfg()->refresh_predecessors();
+    _F->refresh_predecessors();
     _builder->set_cur_bb(new_bb);
     _builder->create_br(header);
     for (auto& inst : header->get_intrs()){
