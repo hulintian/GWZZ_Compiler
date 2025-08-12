@@ -1,6 +1,6 @@
-#include "transform/DCE.hpp"
+#include "DCE.hpp"
 #include "PassManager.hpp"
-#include "analysis/UseDefAnalysis.hpp"
+#include "UseDefAnalysis.hpp"
 #include "Function.hpp"
 #include "BasicBlock.hpp"
 #include "Instructions.hpp"

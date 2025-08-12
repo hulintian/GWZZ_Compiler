@@ -93,6 +93,17 @@ void BasicBlock::add_instruction_at_front(Instruction* inst) {
     _instrs.insert(_instrs.begin(), inst);
 }
 
+void BasicBlock::add_curinst_before_inst(Instruction* curinst,Instruction* inst){
+    auto it = std::find(_instrs.begin(), _instrs.end(), inst);
+    assert(it != _instrs.end() && "Instruction to insert before was not found in this BasicBlock!");
+    if (it == _instrs.end()) {
+        std::cerr<<"[NOT FIND INST IN BB]\n";
+        it = _instrs.begin();
+    }
+    curinst->set_parent(this);
+    _instrs.insert(it, curinst);
+}
+
 //User Code End. Sasara
 
 }

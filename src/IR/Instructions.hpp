@@ -457,7 +457,7 @@ private:
 class PhiInst : public Instruction {
 public:
     
-    PhiInst(Type* ty, unsigned num_reserved_operands, const std::string& name, BasicBlock* bb, IR::AllocaInst* alloca_src)
+    PhiInst(Type* ty, const std::string& name, BasicBlock* bb, IR::AllocaInst* alloca_src)
     : Instruction(ty, name, bb), _alloca_src(alloca_src) {
     
     }

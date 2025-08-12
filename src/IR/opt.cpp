@@ -12,7 +12,7 @@
 #include "Mem2Reg.hpp"
 #include "DCE.hpp"
 #include "PHISimplify.hpp"
-
+#include "Reg2Mem.hpp"
 #include <iostream>
 
 namespace opt
@@ -25,8 +25,8 @@ namespace opt
         pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::DomTreePrinterPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::DomFrontierPrinterPass>());
-        //pm.add_function_transform_pass(std::make_unique<pass::Mem2RegPass>());
-        //pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
+        pm.add_function_transform_pass(std::make_unique<pass::Mem2RegPass>());
+        pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::DCEPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::PHISimplifyPass>());
@@ -34,6 +34,7 @@ namespace opt
         //pm.add_function_transform_pass(std::make_unique<pass::LoopInfoPrinterPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::PredPrinterPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::LICMPass>());
+        pm.add_function_transform_pass(std::make_unique<pass::Reg2MemPass>());
         std::cout << "====================Running optimization passes...====================\n";
         pm.run(*m);
         /* User Code End: Sasara */
