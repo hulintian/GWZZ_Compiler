@@ -116,8 +116,8 @@ int main(int argc, char** argv) {
     m->dump(cout);
 #endif
 
-    //backend::ASMGen* asmg = new backend::ASMGen();
-    //backend::MachineModule *mm = asmg->translate(m);
+    backend::ASMGen* asmg = new backend::ASMGen();
+    backend::MachineModule *mm = asmg->translate(m);
 #ifdef SHOW_ASM
     cout << "====================The asm of " << opts.input_file << " =======================\n";
     mm->dump_asm(cout);
