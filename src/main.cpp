@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
     cout << "====================The asm of " << opts.input_file << " =======================\n";
     mm->dump_asm(cout);
 #endif
-    //mm->dump_asm(opf);
+    mm->dump_asm(opf);
     opf.close();
 
     return 0;
