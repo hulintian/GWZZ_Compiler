@@ -23,6 +23,9 @@ void collect_first_store_values(
 {
     for (auto* alloca : promotables) {
         const auto& users = use_def.get_users(alloca);
+        if(function.is_param(alloca)) {
+            std::cout << alloca->get_name() << " is a function parameter \n";
+        }
         // 遍历该 alloca 的所有 store
         for (auto* user : users) {
             auto* store = dynamic_cast<IR::StoreInst*>(user);

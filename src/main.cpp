@@ -100,6 +100,7 @@ int main(int argc, char** argv) {
     std::ofstream f_out;
     f_out.open(opts.input_file + ".ir");
     m->dump(f_out);
+    f_out.close();
     // m->dump(cout);
 #endif
 
@@ -124,6 +125,7 @@ int main(int argc, char** argv) {
     std::ofstream f_out2;
     f_out2.open(opts.input_file + ".opt.ir");
     m->dump(f_out2);
+    f_out2.close();
     // m->dump(cout);
 #endif
 

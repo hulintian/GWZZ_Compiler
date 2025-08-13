@@ -37,6 +37,17 @@ void CFG::dump(std::ostream &out) {
         out << "\n";
     }
 } 
+
+bool Function::is_param(Instruction *instr) {
+    if(auto alloc = dynamic_cast<AllocaInst*>(instr)) {
+        auto it = std::find(this->allocas.begin(), this->allocas.end(), alloc);
+        if(it != this->allocas.end() && it - this->allocas.begin() < this->_arg_names.size() ) {
+            return true;
+        }
+    }
+    return false;
+}
+
 // User Code Start. Sasara
 void CFG::_build_predecessors()const{
     if (_predecessors_built) return;
