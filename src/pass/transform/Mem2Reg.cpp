@@ -39,11 +39,14 @@ void collect_first_store_values(
         }
     }
 }
-static void cleanup_instructions(std::vector<IR::AllocaInst*> promotable_allocas,std::set<IR::Instruction*> to_remove){
+static void cleanup_instructions(std::vector<IR::AllocaInst*>& promotable_allocas,std::set<IR::Instruction*>& to_remove,std::set<IR::AllocaInst*>& param_allocas){
     for (auto* instr : to_remove) {
         instr->get_parent()->remove_instr(instr);
     }
     for (auto* alloca : promotable_allocas){
+        if(param_allocas.count(alloca)){
+            continue;
+        }
         alloca->get_parent()->remove_instr(alloca);
     }
 }
@@ -88,6 +91,7 @@ bool Mem2RegPass::run(IR::Function& function, PassManager& pm) {
     auto& use_def = pm.get_analysis_manager().get_function_result<UseDefAnalysisPass>(function);
     auto& builder = pm.get_ir_builder();
     std::vector<IR::AllocaInst*> promotable_allocas;
+    std::set<IR::AllocaInst*> param_allocas;
     std::set<IR::Instruction*> to_remove;
     collect_promotable_allocas(function, promotable_allocas,use_def);
      
@@ -119,10 +123,13 @@ bool Mem2RegPass::run(IR::Function& function, PassManager& pm) {
     }
     value_stack.clear(); // 确保值栈是空的
     _initial_param_loads.clear();
+    param_allocas.clear();
+
     for (auto* alloca : promotable_allocas) {
         value_stack[alloca].push(IR::UndefValue::get(alloca->get_alloca_ty()));
         if(function.is_param(alloca)) {
             std::cout << alloca->get_name() << " is a function parameter \n";
+            param_allocas.insert(alloca);
             builder.set_cur_module(function.get_parent());
             builder.set_cur_func(&function);
             builder.set_cur_bb(function.get_entry_bb());
@@ -146,7 +153,7 @@ bool Mem2RegPass::run(IR::Function& function, PassManager& pm) {
 
     rename_variables(function.get_entry_bb(), first_store_map, dom_tree_children,to_remove,use_def);
 
-    cleanup_instructions(promotable_allocas,to_remove);
+    cleanup_instructions(promotable_allocas,to_remove,param_allocas);
     return true;
 }  
 

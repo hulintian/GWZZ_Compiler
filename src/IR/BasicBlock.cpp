@@ -76,6 +76,20 @@ void BasicBlock::delete_instr(Instruction* inst){
     delete inst;
 }
 
+void BasicBlock::add_instr_after_allocas(Instruction* inst){
+    auto insert_pos = _instrs.begin();
+    for (long long i = _instrs.size() - 1; i >= 0; --i) {
+        if (dynamic_cast<IR::AllocaInst*>(_instrs[i])) {
+            insert_pos = _instrs.begin() + i + 1;
+            break; 
+        }
+    }
+    // 更新信息
+    inst->set_parent(this);
+    _instrs.insert(insert_pos, inst);
+}
+
+
 void BasicBlock::add_instr_before_terminator(Instruction* inst) {
     auto insert_pos = _instrs.end();
     if (!_instrs.empty()) {

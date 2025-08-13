@@ -34,6 +34,8 @@ public:
     // void add_predecessor(BasicBlock* bb);
     Instruction* remove_instr(Instruction* inst);
     void delete_instr(Instruction* inst);
+
+    void add_instr_after_allocas(Instruction* inst);
     // 在基本块的终结指令之前，插入指令。
     void add_instr_before_terminator(Instruction* inst);
     void add_instruction_at_front(Instruction* instr);

@@ -59,7 +59,7 @@ void Reg2MemPass::reset_alloca_in_entry(){
         //已经知道是entrybb,但为了标准化
         auto parent_bb = alloca_inst->get_parent();
         auto move_alloca_inst = parent_bb->remove_instr(alloca_inst);
-        parent_bb->add_instruction_at_front(move_alloca_inst);
+        parent_bb->add_instr_after_allocas(move_alloca_inst);
         _phi_to_alloca_map[phi] = static_cast<IR::AllocaInst*>(move_alloca_inst);
     }
     refresh_analyses();
@@ -109,7 +109,7 @@ void Reg2MemPass::insert_stores_at_src(){
             auto storeinst = _builder->create_store(phi->get_type(),phi->get_name()+".store",alloca,val);
             auto parentbb = storeinst->get_parent();
             auto move_store = parentbb->remove_instr(storeinst);
-            parentbb->add_instr_before_terminator(move_store);
+            parentbb->add_instr_after_allocas(move_store);
         }
     }
     refresh_analyses();
