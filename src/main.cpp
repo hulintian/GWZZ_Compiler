@@ -95,6 +95,13 @@ int main(int argc, char** argv) {
     frontend::CodeGen* cg = new frontend::CodeGen();
     auto m = cg->gen(cu);
 
+#ifdef SHOW_IR
+    cout << "====================The ir of " << opts.input_file << " =======================\n";
+    std::ofstream f_out;
+    f_out.open(opts.input_file + ".ir");
+    m->dump(f_out);
+    // m->dump(cout);
+#endif
 
 #ifdef O1
     // TODO 这些放到codegen里面，或则在ir里独立出来一个opt的文件
@@ -113,7 +120,11 @@ int main(int argc, char** argv) {
 
 #ifdef SHOW_IR
     cout << "====================The ir of " << opts.input_file << " =======================\n";
-    m->dump(cout);
+
+    std::ofstream f_out2;
+    f_out2.open(opts.input_file + ".opt.ir");
+    m->dump(f_out2);
+    // m->dump(cout);
 #endif
 
     backend::ASMGen* asmg = new backend::ASMGen();

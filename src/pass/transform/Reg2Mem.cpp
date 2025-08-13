@@ -85,6 +85,7 @@ void Reg2MemPass::replace_phi_uses(){
                     if (user_phi->get_incoming_value(i) == phi){
                         auto pred_bb = user_phi->get_incoming_block(i);
                         
+                        _builder->set_cur_bb(pred_bb);
                         auto loadinst = _builder->create_load(phi->get_type(),alloca);
                         auto move_load = static_cast<IR::LoadInst*>(pred_bb->remove_instr(loadinst));
                         load_temp[user_phi].push_back({move_load, pred_bb});
@@ -113,6 +114,7 @@ void Reg2MemPass::insert_stores_at_src(){
     }
     refresh_analyses();
 }
+
 void Reg2MemPass::insert_loads(){
     if(load_temp.empty()) return;
     for(auto& [phi,load_tasks] : load_temp){
@@ -126,6 +128,7 @@ void Reg2MemPass::insert_loads(){
     }
     refresh_analyses();
 }
+
 void Reg2MemPass::erase_phi_nodes(){
     for (IR::PhiInst* phi : _phi_to_process){
         phi->get_parent()->remove_instr(phi);
