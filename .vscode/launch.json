@@ -9,7 +9,7 @@
             "program": "${workspaceFolder}/bin/compiler",
             "args": [
                 "-O1",
-                "test/cfg.sy"
+                "test/01_mm1.sy"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

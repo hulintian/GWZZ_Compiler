@@ -28,7 +28,7 @@ public:
 private:
     std::map<IR::AllocaInst*, std::map<IR::BasicBlock*, IR::PhiInst*>,std::less<void*>> _alloca_to_phis_map;
     std::map<IR::AllocaInst*, std::stack<Value*>,std::less<void*>> value_stack;
-
+    std::set<IR::Instruction*> _initial_param_loads;
 
     void collect_promotable_allocas(IR::Function& function, 
                                     std::vector<IR::AllocaInst*>& allocas,

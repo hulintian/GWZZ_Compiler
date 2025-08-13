@@ -126,16 +126,16 @@ int main(int argc, char** argv) {
     f_out2.open(opts.input_file + ".opt.ir");
     m->dump(f_out2);
     f_out2.close();
-    // m->dump(cout);
+    m->dump(cout);
 #endif
 
-    backend::ASMGen* asmg = new backend::ASMGen();
-    backend::MachineModule *mm = asmg->translate(m);
+    //backend::ASMGen* asmg = new backend::ASMGen();
+    //backend::MachineModule *mm = asmg->translate(m);
 #ifdef SHOW_ASM
     cout << "====================The asm of " << opts.input_file << " =======================\n";
-    mm->dump_asm(cout);
+    //mm->dump_asm(cout);
 #endif
-    mm->dump_asm(opf);
+    //mm->dump_asm(opf);
     opf.close();
 
     return 0;

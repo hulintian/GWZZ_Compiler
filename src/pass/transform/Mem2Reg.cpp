@@ -23,9 +23,7 @@ void collect_first_store_values(
 {
     for (auto* alloca : promotables) {
         const auto& users = use_def.get_users(alloca);
-        if(function.is_param(alloca)) {
-            std::cout << alloca->get_name() << " is a function parameter \n";
-        }
+        
         // 遍历该 alloca 的所有 store
         for (auto* user : users) {
             auto* store = dynamic_cast<IR::StoreInst*>(user);
@@ -120,8 +118,20 @@ bool Mem2RegPass::run(IR::Function& function, PassManager& pm) {
         }
     }
     value_stack.clear(); // 确保值栈是空的
+    _initial_param_loads.clear();
     for (auto* alloca : promotable_allocas) {
         value_stack[alloca].push(IR::UndefValue::get(alloca->get_alloca_ty()));
+        if(function.is_param(alloca)) {
+            std::cout << alloca->get_name() << " is a function parameter \n";
+            builder.set_cur_module(function.get_parent());
+            builder.set_cur_func(&function);
+            builder.set_cur_bb(function.get_entry_bb());
+            auto loadinst = builder.create_load(alloca->get_type(),alloca);
+            auto moveload = function.get_entry_bb()->remove_instr(loadinst);
+            function.get_entry_bb()->add_instr_before_terminator(moveload);
+            value_stack[alloca].push(moveload);
+            _initial_param_loads.insert(moveload);
+        }
     }
 
 
@@ -225,7 +235,10 @@ void Mem2RegPass::rename_variables(IR::BasicBlock* bb,
     auto& instrs = bb->get_intrs();
     for (auto it = instrs.begin(); it != instrs.end();++it){
         auto* instr = *it;
-
+        //跳过参数的load
+        if (_initial_param_loads.count(instr)) {
+            continue;
+        }
         if (auto* store = dynamic_cast<IR::StoreInst*>(instr)) {
             if (auto* alloca = dynamic_cast<IR::AllocaInst*>(store->get_ptr_operand())){
 
