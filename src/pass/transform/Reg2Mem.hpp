@@ -28,6 +28,8 @@ private:
     std::map<IR::PhiInst*, IR::AllocaInst*> _phi_to_alloca_map;
     //缓存：延迟插入
     std::map<IR::PhiInst*, std::vector<std::pair<IR::LoadInst*, IR::BasicBlock*>>> load_temp;
+
+    std::map<std::pair<IR::PhiInst*, IR::BasicBlock*>, IR::LoadInst*> incoming_load;
     
     void refresh_analyses();
     void init_phi_set();
@@ -36,5 +38,6 @@ private:
     void insert_stores_at_src();
     void insert_loads();
     void erase_phi_nodes();
+    IR::LoadInst* get_or_make_incoming_load(IR::PhiInst* val_phi, IR::BasicBlock* pred_bb);
 };
 } // namespace pass

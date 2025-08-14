@@ -56,7 +56,7 @@ bool CFGSimplifyPass::run(IR::Function& func,PassManager& pm){
                         phi->remove_incoming_by_block(bb_removed);
                         if (val) {
                             for (IR::BasicBlock* pred : predecessors) {
-                                phi->add_incoming(val, pred);
+                                phi->set_incoming(val, pred);
                             }
                         }
                     }

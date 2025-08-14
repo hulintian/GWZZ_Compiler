@@ -57,14 +57,14 @@ const std::vector<BasicBlock*>& BasicBlock::get_predecessors() const{
 //     _parent->get_cfg()->add_predecessor(this,bb);
 // }
 Instruction* BasicBlock::remove_instr(Instruction* inst) {
-    std::cout << "  [ERASE] Find result for " << inst->to_str() << ": ";
+    //std::cout << "  [ERASE] Find result for " << inst->to_str() << ": ";
     auto it = std::find(_instrs.begin(), _instrs.end(), inst);
     if (it != _instrs.end()) {
-        std::cout << "FOUND!" << std::endl;
+        //std::cout << "FOUND!" << std::endl;
         _instrs.erase(it);
         return inst;
     }else{
-        std::cout << "NOT FOUND!" << std::endl;
+        //std::cout << "NOT FOUND!" << std::endl;
     }
     inst->set_parent(nullptr);
     return nullptr;

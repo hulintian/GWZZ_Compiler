@@ -10,47 +10,24 @@
 #include "IRBuilder.hpp"
 #include "UndefValue.hpp"
 #include <deque>
-#include <set>
+
 namespace pass{
-
-
-
-void collect_first_store_values(
-    IR::Function& function,
-    const std::set<IR::AllocaInst*>& promotables,
-    const UseDefResult& use_def,
-    std::map<IR::AllocaInst*, std::map<IR::BasicBlock*, Value*>,std::less<void*>>& first_store_map)
-{
-    for (auto* alloca : promotables) {
-        const auto& users = use_def.get_users(alloca);
-        
-        // 遍历该 alloca 的所有 store
-        for (auto* user : users) {
-            auto* store = dynamic_cast<IR::StoreInst*>(user);
-            if (!store) continue;
-            // 仅处理 store 到 alloca 本身的情况
-            if (store->get_ptr_operand() != alloca) continue;
-
-            IR::BasicBlock* bb = store->get_parent();
-
-            if (!first_store_map[alloca].count(bb)) {
-                first_store_map[alloca][bb] = store->get_value_operand();
-            }
+/**
+ * @brief 构建支配树的树形结构（后续用于DFS）
+*/
+static std::map<IR::BasicBlock*, std::vector<IR::BasicBlock*>> build_dom_tree(IR::Function& F,DominatorTreeResult &tree){
+    std::map<IR::BasicBlock*, std::vector<IR::BasicBlock*>> dom_tree;
+    for (auto& bb : F.get_basic_blocks()) {
+        IR::BasicBlock* idom = tree.get_idom(bb);
+        if (idom != nullptr) {
+            dom_tree[idom].push_back(bb);
         }
     }
+    return dom_tree;
 }
-static void cleanup_instructions(std::vector<IR::AllocaInst*>& promotable_allocas,std::set<IR::Instruction*>& to_remove,std::set<IR::AllocaInst*>& param_allocas){
-    for (auto* instr : to_remove) {
-        instr->get_parent()->remove_instr(instr);
-    }
-    for (auto* alloca : promotable_allocas){
-        if(param_allocas.count(alloca)){
-            continue;
-        }
-        alloca->get_parent()->remove_instr(alloca);
-    }
-}
-
+/**
+ * @brief 检查Alloca是否具备提升合法性
+*/
 static bool is_alloca_promotable(IR::AllocaInst* alloca_inst, const UseDefResult& use_def_result) {
     if (alloca_inst->get_alloca_ty()->is_array()) {
         return false;
@@ -59,7 +36,6 @@ static bool is_alloca_promotable(IR::AllocaInst* alloca_inst, const UseDefResult
     if (users.empty()) {
         return false;
     }
-    //合法jiancha
     for (IR::User* user : users) {
         if (dynamic_cast<const IR::LoadInst*>(user)) {
             continue; 
@@ -69,9 +45,6 @@ static bool is_alloca_promotable(IR::AllocaInst* alloca_inst, const UseDefResult
                 continue;
             }
         }
-        std::cout << "DEBUG: Alloca " << alloca_inst->get_name() 
-                  << " is not promotable due to user: " 
-                  << static_cast<IR::Instruction*>(user)->to_str() << std::endl;
         return false;
     }
     for (const IR::User* user : users) {
@@ -81,262 +54,221 @@ static bool is_alloca_promotable(IR::AllocaInst* alloca_inst, const UseDefResult
     }
     return false;
 }
+/**
+ * @brief （操作）插入phi
+*/
+static IR::PhiInst* insert_phi(IR::IRBuilder* builder,IR::BasicBlock* BB,IR::AllocaInst* alloca){
+    builder->set_cur_module(BB->get_parent()->get_parent());
+    builder->set_cur_func(BB->get_parent());
+    builder->set_cur_bb(BB);
+    Type* phi_type = alloca->get_alloca_ty();
+    auto* phi_instruction = builder->create_phi(phi_type,alloca);
+    auto* phi_node = static_cast<IR::PhiInst*>(phi_instruction);
+    return phi_node;
+}
 
-bool Mem2RegPass::run(IR::Function& function, PassManager& pm) { 
-    if (function.get_entry_bb() == nullptr) {
-        return false;
-    }
-    auto& dom_tree = pm.get_analysis_manager().get_function_result<DominatorTreePass>(function);
-    auto& dom_frontier = pm.get_analysis_manager().get_function_result<DominanceFrontierPass>(function);
-    auto& use_def = pm.get_analysis_manager().get_function_result<UseDefAnalysisPass>(function);
-    auto& builder = pm.get_ir_builder();
-    std::vector<IR::AllocaInst*> promotable_allocas;
-    std::set<IR::AllocaInst*> param_allocas;
-    std::set<IR::Instruction*> to_remove;
-    collect_promotable_allocas(function, promotable_allocas,use_def);
-     
-    std::set<IR::AllocaInst*> promotable_set(promotable_allocas.begin(), promotable_allocas.end());
-    if (promotable_allocas.empty()) {
-        return false;
-    }
-    _alloca_to_phis_map.clear();
-    insert_phi_nodes(function, promotable_allocas, dom_frontier,use_def,builder);
+bool Mem2RegPass::run(IR::Function& F,PassManager& pm){
+    if (F.get_entry_bb() == nullptr) return false;
+    _F = &F;
+    _pm = &pm;
 
-    std::map<IR::AllocaInst*, std::map<IR::BasicBlock*, Value*>,std::less<void*>> first_store_map;
-    collect_first_store_values(function, promotable_set, use_def, first_store_map);
+    init();
 
-    // Debug 输出验证
-    for (auto& [alloca, bbmap] : first_store_map) {
-        std::cout << "Alloca " << alloca->get_name() << ":\n";
-        for (auto& [bb, val] : bbmap) {
-            std::cout << "  Initial store in BB " << bb->get_name()
-                    << " -> " << val->get_name() << "\n";
-        }
-    }
-    // 构建树形 dom_tree
-    std::map<IR::BasicBlock*, std::vector<IR::BasicBlock*>> dom_tree_children;
-    for (auto& bb : function.get_basic_blocks()) {
-        IR::BasicBlock* idom = dom_tree.get_idom(bb);
-        if (idom != nullptr) {
-            dom_tree_children[idom].push_back(bb);
-        }
-    }
-    value_stack.clear(); // 确保值栈是空的
-    _initial_param_loads.clear();
-    param_allocas.clear();
+    collect_promotable_allocas();
 
-    for (auto* alloca : promotable_allocas) {
-        value_stack[alloca].push(IR::UndefValue::get(alloca->get_alloca_ty()));
-        if(function.is_param(alloca)) {
-            std::cout << alloca->get_name() << " is a function parameter \n";
-            param_allocas.insert(alloca);
-            builder.set_cur_module(function.get_parent());
-            builder.set_cur_func(&function);
-            builder.set_cur_bb(function.get_entry_bb());
-            auto loadinst = builder.create_load(alloca->get_type(),alloca);
-            auto moveload = function.get_entry_bb()->remove_instr(loadinst);
-            function.get_entry_bb()->add_instr_before_terminator(moveload);
-            value_stack[alloca].push(moveload);
-            _initial_param_loads.insert(moveload);
-        }
+    insert_phi_nodes();
+
+    for (auto* alloca : _promotable_allocas){
+        _value_stack[alloca].push(IR::UndefValue::get(alloca->get_alloca_ty()));
     }
 
-
-    // 栈初始化
-    for (auto* alloca : promotable_allocas) {
-        auto it = first_store_map[alloca].find(function.get_entry_bb());
-        if (it != first_store_map[alloca].end()) {
-            value_stack[alloca].push(it->second);
-        }
+    if (F.get_entry_bb()) {
+        rename_variables(F.get_entry_bb());
     }
 
+    cleanup_instructions();
 
-    rename_variables(function.get_entry_bb(), first_store_map, dom_tree_children,to_remove,use_def);
-
-    cleanup_instructions(promotable_allocas,to_remove,param_allocas);
     return true;
-}  
+}
+/**
+ * @brief 初始化
+*/
+void Mem2RegPass::init(){
+    _builder = &_pm->get_ir_builder();
+    auto& dom_tree = _pm->get_analysis_manager().get_function_result<DominatorTreePass>(*_F);
+    _dom_tree = build_dom_tree(*_F,dom_tree);
+    _use_def = &_pm->get_analysis_manager().get_function_result<UseDefAnalysisPass>(*_F);
+    _dom_frontier = &_pm->get_analysis_manager().get_function_result<DominanceFrontierPass>(*_F);
 
-void Mem2RegPass::collect_promotable_allocas (IR::Function& function, 
-                                              std::vector<IR::AllocaInst*>& allocas,
-                                              const UseDefResult& use_def_result){
-    for(const auto& bb:function.get_basic_blocks()){
-        for(const auto &inst:bb->get_intrs()){
-            if(auto* alloca_inst = dynamic_cast<IR::AllocaInst*>(inst)){
-                if (is_alloca_promotable(alloca_inst, use_def_result)) {
-                    allocas.push_back(alloca_inst);
+    _promotable_allocas.clear();
+    _to_remove.clear();
+    _value_stack.clear();
+    _alloca_to_phis_map.clear();
+    _phi_to_alloca_map.clear();
+
+}
+/**
+ * @brief 刷新_use_def
+*/
+void Mem2RegPass::refresh_analyses(){
+    _pm->get_analysis_manager().invalidate_function_result<UseDefAnalysisPass>(*_F);
+    _use_def = &_pm->get_analysis_manager().get_function_result<UseDefAnalysisPass>(*_F);
+}
+
+/**
+ * @brief 寻找可提升Alloca
+*/
+void Mem2RegPass::collect_promotable_allocas(){
+    for(const auto &BB : _F->get_basic_blocks()){
+        for(const auto &I : BB->get_intrs()){
+            if(auto* alloca_inst = dynamic_cast<IR::AllocaInst*>(I)){
+                if (is_alloca_promotable(alloca_inst, *_use_def) && !_F->is_param(alloca_inst)) {
+                    _promotable_allocas.insert(alloca_inst);
                 }
             }
         }
     }
 }
+/**
+ * @brief 寻找正确位置插入phi
+*/
+void Mem2RegPass::insert_phi_nodes(){
 
-void Mem2RegPass::insert_phi_nodes(IR::Function& function, 
-                                 const std::vector<IR::AllocaInst*>& allocas,
-                                 const DominanceFrontierResult& dom_frontier_result,
-                                 const UseDefResult& use_def_result,
-                                 IR::IRBuilder& builder) {
-                   
-    for(auto* alloca_inst : allocas){
+    for(auto* alloca_inst : _promotable_allocas){
+
         std::set<IR::BasicBlock*> defining_blocks;
-        const auto& users = use_def_result.get_users(alloca_inst);
+        const auto& users = _use_def->get_users(alloca_inst);
+
         for (auto* user : users) {
             if (auto store = dynamic_cast<IR::StoreInst*>(user)) {
                 defining_blocks.insert(store->get_parent());
             }
         }
+
         std::deque<IR::BasicBlock*> worklist(defining_blocks.begin(), defining_blocks.end());
         std::set<IR::BasicBlock*> phi_placed_blocks;
 
-        while (!worklist.empty()) {
-            IR::BasicBlock* current = worklist.front();
+        while(!worklist.empty()){
+            auto current = worklist.front();
             worklist.pop_front();
 
-            const auto& df_set = dom_frontier_result.get_frontier(current);
-            
-            for (auto* df_block : df_set) {
-                if (phi_placed_blocks.find(df_block) == phi_placed_blocks.end()) {
-                    builder.set_cur_module(function.get_parent());
-                    builder.set_cur_func(&function);
-                    builder.set_cur_bb(df_block);
-                    Type* phi_type = alloca_inst->get_alloca_ty();
-                    auto* phi_instruction = builder.create_phi(phi_type,alloca_inst);
-                    auto* phi_node = static_cast<IR::PhiInst*>(phi_instruction);
-                    _alloca_to_phis_map[alloca_inst][df_block] = phi_node;
+            const auto& df_set = _dom_frontier->get_frontier(current);
+            for(auto& df_block : df_set){
+                if (phi_placed_blocks.find(df_block) == phi_placed_blocks.end()){
+                    auto phi_inst = insert_phi(_builder,df_block,alloca_inst);
+                    _alloca_to_phis_map[alloca_inst][df_block] = phi_inst;
+                    _phi_to_alloca_map[phi_inst] = alloca_inst;
                     phi_placed_blocks.insert(df_block);
                     worklist.push_back(df_block);
                 }
             }
         }
-    }                                
+    }
 }
+/**
+ * @brief 回填phi & 重命名
+*/
+void Mem2RegPass::rename_variables(IR::BasicBlock* BB){
 
+    std::cout << "--> ENTER rename_variables for BB [" << BB->get_name() << "]\n";
 
-void Mem2RegPass::rename_variables(IR::BasicBlock* bb,
-                      const std::map<IR::AllocaInst*, std::map<IR::BasicBlock*,Value*>,std::less<void*>>& first_store_map,
-                      const std::map<IR::BasicBlock*, std::vector<IR::BasicBlock*>>& dom_tree_children,
-                      std::set<IR::Instruction*>& to_remove,
-                      const UseDefResult& use_def) {
-    //std::cout << "Renaming BB " << bb->get_name() << std::endl;
-    // 先处理phi
     std::map<IR::AllocaInst*, int> pushed_counts;
-    std::vector<IR::AllocaInst*> pushed_in_this_bb;
-    for (auto& [alloca, bb2phi] : _alloca_to_phis_map) {
-        auto it_phi = bb2phi.find(bb);
-        if (it_phi != bb2phi.end()) {
-            IR::PhiInst* phi = it_phi->second;
-            // 只处理被提升的变量
-            if (value_stack.count(alloca)) {
-                value_stack[alloca].push(phi);
+    for (auto* instr : BB->get_intrs()){
+
+        if (auto* phi = dynamic_cast<IR::PhiInst*>(instr)){
+            auto* alloca = find_alloca_for_phi(phi);
+            if (alloca != nullptr) {
+                _value_stack[alloca].push(phi);
                 pushed_counts[alloca]++;
-                pushed_in_this_bb.push_back(alloca);
 
-                std::cout << "Push PHI " << alloca->get_name()
-                          << " := " << phi->get_name()
-                          << " at entry of BB " << bb->get_name() << std::endl;
+                std::cout << "    PUSHED PHI " << phi->get_name() 
+                      << " for $" << alloca->get_name() << "\n";
             }
         }
-    }
-
-    // 处理其他指令
-    auto& instrs = bb->get_intrs();
-    for (auto it = instrs.begin(); it != instrs.end();++it){
-        auto* instr = *it;
-        //跳过参数的load
-        if (_initial_param_loads.count(instr)) {
-            continue;
-        }
-        if (auto* store = dynamic_cast<IR::StoreInst*>(instr)) {
+        else if (auto* store = dynamic_cast<IR::StoreInst*>(instr)){
             if (auto* alloca = dynamic_cast<IR::AllocaInst*>(store->get_ptr_operand())){
-
-                if (value_stack.count(alloca)) {
-                    Value* val = store->get_value_operand();
-                    value_stack[alloca].push(val);
+                if (_promotable_allocas.count(alloca)){
+                    Value* stored_val = store->get_value_operand();
+                    _value_stack[alloca].push(stored_val);
                     pushed_counts[alloca]++;
-
-                    std::cout << "Push " << alloca->get_name()
-                      << " := " << val->get_name()
-                      << " in BB " << bb->get_name() << std::endl;
-                    //延迟删除
-                    to_remove.insert(instr);
+                    std::cout << "    PUSHED Store value " << stored_val->get_name() 
+                      << " for $" << alloca->get_name() << "\n";
+                    _to_remove.insert(store);
                 }
             }
-            continue;
-        }
-        if (auto* load = dynamic_cast<IR::LoadInst*>(instr)) {
-            if (auto* alloca = dynamic_cast<IR::AllocaInst*>(load->get_src())) {
-                if (value_stack.count(alloca) && !value_stack[alloca].empty()) {
+        }else if (auto* load = dynamic_cast<IR::LoadInst*>(instr)){
+            if (auto* alloca = dynamic_cast<IR::AllocaInst*>(load->get_src())){
+                if (_promotable_allocas.count(alloca)){
 
-                    if (value_stack[alloca].empty()) {
-                        std::cerr << "Error: use of uninitialized value for $" << alloca->get_name() << "\n";
-                        exit(1);
-                    }
+                    Value* current_version = _value_stack[alloca].top();
 
-                    Value* replacement = value_stack[alloca].top();
-                    std::cout << "Replace Load " << alloca->get_name()
-                                << " → " << replacement->get_name()
-                                << " in BB " << bb->get_name() << std::endl;
-                    for (auto* user : use_def.get_users(load)) {
-                        user->replace_operand(load, replacement);
+                    std::cout << "    REPLACING Load " << load->get_name() 
+                      << " with " << current_version->get_name() << "\n";
+                    auto users_copy = _use_def->get_users(load);
+                    for (auto* user : users_copy) {
+                        user->replace_operand(load, current_version);
                     }
-                    to_remove.insert(instr);
+                    refresh_analyses();//可能错误出在这一步
+                    _to_remove.insert(load);
                 }
             }
-            continue;
-        }    
+        }
     }
-    // 填充 phi
-    for (IR::BasicBlock* succ : bb->get_successors()) {
-        // 找出栈中最 新 的val
-        for (auto& [alloca, bb2phi] : _alloca_to_phis_map) {
-            auto it_phi_in_succ = bb2phi.find(succ);
-            if (it_phi_in_succ == bb2phi.end()) continue;
+    for (IR::BasicBlock* S : BB->get_successors()){
+        for (auto* instr : S->get_intrs()){
+            if (auto* phi = dynamic_cast<IR::PhiInst*>(instr)) {
+                auto* alloca = find_alloca_for_phi(phi);
+                if (alloca != nullptr && _promotable_allocas.count(alloca)) {
+                    Value* value_from_B = _value_stack[alloca].top();
+                    phi->add_incoming(value_from_B, BB);
 
-            if (!value_stack.count(alloca) || value_stack[alloca].empty()) {
-                std::cerr << "Error: missing current version for "
-                          << alloca->get_name()
-                          << " when wiring phi in succ BB "
-                          << succ->get_name() << " from pred "
-                          << bb->get_name() << "\n";
-                std::exit(1);
+                    std::cout << "    WIRING PHI " << phi->get_name() << " in Succ [" << S->get_name() << "]"
+                          << " with value " << value_from_B->get_name() 
+                          << " from Pred [" << BB->get_name() << "]\n";
+                }
+            }else{
+                break;
             }
-            Value* cur_version;
-            if (value_stack.count(alloca) && !value_stack[alloca].empty()) {
-                cur_version = value_stack[alloca].top();
-            } else {
-                // 应该永远不被执行
-                cur_version = IR::UndefValue::get(alloca->get_alloca_ty());
-            }
-            IR::PhiInst* phi_in_succ = it_phi_in_succ->second;
-            // 正常情况都是覆盖
-            phi_in_succ->add_incoming(cur_version, bb);
-
-            std::cout << "Phi wiring: succ BB " << succ->get_name()
-                      << " phi(" << phi_in_succ->get_name() << ") for $"
-                      << alloca->get_name()
-                      << " gets value " << cur_version->get_name()
-                      << " from pred " << bb->get_name() << std::endl;
         }
     }
 
-    // 递归
-    auto it = dom_tree_children.find(bb);
-    if (it != dom_tree_children.end()) {
-        for (auto* child : it->second) {
-            rename_variables(child, first_store_map, dom_tree_children,to_remove,use_def);
+    refresh_analyses();
+
+    if (_dom_tree.count(BB)) {
+        for (IR::BasicBlock* child : _dom_tree.at(BB)) {
+            rename_variables(child);
         }
     }
-
-    // 回溯
     for (auto const& [alloca, count] : pushed_counts) {
-        auto& stack = value_stack[alloca];
+
+        std::cout << "    POP-ing " << count << " value(s) for $" << alloca->get_name() << "\n";
         for (int i = 0; i < count; ++i) {
-            if (!stack.empty()) {
-                stack.pop();
-            }
+            _value_stack[alloca].pop();
         }
+    }
+    std::cout << "<-- EXIT rename_variables for BB [" << BB->get_name() << "]\n";
+
+}
+/**
+ * @brief 辅助函数
+*/
+IR::AllocaInst* Mem2RegPass::find_alloca_for_phi(IR::PhiInst* phi_inst){
+    auto it = _phi_to_alloca_map.find(phi_inst);
+    if (it != _phi_to_alloca_map.end()) {
+        return it->second;
+    }
+    return nullptr;
+}
+/**
+ * @brief 清理
+*/
+void Mem2RegPass::cleanup_instructions(){
+    for (auto* instr : _to_remove) {
+        instr->get_parent()->remove_instr(instr);
+    }
+    for (auto* alloca : _promotable_allocas){
+        alloca->get_parent()->remove_instr(alloca);
     }
 }
 
-
-} // namespace pass
+}

@@ -468,14 +468,18 @@ public:
     }
 
     void add_incoming(Value* value, BasicBlock* pred_bb) {
+        this->add_operand(value); 
+        _incoming_blocks.push_back(pred_bb);
+    }
+
+    void set_incoming(Value* value, BasicBlock* pred_bb){
         for (size_t i = 0; i < _incoming_blocks.size(); ++i) {
             if (_incoming_blocks[i] == pred_bb) {
                 this->set_operand(i, value);
                 return;
             }
         }
-        this->add_operand(value); 
-        _incoming_blocks.push_back(pred_bb);
+        std::cerr<<"NOT FOUND BB IN PHI\n";
     }
 
     void remove_incoming_by_block(BasicBlock* pred_bb) {

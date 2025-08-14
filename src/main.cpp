@@ -115,7 +115,7 @@ int main(int argc, char** argv) {
     for (auto& func : m->get_functions()) {
         if (!func->is_lib()) {
             func->get_cfg()->regen_cfg();
-            func->get_cfg()->dump_cfg("Final CFG for Backend");
+            //func->get_cfg()->dump_cfg("Final CFG for Backend");
         }
     }
 
@@ -129,13 +129,13 @@ int main(int argc, char** argv) {
     m->dump(cout);
 #endif
 
-    //backend::ASMGen* asmg = new backend::ASMGen();
-    //backend::MachineModule *mm = asmg->translate(m);
+    backend::ASMGen* asmg = new backend::ASMGen();
+    backend::MachineModule *mm = asmg->translate(m);
 #ifdef SHOW_ASM
     cout << "====================The asm of " << opts.input_file << " =======================\n";
-    //mm->dump_asm(cout);
+    mm->dump_asm(cout);
 #endif
-    //mm->dump_asm(opf);
+    mm->dump_asm(opf);
     opf.close();
 
     return 0;
