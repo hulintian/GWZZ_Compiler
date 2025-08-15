@@ -11,7 +11,7 @@ class PhiInst;
 class LoadInst;
 class BasicBlock;
 }
-
+class Value;
 namespace pass{
 class UseDefResult;
 
@@ -29,15 +29,14 @@ private:
     //缓存：延迟插入
     std::map<IR::PhiInst*, std::vector<std::pair<IR::LoadInst*, IR::BasicBlock*>>> load_temp;
 
-    std::map<std::pair<IR::PhiInst*, IR::BasicBlock*>, IR::LoadInst*> incoming_load;
+    std::map<IR::PhiInst*, bool> _phi_slot_is_semantic;
     
     void refresh_analyses();
-    void init_phi_set();
+    void init_phi_set();  
     void reset_alloca_in_entry();
     void replace_phi_uses();
     void insert_stores_at_src();
     void insert_loads();
     void erase_phi_nodes();
-    IR::LoadInst* get_or_make_incoming_load(IR::PhiInst* val_phi, IR::BasicBlock* pred_bb);
 };
 } // namespace pass
