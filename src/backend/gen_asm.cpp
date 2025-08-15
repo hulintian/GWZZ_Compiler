@@ -18,7 +18,7 @@ namespace backend {
 
 void ASMGen::translate_func(IR::Function* func) {
 
-#ifdef DEBUG
+#ifdef DEBUG1
         std::cerr << info << "Translating function: " << func->get_name() << "\n" ;
 #endif
     auto fname = func->get_func_name();
@@ -66,18 +66,18 @@ void ASMGen::translate_func(IR::Function* func) {
         }
         sum_lss += size;
         // add the bias 
-#ifdef DEBUG
+#ifdef DEBUG1
         std::cerr << info << "Add symbol : " << ai->get_name() << "\n" ;
 #endif
         this->mctx->get_function()->add_symbol(ai->get_name(), -16-sum_lss);
         // std::cout << ai->to_str() << ";  Size : " << size << std::endl;
     }
     if(sum_lss % 8 != 0) {
-#ifdef DEBUG
+#ifdef DEBUG1
         std::cerr << warn << "sum_lss is " << sum_lss; 
 #endif
         sum_lss = ((sum_lss/8)+1)*8;
-#ifdef DEBUG
+#ifdef DEBUG1
         std::cerr << " exist not 8 byte align fixed it to" << sum_lss <<  "\n";
 #endif
     }
@@ -149,7 +149,7 @@ void ASMGen::translate_func(IR::Function* func) {
 // #endif
 //     }
     // this->mctx->get_function()->set_stack_size(sz);      // 多的这个8个是0(sp)
-#ifdef DEBUG
+#ifdef DEBUG1
     std::cerr << info << "The sum is : " << this->mctx->get_function()->get_stack_size() << "\n";
 #endif
     

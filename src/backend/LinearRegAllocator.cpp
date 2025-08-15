@@ -219,7 +219,7 @@ void RegAllocator::alloca_regs() {
             for(auto def_r : instr->get_dsts()) {
                 if(!def_r->is_standard()) {
                     if(temp_reg_live_interval_meta_data* md = this->find_def_meta_data(def_r, instr->time)) {
-#ifdef DEBUG
+#ifdef DEBUG1
                         std::cout << "In instr " << instr->to_asm() << "    \n";
                         std::cout << instr->time <<  "        let " << def_r->name();
 #endif
@@ -229,7 +229,7 @@ void RegAllocator::alloca_regs() {
                             // 整数寄存器
                             if(!md->pass_call_instr) {
                                 if(!stk_temp_regs.empty()) {
-#ifdef DEBUG
+#ifdef DEBUG1
                         std::cout << " through 1 " ;
 #endif
                                     auto *mreg = stk_temp_regs.top();
@@ -237,7 +237,7 @@ void RegAllocator::alloca_regs() {
                                     meta2machine[md] = mreg;
                                     *def_r = *mreg;
                                 } else if(!stk_save_regs.empty()) {
-#ifdef DEBUG
+#ifdef DEBUG1
                         std::cout << " through 2 " ;
 #endif
                                     auto *mreg = stk_save_regs.top();
@@ -250,7 +250,7 @@ void RegAllocator::alloca_regs() {
                                 }
                             } else {
                                 if(!stk_save_regs.empty()) {
-#ifdef DEBUG
+#ifdef DEBUG1
                         std::cout << " through 3 " ;
 #endif
 #ifdef SHOW_PASS_CALL_REGS
@@ -270,7 +270,7 @@ void RegAllocator::alloca_regs() {
                             // 浮点寄存器
                             if(!md->pass_call_instr) {
                                 if(!stk_fp_temp_regs.empty()) {
-#ifdef DEBUG
+#ifdef DEBUG1
                         std::cout << " through 4 " ;
 #endif
                                     auto *mreg = stk_fp_temp_regs.top();
@@ -278,7 +278,7 @@ void RegAllocator::alloca_regs() {
                                     meta2machine[md] = mreg;
                                     *def_r = *mreg;
                                 } else if(!stk_fp_save_regs.empty()){
-#ifdef DEBUG
+#ifdef DEBUG1
                         std::cout << " through 5 " ;
 #endif
                                     auto *mreg = stk_fp_save_regs.top();
@@ -291,7 +291,7 @@ void RegAllocator::alloca_regs() {
                                 }
                             } else {
                                 if(!stk_fp_save_regs.empty()) {
-#ifdef DEBUG
+#ifdef DEBUG1
                         std::cout << " through 6 " ;
 #endif
                                     auto *mreg = stk_fp_save_regs.top();
@@ -306,7 +306,7 @@ void RegAllocator::alloca_regs() {
                             }
 
                         }
-#ifdef DEBUG
+#ifdef DEBUG1
                         std::cout <<  " be " << def_r->name() << "\n";
 #endif
                     } else {
