@@ -5,6 +5,7 @@
 #include "Value.hpp"
 #include "PassManager.hpp"
 #include "UseDefAnalysis.hpp"
+#include "UndefValue.hpp"
 
 
 namespace pass {
@@ -169,6 +170,9 @@ void Reg2MemPass::insert_stores_at_src() {
                     pred->add_instr_before_terminator(mv);
                     val = mv;
                 }
+            }
+            if (dynamic_cast<IR::UndefValue*>(val) != nullptr) {
+                continue;
             }
 
             _builder->set_cur_bb(pred);
