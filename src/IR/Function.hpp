@@ -211,6 +211,8 @@ public:
 
     std::vector<Instruction*> get_allocas() { return allocas; }
 
+    void re_scain_allocas();
+
     bool is_param(Instruction* inst);
 private:
     CFG* _cfg;

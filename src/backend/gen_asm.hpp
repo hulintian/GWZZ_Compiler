@@ -10,6 +10,7 @@
 #include "miscs.hpp"
 #include "ASMBuilder.hpp"
 #include "regarch.hpp"
+#include "Instructions.hpp"
 
 namespace backend {
 
@@ -50,6 +51,12 @@ public:
         this->mctx->get_module()->_name2lib_func = std::move(m->get_name2lib_func());
 
         for(auto func : m->get_funcs()) {
+            func->re_scain_allocas();
+#ifdef SHOW_ALLOCAS
+            for(auto alloca : func->get_allocas()) {
+                std::cerr << alloca->to_str() << "\n";
+            }
+#endif
             translate_func(func);
         }
 

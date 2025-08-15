@@ -2,6 +2,7 @@
 #include "BasicBlock.hpp"
 #include "Instructions.hpp"
 #include "type.hpp"
+#include <map>
 #include <optional>
 #include <ostream>
 #include <stack>
@@ -146,55 +147,6 @@ std::optional<BrInst> get_br_instr(Instruction* instr) {
     return std::nullopt;
 }
 
-void CFG::regen_cfg() {
-    // update bb2idx 
-
-    // start from entry bb 
-    BasicBlock* bb = this->entry_bb;
-    std::stack<BasicBlock*> stk;
-    this->succ_bb.clear();
-    this->prev_bb.clear();
-    std::map<int, bool> visited;
-    stk.push(bb);
-    while(!stk.empty()) {
-        auto top = stk.top();
-        stk.pop();
-        auto br_inst = get_br_instr(top->get_intrs().back());
-        if(br_inst) {
-            if(std::holds_alternative<BranchInst*>(*br_inst)) {
-                auto bi = std::get<BranchInst*>(*br_inst);
-                auto next_bb = bi->get_dst_bb();
-                succ_bb[top->get_bb_idx()].insert(next_bb->get_bb_idx());
-                prev_bb[next_bb->get_bb_idx()].insert(top->get_bb_idx());
-
-                if(!visited[next_bb->get_bb_idx()]) {
-                    stk.push(next_bb);
-                    visited[next_bb->get_bb_idx()] = true;
-                }
-            } else if(std::holds_alternative<CondBranchInst*>(*br_inst)) {
-                auto cbi = std::get<CondBranchInst*>(*br_inst);
-                auto next_t_bb = cbi->get_true_bb();
-                auto next_f_bb = cbi->get_false_bb();
-                succ_bb[top->get_bb_idx()].insert(next_t_bb->get_bb_idx());
-                succ_bb[top->get_bb_idx()].insert(next_f_bb->get_bb_idx());
-
-                prev_bb[next_t_bb->get_bb_idx()].insert(top->get_bb_idx());
-                prev_bb[next_f_bb->get_bb_idx()].insert(top->get_bb_idx());
-
-                if(!visited[next_t_bb->get_bb_idx()]) {
-                    stk.push(next_t_bb);
-                    visited[next_t_bb->get_bb_idx()] = true;
-                } 
-
-                if(!visited[next_f_bb->get_bb_idx()]) {
-                    stk.push(next_f_bb);
-                    visited[next_f_bb->get_bb_idx()] = false;
-                }
-            }
-        }
-    }
-}
-
 
 void CFG::dump_cfg(const std::string& title) const {
     std::cout << "--- " << title << " ---\n";
@@ -264,6 +216,84 @@ void CFG::dump_cfg(const std::string& title) const {
     std::cout << "--- End of " << title << " ---\n\n";
 }
 
+// User Code End. Sasara
+
+void CFG::regen_cfg() {
+    // update bb2idx 
+
+    // start from entry bb 
+    BasicBlock* bb = this->entry_bb;
+    std::stack<BasicBlock*> stk;
+    this->succ_bb.clear();
+    this->prev_bb.clear();
+    std::map<int, bool> visited;
+    stk.push(bb);
+    while(!stk.empty()) {
+        auto top = stk.top();
+        stk.pop();
+        auto br_inst = get_br_instr(top->get_intrs().back());
+        if(br_inst) {
+            if(std::holds_alternative<BranchInst*>(*br_inst)) {
+                auto bi = std::get<BranchInst*>(*br_inst);
+                auto next_bb = bi->get_dst_bb();
+                succ_bb[top->get_bb_idx()].insert(next_bb->get_bb_idx());
+                prev_bb[next_bb->get_bb_idx()].insert(top->get_bb_idx());
+
+                if(!visited[next_bb->get_bb_idx()]) {
+                    stk.push(next_bb);
+                    visited[next_bb->get_bb_idx()] = true;
+                }
+            } else if(std::holds_alternative<CondBranchInst*>(*br_inst)) {
+                auto cbi = std::get<CondBranchInst*>(*br_inst);
+                auto next_t_bb = cbi->get_true_bb();
+                auto next_f_bb = cbi->get_false_bb();
+                succ_bb[top->get_bb_idx()].insert(next_t_bb->get_bb_idx());
+                succ_bb[top->get_bb_idx()].insert(next_f_bb->get_bb_idx());
+
+                prev_bb[next_t_bb->get_bb_idx()].insert(top->get_bb_idx());
+                prev_bb[next_f_bb->get_bb_idx()].insert(top->get_bb_idx());
+
+                if(!visited[next_t_bb->get_bb_idx()]) {
+                    stk.push(next_t_bb);
+                    visited[next_t_bb->get_bb_idx()] = true;
+                } 
+
+                if(!visited[next_f_bb->get_bb_idx()]) {
+                    stk.push(next_f_bb);
+                    visited[next_f_bb->get_bb_idx()] = false;
+                }
+            }
+        }
+    }
 }
 
-// User Code End. Sasara
+void Function::re_scain_allocas() {
+    this->allocas.clear();
+
+    std::map<int, bool> visited;
+    std::stack<BasicBlock*> stk;
+
+    stk.push(this->entry_bb);
+
+    while(!stk.empty()) {
+        auto cbi = stk.top();
+        stk.pop();
+        for(auto nbi : this->_cfg->succ_bb[cbi->get_bb_idx()]) {
+            if(!visited[nbi]) {
+                stk.push(this->_cfg->idx2bb[nbi]);
+            }
+        }
+
+        if(!visited[cbi->get_bb_idx()]) {
+            visited[cbi->get_bb_idx()] = true;
+            for(auto inst: cbi->get_intrs()) {
+                if(auto ai = dynamic_cast<AllocaInst*>(inst)) {
+                    this->allocas.push_back(ai);
+                }
+            }
+        }
+    }
+}
+
+}
+

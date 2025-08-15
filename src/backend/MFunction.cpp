@@ -1,6 +1,7 @@
 #include "MFunction.hpp"
 #include "MBasicBlock.hpp"
 #include <cassert>
+#include <map>
 #include <ostream>
 
 namespace backend {
@@ -35,6 +36,11 @@ void MachineFunction::dump_asm(std::ostream& out) {
         bb->dump_asm(out);
         //out << "\n";
     }
+
+    std::map<int, bool> visited;
+
+    // for(auto )
+
     this->epilogue_bb->dump_asm(out);
 }
 

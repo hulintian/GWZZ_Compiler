@@ -13,6 +13,7 @@ CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE
 # CXXFLAGS += -DMEM_CLEAR
 # CXXFLAGS += -DSHOW_PASS_CALL_REGS
 #CXXFLAGS += -DO1
+CXXFLAGS += -DSHOW_ALLOCAS
 
 ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 
