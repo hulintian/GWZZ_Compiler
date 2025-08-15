@@ -12,7 +12,10 @@
 # set args -S -o tmp/tests_t79.s /tmp/test/t79.sy
 # set args -S -o tmp/tests_t89.s ~/compiler2025/functional/functional_recover/functional/89_many_globals.sy
 # set args -S -o tmp/tests_t00.s ~/compiler2025/functional/functional_recover/functional/00_main.sy
-set args -S -O1 -o tmp/test_xn_01.s tmp/RVXN/01_mm1.sy
+# set args -S -O1 -o tmp/test_xn_01.s tmp/RVXN/01_mm1.sy
+# set args -S -O1 -o tmp/test_xn_transpose0.s tmp/RVXN/transpose0.sy
+# set args -S -O1 -o tmp/03_sort2.s tmp/RVXN/03_sort2.sy
+set args -S -O1 -o tmp/h-9-02.s tmp/RVXN/h-9-02.sy
 
 set print pretty on
 set print object on
