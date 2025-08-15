@@ -24,6 +24,9 @@ public :
     virtual bool is_unconditional_br() const {
         return false; // 基类默认返回 false
     }
+    virtual bool is_conditional_br() const{
+        return false;
+    }
     virtual void replace_successor(BasicBlock* old_succ, BasicBlock* new_succ) {
         assert(false && "replace_successor called on a terminator with no successors!");
     }
@@ -549,6 +552,10 @@ public:
 
     /* User Code Start: CondBranch place */
     // by .Sasara
+
+    bool is_conditional_br()const override {
+        return true;
+    }
     void replace_successor(BasicBlock* old_succ, BasicBlock* new_succ){
         bool replaced = false;
         if (get_operand(1) == old_succ) {

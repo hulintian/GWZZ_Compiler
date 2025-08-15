@@ -9,7 +9,7 @@
             "program": "${workspaceFolder}/bin/compiler",
             "args": [
                 "-O1",
-                "test/transpose1.sy"
+                "test/transpose2.sy"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
