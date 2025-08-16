@@ -9,7 +9,7 @@
             "program": "${workspaceFolder}/bin/compiler",
             "args": [
                 "-O1",
-                "test/transpose2.sy"
+                "functional/h_functional/21_union_find.sy"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

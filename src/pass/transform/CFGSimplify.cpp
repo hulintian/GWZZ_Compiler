@@ -6,8 +6,57 @@
 #include <vector>
 #include <set>
 #include <tuple>
+#include <unordered_set>
 
 namespace pass {
+
+static bool zap_unreachable_blocks_dfs(IR::Function& F) {
+    using IR::BasicBlock;
+    using IR::Instruction;
+
+    auto* entry = F.get_entry_bb();
+    if (!entry) return false;
+
+    std::unordered_set<BasicBlock*> vis;
+    std::vector<BasicBlock*> stack;
+    stack.push_back(entry);
+
+    auto push = [&](BasicBlock* bb) {
+        if (bb && vis.insert(bb).second) stack.push_back(bb);
+    };
+
+    while (!stack.empty()) {
+        BasicBlock* bb = stack.back(); stack.pop_back();
+
+        Instruction* term = bb->get_terminator();
+        if (!term) continue; // 防御式
+
+        if (auto* br = dynamic_cast<IR::BranchInst*>(term)) {
+            // 无条件
+            push(br->get_dst_bb());
+        } else if (auto* cbr = dynamic_cast<IR::CondBranchInst*>(term)) {
+            push(cbr->get_true_bb());
+            push(cbr->get_false_bb());
+        } else {
+            // return / unreachable 等：无后继
+        }
+    }
+
+    // 一次性删去所有不可达块（保留 entry）
+    bool changed = false;
+    auto all = F.get_basic_blocks(); // 拷贝快照
+    for (auto* bb : all) {
+        if (bb != entry && !vis.count(bb)) {
+#ifdef DEBUG
+            std::cout<<"[REMOVE]: "<<bb->get_name()<<"\n";
+#endif
+            F.rm_basic_block(bb);
+            changed = true;
+        }
+    }
+    if (changed) F.refresh_predecessors();
+    return changed;
+}
 
 static bool can_removed(IR::BasicBlock* pred,IR::BasicBlock* removedBB,IR::BasicBlock* succ){
     for (auto* inst : succ->get_intrs()){
@@ -44,7 +93,7 @@ struct RedirectPlan {
 bool CFGSimplifyPass::run(IR::Function& func,PassManager& pm){
     bool function_changed = false;
     bool changed_in_iteration = true;
-
+    if (zap_unreachable_blocks_dfs(func)) function_changed = true;
     //定点迭代
     while (changed_in_iteration){
         changed_in_iteration = false;
@@ -79,7 +128,7 @@ bool CFGSimplifyPass::run(IR::Function& func,PassManager& pm){
                 
                 // 快照 successor 顶部 PHI 中来自 removed 的值
                 for (auto* inst : successor->get_intrs()) {
-                    auto* phi = dynamic_cast<IR::PhiInst*>(inst);
+                    auto phi = dynamic_cast<IR::PhiInst*>(inst);
                     if (!phi) break; // 只遍历 PHI 区段
                     if (Value* v = phi->get_incoming_value_for_block(bb)) {
                         plan.phi_entries.push_back({phi, v});
@@ -96,9 +145,34 @@ bool CFGSimplifyPass::run(IR::Function& func,PassManager& pm){
             function_changed = true;
             for (const auto& plan : plans) {
                 for (IR::BasicBlock* pred : plan.preds) {
-                    pred->get_terminator()->replace_successor(plan.removed, plan.succ);
+                    if (plan.removed == plan.succ) continue;
+                    auto* term = pred->get_terminator();
+                    if (!term) continue;
+
+                    if (auto* br = dynamic_cast<IR::BranchInst*>(term)) {
+                        // 只在确实存在 old_succ 时替换
+                        if (br->get_dst_bb() == plan.removed) {
+                            br->replace_successor(plan.removed, plan.succ);
+                        } else {
+                            continue; // 不含 old_succ，跳过
+                        }
+                    } else if (auto* cbr = dynamic_cast<IR::CondBranchInst*>(term)) {
+                        // CondBr 可能两条边都指向 old_succ：分别检查，各替一次
+                        bool touched = false;
+                        if (cbr->get_true_bb() == plan.removed) {
+                            cbr->replace_successor(plan.removed, plan.succ);
+                            touched = true;
+                        }
+                        if (cbr->get_false_bb() == plan.removed) {
+                            cbr->replace_successor(plan.removed, plan.succ);
+                            touched = true;
+                        }
+                        if (!touched) continue; // 不含 old_succ，跳过
+                    }
+                    
                 }
             }
+            func.refresh_predecessors();
             //调整phi
             for (const auto& plan : plans) {
                 // successor 顶部 PHI

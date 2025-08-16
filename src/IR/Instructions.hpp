@@ -557,6 +557,16 @@ public:
         return true;
     }
     void replace_successor(BasicBlock* old_succ, BasicBlock* new_succ){
+#ifdef DEBUG
+        std::cout<<"thisBB :" <<this->get_parent()->get_name()<<std::endl;
+        for(int i =1 ;i<this->get_operands().size();i++){
+
+            std::cout<<"        thisBB_op"<<i<<":"<< get_operand(i)->get_name()<<std::endl;
+        }
+        std::cout<<"old_succ :" <<old_succ->get_name()<<std::endl;
+        std::cout<<"new_succ :" <<new_succ->get_name()<<std::endl;
+
+#endif
         bool replaced = false;
         if (get_operand(1) == old_succ) {
             set_operand(1, new_succ);
