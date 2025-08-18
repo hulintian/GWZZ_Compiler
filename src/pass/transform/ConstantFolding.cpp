@@ -5,7 +5,10 @@
 #include "DominatorTree.hpp"
 #include "PassManager.hpp"
 #include "UseDefAnalysis.hpp"
+#include <cassert>
 #include <queue>
+#include <string>
+#include <variant>
 
 namespace pass{
 
@@ -93,6 +96,38 @@ IR::ConstantValue* ConstantFoldingPass::tryToConstantFold(IR::Instruction* inst)
     }
     if (auto* bin_inst = dynamic_cast<IR::BinaryInst*>(inst)){
         // TODO
+        auto bop = bin_inst->get_bop();
+        auto lhs = bin_inst->get_lhs();
+        auto rhs = bin_inst->get_rhs();
+        auto ty = lhs->get_type();
+        auto clhs = dynamic_cast<IR::ConstantValue*>(lhs);
+        auto  crhs = dynamic_cast<IR::ConstantValue*>(rhs);
+
+        std::variant<int, float> res;
+
+        switch (bop) {
+            case BinaryOp::Add:     if(ty->base_type == 1) { res = clhs->get_value().fv + crhs->get_value().fv; } else { res = clhs->get_value().iv + crhs->get_value().iv; }; break;
+            case BinaryOp::Sub:     if(ty->base_type == 1) { res = clhs->get_value().fv - crhs->get_value().fv; } else { res = clhs->get_value().iv - crhs->get_value().iv; }; break;
+            case BinaryOp::Mul:     if(ty->base_type == 1) { res = clhs->get_value().fv * crhs->get_value().fv; } else { res = clhs->get_value().iv * crhs->get_value().iv; }; break;
+            case BinaryOp::Div:     if(ty->base_type == 1) { res = clhs->get_value().fv / crhs->get_value().fv; } else { res = clhs->get_value().iv / crhs->get_value().iv; }; break;
+            case BinaryOp::Mod:     if(ty->base_type == 1) { assert(false && "Unsupport float mod"); } else { res = clhs->get_value().iv % crhs->get_value().iv; }; break;
+            case BinaryOp::Eq:     if(ty->base_type == 1) { res = clhs->get_value().fv == crhs->get_value().fv; } else { res = clhs->get_value().iv == crhs->get_value().iv; }; break;
+            case BinaryOp::Neq:     if(ty->base_type == 1) { res = clhs->get_value().fv != crhs->get_value().fv; } else { res = clhs->get_value().iv != crhs->get_value().iv; }; break;
+            case BinaryOp::Lt:      if(ty->base_type == 1) { res = clhs->get_value().fv < crhs->get_value().fv; } else { res = clhs->get_value().iv < crhs->get_value().iv; }; break;
+            case BinaryOp::Gt:      if(ty->base_type == 1) { res = clhs->get_value().fv > crhs->get_value().fv; } else { res = clhs->get_value().iv > crhs->get_value().iv; }; break;
+            case BinaryOp::Leq:     if(ty->base_type == 1) { res = clhs->get_value().fv <= crhs->get_value().fv; } else { res = clhs->get_value().iv <= crhs->get_value().iv; }; break;
+            case BinaryOp::Geq:     if(ty->base_type == 1) { res = clhs->get_value().fv >= crhs->get_value().fv; } else { res = clhs->get_value().iv >= crhs->get_value().iv; }; break;
+            case BinaryOp::LShr:    if(ty->base_type == 1) { assert(false && "Not support float LSHR"); } else { res = clhs->get_value().iv >> crhs->get_value().iv; }; break;
+            case BinaryOp::Shr:     if(ty->base_type == 1) { assert(false && "Not support float SHR"); } else { res = clhs->get_value().iv >> crhs->get_value().iv; }; break;
+            case BinaryOp::Shl:     if(ty->base_type == 1) { assert(false && "Not support float SHL"); } else { res = clhs->get_value().iv << crhs->get_value().iv; }; break;
+        }
+        if(ty->base_type == 1 && !is_cmp_op(bop)) {
+            auto cv = new ConstValue(std::get<float>(res));
+            return this->_builder->create_const_value(ty, *cv);
+        } else {
+            auto cv = new ConstValue(std::get<int>(res));
+            return this->_builder->create_const_value(ty, *cv);
+        }
     }
 
     return nullptr;
