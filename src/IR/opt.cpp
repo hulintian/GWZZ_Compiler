@@ -12,8 +12,12 @@
 #include "Mem2Reg.hpp"
 #include "DCE.hpp"
 #include "PHISimplify.hpp"
+#include "FunctionInline.hpp"
 #include "Reg2Mem.hpp"
 #include <iostream>
+#include <memory>
+
+#include "CFG_Dump.hpp"
 
 namespace opt
 {
@@ -25,9 +29,18 @@ namespace opt
         pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::DomTreePrinterPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::DomFrontierPrinterPass>());
+        
+        pm.add_module_transform_pass(std::make_unique<pass::FunctionInline>());
+
         pm.add_function_transform_pass(std::make_unique<pass::Mem2RegPass>());
+
+#ifdef DUMP_CFG
+        auto cfg_dumper = std::make_unique<pass::CFG_Dump>();
+        cfg_dumper->run(*m, pm);
+#endif
+
         pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
-        //pm.add_function_transform_pass(std::make_unique<pass::DCEPass>());
+        // pm.add_function_transform_pass(std::make_unique<pass::DCEPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::PHISimplifyPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::AliasTestPass>());

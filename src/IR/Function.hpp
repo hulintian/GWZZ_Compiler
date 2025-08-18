@@ -153,6 +153,7 @@ public:
     }
 
     void dump(std::ostream& out);
+    void dump_head(std::ostream& out);
 
     Value* find_alias(const std::string &symbol) {
         if(alias.find(symbol) != alias.end()) {
@@ -214,6 +215,10 @@ public:
     void re_scain_allocas();
 
     bool is_param(Instruction* inst);
+
+    void add_inline_times() { inline_times+=1; }
+    int get_inline_time() const { return inline_times; }
+
 private:
     CFG* _cfg;
     Module* _parent;
@@ -234,6 +239,8 @@ private:
     std::vector<Instruction*> allocas;
 
     BasicBlock* entry_bb;
+
+    int inline_times = 0;
 };
 
 }

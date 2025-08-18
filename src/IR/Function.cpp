@@ -32,6 +32,22 @@ void  Function::dump(std::ostream &out) {
     out << "}\n";
 }
 
+void Function::dump_head(std::ostream &out) {
+    out << "define " << type_string(*this->get_return_type())  << " "
+        << this->get_func_name() ;
+
+    out << " ( " ;
+    // the params
+    auto ps = this->get_params_type();
+    for(int i=0; i < ps.size(); i++) {
+        out << type_string(*ps[i]);
+        if(i != ps.size()-1) {
+            out << ", ";
+        }
+    }
+    out << " ) ";
+}
+
 void CFG::dump(std::ostream &out) {
     for(auto bb : _bbs) {
         bb->dump(out);
@@ -221,6 +237,8 @@ void CFG::dump_cfg(const std::string& title) const {
 void CFG::regen_cfg() {
     // update bb2idx 
 
+    succ_bb.clear();
+    prev_bb.clear();
     // start from entry bb 
     BasicBlock* bb = this->entry_bb;
     std::stack<BasicBlock*> stk;

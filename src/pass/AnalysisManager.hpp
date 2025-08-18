@@ -3,7 +3,6 @@
 #include <map>
 #include <memory>
 #include "Analysis.hpp"
-#include "PassManager.hpp"
 #include <functional>
 
 namespace IR {
@@ -12,7 +11,7 @@ class Function;
 }
 namespace pass {
 class AnalysisPass;
-
+class PassManager;
 //分析结果管理器
 class AnalysisManager{
 private:
