@@ -17,7 +17,8 @@
 # set args -S -O1 -o tmp/03_sort2.s tmp/RVXN/03_sort2.sy
 # set args -S -O1 -o tmp/h-9-02.s tmp/RVXN/h-9-02.sy
 # set args -S -O1 -o tmp/test63.s tmp/functional/63_big_int_mul.sy
-set args -S -O1 -o tmp/test64.s tmp/functional/64_calculator.sy
+# set args -S -O1 -o tmp/test64.s tmp/functional/64_calculator.sy
+set args -S -O1 -o tmp/test22.s tmp/functional/21_if_test2.sy
 
 set print pretty on
 set print object on

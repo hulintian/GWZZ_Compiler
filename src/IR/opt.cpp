@@ -34,11 +34,6 @@ namespace opt
 
         pm.add_function_transform_pass(std::make_unique<pass::Mem2RegPass>());
 
-#ifdef DUMP_CFG
-        auto cfg_dumper = std::make_unique<pass::CFG_Dump>();
-        cfg_dumper->run(*m, pm);
-#endif
-
         pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
         // pm.add_function_transform_pass(std::make_unique<pass::DCEPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
@@ -47,9 +42,15 @@ namespace opt
         //pm.add_function_transform_pass(std::make_unique<pass::LoopInfoPrinterPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::PredPrinterPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::LICMPass>());
-        pm.add_function_transform_pass(std::make_unique<pass::Reg2MemPass>());
+        // pm.add_function_transform_pass(std::make_unique<pass::Reg2MemPass>());
         std::cout << "====================Running optimization passes...====================\n";
         pm.run(*m);
         /* User Code End: Sasara */
+
+#ifdef DUMP_CFG
+        auto cfg_dumper = std::make_unique<pass::CFG_Dump>();
+        cfg_dumper->run(*m, pm);
+#endif
+
     }
 } // namespace opt
