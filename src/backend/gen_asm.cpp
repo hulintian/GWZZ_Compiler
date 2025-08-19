@@ -759,6 +759,17 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
     this->mctx->set_basic_block(nullptr);
 }
 
+void ASMGen::phi_eliminate(IR::PhiInst* phi_instr) {
+
+    RiscvReg::Reg* phi_dst;
+    if(phi_instr->get_type()->base_type == 1) {
+        phi_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+
+    }
+
+    auto ibb_cnt = phi_instr->get_num_incoming();
+}
+
 void ASMGen::translate_binary(IR::BinaryInst* binary) {
     auto bop = binary->get_instr_type();
     auto lhs = binary->get_lhs();

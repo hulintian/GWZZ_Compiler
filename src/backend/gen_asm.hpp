@@ -70,6 +70,8 @@ public:
     void gen_prolo_epil(backend::MachineFunction* mfunc, IR::Function* src_func);
     void translate_bb(IR::BasicBlock* bb);
 
+    void phi_eliminate(IR::PhiInst* phi_instr);
+
     void translate_binary(IR::BinaryInst* binst);
 
     int get_new_bb_idx() { return n_bb_idxs++; }
