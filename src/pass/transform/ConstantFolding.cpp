@@ -36,6 +36,7 @@ bool ConstantFoldingPass::run(IR::Function& func,PassManager& pm){
     _pm = &pm;
     init();
     BFS(_func->get_entry_bb());
+    BFS(_func->get_entry_bb());
 
     //TODO : rm dead BB
     dead_inst_clear();
@@ -69,8 +70,8 @@ void ConstantFoldingPass::BFS(IR::BasicBlock* BB){
         }
 
         process(cur_bb);
+        
     }
-
 }
 
 
@@ -216,6 +217,7 @@ IR::ConstantValue* ConstantFoldingPass::tryToPhi(IR::Instruction* inst){
     auto pres = inst->get_parent()->get_predecessors();
     auto incoming_bbs = phi->get_incoming_blocks();
     // step 1
+    //std::cout<<"=============step1===============\n";
     if(pres.size() < incoming_bbs.size()){
         for(auto& bb : incoming_bbs){
             auto it_found = std::find(pres.begin(),pres.end(),bb);
@@ -225,10 +227,12 @@ IR::ConstantValue* ConstantFoldingPass::tryToPhi(IR::Instruction* inst){
         }
     }
     // step 2
+    //std::cout<<"=============step2===============\n";
     if(phi->get_num_incoming() == 0){
         _dead_insts.insert(phi);
         return nullptr;
     }
+    //std::cout<<"=============step3===============\n";
     //step 3 
     Value* common_value = nullptr;
     for (unsigned i = 0; i < phi->get_num_incoming(); ++i) {
@@ -238,13 +242,17 @@ IR::ConstantValue* ConstantFoldingPass::tryToPhi(IR::Instruction* inst){
             break;
         }
     }
-    if(common_value = nullptr){
+    //std::cout<<"=============step4===============\n";
+    std::cout<<common_value->get_name()<<"\n";
+    if(common_value == nullptr){
         _dead_insts.insert(phi);
         return nullptr;
     }
+    //std::cout<<"=============step5===============\n";
     if(!dynamic_cast<IR::ConstantValue*>(common_value)){
         return nullptr;
     }
+    //std::cout<<"=============step6===============\n";
     for (unsigned i = 0; i < phi->get_num_incoming(); ++i) {
         Value* incoming_val = phi->get_incoming_value(i);
         if (incoming_val != phi &&
@@ -254,6 +262,7 @@ IR::ConstantValue* ConstantFoldingPass::tryToPhi(IR::Instruction* inst){
             return nullptr;
         }
     }
+    //std::cout<<"=============step7===============\n";
     return dynamic_cast<IR::ConstantValue*>(common_value);   
 }
 

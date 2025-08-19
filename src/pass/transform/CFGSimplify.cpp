@@ -202,6 +202,10 @@ bool CFGSimplifyPass::run(IR::Function& func,PassManager& pm){
             func.refresh_predecessors();
         }
     }
+    func.get_cfg()->regen_cfg();
+
+
+
     return function_changed;
 }
 
