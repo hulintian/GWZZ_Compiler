@@ -18,7 +18,8 @@
 # set args -S -O1 -o tmp/h-9-02.s tmp/RVXN/h-9-02.sy
 # set args -S -O1 -o tmp/test63.s tmp/functional/63_big_int_mul.sy
 # set args -S -O1 -o tmp/test64.s tmp/functional/64_calculator.sy
-set args -S -O1 -o tmp/test22.s tmp/functional/21_if_test2.sy
+# set args -S -O1 -o tmp/test21.s tmp/functional/21_if_test2.sy
+set args -S -O1 -o tmp/test25.s tmp/functional/25_while_if.sy
 
 set print pretty on
 set print object on

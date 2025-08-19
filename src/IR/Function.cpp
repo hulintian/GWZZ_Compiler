@@ -293,6 +293,7 @@ void Function::re_scain_allocas() {
 
     stk.push(this->entry_bb);
 
+    this->_cfg->regen_cfg();
     while(!stk.empty()) {
         auto cbi = stk.top();
         stk.pop();

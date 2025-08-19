@@ -5,11 +5,13 @@
 #include "Instructions.hpp"
 #include "LinearRegAllocator.hpp"
 #include "MFunction.hpp"
+#include "MInstruction.hpp"
 #include "defines.hpp"
 #include "regarch.hpp"
 #include "type.hpp"
 #include "utils.hpp"
 #include <cinttypes>
+#include <endian.h>
 #include <filesystem>
 #include <iostream>
 #include <string>
@@ -749,6 +751,7 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
             this->mctx->get_function()->prev_bb[false_bb_idx].insert(cur_bb_idx);
         } else if(auto phi = dynamic_cast<IR::PhiInst*>(instr)) {
             // 在 ir中消除，后端不管
+            phi_eliminate(phi);
             continue;
         } else {
             // Handle unknown instruction type
@@ -764,10 +767,28 @@ void ASMGen::phi_eliminate(IR::PhiInst* phi_instr) {
     RiscvReg::Reg* phi_dst;
     if(phi_instr->get_type()->base_type == 1) {
         phi_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
-
+    } else {
+        phi_dst = new RiscvReg::Reg(this->get_new_vreg_idx());
     }
 
     auto ibb_cnt = phi_instr->get_num_incoming();
+
+    for(int i=0; i < ibb_cnt; i++) {
+        auto icbb = phi_instr->get_incoming_block(i);
+        auto get_phi_val = phi_instr->get_incoming_value(i);
+    
+        auto icv_verg = this->mctx->get_function()->get_reg(get_phi_val);
+        auto icb_mbb = this->mctx->get_function()->get_mbb(icbb->get_bb_idx());
+        if(phi_instr->get_type()->base_type == 1) {
+            auto phi_merge_instr = new FMVInst(MachineInstrType::FMV_S, icb_mbb, phi_dst, icv_verg);
+            icb_mbb->insert_before_branch_instr(phi_merge_instr);
+        } else {
+            auto phi_merge_instr = new MoveInst(MachineInstrType::MV, icb_mbb, phi_dst, icv_verg);
+            icb_mbb->insert_before_branch_instr(phi_merge_instr);
+        }
+    }
+
+    this->mctx->get_function()->add_reg_mp(phi_instr, phi_dst);
 }
 
 void ASMGen::translate_binary(IR::BinaryInst* binary) {
