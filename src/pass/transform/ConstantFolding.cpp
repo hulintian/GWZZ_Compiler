@@ -36,6 +36,7 @@ bool ConstantFoldingPass::run(IR::Function& func,PassManager& pm){
     _pm = &pm;
     init();
     BFS(_func->get_entry_bb());
+    refresh_dom_tree();
     BFS(_func->get_entry_bb());
 
     //TODO : rm dead BB
@@ -43,6 +44,12 @@ bool ConstantFoldingPass::run(IR::Function& func,PassManager& pm){
     return true;
 }
 
+void ConstantFoldingPass::refresh_dom_tree(){
+    _pm->get_analysis_manager().invalidate_function_result<DominatorTreePass>(*_func);
+    auto& dom_tree = _pm->get_analysis_manager().get_function_result<DominatorTreePass>(*_func);
+    _dom_tree = build_dom_tree(*_func,dom_tree);
+
+}
 void ConstantFoldingPass::init(){
     _builder = &_pm->get_ir_builder();
     auto& dom_tree = _pm->get_analysis_manager().get_function_result<DominatorTreePass>(*_func);
@@ -243,7 +250,7 @@ IR::ConstantValue* ConstantFoldingPass::tryToPhi(IR::Instruction* inst){
         }
     }
     //std::cout<<"=============step4===============\n";
-    std::cout<<common_value->get_name()<<"\n";
+    //std::cout<<common_value->get_name()<<"\n";
     if(common_value == nullptr){
         _dead_insts.insert(phi);
         return nullptr;

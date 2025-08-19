@@ -32,6 +32,7 @@ private:
 
     void init();
     void refresh_analyses();
+    void refresh_dom_tree();
     void BFS(IR::BasicBlock* BB);
     void process(IR::BasicBlock* B);
     IR::ConstantValue* tryToConstantFold(IR::Instruction* inst);
