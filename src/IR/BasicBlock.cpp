@@ -13,6 +13,9 @@ void BasicBlock::dump(std::ostream& out) {
     out << this->bb_label  << "\n";
     // << std::to_string(this->get_bb_idx())
     for(auto i : this->get_intrs()) {
+        if(i->get_parent() != this) {
+            std::cerr << error << " Instr " << i->to_str() << " is from " << i->get_parent()->get_name() << " but here is " << this->bb_label << "\n";
+        }
         assert(i->get_parent() == this && "Instruction's parent pointer is inconsistent!");
         print_indent(out, 4);
         out << i->to_str() 
