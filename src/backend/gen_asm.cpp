@@ -15,6 +15,7 @@
 #include <filesystem>
 #include <iostream>
 #include <string>
+#include "UndefValue.hpp"
 
 namespace backend {
 
@@ -127,7 +128,8 @@ void ASMGen::translate_func(IR::Function* func) {
 #ifdef SHOW_INST_TIME
     regallo->plot_reg_interval();
 #endif
-    regallo->alloca_regs();
+    // TODO Should open the reg allocator after debug
+    // regallo->alloca_regs();
     
     // after reg allocas 
     int ssz = this->mctx->get_function()->get_stack_size();
@@ -788,15 +790,48 @@ void ASMGen::phi_eliminate(RiscvReg::Reg* phi_dst, IR::PhiInst* phi_instr) {
     for(int i=0; i < ibb_cnt; i++) {
         auto icbb = phi_instr->get_incoming_block(i);
         auto get_phi_val = phi_instr->get_incoming_value(i);
+
+        // jump if is undef value
+        if(auto udf = dynamic_cast<IR::UndefValue*>(get_phi_val)) { continue; }
+
+        if(get_phi_val == phi_instr) {
+            std::cout << info <<  "has unchanges phi in instr : " << phi_instr->to_str();
+            continue;
+        }
     
-        auto icv_verg = this->mctx->get_function()->get_reg(get_phi_val);
-        auto icb_mbb = this->mctx->get_function()->get_mbb(icbb->get_bb_idx());
-        if(phi_instr->get_type()->base_type == 1) {
-            auto phi_merge_instr = new FMVInst(MachineInstrType::FMV_S, icb_mbb, phi_dst, icv_verg);
-            icb_mbb->insert_before_branch_instr(phi_merge_instr);
+        bool is_cv = false;
+
+        RiscvReg::Reg* icv_verg ;
+        IR::ConstantValue* may_cv;
+        if(auto cv = dynamic_cast<IR::ConstantValue*>(get_phi_val)) {
+            is_cv = true;
+            may_cv = cv;
         } else {
-            auto phi_merge_instr = new MoveInst(MachineInstrType::MV, icb_mbb, phi_dst, icv_verg);
-            icb_mbb->insert_before_branch_instr(phi_merge_instr);
+            *icv_verg = this->mctx->get_function()->get_reg(get_phi_val);
+        }
+
+        auto icb_mbb = this->mctx->get_function()->get_mbb(icbb->get_bb_idx());
+
+        if(phi_instr->get_type()->base_type == 1) {
+            if(is_cv) {
+                auto tmp_reg = RiscvReg::Reg(this->get_new_vreg_idx());
+                auto li_f_cv_2 = new LIInst(MachineInstrType::LI, icb_mbb, tmp_reg, may_cv->get_value().iv);
+                auto move2fp = new FMVInst(MachineInstrType::FMV_W_X, icb_mbb, phi_dst, tmp_reg);
+
+                icb_mbb->insert_before_branch_instr(li_f_cv_2);
+                icb_mbb->insert_before_branch_instr(move2fp);
+            } else {
+                auto phi_merge_instr = new FMVInst(MachineInstrType::FMV_S, icb_mbb, phi_dst, icv_verg);
+                icb_mbb->insert_before_branch_instr(phi_merge_instr);
+            }
+        } else {
+            if(is_cv) {
+                auto phi_merge_instr = new LIInst(MachineInstrType::LI, icb_mbb, phi_dst, may_cv->get_value().iv);
+                icb_mbb->insert_before_branch_instr(phi_merge_instr);
+            } else {
+                auto phi_merge_instr = new MoveInst(MachineInstrType::MV, icb_mbb, phi_dst, icv_verg);
+                icb_mbb->insert_before_branch_instr(phi_merge_instr);
+            }
         }
     }
 }

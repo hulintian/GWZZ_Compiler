@@ -5,7 +5,7 @@ CC = gcc
 
 INCLUDE_FLAGS = -I/usr/include/antlr4-runtime -I./src -I./antlr4/antlr4-runtime
 CXXFLAGS = -std=c++17 -Wall -g -MMD -MP -fPIE 
-# CXXFLAGS += -DSHOW_INST_TIME
+CXXFLAGS += -DSHOW_INST_TIME
 # CXXFLAGS += -DSHOW_ASM
 # CXXFLAGS += -DSHOW_AST
 # CXXFLAGS += -DDEBUG
