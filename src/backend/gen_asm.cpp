@@ -118,7 +118,9 @@ void ASMGen::translate_func(IR::Function* func) {
     }
 
     // after translate eliminate all phi instrs
-    this->eliminate_phis();
+    // FIXME 不在后端处理phi，在ir中解决
+    // this->eliminate_phis();
+    
     // after translate, the immerged params are know 
     // TODO reg alloca 
     RegAllocator *regallo = new RegAllocator(mfunc);
@@ -129,7 +131,7 @@ void ASMGen::translate_func(IR::Function* func) {
     regallo->plot_reg_interval();
 #endif
     // TODO Should open the reg allocator after debug
-    // regallo->alloca_regs();
+    regallo->alloca_regs();
     
     // after reg allocas 
     int ssz = this->mctx->get_function()->get_stack_size();
