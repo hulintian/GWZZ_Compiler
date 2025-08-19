@@ -8,6 +8,7 @@ namespace pass {
 
 void PHIEliminatePass::collect_all_phi() {
     
+    this->phis.clear();
     this->_func->get_cfg()->regen_cfg();
 
     auto ebb = this->_func->get_entry_bb();
@@ -36,6 +37,7 @@ void PHIEliminatePass::collect_all_phi() {
 }
 
 void PHIEliminatePass::view_all_phis() {
+    std::cerr << info << "find " << this->phis.size() << " phi instrs at " << this->_func->get_func_name() << "\n";
     for(auto p : this->phis) {
         std::cerr << info << " find " 
             << p->to_str() << " is form " 
