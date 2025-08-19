@@ -132,12 +132,12 @@ int main(int argc, char** argv) {
 #endif
 
     backend::ASMGen* asmg = new backend::ASMGen();
-    // backend::MachineModule *mm = asmg->translate(m);
+    backend::MachineModule *mm = asmg->translate(m);
 #ifdef SHOW_ASM
     cout << "====================The asm of " << opts.input_file << " =======================\n";
-    // mm->dump_asm(cout);
+    mm->dump_asm(cout);
 #endif
-    // mm->dump_asm(opf);
+    mm->dump_asm(opf);
     opf.close();
 
     return 0;
