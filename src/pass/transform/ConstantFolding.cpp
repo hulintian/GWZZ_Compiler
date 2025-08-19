@@ -238,7 +238,7 @@ IR::ConstantValue* ConstantFoldingPass::tryToPhi(IR::Instruction* inst){
             break;
         }
     }
-    if(common_value = nullptr){
+    if(common_value == nullptr){
         _dead_insts.insert(phi);
         return nullptr;
     }
