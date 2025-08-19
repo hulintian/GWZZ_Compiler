@@ -110,16 +110,16 @@ int main(int argc, char** argv) {
     // TODO 这些放到codegen里面，或则在ir里独立出来一个opt的文件
 #endif
     // if(opts.opt_O1){
-        IR::IRBuilder* builder = cg->get_ir_builder();  
-        opt::run_passes(m,builder);  
+    //  IR::IRBuilder* builder = cg->get_ir_builder();  
+    //  opt::run_passes(m,builder);  
     // }
     //同步CFG
-    for (auto& func : m->get_functions()) {
-        if (!func->is_lib()) {
-            func->get_cfg()->regen_cfg();
-            //func->get_cfg()->dump_cfg("Final CFG for Backend");
-        }
-    }
+    // for (auto& func : m->get_functions()) {
+    //     if (!func->is_lib()) {
+    //         func->get_cfg()->regen_cfg();
+    //         //func->get_cfg()->dump_cfg("Final CFG for Backend");
+    //     }
+    // }
 
 #ifdef SHOW_IR
     cout << "====================The ir of " << opts.input_file << " =======================\n";

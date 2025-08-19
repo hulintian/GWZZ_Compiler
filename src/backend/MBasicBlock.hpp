@@ -33,6 +33,8 @@ public:
     void insert_instr_before(MachineInstr* pos, MachineInstr* to_insert);
     // 在 instr 之后插入
     void insert_instr_after(MachineInstr* pos, MachineInstr* to_insert);
+
+    void insert_before_branch_instr(MachineInstr* instr);
 };
 
 }

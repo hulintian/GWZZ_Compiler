@@ -41,4 +41,22 @@ void MachineBasicBlock::insert_instr_after(MachineInstr* pos, MachineInstr* to_i
     }
 }
 
+void MachineBasicBlock::insert_before_branch_instr(MachineInstr* instr) {
+    MachineInstr* first_jump;
+    for(auto i : this->m_instrs) {
+        if(auto br = dynamic_cast<BranchInst*>(i)) {
+            first_jump = br;
+            break;
+        } else if(auto ubr = dynamic_cast<BranchUInst*>(i)) {
+            first_jump = ubr;
+            break;
+        } else if(auto jp = dynamic_cast<JumpInst*>(i)) {
+            first_jump = jp;
+            break;
+        }
+    }
+    
+    this->insert_instr_before(first_jump, instr);
+}
+
 }
