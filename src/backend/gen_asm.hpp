@@ -70,7 +70,8 @@ public:
     void gen_prolo_epil(backend::MachineFunction* mfunc, IR::Function* src_func);
     void translate_bb(IR::BasicBlock* bb);
 
-    void phi_eliminate(IR::PhiInst* phi_instr);
+    void phi_eliminate(RiscvReg::Reg* phi_dst, IR::PhiInst* phi_instr);
+    void eliminate_phis();
 
     void translate_binary(IR::BinaryInst* binst);
 

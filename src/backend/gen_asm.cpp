@@ -115,6 +115,9 @@ void ASMGen::translate_func(IR::Function* func) {
         }
         // std::cerr << "Translate bb " << bi << std::endl; 
     }
+
+    // after translate eliminate all phi instrs
+    this->eliminate_phis();
     // after translate, the immerged params are know 
     // TODO reg alloca 
     RegAllocator *regallo = new RegAllocator(mfunc);
@@ -749,9 +752,20 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
 
             this->mctx->get_function()->prev_bb[true_bb_idx].insert(cur_bb_idx);
             this->mctx->get_function()->prev_bb[false_bb_idx].insert(cur_bb_idx);
-        } else if(auto phi = dynamic_cast<IR::PhiInst*>(instr)) {
+        } else if(auto phi_instr = dynamic_cast<IR::PhiInst*>(instr)) {
             // 在 ir中消除，后端不管
-            phi_eliminate(phi);
+            // phi_eliminate(phi);
+            RiscvReg::Reg* phi_dst;
+            if(phi_instr->get_type()->base_type == 1) {
+                phi_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+            } else {
+                phi_dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+            }
+
+            // 收集phi
+            this->mctx->get_function()->vreg_phi_map[phi_dst] = phi_instr;
+
+            this->mctx->get_function()->add_reg_mp(phi_instr, phi_dst);
             continue;
         } else {
             // Handle unknown instruction type
@@ -762,15 +776,13 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
     this->mctx->set_basic_block(nullptr);
 }
 
-void ASMGen::phi_eliminate(IR::PhiInst* phi_instr) {
-
-    RiscvReg::Reg* phi_dst;
-    if(phi_instr->get_type()->base_type == 1) {
-        phi_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
-    } else {
-        phi_dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+void ASMGen::eliminate_phis() {
+    for(auto [phi_reg, phi_instr] : this->mctx->get_function()->vreg_phi_map) {
+        phi_eliminate(phi_reg, phi_instr);
     }
+}
 
+void ASMGen::phi_eliminate(RiscvReg::Reg* phi_dst, IR::PhiInst* phi_instr) {
     auto ibb_cnt = phi_instr->get_num_incoming();
 
     for(int i=0; i < ibb_cnt; i++) {
@@ -787,8 +799,6 @@ void ASMGen::phi_eliminate(IR::PhiInst* phi_instr) {
             icb_mbb->insert_before_branch_instr(phi_merge_instr);
         }
     }
-
-    this->mctx->get_function()->add_reg_mp(phi_instr, phi_dst);
 }
 
 void ASMGen::translate_binary(IR::BinaryInst* binary) {

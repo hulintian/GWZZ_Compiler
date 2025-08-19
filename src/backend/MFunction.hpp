@@ -13,6 +13,7 @@
 #include "regarch.hpp"
 #include "type.hpp"
 #include "utils.hpp"
+#include "Instructions.hpp"
 
 namespace backend {
 
@@ -50,6 +51,8 @@ public:
     std::map<Value*, RiscvReg::Reg> v2r;
 
     RegAllocator* allocator;
+
+    std::map<RiscvReg::Reg*, IR::PhiInst*> vreg_phi_map;
 
     bool has_reg(Value* v) { return v2r.find(v) != v2r.end(); }
     void add_reg_mp(Value* v, RiscvReg::Reg reg) {
