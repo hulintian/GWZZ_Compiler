@@ -5,10 +5,12 @@
 #include "DominatorTree.hpp"
 #include "PassManager.hpp"
 #include "UseDefAnalysis.hpp"
+#include "UndefValue.hpp"
 #include <cassert>
 #include <queue>
 #include <string>
 #include <variant>
+#include <algorithm>
 
 namespace pass{
 
@@ -98,7 +100,18 @@ void ConstantFoldingPass::process(IR::BasicBlock* B){
         if(inst->is_conditional_br()){
             tryToConstantCondbr(inst);
         }
+        auto phi_v = tryToPhi(inst);
+        if(phi_v){
+            _dead_insts.insert(inst);
+
+            auto users = _use_def->get_users(inst);
+            for(auto user : users){
+                user->replace_operand(inst,phi_v);
+            }
+            refresh_analyses();
+        } 
     }
+    B->get_parent()->refresh_predecessors();
 }
 
 IR::ConstantValue* ConstantFoldingPass::tryToConstantFold(IR::Instruction* inst){
@@ -193,6 +206,55 @@ IR::ConstantValue* ConstantFoldingPass::tryToCVT(IR::Instruction* inst){
         return this->_builder->create_const_value(ty,*cvt_v);
     }
     return nullptr;
+}
+IR::ConstantValue* ConstantFoldingPass::tryToPhi(IR::Instruction* inst){
+    if(!inst)return nullptr;
+    auto phi = dynamic_cast<IR::PhiInst*>(inst);
+    if(!phi)return nullptr;
+    // process dead BB
+
+    auto pres = inst->get_parent()->get_predecessors();
+    auto incoming_bbs = phi->get_incoming_blocks();
+    // step 1
+    if(pres.size() < incoming_bbs.size()){
+        for(auto& bb : incoming_bbs){
+            auto it_found = std::find(pres.begin(),pres.end(),bb);
+            if(it_found == pres.end()){
+                phi->remove_incoming_by_block(bb);
+            }
+        }
+    }
+    // step 2
+    if(phi->get_num_incoming() == 0){
+        _dead_insts.insert(phi);
+        return nullptr;
+    }
+    //step 3 
+    Value* common_value = nullptr;
+    for (unsigned i = 0; i < phi->get_num_incoming(); ++i) {
+        Value* incoming_val = phi->get_incoming_value(i);
+        if (incoming_val != phi && !dynamic_cast<IR::UndefValue*>(incoming_val)){
+            common_value = incoming_val;
+            break;
+        }
+    }
+    if(common_value = nullptr){
+        _dead_insts.insert(phi);
+        return nullptr;
+    }
+    if(!dynamic_cast<IR::ConstantValue*>(common_value)){
+        return nullptr;
+    }
+    for (unsigned i = 0; i < phi->get_num_incoming(); ++i) {
+        Value* incoming_val = phi->get_incoming_value(i);
+        if (incoming_val != phi &&
+            !dynamic_cast<IR::UndefValue*>(incoming_val) &&
+            incoming_val != common_value) 
+        {
+            return nullptr;
+        }
+    }
+    return dynamic_cast<IR::ConstantValue*>(common_value);   
 }
 
 }

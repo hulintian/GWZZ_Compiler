@@ -526,6 +526,10 @@ public:
         }
         return nullptr;
     }
+
+    std::vector<BasicBlock*> get_incoming_blocks() const {
+        return _incoming_blocks;
+    }
     /* User Code End: Phi place */
     std::string to_str();
     std::string to_llvm();

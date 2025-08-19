@@ -36,8 +36,10 @@ private:
     void process(IR::BasicBlock* B);
     IR::ConstantValue* tryToConstantFold(IR::Instruction* inst);
     IR::ConstantValue* tryToCVT(IR::Instruction* inst);
+    IR::ConstantValue* tryToPhi(IR::Instruction* inst);
     void tryToConstantCondbr(IR::Instruction* inst);
     void dead_inst_clear();
+
     
 };
 
