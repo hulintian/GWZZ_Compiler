@@ -9,7 +9,7 @@
             "program": "${workspaceFolder}/bin/compiler",
             "args": [
                 "-O1",
-                "functional/h_functional/21_union_find.sy"
+                "test/constant.sy"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

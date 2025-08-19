@@ -36,6 +36,7 @@ bool ConstantFoldingPass::run(IR::Function& func,PassManager& pm){
     BFS(_func->get_entry_bb());
 
     //TODO : rm dead BB
+    dead_inst_clear();
     return true;
 }
 
@@ -73,8 +74,21 @@ void ConstantFoldingPass::BFS(IR::BasicBlock* BB){
 
 void ConstantFoldingPass::process(IR::BasicBlock* B){
     for(auto& inst : B->get_intrs()){
+        auto cvt_v = tryToCVT(inst);
+        if(cvt_v){
+            _dead_insts.insert(inst);
+
+            auto users = _use_def->get_users(inst);
+            for(auto user : users){
+                user->replace_operand(inst,cvt_v);
+            }
+            refresh_analyses();
+        }
+
         auto constant_v = tryToConstantFold(inst);
         if(constant_v) {
+            _dead_insts.insert(inst);
+
             auto users = _use_def->get_users(inst);
             for(auto user : users){
                 user->replace_operand(inst,constant_v);
@@ -147,6 +161,38 @@ void ConstantFoldingPass::tryToConstantCondbr(IR::Instruction* inst){
         _builder->create_br(condbr->get_true_bb());
     }
     inst->get_parent()->remove_instr(inst);
+}
+
+void ConstantFoldingPass::dead_inst_clear(){
+    if(_dead_insts.empty()){
+        std::cout<<"Dead_inst is empty!\n";
+        return;
+    }
+    //std::cout<<"The function has:"<<_dead_insts.size()<<" dead inst!\n";
+    for(auto& inst: _dead_insts){
+        auto p = inst->get_parent();
+        if(p){
+            p->remove_instr(inst);
+        }
+    }
+}
+
+IR::ConstantValue* ConstantFoldingPass::tryToCVT(IR::Instruction* inst){
+    if(!inst)return nullptr;
+    auto cvt = dynamic_cast<IR::ConvertInst*>(inst);
+    if(!cvt)return nullptr;
+    auto* v = cvt->get_operand(0);
+    auto* cv = dynamic_cast<IR::ConstantValue*>(v);
+    if(!cv)return nullptr;
+    auto* ty = cvt->getdst_type();
+    if(ty->base_type == 1){
+        auto cvt_v = new ConstValue((float)(cv->get_value().iv));
+        return this->_builder->create_const_value(ty,*cvt_v);
+    }else{
+        auto cvt_v = new ConstValue((int)(cv->get_value().fv));
+        return this->_builder->create_const_value(ty,*cvt_v);
+    }
+    return nullptr;
 }
 
 }
