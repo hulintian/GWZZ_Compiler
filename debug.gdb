@@ -24,7 +24,9 @@
 # set args -S -O1 -o tmp/h_1_1.s tmp/RVXN/h-1-01.sy;
 # set args -S -O1 -o tmp/test31.s tmp/functional/31_while_if_test1.sy
 # set args -S -O1 -o tmp/test31.s tmp/functional/22_if_test3.sy
-set args -S -O1 -o tmp/test33.s tmp/functional/33_while_if_test3.sy
+# set args -S -O1 -o tmp/test33.s tmp/functional/33_while_if_test3.sy
+# set args -S -O1 -o tmp/test27.s tmp/functional/27_while_test2.sy
+set args -S -O1 -o tmp/test58.s tmp/functional/58_sort_test4.sy
 
 set print pretty on
 set print object on

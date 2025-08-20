@@ -109,10 +109,10 @@ int main(int argc, char** argv) {
 #ifdef O1
     // TODO 这些放到codegen里面，或则在ir里独立出来一个opt的文件
 #endif
-//     if(opts.opt_O1){
+     if(opts.opt_O1){
         IR::IRBuilder* builder = cg->get_ir_builder();  
         opt::run_passes(m,builder);  
-//    }
+    }
     //同步CFG
     for (auto& func : m->get_functions()) {
         if (!func->is_lib()) {

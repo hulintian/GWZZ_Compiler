@@ -75,6 +75,8 @@ void PHIEliminatePass::view_all_phis() {
         std::cerr << info << " find " 
             << p->to_str() << " is form " 
             << p->get_alloca_src()->to_str() 
+            << "at "
+            << p->get_parent()->get_name()
             << "\n";
     }
 }
@@ -125,6 +127,12 @@ void PHIEliminatePass::phi_promotion(IR::PhiInst* phi) {
 
     
     auto phi_bb = phi->get_parent();
+    std::cerr << info << " Adding instr " 
+        << phi_value->to_str()
+        << " at front to replace  " 
+        << phi->to_str() 
+        << " in "
+        << phi->get_parent()->get_name() << "\n";
     phi_bb->add_instruction_at_front(phi_value);
     phi_bb->remove_instr(phi);
 }
@@ -139,10 +147,11 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
             int incoming_cnt = phi->get_num_incoming();
             for(int i=0; i < incoming_cnt; i++) {
                 auto icval = phi->get_incoming_value(i);
-                if(icval != phi)
-                if(auto viap = dynamic_cast<IR::PhiInst*>(icval)) {
-                    this->inference_graph[phi].insert(viap);
-                    this->rinference_graph[viap].insert(phi);
+                if(icval != phi) {
+                    if(auto viap = dynamic_cast<IR::PhiInst*>(icval)) {
+                        this->inference_graph[phi].insert(viap);
+                        this->rinference_graph[viap].insert(phi);
+                    }
                 }
             }
         }
@@ -158,9 +167,11 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
 
     std::map<IR::PhiInst*, bool> visited;
     for(auto fphi : free_phis) {
-        this->phi_promotion(fphi);
-        visited[fphi] = true;
-        this->eliminated[fphi] = true;
+        if(!this->eliminated[fphi]) {
+            this->phi_promotion(fphi);
+            visited[fphi] = true;
+            this->eliminated[fphi] = true;
+        }
     } 
 
     // TODO need to check has loop in inference graph, ignore them
@@ -176,7 +187,7 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
             bool res = true;
             for(auto comings : inference_graph[phi]) {
                 // if has unvisited return false 
-                if(!three_colors[comings] && !eliminated[comings] ) res = false;
+                if(!three_colors[comings] && !this->eliminated[comings] ) res = false;
             }
             return res;
         }
@@ -185,7 +196,7 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
 
     std::stack<IR::PhiInst*> stk;
     for(auto phi : this->phis) {
-        if(!eliminated[phi]) {
+        if(!this->eliminated[phi]) {
             // TODO 找到环并消除
             if(three_colors[phi]) continue;     // 已经访问过了的，不管是访问中还是访问结束
             
@@ -195,10 +206,12 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
             while(!stk.empty()) {
                 auto top_phi = stk.top();
                 if(check_is_all_visited(top_phi)) {
-                    three_colors[phi] = 2;
+                    three_colors[top_phi] = 2;
                     stk.pop();
                 }
 
+                auto for_view = inference_graph[top_phi];
+                if(inference_graph.find(top_phi) != inference_graph.end()) 
                 for(auto n_phi : inference_graph[top_phi]) {
                     // 未访问过的
                     if( three_colors[n_phi] == 0 ) {
@@ -209,19 +222,24 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
                         // insert an instr, add or fadd 0.0
                         IR::ConstantValue* zero;
                         IR::Instruction* mv_phi2tmep;
+
+                        std::string replace_name = "%T" + std::to_string(this->_pm->get_ir_builder().get_cur_ctx()->get_tmp_var());
                         if(n_phi->get_type()->base_type == 1) {
                             zero = this->_pm->get_ir_builder().fzero;
-                            mv_phi2tmep = new IR::BinaryInst(n_phi->get_type(), BinaryOp::Add, n_phi, zero, "", IR::fadd, n_phi->get_parent());
+                            mv_phi2tmep = new IR::BinaryInst(n_phi->get_type(), BinaryOp::Add, n_phi, zero, replace_name, IR::fadd, n_phi->get_parent());
                         } else {
                             zero = this->_pm->get_ir_builder().zero;
-                            mv_phi2tmep = new IR::BinaryInst(n_phi->get_type(), BinaryOp::Add, n_phi, zero, "", IR::fadd, n_phi->get_parent());
+                            mv_phi2tmep = new IR::BinaryInst(n_phi->get_type(), BinaryOp::Add, n_phi, zero, replace_name, IR::add, n_phi->get_parent());
                         }
 
-                        // std::cerr << info << " To cut the ring in " <<  n_phi->get_parent()->get_name()
-                        //                     << " " << n_phi->to_str() 
-                        //                     << "\n";
-                        // n_phi->get_parent()->dump(std::cerr);
+                        std::cerr << info << " To cut the ring in " <<  n_phi->get_parent()->get_name()
+                                            << " " << n_phi->to_str() 
+                                            << " by inserting " << mv_phi2tmep->to_str()
+                                            << "\n";
+                        n_phi->get_parent()->dump(std::cerr);
+
                         n_phi->get_parent()->add_curinst_after_inst(mv_phi2tmep, n_phi);
+
 
                         auto users = this->use_def_res->get_users(n_phi);
                         for(auto user : users) {
@@ -230,6 +248,7 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
                         this->update_use_def();
                         
                         this->gen_inference_and_phiEli();
+                        return;
                     }
                 }
             }
@@ -245,7 +264,7 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
         } else {
             bool res = true;
             for(auto icom_phi : inference_graph[phi]) {
-                if(!eliminated[icom_phi]) {
+                if(!this->eliminated[icom_phi]) {
                     res = false;
                     return res;
                 }
@@ -255,18 +274,25 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
     };
 
     std::stack<IR::PhiInst*> elim_work;
+    std::map<IR::PhiInst*, bool> in_work_space;
     for(auto phi : phis) {
         
-        if( can_eliminate(phi) ) elim_work.push((phi));
+        if(!this->eliminated[phi]) {
+            if(can_eliminate(phi) && !in_work_space[phi]){
+                in_work_space[phi] = true;
+                elim_work.push(phi);
+                std::cerr << info << "Add " << phi->to_str() << " to workspace\n"; 
+            }
+        }
 
         while(!elim_work.empty()) {
             auto c_phi = elim_work.top();
             elim_work.pop();
 
-            this->phi_promotion(phi);
-            this->eliminated[phi] = true;
+            this->phi_promotion(c_phi);
+            this->eliminated[c_phi] = true;
 
-            for(auto n_phi : inference_graph[phi]) {
+            for(auto n_phi : inference_graph[c_phi]) {
                 if(!this->eliminated[n_phi]) {
                     if(can_eliminate(n_phi)) {
                         stk.push(n_phi);
