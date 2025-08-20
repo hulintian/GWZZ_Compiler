@@ -1,6 +1,7 @@
 #include "LICM.hpp"
 #include "DominatorTree.hpp"
 #include "AliasAnalysis.hpp"
+#include "UseDefAnalysis.hpp"
 #include "LoopInfo.hpp"
 #include "PassManager.hpp"
 
@@ -23,6 +24,12 @@ void LICMPass::refresh_analyses() {
     _F->refresh_predecessors();
 }
 
+void LICMPass::refresh_usedef(){
+    _pm->get_analysis_manager().invalidate_function_result<UseDefAnalysisPass>(*_F);
+    _use_def = &_pm->get_analysis_manager().get_function_result<UseDefAnalysisPass>(*_F);
+    _F->refresh_predecessors();
+}
+
 bool LICMPass::run(IR::Function& function,PassManager& pm){
     _pm = &pm;
     _F = &function;
@@ -30,6 +37,9 @@ bool LICMPass::run(IR::Function& function,PassManager& pm){
     _dom_tree = &pm.get_analysis_manager().get_function_result<DominatorTreePass>(function);
     _AA = &pm.get_analysis_manager().get_module_result<AliasAnalysisPass>(*function.get_parent());
     _loop_info = &pm.get_analysis_manager().get_function_result<LoopInfoPass>(function);
+    _use_def = &pm.get_analysis_manager().get_function_result<UseDefAnalysisPass>(function);
+
+    to_rm.clear();
     bool function_changed = false;
     
     // 使用一个循环来确保所有新产生的优化机会都能被处理
@@ -45,6 +55,12 @@ bool LICMPass::run(IR::Function& function,PassManager& pm){
     _builder = nullptr;
     _dom_tree = nullptr;
     _loop_info = nullptr;
+
+    if(!to_rm.empty()){
+        for(auto i : to_rm){
+            i->get_parent()->remove_instr(i);
+        }
+    }
     
     return function_changed;
 }
@@ -216,12 +232,24 @@ IR::BasicBlock* LICMPass::get_or_create_preheader(Loop* loop) {
         } else {
             pre_phi->get_parent()->remove_instr(pre_phi);
         }
+        refresh_usedef();
+        if(pre_phi->get_num_incoming() == 1){
+            
+            Value *v = pre_phi->get_operand(0);
+            
+            auto users = _use_def->get_users(pre_phi);
+            for(auto user : users){
+                user->replace_operand(pre_phi,v);
+            }
+            to_rm.insert(pre_phi);
+        }
     }
     for (IR::BasicBlock* pred : external_preds){
         pred->get_terminator()->replace_successor(header,new_bb);
     }
     //更新 
     refresh_analyses();
+    refresh_usedef();
     
     return new_bb;
 }
