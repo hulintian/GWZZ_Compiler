@@ -13,7 +13,7 @@ namespace pass {
 static bool zap_unreachable_blocks_dfs(IR::Function& F) {
     using IR::BasicBlock;
     using IR::Instruction;
-
+    
     auto* entry = F.get_entry_bb();
     if (!entry) return false;
 
