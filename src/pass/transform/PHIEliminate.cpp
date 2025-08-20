@@ -279,7 +279,7 @@ bool PHIEliminatePass::run(IR::Function& f, PassManager& pm) {
     collect_all_phi();
     check_and_confirm_slot();
 //    phi_promotion();
-
+    gen_inference_and_phiEli();
 
 #ifdef SHOW_PHIS
     view_all_phis();
