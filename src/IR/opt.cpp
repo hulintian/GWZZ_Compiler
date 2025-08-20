@@ -46,7 +46,7 @@ namespace opt
 
         pm.add_function_transform_pass(std::make_unique<pass::ConstantFoldingPass>());
 
-        //pm.add_function_transform_pass(std::make_unique<pass::PHIEliminatePass>());
+        pm.add_function_transform_pass(std::make_unique<pass::PHIEliminatePass>());
         //pm.add_function_transform_pass(std::make_unique<pass::PHISimplifyPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::AliasTestPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::LoopInfoPrinterPass>());

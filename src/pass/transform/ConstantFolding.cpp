@@ -83,7 +83,8 @@ void ConstantFoldingPass::BFS(IR::BasicBlock* BB){
 
 
 void ConstantFoldingPass::process(IR::BasicBlock* B){
-    for(auto& inst : B->get_intrs()){
+    auto insts = B->get_intrs();
+    for(auto& inst : insts){
         auto cvt_v = tryToCVT(inst);
         if(cvt_v){
             _dead_insts.insert(inst);
@@ -217,6 +218,7 @@ IR::ConstantValue* ConstantFoldingPass::tryToCVT(IR::Instruction* inst){
 }
 IR::ConstantValue* ConstantFoldingPass::tryToPhi(IR::Instruction* inst){
     if(!inst)return nullptr;
+    std::cout<< inst->to_str()<<"\n";
     auto phi = dynamic_cast<IR::PhiInst*>(inst);
     if(!phi)return nullptr;
     // process dead BB
