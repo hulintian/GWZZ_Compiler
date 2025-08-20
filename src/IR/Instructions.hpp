@@ -340,9 +340,9 @@ public:
     std::string to_llvm();
 
      
-    const IR::Function* get_func() const {
+    IR::Function* get_func() const {
         /* User Code Start: Call::get_func */
-        return static_cast<const IR::Function*>(get_operand(0));
+        return static_cast<IR::Function*>(get_operand(0));
         /* User Code End: Call::get_func */
     }
       

@@ -9,7 +9,7 @@
             "program": "${workspaceFolder}/bin/compiler",
             "args": [
                 "-O1",
-                "functional/functional/25_while_if.sy"
+                "test/cfg.sy"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

@@ -40,6 +40,7 @@ namespace opt
         pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
         pm.add_function_transform_pass(std::make_unique<pass::ConstantFoldingPass>());
 
+        //pm.add_function_transform_pass(std::make_unique<pass::PHIEliminatePass>());
         // pm.add_function_transform_pass(std::make_unique<pass::DCEPass>());
         pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
 
