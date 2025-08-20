@@ -759,17 +759,17 @@ void ASMGen::translate_bb(IR::BasicBlock* bb) {
         } else if(auto phi_instr = dynamic_cast<IR::PhiInst*>(instr)) {
             // 在 ir中消除，后端不管
             // phi_eliminate(phi);
-            RiscvReg::Reg* phi_dst;
-            if(phi_instr->get_type()->base_type == 1) {
-                phi_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
-            } else {
-                phi_dst = new RiscvReg::Reg(this->get_new_vreg_idx());
-            }
+            //RiscvReg::Reg* phi_dst;
+            //if(phi_instr->get_type()->base_type == 1) {
+            //    phi_dst = new RiscvReg::Reg(this->get_new_vreg_idx(), false, false);
+            //} else {
+            //    phi_dst = new RiscvReg::Reg(this->get_new_vreg_idx());
+            //}
 
-            // 收集phi
-            this->mctx->get_function()->vreg_phi_map[phi_dst] = phi_instr;
+            //// 收集phi
+            //this->mctx->get_function()->vreg_phi_map[phi_dst] = phi_instr;
 
-            this->mctx->get_function()->add_reg_mp(phi_instr, phi_dst);
+            //this->mctx->get_function()->add_reg_mp(phi_instr, phi_dst);
             continue;
         } else {
             // Handle unknown instruction type
