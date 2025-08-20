@@ -224,26 +224,26 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
                         IR::Instruction* mv_phi2tmep;
 
                         std::string replace_name = "%T" + std::to_string(this->_pm->get_ir_builder().get_cur_ctx()->get_tmp_var());
-                        if(n_phi->get_type()->base_type == 1) {
+                        if(top_phi->get_type()->base_type == 1) {
                             zero = this->_pm->get_ir_builder().fzero;
-                            mv_phi2tmep = new IR::BinaryInst(n_phi->get_type(), BinaryOp::Add, n_phi, zero, replace_name, IR::fadd, n_phi->get_parent());
+                            mv_phi2tmep = new IR::BinaryInst(top_phi->get_type(), BinaryOp::Add, top_phi, zero, replace_name, IR::fadd, top_phi->get_parent());
                         } else {
                             zero = this->_pm->get_ir_builder().zero;
-                            mv_phi2tmep = new IR::BinaryInst(n_phi->get_type(), BinaryOp::Add, n_phi, zero, replace_name, IR::add, n_phi->get_parent());
+                            mv_phi2tmep = new IR::BinaryInst(top_phi->get_type(), BinaryOp::Add, top_phi, zero, replace_name, IR::add, top_phi->get_parent());
                         }
 
-                        std::cerr << info << " To cut the ring in " <<  n_phi->get_parent()->get_name()
-                                            << " " << n_phi->to_str() 
+                        std::cerr << info << " To cut the ring in " <<  top_phi->get_parent()->get_name()
+                                            << " " << top_phi->to_str() 
                                             << " by inserting " << mv_phi2tmep->to_str()
                                             << "\n";
-                        n_phi->get_parent()->dump(std::cerr);
+                        top_phi->get_parent()->dump(std::cerr);
 
-                        n_phi->get_parent()->add_curinst_after_inst(mv_phi2tmep, n_phi);
+                        top_phi->get_parent()->add_curinst_after_inst(mv_phi2tmep, top_phi);
 
 
-                        auto users = this->use_def_res->get_users(n_phi);
+                        auto users = this->use_def_res->get_users(top_phi);
                         for(auto user : users) {
-                            user->replace_operand(n_phi, mv_phi2tmep);
+                            user->replace_operand(top_phi, mv_phi2tmep);
                         }
                         this->update_use_def();
                         
