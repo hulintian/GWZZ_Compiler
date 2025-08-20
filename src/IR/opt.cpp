@@ -27,9 +27,9 @@ namespace opt
     void run_passes(IR::Module* m,IR::IRBuilder* builder){
         /* User Code Start: Sasara */    
         pass::PassManager pm(builder);
-        pm.add_module_transform_pass(std::make_unique<pass::HelloWorldPass>());
-        pm.add_module_transform_pass(std::make_unique<pass::DummyTransformPass>());
-        pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
+//        pm.add_module_transform_pass(std::make_unique<pass::HelloWorldPass>());
+//        pm.add_module_transform_pass(std::make_unique<pass::DummyTransformPass>());
+//        pm.add_function_transform_pass(std::make_unique<pass::CFGSimplifyPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::DomTreePrinterPass>());
         //pm.add_function_transform_pass(std::make_unique<pass::DomFrontierPrinterPass>());
         
