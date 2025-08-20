@@ -1,4 +1,5 @@
 #include "PHIEliminate.hpp"
+#include <iostream>
 #include <map>
 #include <set>
 #include <stack>
@@ -175,9 +176,9 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
             bool res = true;
             for(auto comings : inference_graph[phi]) {
                 // if has unvisited return false 
-                if(!three_colors[comings]) res = false;
+                if(!three_colors[comings] && !eliminated[comings] ) res = false;
             }
-            return false;
+            return res;
         }
 
     }; 
@@ -201,6 +202,7 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
                 for(auto n_phi : inference_graph[top_phi]) {
                     // 未访问过的
                     if( three_colors[n_phi] == 0 ) {
+                        three_colors[n_phi] = 1;
                         stk.push(n_phi);
                     } else if(three_colors[n_phi] == 1) {
                         // 是环，消除环，并重新构建冲突图
@@ -214,6 +216,11 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
                             zero = this->_pm->get_ir_builder().zero;
                             mv_phi2tmep = new IR::BinaryInst(n_phi->get_type(), BinaryOp::Add, n_phi, zero, "", IR::fadd, n_phi->get_parent());
                         }
+
+                        // std::cerr << info << " To cut the ring in " <<  n_phi->get_parent()->get_name()
+                        //                     << " " << n_phi->to_str() 
+                        //                     << "\n";
+                        // n_phi->get_parent()->dump(std::cerr);
                         n_phi->get_parent()->add_curinst_after_inst(mv_phi2tmep, n_phi);
 
                         auto users = this->use_def_res->get_users(n_phi);
@@ -279,11 +286,11 @@ bool PHIEliminatePass::run(IR::Function& f, PassManager& pm) {
     collect_all_phi();
     check_and_confirm_slot();
 //    phi_promotion();
-    gen_inference_and_phiEli();
-
 #ifdef SHOW_PHIS
     view_all_phis();
 #endif
+    gen_inference_and_phiEli();
+
 
     return true;
 }
