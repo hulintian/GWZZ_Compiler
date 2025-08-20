@@ -7,7 +7,7 @@
 #include <set>
 #include <fstream>
 #include <ostream>
-
+#include <algorithm>
 
 #include <utils.hpp>
 
