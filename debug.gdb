@@ -29,7 +29,8 @@
 # set args -S -O1 -o tmp/test58.s tmp/functional/58_sort_test4.sy
 # set args -S -O1 -o tmp/test92.s tmp/functional/92_register_alloc.sy
 # set args -S -O1 -o tmp/test82.s tmp/functional/82_long_func.sy
-set args -S -O1 -o tmp/test94.s tmp/functional/94_nested_loops.sy
+# set args -S -O1 -o tmp/test94.s tmp/functional/94_nested_loops.sy
+set args -S -O1 -o tmp/test59.s tmp/functional/59_sort_test5.sy
 
 set print pretty on
 set print object on

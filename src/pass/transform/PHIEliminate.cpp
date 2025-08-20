@@ -292,15 +292,15 @@ void PHIEliminatePass::gen_inference_and_phiEli() {
             this->phi_promotion(c_phi);
             this->eliminated[c_phi] = true;
 
-            for(auto n_phi : inference_graph[c_phi]) {
+            for(auto n_phi : this->phis) {
                 if(!this->eliminated[n_phi]) {
-                    if(can_eliminate(n_phi)) {
-                        stk.push(n_phi);
+                    if(!in_work_space[n_phi] && can_eliminate(n_phi)) {
+                        in_work_space[n_phi] = true;
+                        elim_work.push(n_phi);
                     }
                 }
             }
         }
-
     }
 }
 
