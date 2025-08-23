@@ -1,5 +1,6 @@
 Parser=Sysy22.g4
 ANTLR=antlr4
+ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 CXX = g++
 CC = gcc
 
@@ -18,7 +19,6 @@ CXXFLAGS += -DSHOW_CALL_GRAPH
 CXXFLAGS += -DDUMP_CFG
 CXXFLAGS += -DSHOW_PHIS
 
-ANTLR_FLAG = -Werror -Dlanguage=Cpp -visitor
 
 LDFLAGS = -L./antlr4/lib -lantlr4-runtime
 
