@@ -1,6 +1,7 @@
 headers:
-  - IR/GlobalValue.hpp
-  - IR/Context.hpp
+  - GlobalValue.hpp
+  - Context.hpp
+  - AST.hpp
 
 members:
   #  - type : IR::Module* 
@@ -49,12 +50,16 @@ Instructions:
   - Instruction: ne 
   - Instruction: gt 
   - Instruction: lt 
+  - Instruction: ge 
+  - Instruction: le 
   # fcmp 
   - Instruction: fcmp
   - Instruction: oeq 
   - Instruction: one 
   - Instruction: ogt 
   - Instruction: olt 
+  - Instruction: oge 
+  - Instruction: ole 
   # branch
   - Instruction: br 
   - Instruction: cond_br

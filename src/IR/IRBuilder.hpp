@@ -1,16 +1,16 @@
 #pragma once
-#include "IR/Function.hpp"
-#include "IR/Module.hpp"
-#include "IR/BasicBlock.hpp"
-#include "IR/Instructions.hpp"
-#include "common/defines.hpp"
-#include "common/type.hpp"
+#include "Function.hpp"
+#include "Module.hpp"
+#include "BasicBlock.hpp"
+#include "Instructions.hpp"
+#include "defines.hpp"
+#include "type.hpp"
 #include <memory>
-#include <string>
-#include <vector> 
-#include "IR/GlobalValue.hpp" 
-#include "IR/Context.hpp"
-#include "frontend/AST.hpp"
+#include <vector>
+#include <string> 
+#include "GlobalValue.hpp" 
+#include "Context.hpp" 
+#include "AST.hpp"
 
 namespace IR {
 class IRBuilder {
@@ -43,10 +43,10 @@ public:
     }
     
     
-    GlobalValue* create_gv(std::shared_ptr<Var> var, const std::string &sym) {
+    GlobalValue* create_gv(std::shared_ptr<Var> var, const std::string &sym, bool is_const) {
         auto _cur_module = this->get_cur_module();
         bool initialized = var->arr_val || var->val;
-        auto gv = new GlobalValue(_cur_module, sym, var, initialized); 
+        auto gv = new GlobalValue(_cur_module, sym, var, initialized, is_const); 
         _cur_module->add_gv(gv);
         
         return gv;
@@ -191,6 +191,17 @@ public:
                                                                 true));
     }
 
+    bool is_jump_instr(IR::Instruction* instr) {
+        if(auto res = dynamic_cast<ReturnInst*>(instr)) {
+            return true;
+        }else if(auto res = dynamic_cast<CondBranchInst*>(instr)) {
+            return true;
+        }else if(auto res = dynamic_cast<BranchInst*>(instr)) {
+            return true;
+        }
+        return false;
+    }
+
     /* User Code End: code space 1 */
 
      
@@ -219,6 +230,7 @@ public:
         unsigned alignment = ty->is_ptr() ? 8 : 4;
         auto inst = new AllocaInst(ty, name, alignment, _cur_ctx->get_current_basic_block());
         this->get_cur_bb()->add_instr(inst);
+        this->get_cur_func()->add_allocas(inst);
         return inst;
         /* User Code End: create_alloca */
     }
@@ -243,15 +255,16 @@ public:
         /* User Code End: create_store args */
     ){
         /* User Code Start: create_store */
+        Value* true_src = src;
         unsigned alignment = type->is_ptr() ? 8 : 4;
         if(src->get_type()->base_type != dst->get_type()->base_type) {
             if(dst->get_type()->base_type == 0) {
-                this->cvt_to_int(src);
+                true_src = this->cvt_to_int(src);
             } else {
-                this->cvt_to_float(src);
+                true_src = this->cvt_to_float(src);
             }
         }
-        auto inst = new StoreInst(type, dst, src, name, alignment, this->get_cur_bb());
+        auto inst = new StoreInst(type, dst, true_src, name, alignment, this->get_cur_bb());
         this->get_cur_bb()->add_instr(inst);
         return inst;
         /* User Code End: create_store */
@@ -305,7 +318,15 @@ public:
             case BinaryOp::Shl:    if(ty->base_type == 1) { bit = BinaryInstType::shl; } else { bit = BinaryInstType::shl; }; break;
         }
 
-        auto instr = new BinaryInst(ty, bop, n_lhs, n_rhs, name, bit,this->get_cur_bb() );
+        bool is_cmp = is_cmp_op(bop);
+
+        Instruction* instr;
+        if(is_cmp) {
+            // cmp instr should put the res to int reg
+            instr = new BinaryInst(this->get_base_type(Int), bop, n_lhs, n_rhs, name, bit,this->get_cur_bb() );
+        } else {
+            instr = new BinaryInst(ty, bop, n_lhs, n_rhs, name, bit,this->get_cur_bb() );
+        }
 
         this->get_cur_bb()->add_instr(instr);
 
@@ -515,6 +536,26 @@ public:
         /* User Code End: create_lt */
     }
      
+    Instruction* create_ge(
+        /* User Code Start: create_ge args */
+        Value* lhs, Value* rhs
+        /* User Code End: create_ge args */
+    ){
+        /* User Code Start: create_ge */
+        return nullptr;
+        /* User Code End: create_ge */
+    }
+     
+    Instruction* create_le(
+        /* User Code Start: create_le args */
+        Value* lhs, Value* rhs
+        /* User Code End: create_le args */
+    ){
+        /* User Code Start: create_le */
+        return nullptr;
+        /* User Code End: create_le */
+    }
+     
     Instruction* create_fcmp(
         /* User Code Start: create_fcmp args */
         Value* lhs, Value* rhs
@@ -563,6 +604,26 @@ public:
         /* User Code Start: create_olt */
         return nullptr;
         /* User Code End: create_olt */
+    }
+     
+    Instruction* create_oge(
+        /* User Code Start: create_oge args */
+        Value* lhs, Value* rhs
+        /* User Code End: create_oge args */
+    ){
+        /* User Code Start: create_oge */
+        return nullptr;
+        /* User Code End: create_oge */
+    }
+     
+    Instruction* create_ole(
+        /* User Code Start: create_ole args */
+        Value* lhs, Value* rhs
+        /* User Code End: create_ole args */
+    ){
+        /* User Code Start: create_ole */
+        return nullptr;
+        /* User Code End: create_ole */
     }
      
     Instruction* create_br(
@@ -616,11 +677,27 @@ public:
      
     Instruction* create_phi(
         /* User Code Start: create_phi args */
-
+        Type* ty, 
+        //unsigned num_reserved_operands,
+        //const std::string& name,
+        IR::AllocaInst* alloca_source
         /* User Code End: create_phi args */
     ){
         /* User Code Start: create_phi */
-        return nullptr;
+        BasicBlock* current_bb = this->get_cur_bb();
+        if (!current_bb) {
+            // 或者抛出异常
+            return nullptr;
+        }
+        unsigned num_preds = current_bb->get_predecessors().size();
+
+        auto name = "%T" + std::to_string(this->get_cur_ctx()->get_tmp_var());
+        auto inst = new PhiInst(ty, num_preds, name, current_bb, alloca_source);
+        for (auto* pred : current_bb->get_predecessors()) {
+            inst->add_incoming(nullptr, pred);
+        }
+        current_bb->add_instruction_at_front(inst);
+        return inst;
         /* User Code End: create_phi */
     }
      

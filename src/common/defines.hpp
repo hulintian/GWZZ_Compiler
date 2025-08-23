@@ -1,3 +1,4 @@
+// 这个代码 借鉴自 return_0 
 #pragma once 
 
 #include "type.hpp"
@@ -67,6 +68,7 @@ struct Var {
         }
         return ans;
     }
+  // can to str 了
 };
 
 

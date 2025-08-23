@@ -1,18 +1,15 @@
-#include "frontend/Sema.hpp"
-#include "InputMismatchException.h"
-#include "common/defines.hpp"
-#include "common/type.hpp"
-#include "frontend/AST.hpp"
-#include "frontend/SymbolTable.hpp"
-#include "common/utils.hpp"
+#include "Sema.hpp"
+#include "defines.hpp"
+#include "type.hpp"
+#include "AST.hpp"
+#include "SymbolTable.hpp"
+#include "utils.hpp"
 #include <algorithm>
-#include <any>
 #include <cassert>
 #include <iterator>
 #include <memory>
 #include <iostream>
 #include <optional>
-#include <system_error>
 #include <vector>
 #include <map>
 
@@ -49,9 +46,9 @@ Sema::Sema() {
             .params_type = {Type{String}},
             .variadic = true};
     funcs["starttime"] = {
-            .return_type = std::nullopt, .params_type = {Type{Int}}, .variadic = false};
+            .return_type = std::nullopt, .params_type = {}, .variadic = false};
     funcs["stoptime"] = {
-            .return_type = std::nullopt, .params_type = {Type{Int}}, .variadic = false};
+            .return_type = std::nullopt, .params_type = {}, .variadic = false};
 
     // this is just for test, not impl in lib
     funcs["print"] = {.return_type = std::nullopt,
@@ -101,6 +98,7 @@ bool Sema::already_exits_var_in_current_scope(const SymbolTable& table, const st
 void Sema::visit_decls(const ast::Decl& decl ) {
     auto &name = decl.ident()->identifier();
     Type t = parse_type(decl.type());
+    t.is_const = decl.is_const();
 
     std::optional<ConstValue> initial_val;
     std::map<int, ConstValue> *arr_val = nullptr;
@@ -251,6 +249,7 @@ void Sema::visit_stmt(const ast::Stmt& node) {
         if(!ret && func->return_type) {
             std::cerr << error << "Not void function, need return a value.\n";
         }
+        if(!ret) { return; }
         // 检查return value
         auto ty = visit_expr(ret);
         // unction returns  void
@@ -333,6 +332,7 @@ bool type_compatible(const Type &t1, const Type &t2){
     if(t1.is_ptr2scalar() && t2.nr_dims() > 1) return true;
     if(t1.nr_dims() != t2.nr_dims()) return false;
 
+    
     for(int i=1; i < t1.nr_dims(); ++i) {
         if(t1.dims[i] != t2.dims[i]) return false;
     }
@@ -472,6 +472,7 @@ Type Sema::parse_type(const std::unique_ptr<ast::SysyType> & st) {
     if(auto scalar_type = dynamic_cast<ast::ScalarType*>(ptr)) {
         t.base_type = scalar_type->type();
     } else if(auto array_type = dynamic_cast<ast::ArrayType*>(ptr)){ // Array Type
+                                                                                    
         t.base_type = array_type->base_type();
         if(array_type->omit_first_dimesion()) t.dims.push_back(0);       // hidden the first dimension
         
@@ -657,7 +658,7 @@ std::optional<ConstValue> Sema::eval(const ast::Expr* expr) {
             }
             int index = implicit_cast(Int, opt_val.value()).iv;        // get the integer index
             int dim_size = 1;
-            for(int i = subscripts.size()-2; i >= 0; i++) {
+            for(int i = subscripts.size()-2; i >= 0; --i) {
                 auto opt_val = eval(subscripts[i]);
                 if(!opt_val) {
                     return std::nullopt;        // can't eavluate, need to wait variable
@@ -682,7 +683,10 @@ std::optional<ConstValue> Sema::eval(const ast::Expr* expr) {
     if(auto call_ptr = dynamic_cast<const ast::Call*>(expr)) {
         return std::nullopt;
     }
+    
+    std::string msg = "expr is null";
 
+    return std::nullopt;
 }
 
 }

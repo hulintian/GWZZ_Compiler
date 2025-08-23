@@ -1,15 +1,15 @@
 #pragma once
-#include <IR/IRBuilder.hpp>
+#include <IRBuilder.hpp>
 #include <memory>
 #include <vector>
 
-#include "IR/BasicBlock.hpp"
-#include "IR/Context.hpp"
-#include "IR/Function.hpp"
-#include "IR/GlobalValue.hpp"
-#include "IR/Module.hpp"
-#include "IR/Value.hpp"
-#include "frontend/AST.hpp"
+#include "BasicBlock.hpp"
+#include "Context.hpp"
+#include "Function.hpp"
+#include "GlobalValue.hpp"
+#include "Module.hpp"
+#include "Value.hpp"
+#include "AST.hpp"
 
 namespace frontend {
 
@@ -57,6 +57,11 @@ public:
     IR::Function* get_cur_func() { return ctx->get_current_function(); }
     IR::BasicBlock* get_cur_bb() { return ctx->get_current_basic_block(); }
     IR::Module* get_cur_module() { return ctx->get_current_module(); }
+
+    //by Sasara
+    IR::IRBuilder* get_ir_builder() const {
+        return builder;
+    }
 };
 
 }

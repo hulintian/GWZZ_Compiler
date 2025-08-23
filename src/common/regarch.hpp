@@ -1,7 +1,11 @@
+// 这个是使用 return_0;的代码，做了点修改，把fs_x s_x ft_x t_x 这些寄存器分开，用于定寄存器分配的可选寄存器范围
+// 这个是使用 return_0;的代码
 #pragma once
 
 #include <string>
 #include <ostream>
+#include <vector>
+#include <vector>
 #include <map>
 
 namespace RiscvReg {
@@ -60,6 +64,8 @@ protected:
     bool is_gp_;
 public:
     Reg() = default;
+    // is_standard -> 是否是物理寄存器； is_gp -> 是否是整数寄存器
+    // is_standard -> 是否是物理寄存器； is_gp -> 是否是整数寄存器
     Reg(int index, bool is_standard = false, bool is_gp = true) : index_(index), is_standard_(is_standard), is_gp_(is_gp) {
         if (is_standard_ && !(0 <= index_ && index_ < RegCount)) 
             throw std::runtime_error("invalid standard register index");
@@ -160,6 +166,10 @@ const std::vector<const Reg*> regs = std::vector<const Reg*>({&ZERO, &RA, &SP, &
 const std::vector<const Reg*> regs_callersaved = std::vector<const Reg*>({&T0, &T1, &T2, &T3, &T4, &T5, &T6, &A0, &A1, &A2, &A3, &A4, &A5, &A6, &A7});
 const std::vector<const Reg*> regs_calleesaved = std::vector<const Reg*>({&S1, &S2, &S3, &S4, &S5, &S6, &S7, &S8, &S9, &S10, &S11, &RA, &FP});
 const std::vector<const Reg*> regs_allocatable = std::vector<const Reg*>({&T0, &T1, &T2, &T3, &T4, &T5, &T6, &A0, &A1, &A2, &A3, &A4, &A5, &A6, &A7, &S1, &S2, &S3, &S4, &S5, &S6, &S7, &S8, &S9, &S10, &S11, &RA});
+
+const std::vector<const Reg*> regs_saved = std::vector<const Reg*>({&S1, &S2, &S3, &S4, &S5, &S6, &S7, &S8, &S9, &S10, &S11});
+const std::vector<const Reg*> temp_regs = std::vector<const Reg*>({&T0, &T1, &T2, &T3, &T4, &T5, &T6});
+
 const std::vector<const Reg*> regs_arg = std::vector<const Reg*>({&A0, &A1, &A2, &A3, &A4, &A5, &A6, &A7});
 // const std::vector<int> caller_to_offset({0,0,0,0,0,0,1,2,0,0,3,4,5,6,7,8,9,10,0,0,0,0,0,0,0,0,0,0,11,12,13,14});
 
@@ -186,5 +196,18 @@ const std::vector<const Reg*> fp_regs_arg = std::vector<const Reg*>({
     &FP10, &FP11, &FP12, &FP13, &FP14, &FP15, &FP16, &FP17
 });
 
+const std::vector<const Reg*>  fp_Temp_regs = std::vector<const Reg*>({ 
+        &FP0, &FP1, &FP2, &FP3, &FP4, &FP5, &FP6, &FP7,
+        &FP28, &FP29, &FP30, &FP31
+});
+
+inline bool is_in_pool(const std::vector<const Reg*> pool, const Reg* reg) {
+    for(auto pr : pool) {
+        if(pr->id() == reg->id() && pr->is_gp() == reg->is_gp() ) { return true; }
+    }
+    return false;
+}
 
 }
+
+

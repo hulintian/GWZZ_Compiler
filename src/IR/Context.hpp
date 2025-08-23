@@ -2,9 +2,9 @@
 
 // This head file defines the Context, 
 
-#include <IR/Function.hpp>
-#include <IR/Module.hpp>
-#include <IR/BasicBlock.hpp>
+#include "Function.hpp"
+#include "Module.hpp"
+#include "BasicBlock.hpp"
 
 /**
  * @brief defines the Context

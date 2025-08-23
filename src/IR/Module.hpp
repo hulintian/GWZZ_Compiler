@@ -1,8 +1,8 @@
 #pragma once 
 
-#include "IR/Function.hpp"
-#include "IR/GlobalValue.hpp"
-#include "common/utils.hpp"
+#include "Function.hpp"
+#include "GlobalValue.hpp"
+#include "utils.hpp"
 
 #include <cassert>
 #include <iostream>
@@ -35,7 +35,8 @@ public:
     }
 
     void add_gv(GlobalValue* gv) {
-        assert(_name2gv.find(gv->get_symbol()) == _name2gv.end() && "Already have the GlobalValue");
+        // assert(_name2gv.find(gv->get_symbol()) == _name2gv.end() && "Already have the GlobalValue");
+        // assert(_name2gv.find(gv->get_symbol()) == _name2gv.end() && "Already have the GlobalValue");
         _gvs.push_back(gv);
         _name2gv[gv->get_symbol()] = gv;
     }
@@ -46,6 +47,10 @@ public:
         }
         return nullptr;
     }
+
+    std::vector<GlobalValue*>& get_gvs()  {
+        return _gvs;
+     }
 
     bool has_gv(const std::string& symbol) {
         return this->get_gv(symbol) != nullptr;
@@ -63,6 +68,21 @@ public:
             return _name2lib_func[name];
         }
     }
+
+    std::vector<Function*>& get_funcs() { return _funcs; }
+    std::vector<Function*>& get_lib_funcs() { return _lib_funcs; }
+    std::map<std::string, Function*>& get_name2lib_func() { return _name2lib_func; }
+
+    /* User Code Start: Sasara */
+    const std::vector<Function*>& get_functions() const {
+        return _funcs;
+    }
+    std::vector<Function*>& get_functions() {
+        return _funcs;
+    }
+    /* User Code End: Sasara */
+
+
 private:
     // TODO Need maintain the function and global variable
     std::vector<Function*> _funcs;
