@@ -17,7 +17,7 @@
 # set args -S -O1 -o tmp/03_sort2.s tmp/RVXN/03_sort2.sy
 # set args -S -O1 -o tmp/h-9-02.s tmp/RVXN/h-9-02.sy
 # set args -S -O1 -o tmp/test63.s tmp/functional/63_big_int_mul.sy
-set args -S -O1 -o tmp/test64.s tmp/functional/64_calculator.sy
+# set args -S -O1 -o tmp/test64.s tmp/functional/64_calculator.sy
 # set args -S -O1 -o tmp/test21.s tmp/functional/21_if_test2.sy
 # set args -S -O1 -o tmp/test25.s tmp/functional/25_while_if.sy
 # set args -S -O1 -o tmp/my_test_01.s tmp/functional/my_test_cfg.sy;
@@ -31,6 +31,7 @@ set args -S -O1 -o tmp/test64.s tmp/functional/64_calculator.sy
 # set args -S -O1 -o tmp/test82.s tmp/functional/82_long_func.sy
 # set args -S -O1 -o tmp/test94.s tmp/functional/94_nested_loops.sy
 # set args -S -O1 -o tmp/test59.s tmp/functional/59_sort_test5.sy
+set args -S -O1 -o tmp/testRVJS52.s tmp/RVJS/2025-TGX-34.sy
 
 set print pretty on
 set print object on

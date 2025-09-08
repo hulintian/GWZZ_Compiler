@@ -2,8 +2,6 @@ grammar Sysy22;
 
 import SysyLex;
 
-// prog : compUnits;
-
 compUnits : compUnit* EOF;
 
 compUnit : funcDef | decl;

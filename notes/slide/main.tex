@@ -1,7 +1,34 @@
-\documentclass[12pt]{ctexbeamer}
+\documentclass[16pt]{ctexbeamer}
 
-\title{2025LycorisRecompile/ 南京邮电大学}
+\setCJKmainfont{Source Han Serif SC}        % 宋体（主字体）
+
+\usetheme{Madrid}               % Beamer 内置主题
+% \usecolortheme{dolphin}        % 颜色主题
+
+\usepackage{fontspec}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\usepackage{float}       % 支持 [H] 参数强制表格位置
+\usepackage{caption}     % 设置表格标题样式
+\usepackage{booktabs}    % （可选）增强表格线条美观
+\usepackage{longtable}   % （可选）支持跨页表格
+\usepackage{amsmath}     % （可选）支持数学表达式
+\usepackage{amssymb}     % （可选）增强数学符号
+\usepackage{listings}    % （可选）若后续插入IR代码块
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+
+\usepackage[numbers]{natbib}
+
+\title{玩具级编译器的实现}
 \author{格llvm致知}
+\date{\today}
 
 \begin{document}
 
@@ -11,6 +38,142 @@
 
 \begin{frame}{目录}
     \tableofcontents
+\end{frame}
+
+\section{概览}
+\begin{frame}{背景}
+\includegraphics[width=0.7\textwidth]{./asserts/hw_bsb_contest.png}
+\end{frame}
+
+\begin{frame}{概览}
+\includegraphics[width=1\textwidth]{./asserts/overview.png}
+
+\pause
+我们将编译器总体分成三个模块，分别为前端、中端和后端。前端词法分析和语法分析采用ANTLR4生成，通过遍历ANTLR4的解析树生成AST。然后遍历AST进行语义分析、中间代码生成，生成中间表示代码（IR）。中间表示采用类LLVM的结构。后端遍历IR，将IR指令翻译成等效的RISCV指令。
+
+\end{frame}
+
+\begin{frame}
+为什么能够等效的翻译？
+
+    \vspace{2em}
+\pause
+哲学：语言的是用来描述怎么做的。
+\end{frame}
+
+\section{编译前端}
+\begin{frame}{SysY语言文法}
+    \begin{columns}
+        \begin{column}{.5\linewidth}
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=1\textwidth]{asserts/grammar1.png}
+            \end{figure}
+        \end{column}
+        \begin{column}{.5\linewidth}
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=1\textwidth]{asserts/grammar2.png}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{词法分析和语法分析}
+\begin{columns}
+    \begin{column}{.5\linewidth}
+        用ANTLR4生成
+
+        词法规则：
+            \begin{itemize}
+                \item 关键字：上面文法中加粗的
+                \item 整数、浮点数：参考iso9899
+            \end{itemize}
+            
+        语法规则：
+
+        根据文法的定义写（ANTLR4能够自动处理左递归，写的时话不太关心左递归的情况，其他的解析工具如PEST不行）
+    \end{column}
+    \begin{column}{.5\linewidth}
+        \only<1>{ \includegraphics[width=0.5\textwidth]{./asserts/kws.png} }
+        \only<2>{ \includegraphics[width=0.7\textwidth]{./asserts/dec_lex.png} }
+        \only<3>{ \includegraphics[width=0.7\textwidth]{./asserts/hex_lex.png} }
+        \only<4>{ \includegraphics[width=0.7\textwidth]{./asserts/grammar.png} }
+    \end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{语义分析}
+
+检查语义上是否正确
+    \begin{itemize}
+        \item 使用未声明的变量
+        \item 使用未定义的函数
+        \item 数组声明时大小是不是常量
+        \item 赋值语句类型是否匹配
+    \end{itemize}
+需要符号表的帮助
+
+%     \vspace{1em}
+% 
+% 哪些信息有用，就挂到抽象语法树上
+\end{frame}
+
+\begin{frame}{符号表}
+    \begin{columns}
+        \begin{column}{.3\linewidth}
+            \begin{figure}
+                \includegraphics[width=1\textwidth]{asserts/4report-test_src.drawio.png}
+            \end{figure}
+        \end{column}
+        \begin{column}{.5\linewidth}
+            \begin{figure}
+                \includegraphics[width=1\textwidth]{asserts/ast.png}
+            \end{figure}
+        \end{column}
+        \begin{column}{.2\linewidth}
+            \begin{figure}
+                \includegraphics[width=0.7\textwidth]{asserts/4report-Scope.drawio.png}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{编译中端}
+\begin{frame}{编译中端}
+% 中间表示？中间代码？
+%     \begin{itemize}
+%         \item 中间表示：编译的中间产物
+%         \item 中间代码：一种代码形式的中间表示
+%     \end{itemize}
+模仿LLVM
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\textwidth]{./asserts/IR_arch.drawio.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{中间代码指令}
+    \begin{columns}
+        \begin{column}{.3\linewidth}
+            \begin{figure}
+                \centering
+                \includegraphics[height=1\textheight]{./asserts/IR_Instrs.png}
+            \end{figure}
+        \end{column}
+        \begin{column}{.7\linewidth}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{编译后端}
+\begin{frame}{编译后端}
+
+\end{frame}
+
+\section{优化}
+\begin{frame}
 \end{frame}
 
 \end{document}
