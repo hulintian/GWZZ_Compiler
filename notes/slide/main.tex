@@ -1,4 +1,4 @@
-\documentclass[16pt]{ctexbeamer}
+\documentclass[12pt]{ctexbeamer}
 
 \setCJKmainfont{Source Han Serif SC}        % 宋体（主字体）
 
@@ -27,13 +27,15 @@
 \usepackage[numbers]{natbib}
 
 \title{玩具级编译器的实现}
-\author{格llvm致知}
+\author{格llvm致知：胡临天 \quad 王俊}
 \date{\today}
 
 \begin{document}
 
 \begin{frame}
 \maketitle
+
+    \url{https://github.com/hulintian/GWZZ\_Compiler}
 \end{frame}
 
 \begin{frame}{目录}
@@ -86,13 +88,20 @@
 
         词法规则：
             \begin{itemize}
-                \item 关键字：上面文法中加粗的
-                \item 整数、浮点数：参考iso9899
+                \item 关键字：上面文法中加粗的。
+                \item 整数、浮点数：参考iso9899。
             \end{itemize}
             
         语法规则：
 
-        根据文法的定义写（ANTLR4能够自动处理左递归，写的时话不太关心左递归的情况，其他的解析工具如PEST不行）
+        \begin{itemize}
+            \item 根据文法的定义写。
+        \end{itemize}
+
+        生成抽象语法树：
+        \begin{itemize}
+            \item 为了便于后续的语义分析，去除文法中的冗余语义，定义一套简化的抽象语法树。用访问者模式遍历ANTLR4生成的语法解析树。
+        \end{itemize}
     \end{column}
     \begin{column}{.5\linewidth}
         \only<1>{ \includegraphics[width=0.5\textwidth]{./asserts/kws.png} }
@@ -148,32 +157,183 @@
 %         \item 中间代码：一种代码形式的中间表示
 %     \end{itemize}
 模仿LLVM
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.7\textwidth]{./asserts/IR_arch.drawio.png}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{中间代码指令}
     \begin{columns}
+        \begin{column}{.7\linewidth}
+            \only<1>{ \includegraphics[width=1\textwidth]{./asserts/IR_arch.drawio.png} }
+        \end{column}
         \begin{column}{.3\linewidth}
             \begin{figure}
                 \centering
-                \includegraphics[height=1\textheight]{./asserts/IR_Instrs.png}
+                \includegraphics[width=0.7\textwidth]{./asserts/IR_dir.png}
             \end{figure}
         \end{column}
+    \end{columns}
+
+    模块、函数、基本块好定义，一个类就完事了。IR指令有点多add、sub、mul、div、alloca、load、store、gep，br......。
+\end{frame}
+
+\begin{frame}{中间代码指令}
+
+偷懒：把机械化的事情交给机器做。
+
+    \begin{columns}
         \begin{column}{.7\linewidth}
+            用python + jinja2 + yaml生成一堆用于描述IR指令类和IRBuilder类（后端的RISC-V指令的定义也是一样）。
+
+            \begin{figure}
+                \centering
+                \only<1>{\includegraphics[width=0.4\textwidth]{./asserts/templates_dir.png}}
+                \only<2>{ \includegraphics[height=0.5\textheight]{./asserts/irbuilder_jinja2.png} }
+                \only<3>{ \includegraphics[height=0.4\textheight]{./asserts/irbuilder_src.png} }
+            \end{figure}
+        \end{column}
+        \begin{column}{.3\linewidth}
+            \includegraphics[height=0.8\textheight]{./asserts/IR_Instrs.png}
         \end{column}
     \end{columns}
 \end{frame}
 
-\section{编译后端}
-\begin{frame}{编译后端}
+\begin{frame}{中间代码生成}
+    遍历抽象语法树，生成中间代码
 
+    \begin{itemize}
+        \item 函数：创建函数类，并创建一个入口基本块，先给函数形参分配空间（生成alloca语句）
+        \item 运算：生成加、减、乘、除、取余等指令
+        \item 声明：局部的用alloca分配内存，全局的记录到全局变量中
+        \item 循环、分支：根据条件语句的结果生成跳转指令，为每个分支创建基本块，再翻译每个分支
+    \end{itemize}
 \end{frame}
 
-\section{优化}
-\begin{frame}
+\section{编译后端}
+
+\begin{frame}{指令选择}
+哲学：
+    \begin{itemize}
+        \item 我是谁：这条IR指令是干啥的？
+        \item 我从哪里来：指令的数据从哪来？
+        \item 我要到那去：指令的结果放到哪里去？
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{指令选择}
+操作数从哪来？
+\begin{itemize}
+  \item 计算
+    \begin{itemize}
+      \item 常量：立即数
+      \item 来自别的指令的结果：寄存器
+    \end{itemize}
+  \item 取值  
+    地址来源包括：  
+    全局变量（通过 \texttt{la} 指令获取地址）、  
+    栈帧中的局部变量（\texttt{fp} 加偏移量）、  
+    数组元素（数组首地址 + 偏移量）。
+  \item 存值  
+    地址来源与取值相同。
+  \item 函数调用
+    \begin{itemize}
+      \item 调用目标：被调函数
+      \item 参数来源：  
+        可能是计算结果或取值结果。
+    \end{itemize}
+  \item 被调函数参数
+    \begin{itemize}
+      \item 参数寄存器：\texttt{a0-a7} 或 \texttt{fa0-fa7}
+      \item 若寄存器不够：使用栈内存。超出的参数按约定由 \texttt{sp} 向高地址方向依次存放，每个槽占 8 字节（无论是 32 位整型还是 64 位指针，以 64 位对齐）。
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{指令选择}
+指令的结果放在哪里？
+\begin{itemize}
+  \item 计算、取值  
+    指令结果放到寄存器中，并建立 IR Value（中间表示）到 Reg（寄存器）的映射。  
+    在后端翻译阶段，根据指令结果的使用位置，通过映射得到具体的寄存器。  
+  \item 存值  
+    将寄存器中的值写回内存。
+  \item 跳转  
+    执行跳转操作。
+  \item 函数调用  
+    参数存放位置：优先放在参数寄存器，不够时按约定放在栈上，即 \texttt{sp + 8$\times$x}（第 $x$ 个溢出参数）。  
+  \item 被调函数  
+    每个参数视为函数的局部变量，根据值类型（数值或指针）和对齐规则分配地址（相对于 \texttt{fp} 的偏移量），并从寄存器或栈内存搬运到被调函数的栈帧中。
+\end{itemize}
+\end{frame}
+
+\begin{frame}{寄存器分配}
+线扫描寄存器分配。
+
+简单，扫描两趟。一趟扫描找（虚拟）寄存器的活跃区间，一趟扫描分配寄存器。
+\end{frame}
+
+\begin{frame}{汇编代码生成}
+    以上的过程中所谓的指令、基本块、函数、模块都是一个在内存中的数据结构，汇编代码生成就是把这些信息按照汇编代码的样子组织成文本的形式。
+\end{frame}
+
+\section{编译优化}
+\begin{frame}{优化框架}
+    \begin{columns}
+        \begin{column}{.6\linewidth}
+            核心类：
+            \begin{itemize}
+                \item Pass;
+                \item PassManager;
+                \item Analysis;
+                \item AnalysisManager;
+            \end{itemize}
+
+            \hspace{2em}{\fontsize{8pt}{1pt}\selectfont Pass分为变换Pass和分析Pass，变换Pass从PassManager中获取AnalysisManager并调用指定分析Pass分析IR，获得分析结果。根据分析结果执行相应的优化策略。} 
+
+            \hspace{2em}{\fontsize{8pt}{1pt}\selectfont AnalysisManager对分析结果统一进行管理，在初次调用分析Pass，会将其返回的分析结果进行缓存，以便后续Pass获取，节省了性能；若IR进行了修改，变换Pass的run函数返回true时，或者在pass中根据需要手动作废分析结果时，AnalysisManager会清空对应缓存。}
+        \end{column}
+        \begin{column}{.4\linewidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.9\textwidth]{./asserts/opt_dir.png}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{实现的Pass}
+    \begin{columns}[t]
+        \begin{column}{.7\linewidth}
+            \begin{columns}[t]
+                \begin{column}{.5\linewidth}
+                    分析Pass
+                    \begin{itemize}
+                        \item 支配树分析
+                        \item 支配边界分析
+                        \item 循环分析
+                        \item 别名分析
+                        \item Use-Def分析
+                    \end{itemize}
+                \end{column}
+                \begin{column}{.5\linewidth}
+                    变换Pass
+                    \begin{itemize}
+                        \item CFG简化
+                        \item Mem2Reg
+                        \item 常量传播
+                        \item LICM
+                        \item PHI简化
+                        \item DCE
+                        \item PHI节点消除
+                    \end{itemize}
+                \end{column}
+            \end{columns}
+        \end{column}
+        \begin{column}{.3\linewidth}
+            其他功能:
+
+            CFG\_dump、CallGraph\_dump
+            \begin{figure}
+                \centering
+                \includegraphics[width=1\textwidth]{./asserts/deepWhileBr.png}
+            \end{figure}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \end{document}
