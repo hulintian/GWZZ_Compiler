@@ -156,7 +156,7 @@
 %         \item 中间表示：编译的中间产物
 %         \item 中间代码：一种代码形式的中间表示
 %     \end{itemize}
-模仿LLVM
+模仿LLVM IR
     \begin{columns}
         \begin{column}{.7\linewidth}
             \only<1>{ \includegraphics[width=1\textwidth]{./asserts/IR_arch.drawio.png} }
@@ -200,6 +200,7 @@
         \item 函数：创建函数类，并创建一个入口基本块，先给函数形参分配空间（生成alloca语句）
         \item 运算：生成加、减、乘、除、取余等指令
         \item 声明：局部的用alloca分配内存，全局的记录到全局变量中
+        \item 条件：短路求值
         \item 循环、分支：根据条件语句的结果生成跳转指令，为每个分支创建基本块，再翻译每个分支
     \end{itemize}
 \end{frame}
@@ -223,12 +224,12 @@
       \item 常量：立即数
       \item 来自别的指令的结果：寄存器
     \end{itemize}
-  \item 取值  
-    地址来源包括：  
+  \item 取值：
+    地址来源有  
     全局变量（通过 \texttt{la} 指令获取地址）、  
     栈帧中的局部变量（\texttt{fp} 加偏移量）、  
     数组元素（数组首地址 + 偏移量）。
-  \item 存值  
+  \item 存值： 
     地址来源与取值相同。
   \item 函数调用
     \begin{itemize}
@@ -335,5 +336,7 @@
         \end{column}
     \end{columns}
 \end{frame}
+
+% https://github.com/hulintian/GWZZ_Compiler/blob/finally/notes/slide/main.pdf
 
 \end{document}
